@@ -24,18 +24,19 @@
 
 ## C. Limpieza de ramas (decisión requerida)
 
-- ⬜ **C1 · P2 · Resolver `MASTER---JUNE`** — 28 commits únicos, diverge desde 2025-10-30 (122 detrás de main). Decidir: integrar lo rescatable o archivar/borrar.
+- ⬜ **C1 · P2 · Resolver `MASTER---JUNE`** — ANALIZADA 2026-06-22: 28 commits son historia vieja (2025-10-30, mensajes `PANIC!`/`primera subida a plesk`), 122 detrás de main, diff es −64.671 líneas. **Nada que rescatar.** Recomendación: archivar tag + borrar. Pendiente OK usuario.
 - ✅ **C2 · Borrar `main-corrupt`** — HECHO 2026-06-22. Preservada en tag `archive/main-corrupt` (pusheado a origin). Borrada local + origin.
 - ⬜ **C3 · P3 · Archivar `backup/2025-10-30-restore-request`** — 1 commit de backup. Conservar como tag y borrar rama, o eliminar.
 - ✅ **C4 · Podar ramas ya integradas (0 commits únicos vs main)** — HECHO 2026-06-22. 15 ramas locales borradas + 9 remotas equivalentes. SHAs en [RECUPERACION-ramas.md](RECUPERACION-ramas.md).
-- ⬜ **C5 · P3 · Revisar ramas remote-only sin local** — `MASTER-VERSION`, `SFC---color-test`, `WORKS-SWIPER-LIMPIO`, `background-colour-test`, `new-nav`, `new-swiper`, `pagination`. No analizadas (no tenían rama local); revisar contenido vs main antes de decidir.
+- ⬜ **C5 · P3 · Ramas remote-only** — ANALIZADAS 2026-06-22: las 7 son de **2022** (experimentos muertos, 119-122 detrás de main, mensajes `no funciona`/`intento de cambiar fondo`). Nada que rescatar. `background-colour-test`+`new-swiper` = 0 únicos; el resto pocos commits viejos. Recomendación: archivar tags + borrar remotas. Pendiente OK usuario.
 
 ## D. Deuda técnica / higiene de repo
 
 - ✅ **D1 · `project-gamma.zip` (~128 MB)** — HECHO 2026-06-22. Movido a `~/Documents/portfolio-backups/project-gamma-2025-10-30.zip` (fuera del área del repo).
-- ⬜ **D2 · P3 · Hooks legacy de WordPress** en `php-elements/footer.php` (`bloginfo()`, `wp_nav_menu()`, `wp_footer()`) — guardar con `function_exists()` para evitar fatals fuera de WP.
+- ✅ **D2 · Hooks legacy de WordPress** — OBSOLETO 2026-06-22. No queda ninguna llamada WP en ningún PHP del repo. La advertencia de copilot-instructions estaba desactualizada.
 - ✅ **D2bis · `scss/layout/_arrow.scss` corrupto** — HECHO 2026-06-22. Era código muerto (no importado en style.scss) y corrupto desde commit `96baa84`. Eliminado; CSS compilado idéntico. Estilos reales de la flecha viven en `scss/utilities/_animations.scss`.
-- ⬜ **D3 · P3 · `swiperBottomScrollbarFull` indefinido** referenciado en el resize handler de `js/swiper/swiper.js` sin definición. Restaurar definición o eliminar referencia.
+- ✅ **D3 · `swiperBottomScrollbarFull` indefinido** — OBSOLETO 2026-06-22. El símbolo ya no existe en ningún JS. `js.php` carga `swiperNew.js`; el viejo `swiper.js`/`swiperMobile.js` siguen vivos (páginas de proyecto / móvil) pero tampoco lo referencian.
+- ⬜ **D5 · P3 · `copilot-instructions.md` desactualizado** — avisos obsoletos (D2 WP hooks, D3 swiperBottomScrollbarFull, status "November 2025"). Refrescar para no confundir a agentes futuros.
 - ⬜ **D4 · P3 · Sin tests ni lint** — validación 100% manual en navegador. Evaluar smoke test mínimo.
 
 ---
