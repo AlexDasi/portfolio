@@ -10,6 +10,24 @@
 |---|---|---|
 | `main-corrupt` | f2306af | `git branch main-corrupt archive/main-corrupt` |
 
+## 2026-06-22 (tarde) — Limpieza C1 + C3 + C5 (todas preservadas en tags `archive/*`, pusheados a origin)
+
+Para recuperar cualquiera: `git branch <nombre> archive/<tag>` (y `git push origin <nombre>` si la quieres remota).
+
+| Rama borrada | SHA | Tag de recuperación |
+|---|---|---|
+| `MASTER---JUNE` (C1, local+origin) | b3fab13 | `archive/master-june` |
+| `backup/2025-10-30-restore-request` (C3, local) | 544161f | `archive/backup-2025-10-30` |
+| `MASTER-VERSION` (C5, origin) | deb8ad1 | `archive/master-version` |
+| `SFC---color-test` (C5, origin) | 094606c | `archive/sfc-color-test` |
+| `WORKS-SWIPER-LIMPIO` (C5, origin) | 4313d01 | `archive/works-swiper-limpio` |
+| `background-colour-test` (C5, origin) | 1621ea4 | `archive/background-colour-test` |
+| `new-nav` (C5, origin) | 3fe06be | `archive/new-nav` |
+| `new-swiper` (C5, origin) | 811bee8 | `archive/new-swiper` |
+| `pagination` (C5, origin) | 628dc11 | `archive/pagination` |
+
+---
+
 ### C4 · Ramas ya integradas en `main` (0 commits únicos — todo su trabajo vive en `main`)
 | Rama | SHA |
 |---|---|

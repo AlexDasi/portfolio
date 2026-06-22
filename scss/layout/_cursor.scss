@@ -5,11 +5,14 @@
     top: 0;
     width: 10px;
     height: 10px;
-    background-color: var(--accent-color);  
+    background-color: var(--accent-color);
     border-radius: 100%;
-    // transition: transform .1s ease;
     z-index: $z-top+1000;
     pointer-events: none; // do not block interactions
+    /* Absorption transition: size + opacity only.
+       The translate transform is written inline by magnet-mouse every frame,
+       so we must NOT transition transform (it would lag the cursor). */
+    transition: width .25s ease, height .25s ease, margin .25s ease, opacity .25s ease;
 }
 
 /* Change cursor color in project pages */
@@ -17,9 +20,14 @@ body.project-page .follow {
     background-color: $bkg-color;
 }
 
-/* When magnet is active (inside arrow), hide the dot entirely */
+/* Magnet active (cursor inside the arrow): the dot is absorbed into the
+   arrow circle — it shrinks into its own centre and fades, in sync with the
+   accent-colour bloom of the circle, instead of disappearing abruptly.
+   margin:5px keeps the 10px box collapsing toward its centre as it shrinks. */
 .follow-mouse-active {
-  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 5px !important;
   opacity: 0 !important;
   pointer-events: none !important;
 }
