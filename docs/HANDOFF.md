@@ -2,19 +2,20 @@
 
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
-**Fecha:** 2026-06-22 12:36
+**Fecha:** 2026-06-22 13:42
 **Rama activa:** `fix/tulong-mobile-structure` (árbol limpio, sincronizada con origin)
 
 ## Contexto en una frase
-Sesión de arranque: montada la infraestructura de continuidad (docs/) y recopilado el backlog de tareas abiertas a partir del estado de ramas.
+Infra de continuidad montada + limpieza de riesgo nulo ejecutada (C2/C4/D1) + autonomía total configurada. Repo despejado: 4 ramas locales vivas.
 
 ## Estado
-- Repo en `portfolio/` (la raíz `PORTFOLIO/` no es repo).
-- `main` == `origin/main`. Rama actual == su origin. Nada sin pushear.
-- Divergencia 1/1 entre rama actual y `main` (ver backlog A1).
+- Repo en `portfolio/`. `main` == `origin/main`.
+- Ramas locales: `main`, `fix/tulong-mobile-structure` (actual), `MASTER---JUNE`, `backup/2025-10-30-restore-request`.
+- Divergencia 1/1 entre rama actual y `main` (backlog A1).
+- Autonomía: `defaultMode: bypassPermissions` en `.claude/settings.local.json`.
 
 ## Próximo paso exacto (1 línea accionable)
-➡️ Decidir tarea nueva a ejecutar, o cerrar A1 mergeando `a9eac82` en `main` para unificar la línea.
+➡️ Elegir tarea nueva. Sugerido: **A1** (merge `a9eac82` → main para unificar línea) o **C1** (resolver `MASTER---JUNE`).
 
 ## Bloqueos
 Ninguno.

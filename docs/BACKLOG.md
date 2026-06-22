@@ -25,14 +25,14 @@
 ## C. Limpieza de ramas (decisión requerida)
 
 - ⬜ **C1 · P2 · Resolver `MASTER---JUNE`** — 28 commits únicos, diverge desde 2025-10-30 (122 detrás de main). Decidir: integrar lo rescatable o archivar/borrar.
-- ⬜ **C2 · P1 · Borrar `main-corrupt`** — 31 commits, marcada como corrupta. Confirmar que no hay nada rescatable y eliminar (local + `origin`).
+- ✅ **C2 · Borrar `main-corrupt`** — HECHO 2026-06-22. Preservada en tag `archive/main-corrupt` (pusheado a origin). Borrada local + origin.
 - ⬜ **C3 · P3 · Archivar `backup/2025-10-30-restore-request`** — 1 commit de backup. Conservar como tag y borrar rama, o eliminar.
-- ⬜ **C4 · P3 · Podar ramas ya integradas (0 commits únicos vs main)** — `FIXES-MOBILE`, `MOVIL`, `about-3columns-backup`, `about-cv-download`, `contact-email-update`, `cursor-arrow-merge`*, `feat/background-live-controls`, `feature/mobile-swiper-fluid-refresh`, `feature/project-tulong`, `feature/swiper-navigation`, `fix/swiper-performance`, `fix/urgent-stability-2026-03-17`, `horizontal-scroll-works-swiper`, `swiper-navigation-rework`, `works-project-pages`.
-  *(`cursor-arrow-merge` solo si se mueve la spec B1 a backlog; ya está en `docs/specs/`.)*
+- ✅ **C4 · Podar ramas ya integradas (0 commits únicos vs main)** — HECHO 2026-06-22. 15 ramas locales borradas + 9 remotas equivalentes. SHAs en [RECUPERACION-ramas.md](RECUPERACION-ramas.md).
+- ⬜ **C5 · P3 · Revisar ramas remote-only sin local** — `MASTER-VERSION`, `SFC---color-test`, `WORKS-SWIPER-LIMPIO`, `background-colour-test`, `new-nav`, `new-swiper`, `pagination`. No analizadas (no tenían rama local); revisar contenido vs main antes de decidir.
 
 ## D. Deuda técnica / higiene de repo
 
-- ⬜ **D1 · P2 · `project-gamma.zip` (134 MB)** en la raíz `PORTFOLIO/` (fuera del repo). Mover a almacenamiento externo o borrar; no debe vivir junto al working dir.
+- ✅ **D1 · `project-gamma.zip` (~128 MB)** — HECHO 2026-06-22. Movido a `~/Documents/portfolio-backups/project-gamma-2025-10-30.zip` (fuera del área del repo).
 - ⬜ **D2 · P3 · Hooks legacy de WordPress** en `php-elements/footer.php` (`bloginfo()`, `wp_nav_menu()`, `wp_footer()`) — guardar con `function_exists()` para evitar fatals fuera de WP.
 - ⬜ **D3 · P3 · `swiperBottomScrollbarFull` indefinido** referenciado en el resize handler de `js/swiper/swiper.js` sin definición. Restaurar definición o eliminar referencia.
 - ⬜ **D4 · P3 · Sin tests ni lint** — validación 100% manual en navegador. Evaluar smoke test mínimo.
