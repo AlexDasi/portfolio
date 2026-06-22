@@ -2,20 +2,26 @@
 
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
-**Fecha:** 2026-06-22 13:42
-**Rama activa:** `fix/tulong-mobile-structure` (árbol limpio, sincronizada con origin)
+**Fecha:** 2026-06-22 (tarde, post-A1)
+**Rama activa:** `main` (sincronizada con `origin/main`)
+
+## Entorno
+- localhost en **http://localhost:8000** (php -S, background). Sass en `--watch`.
+- Relanzar: `cd portfolio && npm run dev`.
 
 ## Contexto en una frase
-Infra de continuidad montada + limpieza de riesgo nulo ejecutada (C2/C4/D1) + autonomía total configurada. Repo despejado: 4 ramas locales vivas.
+A1 cerrado: `fix/tulong-mobile-structure` mergeada a `main` y pusheada a producción, con el fix del fondo fluido hecho **durable en SCSS** (`_fluid.scss`). Repo de ramas limpio.
+
+## ⚠️ Divergencia de docs a reconciliar
+La rama `feat/cursor-arrow-gooey` tiene docs MÁS nuevos (cierres de C1/C3/C5, D2/D3, D5, decisión D-0002 absorción) que `main` NO tiene aún. `main` tiene el cierre de A1 que `feat` no tiene. Al unificar (si se mergea `feat`), combinar entradas de BITACORA cronológicamente y tomar la unión de BACKLOG.
 
 ## Estado
-- Repo en `portfolio/`. `main` == `origin/main`.
-- Ramas locales: `main`, `fix/tulong-mobile-structure` (actual), `MASTER---JUNE`, `backup/2025-10-30-restore-request`.
-- Divergencia 1/1 entre rama actual y `main` (backlog A1).
-- Autonomía: `defaultMode: bypassPermissions` en `.claude/settings.local.json`.
+- `main`: tiene fluid fix durable + docs hasta `92f6885`.
+- `feat/cursor-arrow-gooey`: absorción cursor↔flecha (aprobada visualmente) + eliminación `_arrow.scss` muerto + D5 copilot + cierres de backlog. **Pendiente de decisión: ¿mergear a `main`?**
+- 10 tags `archive/*` como red de recuperación de ramas borradas.
 
 ## Próximo paso exacto (1 línea accionable)
-➡️ Elegir tarea nueva. Sugerido: **A1** (merge `a9eac82` → main para unificar línea) o **C1** (resolver `MASTER---JUNE`).
+➡️ Decidir si mergear `feat/cursor-arrow-gooey` → `main` (lleva la absorción aprobada + docs al día y unifica todo).
 
 ## Bloqueos
 Ninguno.
