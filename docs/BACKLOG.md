@@ -18,9 +18,9 @@
 
 ## B. Features especificadas pero sin implementar
 
-- ⬜ **B1 · P3 · Efecto gooey de fusión cursor ↔ flecha**
-  Spec completa en [docs/specs/cursor-arrow-gooey.md](specs/cursor-arrow-gooey.md). Rama `cursor-arrow-merge` existe pero **nunca se implementó** (0 commits únicos sobre main).
-  Acción: implementar filtro SVG `#gooey` + reparenting de `.follow` en activación del magnet.
+- 🟡 **B1 · Efecto fusión cursor ↔ flecha** — v1 implementado 2026-06-22 (enfoque **absorción**, no gooey SVG). Ver [D-0002](DECISIONES.md). Pendiente: revisión visual en localhost + tuneo de timing. Spec original: [docs/specs/cursor-arrow-gooey.md](specs/cursor-arrow-gooey.md).
+  - Hecho: dot se encoge a su centro + fade al activarse magnet; bloom amarillo del círculo sincronizado a `magnet-mouse-active`. Puro CSS, sin reparenting.
+  - Opción futura: gooey SVG líquido real (requiere reparenting + recálculo de coords por frame).
 
 ## C. Limpieza de ramas (decisión requerida)
 
@@ -34,6 +34,7 @@
 
 - ✅ **D1 · `project-gamma.zip` (~128 MB)** — HECHO 2026-06-22. Movido a `~/Documents/portfolio-backups/project-gamma-2025-10-30.zip` (fuera del área del repo).
 - ⬜ **D2 · P3 · Hooks legacy de WordPress** en `php-elements/footer.php` (`bloginfo()`, `wp_nav_menu()`, `wp_footer()`) — guardar con `function_exists()` para evitar fatals fuera de WP.
+- ✅ **D2bis · `scss/layout/_arrow.scss` corrupto** — HECHO 2026-06-22. Era código muerto (no importado en style.scss) y corrupto desde commit `96baa84`. Eliminado; CSS compilado idéntico. Estilos reales de la flecha viven en `scss/utilities/_animations.scss`.
 - ⬜ **D3 · P3 · `swiperBottomScrollbarFull` indefinido** referenciado en el resize handler de `js/swiper/swiper.js` sin definición. Restaurar definición o eliminar referencia.
 - ⬜ **D4 · P3 · Sin tests ni lint** — validación 100% manual en navegador. Evaluar smoke test mínimo.
 

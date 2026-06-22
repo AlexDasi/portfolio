@@ -191,8 +191,10 @@
         transition: transform 0.2s;
     }
 
-    /* Effect 2b */
-    &.effect:hover:after {
+    /* Effect 2b — accent bloom on hover OR when the magnet engages, so the
+       circle fills exactly as the cursor dot is absorbed into it. */
+    &.effect:hover:after,
+    &.magnet-mouse-active.effect:after {
         transform: scale(1);
         transition: transform 0.4s;
     }

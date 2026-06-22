@@ -2,20 +2,23 @@
 
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
-**Fecha:** 2026-06-22 13:42
-**Rama activa:** `fix/tulong-mobile-structure` (árbol limpio, sincronizada con origin)
+**Fecha:** 2026-06-22 14:05
+**Rama activa:** `feat/cursor-arrow-gooey` (NO mergeada — pendiente de revisión visual)
+
+## Entorno
+- localhost en **http://localhost:8000** (php -S, background). Sass en `--watch` (recompila solo).
+- Para relanzar: `cd portfolio && npm run dev` (o `php -S localhost:8000` + `npx sass --watch scss/style.scss css/style.css`).
 
 ## Contexto en una frase
-Infra de continuidad montada + limpieza de riesgo nulo ejecutada (C2/C4/D1) + autonomía total configurada. Repo despejado: 4 ramas locales vivas.
+Implementado v1 del efecto de fusión cursor↔flecha por **absorción** (CSS puro) + eliminado SCSS muerto corrupto. Pendiente: que el usuario lo revise en localhost y ajustemos timing.
 
 ## Estado
-- Repo en `portfolio/`. `main` == `origin/main`.
-- Ramas locales: `main`, `fix/tulong-mobile-structure` (actual), `MASTER---JUNE`, `backup/2025-10-30-restore-request`.
-- Divergencia 1/1 entre rama actual y `main` (backlog A1).
-- Autonomía: `defaultMode: bypassPermissions` en `.claude/settings.local.json`.
+- `feat/cursor-arrow-gooey`: efecto absorción live. Falta review visual + posible tuneo (.25s / margin / bloom 0.4s).
+- Eliminado `scss/layout/_arrow.scss` (dead code corrupto, CSS idéntico).
+- Backlog A1 (merge tulong→main) y C1 (MASTER---JUNE) siguen abiertos.
 
 ## Próximo paso exacto (1 línea accionable)
-➡️ Elegir tarea nueva. Sugerido: **A1** (merge `a9eac82` → main para unificar línea) o **C1** (resolver `MASTER---JUNE`).
+➡️ Usuario revisa la absorción en localhost (hover sobre la flecha ▼ abajo); ajustar timing si hace falta, luego seguir con A1 o C1.
 
 ## Bloqueos
 Ninguno.
