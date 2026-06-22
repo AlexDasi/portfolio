@@ -24,11 +24,11 @@
 
 ## C. Limpieza de ramas (decisión requerida)
 
-- ⬜ **C1 · P2 · Resolver `MASTER---JUNE`** — ANALIZADA 2026-06-22: 28 commits son historia vieja (2025-10-30, mensajes `PANIC!`/`primera subida a plesk`), 122 detrás de main, diff es −64.671 líneas. **Nada que rescatar.** Recomendación: archivar tag + borrar. Pendiente OK usuario.
+- ✅ **C1 · Resolver `MASTER---JUNE`** — HECHO 2026-06-22. Historia vieja, nada que rescatar. Archivada en `archive/master-june`, borrada local+origin.
 - ✅ **C2 · Borrar `main-corrupt`** — HECHO 2026-06-22. Preservada en tag `archive/main-corrupt` (pusheado a origin). Borrada local + origin.
-- ⬜ **C3 · P3 · Archivar `backup/2025-10-30-restore-request`** — 1 commit de backup. Conservar como tag y borrar rama, o eliminar.
+- ✅ **C3 · Archivar `backup/2025-10-30-restore-request`** — HECHO 2026-06-22. Archivada en `archive/backup-2025-10-30`, rama local borrada.
 - ✅ **C4 · Podar ramas ya integradas (0 commits únicos vs main)** — HECHO 2026-06-22. 15 ramas locales borradas + 9 remotas equivalentes. SHAs en [RECUPERACION-ramas.md](RECUPERACION-ramas.md).
-- ⬜ **C5 · P3 · Ramas remote-only** — ANALIZADAS 2026-06-22: las 7 son de **2022** (experimentos muertos, 119-122 detrás de main, mensajes `no funciona`/`intento de cambiar fondo`). Nada que rescatar. `background-colour-test`+`new-swiper` = 0 únicos; el resto pocos commits viejos. Recomendación: archivar tags + borrar remotas. Pendiente OK usuario.
+- ✅ **C5 · Ramas remote-only (7, de 2022)** — HECHO 2026-06-22. Experimentos muertos. Archivadas en tags `archive/{master-version,sfc-color-test,works-swiper-limpio,background-colour-test,new-nav,new-swiper,pagination}`, borradas de origin.
 
 ## D. Deuda técnica / higiene de repo
 

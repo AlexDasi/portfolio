@@ -2,23 +2,23 @@
 
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
-**Fecha:** 2026-06-22 14:05
-**Rama activa:** `feat/cursor-arrow-gooey` (NO mergeada — pendiente de revisión visual)
+**Fecha:** 2026-06-22 (tarde)
+**Rama activa:** `feat/cursor-arrow-gooey` (efecto absorción aprobado por el usuario; NO mergeada aún)
 
 ## Entorno
-- localhost en **http://localhost:8000** (php -S, background). Sass en `--watch` (recompila solo).
-- Para relanzar: `cd portfolio && npm run dev` (o `php -S localhost:8000` + `npx sass --watch scss/style.scss css/style.css`).
+- localhost en **http://localhost:8000** (php -S, background). Sass en `--watch`.
+- Relanzar: `cd portfolio && npm run dev`.
 
 ## Contexto en una frase
-Implementado v1 del efecto de fusión cursor↔flecha por **absorción** (CSS puro) + eliminado SCSS muerto corrupto. Pendiente: que el usuario lo revise en localhost y ajustemos timing.
+Repo de ramas limpio (de ~20 a 3 locales / 2 remotas, todo archivado en tags `archive/*`). Efecto absorción cursor↔flecha aprobado. D2/D3 resueltos como obsoletos.
 
 ## Estado
-- `feat/cursor-arrow-gooey`: efecto absorción live. Falta review visual + posible tuneo (.25s / margin / bloom 0.4s).
-- Eliminado `scss/layout/_arrow.scss` (dead code corrupto, CSS idéntico).
-- Backlog A1 (merge tulong→main) y C1 (MASTER---JUNE) siguen abiertos.
+- Ramas locales: `main`, `fix/tulong-mobile-structure`, `feat/cursor-arrow-gooey` (actual).
+- 10 tags `archive/*` preservan todo lo borrado (recuperable: `git branch <n> archive/<tag>`).
+- `feat/cursor-arrow-gooey`: absorción + eliminación de `_arrow.scss` muerto. Lista para mergear cuando el usuario quiera.
 
 ## Próximo paso exacto (1 línea accionable)
-➡️ Usuario revisa la absorción en localhost (hover sobre la flecha ▼ abajo); ajustar timing si hace falta, luego seguir con A1 o C1.
+➡️ Elegir: **A1** (mergear `fix/tulong-mobile-structure` → `main`, afecta producción → revisar juntos) o **D5** (refrescar `copilot-instructions.md` desactualizado). El usuario venía diciendo "continúa".
 
 ## Bloqueos
-Ninguno.
+Ninguno. A1 toca producción (`main`/origin) → confirmar antes de pushear.
