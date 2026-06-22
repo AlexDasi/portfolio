@@ -11,10 +11,11 @@ canvas {
 }
 
 @media (max-width: 1280px) {
-    canvas {
-        display: none !important;
-    }
-
+    /* NOTE: the canvas is intentionally NOT hidden here — the fluid background
+       must render on ≤1280px too. (The mobile/reduced-motion fallback below,
+       .no-fluid-mobile, is the deliberate opt-out.) This makes durable in
+       source the fix from commit a9eac82, which had only patched compiled CSS
+       and was therefore reverted on every Sass recompile. */
     .bg-controls {
         display: none !important;
     }
