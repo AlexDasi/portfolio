@@ -11,16 +11,10 @@ Example commands (for reference):
 - Start: `php -S localhost:8000`
 - Build CSS: `npx sass scss/style.scss css/style.css --style=expanded --source-map`
 
-### Recent Project Status (November 2025)
-**Current State**: Complete Elsa project implementation with all assets, structure, and styling unified.
-**Latest Commits**: All changes committed and deployed to GitHub main branch (commit 86f60ce).
-**Active Features**: Horizontal thumbnails, unified link styling, complete project integration.
-**Elsa Project Specifications**:
-- Horizontal thumbnail format (1536x1024) matching Clustag dimensions
-- Strategic website links to www.elsa-moreno.com throughout project page
-- Properly cropped animation GIF (800x431) preserving browser context
-- Unified accent-color background styling for all project links
-- Complete asset collection: ELSA.jpg, iphone-elsa 1.jpg, Macbook-elsa.jpg, Macbook-elsa 2.jpg, elsa-animation.gif
+### Continuity & current status
+**Source of truth for session state lives in `docs/`** (not here): read `docs/HANDOFF.md` and the top entry of `docs/BITACORA.md` at session start; open tasks are in `docs/BACKLOG.md`; architecture/criteria decisions in `docs/DECISIONES.md`. This file holds stable conventions only — for "what's in flight", use `docs/`.
+
+> Note: the older "November 2025 / Elsa" status block was removed in June 2026; that work is long since merged. The Elsa flow remains documented below only as the canonical *new-project template*, not as current work.
 
 ### Project structure essentials
 - PHP templates
@@ -28,7 +22,7 @@ Example commands (for reference):
   - Elements: `php-elements/` (e.g., `header.php`, `nav.php`, `footer.php`, `preloader.php`). Pages include these.
   - Entry: `index.php` selects and includes page content.
 - Frontend JS
-  - Swiper config: `js/swiper/swiper.js` (desktop) and `js/swiper/swiperMobile.js` (mobile).
+  - Swiper config: `js/swiper/swiperNew.js` (home/main, desktop), `js/swiper/swiper.js` (project pages), `js/swiper/swiperMobile.js` (mobile). See the "split by context" note under pitfalls.
   - Cursor/magnet effects: `js/magnet.js`, `js/cursor.js`, plus utilities in `js/`.
 - Styles
   - Sass sources in `scss/` with partials in `layout/`, `utilities/`, and feature modules.
@@ -37,7 +31,7 @@ Example commands (for reference):
 - Assets: `content/` and `images/` hold pictures, vectors, and videos.
 
 ### Architecture and key behaviors
-- Main navigation uses a vertical Swiper instance on `.MainSwiper` (see `js/swiper/swiper.js`).
+- Main navigation uses a vertical Swiper instance on `.MainSwiper` (home: `js/swiper/swiperNew.js`).
   - Pagination bullets are custom-rendered labels: HOME, WORKS, ABOUT, CONTACT.
   - The “arrow” UI flips up on the last slide and clicking it returns to the first slide.
 - Works gallery uses a horizontal Swiper on `.WorksSwiper` with freeMode enabled.
@@ -45,7 +39,7 @@ Example commands (for reference):
   - Pseudo-infinite scroll is implemented by cloning the original slides to both ends of the wrapper before Swiper init, then starting at a middle offset.
   - Do not enable `loop: true` with `freeMode` here; it causes jump/reposition issues. Adjust `duplicateTimes` and `calculatedInitialSlide` together when changing slide counts.
 
-Snippet (from `js/swiper/swiper.js`) illustrating the pattern:
+Snippet illustrating the pattern (this pseudo-infinite WorksSwiper logic exists in the swiper files; verify against the one for your context):
 ```js
 const worksWrapper = document.querySelector('.WorksSwiper .swiper-wrapper');
 let originalSlides;
@@ -63,7 +57,7 @@ new Swiper('.WorksSwiper', { freeMode: { enabled: true, momentum: true }, loop: 
 ### Project-specific conventions
 - BEM-like classes for layout modules (e.g., `info-column`, `info-column--experience`).
 - Mobile-first Sass with overrides via media queries in layout partials (see `scss/layout/_about.scss`).
-- Keep Swiper config split by device where appropriate (`swiper.js` vs `swiperMobile.js`).
+- Keep Swiper config split by context where appropriate (`swiperNew.js` home / `swiper.js` project pages / `swiperMobile.js` mobile).
 - Conventional commit style is encouraged (e.g., `fix(about): align columns on desktop`).
 
 ### Complete Project Creation Workflow (ESSENTIAL)
@@ -184,21 +178,22 @@ Create `php-pages/projects/[project-name].php` with this exact structure:
 - Push to main branch after testing locally
 
 ### Known integration points and pitfalls
-- Legacy WordPress hooks in `php-elements/footer.php` (`bloginfo()`, `wp_nav_menu()`, `wp_footer()`).
-  - Locally (non-WP), guard these with `function_exists()` or comment them to avoid fatals.
-- jQuery is available; Swiper v8 is used. Avoid mixing undocumented globals—`swiperBottomScrollbarFull` is referenced in a resize handler but not defined in `swiper.js`; don't rely on it unless you locate/restore its definition.
+- ~~Legacy WordPress hooks in `footer.php`~~ — **removed (verified June 2026)**: no `bloginfo()`/`wp_nav_menu()`/`wp_footer()` calls remain in any PHP. `footer.php` is plain markup. No WP guards needed.
+- ~~`swiperBottomScrollbarFull` undefined global~~ — **gone (verified June 2026)**: the symbol no longer exists in any JS.
+- **Swiper is split by context** — the home/main page (`index.php` → `js.php`) loads `js/swiper/swiperNew.js`; project pages (`js-nofluid.php`) load the older `js/swiper/swiper.js`; mobile (`jsMobile.php`) loads `swiperMobile.js`. When changing swiper behavior, edit the file for the right context. jQuery is available; Swiper v8.
 - Images/videos are served statically from `content/`; mind relative paths in PHP includes.
-- **Thumbnail dimensions are critical**: Wrong dimensions will cause layout issues in swiper carousel
+- **Thumbnail dimensions are critical**: Wrong dimensions will cause layout issues in swiper carousel.
+- **Arrow/cursor styles live in `scss/utilities/_animations.scss`** (not in a `_arrow.scss` — that file was dead/corrupt and was deleted June 2026). The custom cursor dot `.follow` is positioned via inline `transform` written by magnet-mouse each frame — never CSS-transition its `transform` (lag) and never put it under a `filter` ancestor (breaks its `position:fixed`).
 
 ### Examples to follow
 - About page alignment: `scss/layout/_about.scss` removes extra top margins on desktop.
-- Arrow behavior + pagination sync: implemented in `js/swiper/swiper.js` via `on.slideChange` and a custom `updatePagination()` helper.
+- Arrow behavior + pagination sync: implemented via `on.slideChange` and a custom `updatePagination()` helper (home: `js/swiper/swiperNew.js`).
 - **Elsa Project**: Perfect example of complete project creation workflow with horizontal thumbnails, unified styling, and proper asset organization.
 
 ### Typical workflows for agents
 - **New Project Creation**: Follow complete workflow above (assets → thumbnails → PHP page → CSS → integration)
 - Styling: edit SCSS partials under `scss/`, then compile to `css/style.css`.
-- Swiper tweaks: update `js/swiper/swiper.js` and verify no regressions with pseudo-infinite scroll.
+- Swiper tweaks: update the swiper file for your context (`swiperNew.js` home / `swiper.js` project pages / `swiperMobile.js` mobile) and verify no regressions with pseudo-infinite scroll.
 - PHP content: edit page files in `php-pages/` and shared includes in `php-elements/`.
 - Local serve: run PHP server and test in browser; watch console for Swiper or WP-call errors.
 - **Git workflow**: Always compile SCSS → add changes → commit with descriptive message → push to main

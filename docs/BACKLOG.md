@@ -36,7 +36,7 @@
 - ✅ **D2 · Hooks legacy de WordPress** — OBSOLETO 2026-06-22. No queda ninguna llamada WP en ningún PHP del repo. La advertencia de copilot-instructions estaba desactualizada.
 - ✅ **D2bis · `scss/layout/_arrow.scss` corrupto** — HECHO 2026-06-22. Era código muerto (no importado en style.scss) y corrupto desde commit `96baa84`. Eliminado; CSS compilado idéntico. Estilos reales de la flecha viven en `scss/utilities/_animations.scss`.
 - ✅ **D3 · `swiperBottomScrollbarFull` indefinido** — OBSOLETO 2026-06-22. El símbolo ya no existe en ningún JS. `js.php` carga `swiperNew.js`; el viejo `swiper.js`/`swiperMobile.js` siguen vivos (páginas de proyecto / móvil) pero tampoco lo referencian.
-- ⬜ **D5 · P3 · `copilot-instructions.md` desactualizado** — avisos obsoletos (D2 WP hooks, D3 swiperBottomScrollbarFull, status "November 2025"). Refrescar para no confundir a agentes futuros.
+- ✅ **D5 · `copilot-instructions.md` desactualizado** — HECHO 2026-06-22. Refrescado: status Nov-2025 → puntero a `docs/`; corregidos avisos obsoletos D2/D3; aclarado que swiper está dividido por contexto (`swiperNew.js` home / `swiper.js` proyectos / `swiperMobile.js` móvil); nota sobre cursor `.follow` y `_animations.scss`.
 - ⬜ **D4 · P3 · Sin tests ni lint** — validación 100% manual en navegador. Evaluar smoke test mínimo.
 
 ---
