@@ -20,23 +20,24 @@ body.project-page .follow {
     background-color: $bkg-color;
 }
 
-/* Magnet active (v2 liquid): the dot SWELLS into a soft blob centred on the
-   cursor — where the magnet has pulled the arrow — instead of a separate fixed
-   sphere. margin:-30px keeps the 70px blob centred on the original 10px centre
-   so it doesn't drift. The gooey filter softens it into a liquid shape. */
+/* Magnet active (v3 metaball): the cursor dot swells into a blob centred on the
+   cursor. As it nears the arrow's target blob (positioned by JS at the arrow's
+   real centre), the shared gooey filter bridges them and they fuse.
+   margin:-20px keeps the 50px blob centred on the original 10px centre. */
 .follow-mouse-active {
-  width: 70px !important;
-  height: 70px !important;
-  margin: -30px !important;
+  width: 50px !important;
+  height: 50px !important;
+  margin: -20px !important;
   opacity: 1 !important;
   pointer-events: none !important;
 }
 
-/* ---- Gooey liquid-cursor ---- */
+/* ---- Gooey liquid-cursor (metaball) ---- */
 
-/* Full-viewport layer holding the cursor dot. The pixels at 0,0 keep the dot's
-   inline translate3d() in viewport space even when the filter turns on (filter
-   would otherwise create a containing block). */
+/* Full-viewport layer holding the cursor dot + the arrow target blob. The
+   layer sits at 0,0 so the dot's inline translate3d() and the blob's JS-set
+   left/top stay in viewport space even when the filter creates a containing
+   block. */
 .gooey-layer {
   position: fixed;
   inset: 0;
@@ -45,8 +46,28 @@ body.project-page .follow {
 }
 
 /* Switch the (expensive) SVG filter ON only while the arrow magnet is engaged,
-   so normal cursor movement never pays for it. The dot then reads as a soft,
-   liquid blob swelling over the arrow. */
+   so normal cursor movement never pays for it. */
 body:has(.circle.magnet-mouse-active) .gooey-layer {
   filter: url(#gooey);
+}
+
+/* Arrow target blob — the "sphere" the cursor fuses into. JS sets its left/top
+   to the arrow circle's real (magnet-moved) centre each frame; CSS blooms it in
+   on magnet engage. margin centres the 76px blob on that point. */
+.gooey-blob--arrow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  transform: scale(0);
+  transition: transform .25s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+body:has(.circle.magnet-mouse-active) .gooey-blob--arrow {
+  transform: scale(1);
 }
