@@ -20,10 +20,10 @@ body.project-page .follow {
     background-color: $bkg-color;
 }
 
-/* Magnet active (cursor inside the arrow): the dot is absorbed into the
-   arrow circle — it shrinks into its own centre and fades, in sync with the
-   accent-colour bloom of the circle, instead of disappearing abruptly.
-   margin:5px keeps the 10px box collapsing toward its centre as it shrinks. */
+/* Magnet active (v0 absorption): the dot shrinks into its own centre and fades,
+   in sync with the circle's accent bloom, instead of vanishing abruptly.
+   margin:5px keeps the 10px box collapsing toward its centre as it shrinks.
+   (Gooey/metaball merge parked as an open task — see docs/BACKLOG.md B2.) */
 .follow-mouse-active {
   width: 0 !important;
   height: 0 !important;

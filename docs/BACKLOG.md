@@ -16,8 +16,14 @@
 ## B. Features especificadas pero sin implementar
 
 - 🟡 **B1 · Efecto fusión cursor ↔ flecha** — v1 implementado 2026-06-22 (enfoque **absorción**, no gooey SVG). Ver [D-0002](DECISIONES.md). Pendiente: revisión visual en localhost + tuneo de timing. Spec original: [docs/specs/cursor-arrow-gooey.md](specs/cursor-arrow-gooey.md).
-  - Hecho: dot se encoge a su centro + fade al activarse magnet; bloom amarillo del círculo sincronizado a `magnet-mouse-active`. Puro CSS, sin reparenting.
-  - Opción futura: gooey SVG líquido real (requiere reparenting + recálculo de coords por frame).
+  - Hecho: dot se encoge a su centro + fade al activarse magnet; bloom amarillo del círculo sincronizado a `magnet-mouse-active`. Puro CSS, sin reparenting. **Este es el estado vivo (v0).**
+
+- ⬜ **B2 · P3 · Gooey/metaball líquido real cursor↔flecha (+ botón CV)** — TAREA ABIERTA (aparcada 2026-06-23, decisión de Alex). Se exploró en la rama `feat/cv-button-magnet-effect` y se revirtió a v0.
+  - **Qué se quiere:** el cursor crece y se **funde** hacia la esfera de la flecha con puente líquido (metaball), no dos esferas que se solapan. Y replicarlo en el botón **DOWNLOAD CV**.
+  - **v3 alcanzado (en el historial git de la rama, commit `edf016c`):** filtro SVG `#gooey` + capa `.gooey-layer` con dot + blob; `js/gooey-cursor.js` ancla el blob al centro real de `.circle` (que el magnet mueve) vía rAF; filtro activado solo con `:has(.circle.magnet-mouse-active)` por rendimiento.
+  - **Pendiente de pulir (feedback de Alex):** (1) el cursor **desaparece un instante** antes de reaparecer en la fusión (timing/opacidad del dot al activarse); (2) al fusionarse, la **esfera del cursor tapa la de la flecha** (z-order/orden de pintado dentro de la capa filtrada). 
+  - **Botón CV:** además, vive dentro del `.swiper-wrapper` (transform) → el magnet no lo mueve; necesitaría magnet a medida o sacarlo del contenedor transformado (ver opción "sacar el botón del swiper").
+  - Para recuperar el código del v3: `git show edf016c` o `git checkout edf016c -- <archivos>`.
 
 ## C. Limpieza de ramas (decisión requerida)
 

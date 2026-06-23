@@ -1,22 +1,20 @@
 <div id="home">
 
     <section class="categories">
-        <div><p class="message message-intro">Hi, I'm <span>Alex Dasi 
-            <!-- <img src="content/pictures/photome.jpg" alt=""> -->
-        </span>,</p>
+        <div><p class="message message-intro">Hi, I'm <span>Alex Dasi</span>,</p>
         </div>
         <ul>
-            <!--graphic-->
-            <li id="graphic" class="categories--items categories--items-graphic text-hover-fill-goes-right"><h2 class="main-text graphic">GRAPHIC</h2><span><p class="message message-comma">,</p></span></li>
+            <!--product-->
+            <li id="product" class="categories--items categories--items-product text-hover-fill-goes-right"><h2 class="main-text product">PRODUCT</h2><span><p class="message message-comma">,</p></span></li>
 
-            <!--ui-->
-            <li id="ui" class="categories--items categories--items-ui"><h2 class="main-text ui">USER INTERFACE</h2> <span><p class="message message-and">&</p></span></li>
+            <!--ux/ui-->
+            <li id="uxui" class="categories--items categories--items-uxui"><h2 class="main-text uxui">UX·UI</h2> <span><p class="message message-and">&</p></span></li>
 
-            <!--web-->
-            <li id="web" class="categories--items categories--items-web"><h2 class="main-text web">WEB</h2></li>
+            <!--systems-->
+            <li id="systems" class="categories--items categories--items-systems"><h2 class="main-text systems">SYSTEMS</h2></li>
         </ul>
         <p class="main-text categories--designer">designer</p>
-        <p id="" class="secondary-text message message-description">As a web designer, I help brands shape their digital presence with design that actually works. No magic spells involved — just pixels, purpose, and a bit of caffeine.</p>
+        <p id="" class="secondary-text message message-description">As a product and web designer, I turn complex, ambiguous problems into clear, usable systems. 12+ years across UX/UI, design systems and brand.</p>
 
     </section>
 

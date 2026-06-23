@@ -6,6 +6,9 @@
         <div class="swiper-button-next hiddenMobile" aria-label="Next project"></div>
         <div class="swiper-pagination"></div>
         <div class="swiper-wrapper">
+
+            <!-- ===== PRODUCT-FIRST ORDER ===== -->
+
             <a href="php-pages/projects/tulong.php" class="swiper-slide">
                 <div class="works works-tulong">
                 <!-- thumbnail -->
@@ -24,19 +27,37 @@
             </a>
 
 
-            <a href="php-pages/projects/camisola.php" class="swiper-slide">
-                <div class="works works-camisola">
+            <a href="php-pages/projects/idrica-wastewater.php" class="swiper-slide">
+                <div class="works works-idrica-wastewater">
                 <!-- thumbnail -->
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/camisola.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/camisola-mobile.jpg"/>
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/idrica-wastewater.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/idrica-wastewater-mobile.jpg"/>
                 <!-- info -->
                     <div class="works--info">
-                        <h2 >CAMISOLA</h2>
-                        <p class="yellow-600">Brand identity and web design for Camisola, an experimental Hawaiian shirt concept centered on custom pieces. The site combines editorial storytelling with an interactive editor to explore patterns, color, and personality.</p>
+                        <h2>IDRICA</h2>
+                        <p class="yellow-600">UX/UI design for a desktop platform used in wastewater treatment operations. Monitoring, alarms, maps, and dense technical data were shaped into a clear and dependable interface for faster operational decisions.</p>
                     </div>
                     <div class="hiddenMobile works--details">
-                        <p>Branding and web design</p>
-                        <p class="yellow-600">2022</p>
+                        <p>UX/UI Design</p>
+                        <p class="yellow-600">2023</p>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="php-pages/projects/knowadays.php" class="swiper-slide">
+                <div class="works works-knowadays">
+                <!-- thumbnail -->
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/knowadays.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/knowadays-mobile.jpg"/>
+                <!-- info -->
+                    <div class="works--info">
+                        <h2>KNOWADAYS</h2>
+                        <p class="yellow-600">Design production and digital redesign for Knowadays, a global online learning platform for proofreading, editing, and writing. Delivered across web, email, social, and editorial touchpoints.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>UX/UI, SM, Editorial & Graphic Design</p>
+                        <p class="yellow-600">2024</p>
                     </div>
                 </div>
             </a>
@@ -78,41 +99,25 @@
             </a>
 
 
-            <a href="php-pages/projects/knowadays.php" class="swiper-slide">
-                <div class="works works-knowadays">
+            <a href="php-pages/projects/camisola.php" class="swiper-slide">
+                <div class="works works-camisola">
                 <!-- thumbnail -->
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/knowadays.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/knowadays-mobile.jpg"/>
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/camisola.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/camisola-mobile.jpg"/>
                 <!-- info -->
                     <div class="works--info">
-                        <h2>KNOWADAYS</h2>
-                        <p class="yellow-600">Design production and digital redesign for Knowadays, a global online learning platform for proofreading, editing, and writing. Delivered across web, email, social, and editorial touchpoints.</p>
+                        <h2 >CAMISOLA</h2>
+                        <p class="yellow-600">Brand identity and web design for Camisola, an experimental Hawaiian shirt concept centered on custom pieces. The site combines editorial storytelling with an interactive editor to explore patterns, color, and personality.</p>
                     </div>
                     <div class="hiddenMobile works--details">
-                        <p>UX/UI, SM, Editorial & Graphic Design</p>
-                        <p class="yellow-600">2024</p>
+                        <p>Branding and web design</p>
+                        <p class="yellow-600">2022</p>
                     </div>
                 </div>
             </a>
 
 
-            <a href="php-pages/projects/idrica-wastewater.php" class="swiper-slide">
-                <div class="works works-idrica-wastewater">
-                <!-- thumbnail -->
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/idrica-wastewater.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/idrica-wastewater-mobile.jpg"/>
-                <!-- info -->
-                    <div class="works--info">
-                        <h2>IDRICA</h2>
-                        <p class="yellow-600">UX/UI design for a desktop platform used in wastewater treatment operations. Monitoring, alarms, maps, and dense technical data were shaped into a clear and dependable interface for faster operational decisions.</p>
-                    </div>
-                    <div class="hiddenMobile works--details">
-                        <p>UX/UI Design</p>
-                        <p class="yellow-600">2023</p>
-                    </div>
-                </div>
-            </a>
-
+            <!-- ===== EARLIER BRAND / WEB WORK ===== -->
 
             <a href="php-pages/projects/terralava.php" class="swiper-slide">
                 <div class="works works-2">
@@ -169,98 +174,6 @@
             </a>
 
 
-            <a href="php-pages/projects/old-skull.php" class="swiper-slide">
-                <div class="works works-5">
-                    <!-- thumbnail -->
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/SKULL-2.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/SKULL-2-mobile.jpg"/>
-                    <!-- info -->
-                    <div class="works--info">
-                        <h2 >Old Skull</h2>
-                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
-                    </div>
-                    <div class="hiddenMobile works--details">
-                        <p>Illustration</p>
-                        <p class="yellow-600">2016</p>
-                    </div>
-                </div>
-            </a>
-
-
-            <a href="php-pages/projects/mef2c-concerts.php" class="swiper-slide">
-                <div class="works works-6">
-                    <!-- thumbnail -->
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/poster conciertos.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/poster conciertos-mobile.jpg"/>
-                    <!-- info -->
-                    <div class="works--info">
-                        <h2 >MEF2C Concerts</h2>
-                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
-                    </div>
-                    <div class="hiddenMobile works--details">
-                        <p>Poster design</p>
-                        <p class="yellow-600">2015</p>
-                    </div>
-                </div>
-            </a>
-
-
-            <a href="php-pages/projects/ros-styleguide.php" class="swiper-slide">
-                <div class="works works-7">
-                    <!-- thumbnail -->
-
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/RoS styleguide.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/RoS styleguide-mobile.jpg"/>
-                    <!-- info -->
-                    <div class="works--info">
-                        <h2 >RoS stylguide</h2>
-                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
-                    </div>
-                    <div class="hiddenMobile works--details">
-                        <p>Editorial design</p>
-                        <p class="yellow-600">2017</p>
-                    </div>
-                </div>
-            </a>
-
-
-            <!-- OFFICE DESIGN PROJECT TEMPORARILY HIDDEN - MISSING THUMBNAIL -->
-            <!-- 
-            <a href="php-pages/projects/office-design.php" class="swiper-slide">
-                <div class="works works-8">
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/RoS enviromental.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/RoS enviromental-mobile.jpg"/>
-                    <div class="works--info">
-                        <h2 >office design</h2>
-                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
-                    </div>
-                    <div class="hiddenMobile works--details">
-                        <p>Graphic & environmental design</p>
-                        <p class="yellow-600">2016</p>
-                    </div>
-                </div>
-            </a>
-            -->
-
-
-            <a href="php-pages/projects/pinstripe.php" class="swiper-slide">
-                <div class="works works-9">
-                    <!-- thumbnail -->
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/Pinstripe.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/Pinstripe-mobile.jpg"/>
-                    <!-- info -->
-                    <div class="works--info">
-                        <h2 >Pinstripe</h2>
-                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
-                    </div>
-                    <div class="hiddenMobile works--details">
-                        <p>UI design</p>
-                        <p class="yellow-600">2016</p>
-                    </div>
-                </div>
-            </a>
-
-
             <a href="php-pages/projects/burbuja.php" class="swiper-slide">
                 <div class="works works-10">
                     <!-- thumbnail -->
@@ -277,6 +190,90 @@
                     </div>
                 </div>
             </a>
+
+
+            <!-- ===== DEMOTED / HIDDEN (2026-06-22): older illustration pieces, several with
+                 placeholder/duplicate copy. Kept here (commented) for easy restore. ===== -->
+            <!--
+            <a href="php-pages/projects/old-skull.php" class="swiper-slide">
+                <div class="works works-5">
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/SKULL-2.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/SKULL-2-mobile.jpg"/>
+                    <div class="works--info">
+                        <h2 >Old Skull</h2>
+                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Illustration</p>
+                        <p class="yellow-600">2016</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="php-pages/projects/mef2c-concerts.php" class="swiper-slide">
+                <div class="works works-6">
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/poster conciertos.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/poster conciertos-mobile.jpg"/>
+                    <div class="works--info">
+                        <h2 >MEF2C Concerts</h2>
+                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Poster design</p>
+                        <p class="yellow-600">2015</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="php-pages/projects/ros-styleguide.php" class="swiper-slide">
+                <div class="works works-7">
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/RoS styleguide.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/RoS styleguide-mobile.jpg"/>
+                    <div class="works--info">
+                        <h2 >RoS stylguide</h2>
+                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Editorial design</p>
+                        <p class="yellow-600">2017</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="php-pages/projects/pinstripe.php" class="swiper-slide">
+                <div class="works works-9">
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/Pinstripe.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/Pinstripe-mobile.jpg"/>
+                    <div class="works--info">
+                        <h2 >Pinstripe</h2>
+                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>UI design</p>
+                        <p class="yellow-600">2016</p>
+                    </div>
+                </div>
+            </a>
+            -->
+
+            <!-- OFFICE DESIGN PROJECT TEMPORARILY HIDDEN - MISSING THUMBNAIL -->
+            <!--
+            <a href="php-pages/projects/office-design.php" class="swiper-slide">
+                <div class="works works-8">
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/RoS enviromental.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/RoS enviromental-mobile.jpg"/>
+                    <div class="works--info">
+                        <h2 >office design</h2>
+                        <p class="yellow-600">Illustration for a bike clothing brand based in Glasgow. The concept consists on a chain-made brain coming up from a beaten-up skull in a tatoo drawing style.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Graphic & environmental design</p>
+                        <p class="yellow-600">2016</p>
+                    </div>
+                </div>
+            </a>
+            -->
+
             <div class="hiddenMobile swiper-slide works works-11">
             </div>
         </div>

@@ -90,6 +90,11 @@ h3 {
   padding: 2px;
   z-index: -100;
   position: fixed;
+  border-radius: 50%;
+  transition: box-shadow 0.25s ease;
+}
+.circle.magnet-mouse-active {
+  box-shadow: 0 0 18px rgba(236, 249, 142, 0.5);
 }
 
 .arrow {
@@ -347,27 +352,13 @@ header {
 }
 .categories > ul > li > h2 {
   font-size: 8vw;
-  filter: blur(0px);
   display: inline-block;
-}
-.categories > ul > li > h2:hover {
-  filter: blur(0px);
-}
-.categories--designer {
-  margin-top: 4rem;
-  text-transform: lowercase;
-  display: inline-block;
-  align-self: flex-start;
-  width: fit-content;
   position: relative;
-  overflow: visible;
   isolation: isolate;
-  line-height: 0.95;
-  padding: 0.08em 0.18em 0.14em;
-  margin-left: -0.18em;
+  padding: 0 0.12em;
   transition: color 0.28s ease;
 }
-.categories--designer::before {
+.categories > ul > li > h2::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -377,16 +368,24 @@ header {
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: -1;
 }
-
 @media (hover: hover) {
-  .categories--designer:hover {
+  .categories > ul > li > h2:hover {
     color: var(--bkg-color);
   }
-  .categories--designer:hover::before {
+  .categories > ul > li > h2:hover::before {
     transform: scaleX(1);
   }
 }
-#graphic:hover + #message-graphic {
+.categories--designer {
+  margin-top: 4rem;
+  text-transform: lowercase;
+  display: inline-block;
+  align-self: flex-start;
+  width: fit-content;
+  line-height: 0.95;
+}
+
+#product:hover + #message-product {
   display: block;
   transition: visibility 0.3s linear, opacity 0.3s linear;
 }
@@ -2050,12 +2049,12 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
     clip-path: circle(0% at 50% 50%);
     transition: clip-path 0.18s ease;
   }
-  .cv-download-btn:hover {
+  .cv-download-btn:hover, .cv-download-btn.magnet-mouse-active {
     color: var(--bkg-color);
     border-color: var(--accent-color);
     box-shadow: 0 0 10px rgba(236, 249, 142, 0.4);
   }
-  .cv-download-btn.effect:hover:after {
+  .cv-download-btn.effect:hover:after, .cv-download-btn.magnet-mouse-active.effect:after {
     clip-path: circle(150% at 50% 50%);
   }
 }
@@ -2219,10 +2218,10 @@ body.project-page .follow {
   background-color: hsl(227, 3%, 8%);
 }
 
-/* Magnet active (cursor inside the arrow): the dot is absorbed into the
-   arrow circle — it shrinks into its own centre and fades, in sync with the
-   accent-colour bloom of the circle, instead of disappearing abruptly.
-   margin:5px keeps the 10px box collapsing toward its centre as it shrinks. */
+/* Magnet active (v0 absorption): the dot shrinks into its own centre and fades,
+   in sync with the circle's accent bloom, instead of vanishing abruptly.
+   margin:5px keeps the 10px box collapsing toward its centre as it shrinks.
+   (Gooey/metaball merge parked as an open task — see docs/BACKLOG.md B2.) */
 .follow-mouse-active {
   width: 0 !important;
   height: 0 !important;
