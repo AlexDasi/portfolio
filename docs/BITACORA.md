@@ -5,6 +5,29 @@
 
 ---
 
+## 2026-06-23 — Rework del portfolio a producción (Track B)
+
+**Contexto:** Reposición de `alexdasi.com` de "web/graphic designer" a **Product Designer** (coordinado vía `cowork/INSTRUCCIONES-CC.md`), más mejoras de interacción y fixes de contenido. Pusheado a producción a petición de Alex (`git-all`).
+
+**Cambios (mergeados a `main`, `fd4c14f`):**
+- **Hero:** 3 palabras animadas **PRODUCT / UX·UI / SYSTEMS** + "designer"; relleno amarillo por palabra (sin blur); subtexto reorientado a producto + web.
+- **Works:** orden producto-primero (Tulong·Idrica·Knowadays·Clustag·Elsa·Camisola); ocultados 4 proyectos viejos (Old Skull, MEF2C, RoS, Pinstripe) en `works.php` + `works-mobile.php`.
+- **About:** copy reorientado a product/systems/AI-assisted (CV PDF intacto). **Meta SEO** actualizado.
+- **Interacción:** glow en flecha y botón CV; botón CV rellena en cercanía del magnet.
+- **Contenido:** contacto (REACH OUT, email→gmail, LinkedIn primero, typo `through`); claims de Tulong suavizados a "prototype/proposal".
+- **CV:** `Resume Alex Dasi 2026.pdf` actualizado; borrado PDF viejo 2025.
+- **Gooey:** explorado (v1–v3, metaball con JS en `edf016c`) y **revertido a v0**; tarea abierta **B2**.
+
+**Reglas nuevas memorizadas:** `git-all` (build+merge+push a prod con guardas); nunca em dash en copys; hero conserva composición de palabras apiladas.
+
+**Pendientes:** ver HANDOFF (Idrica, pieza IA, responsive móvil, B2).
+
+**Riesgos/dudas:** Ninguno. Producción verificada (home/tulong/CV 200). Ramas feature integradas (borrables).
+
+**Siguiente paso:** Esperar datos de Alex (Idrica / IA) o nueva tarea.
+
+---
+
 ## 2026-06-22 (cierre) — A1 a producción + unificación total en `main`
 
 **Contexto:** Cierre de sesión. Integrar todo en una sola línea (`main`) y dejar producción al día.
