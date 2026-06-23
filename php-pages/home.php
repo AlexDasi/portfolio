@@ -1,22 +1,12 @@
 <div id="home">
 
     <section class="categories">
-        <div><p class="message message-intro">Hi, I'm <span>Alex Dasi 
-            <!-- <img src="content/pictures/photome.jpg" alt=""> -->
-        </span>,</p>
+        <div><p class="message message-intro">Hi, I'm <span>Alex Dasi</span> —</p>
         </div>
-        <ul>
-            <!--graphic-->
-            <li id="graphic" class="categories--items categories--items-graphic text-hover-fill-goes-right"><h2 class="main-text graphic">GRAPHIC</h2><span><p class="message message-comma">,</p></span></li>
 
-            <!--ui-->
-            <li id="ui" class="categories--items categories--items-ui"><h2 class="main-text ui">USER INTERFACE</h2> <span><p class="message message-and">&</p></span></li>
+        <h1 class="main-text product-title">Product Designer</h1>
 
-            <!--web-->
-            <li id="web" class="categories--items categories--items-web"><h2 class="main-text web">WEB</h2></li>
-        </ul>
-        <p class="main-text categories--designer">designer</p>
-        <p id="" class="secondary-text message message-description">As a web designer, I help brands shape their digital presence with design that actually works. No magic spells involved — just pixels, purpose, and a bit of caffeine.</p>
+        <p id="" class="secondary-text message message-description">I turn complex, ambiguous problems into clear, usable systems — from data-heavy operational tools to end-to-end product flows. 12+ years across UX/UI, design systems and brand.</p>
 
     </section>
 
