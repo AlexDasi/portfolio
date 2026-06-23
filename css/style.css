@@ -2242,16 +2242,48 @@ body.project-page .follow {
   background-color: hsl(227, 3%, 8%);
 }
 
-/* Magnet active (cursor inside the arrow): the dot is absorbed into the
-   arrow circle — it shrinks into its own centre and fades, in sync with the
-   accent-colour bloom of the circle, instead of disappearing abruptly.
-   margin:5px keeps the 10px box collapsing toward its centre as it shrinks. */
+/* Magnet active: keep the dot visible so it gooey-merges into the arrow blob
+   instead of vanishing. (Near non-gooey magnets like the CV button it just
+   stays — yellow dot over the yellow fill, so effectively invisible there.) */
 .follow-mouse-active {
-  width: 0 !important;
-  height: 0 !important;
-  margin: 5px !important;
-  opacity: 0 !important;
+  opacity: 1 !important;
   pointer-events: none !important;
+}
+
+/* ---- Gooey liquid-cursor ---- */
+/* Full-viewport layer holding the cursor dot + the arrow target blob.
+   The pixels at 0,0 keep the dot's inline translate3d() in viewport space even
+   when the filter turns on (filter would otherwise create a containing block). */
+.gooey-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1200;
+}
+
+/* Switch the (expensive) SVG filter ON only while the arrow magnet is engaged,
+   so normal cursor movement never pays for it. */
+body:has(.circle.magnet-mouse-active) .gooey-layer {
+  filter: url(#gooey);
+}
+
+/* Yellow target blob over the arrow; blooms in on magnet engage so it fuses
+   (gooey) with the cursor dot. Position is approximate — tune to the circle. */
+.gooey-blob--arrow {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  transform: translate(-50%, 50%) scale(0);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+body:has(.circle.magnet-mouse-active) .gooey-blob--arrow {
+  transform: translate(-50%, 50%) scale(1);
 }
 
 .bg-controls {
