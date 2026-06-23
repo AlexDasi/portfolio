@@ -5,11 +5,15 @@
         </div>
         <ul>
             <!--product-->
-            <li id="product" class="categories--items"><h2 class="main-text">PRODUCT</h2></li>
+            <li id="product" class="categories--items categories--items-product text-hover-fill-goes-right"><h2 class="main-text product">PRODUCT</h2><span><p class="message message-comma">,</p></span></li>
 
-            <!--designer-->
-            <li id="designer" class="categories--items categories--items-web"><h2 class="main-text">DESIGNER</h2></li>
+            <!--ux/ui-->
+            <li id="uxui" class="categories--items categories--items-uxui"><h2 class="main-text uxui">UX·UI</h2> <span><p class="message message-and">&</p></span></li>
+
+            <!--systems-->
+            <li id="systems" class="categories--items categories--items-systems"><h2 class="main-text systems">SYSTEMS</h2></li>
         </ul>
+        <p class="main-text categories--designer">designer</p>
         <p id="" class="secondary-text message message-description">As a product and web designer, I turn complex, ambiguous problems into clear, usable systems. 12+ years across UX/UI, design systems and brand.</p>
 
     </section>
