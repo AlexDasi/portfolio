@@ -382,33 +382,9 @@ header {
   display: inline-block;
   align-self: flex-start;
   width: fit-content;
-  position: relative;
-  overflow: visible;
-  isolation: isolate;
   line-height: 0.95;
-  padding: 0.08em 0.18em 0.14em;
-  margin-left: -0.18em;
-  transition: color 0.28s ease;
-}
-.categories--designer::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--accent-color);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: -1;
 }
 
-@media (hover: hover) {
-  .categories--designer:hover {
-    color: var(--bkg-color);
-  }
-  .categories--designer:hover::before {
-    transform: scaleX(1);
-  }
-}
 #product:hover + #message-product {
   display: block;
   transition: visibility 0.3s linear, opacity 0.3s linear;
@@ -2242,18 +2218,22 @@ body.project-page .follow {
   background-color: hsl(227, 3%, 8%);
 }
 
-/* Magnet active: keep the dot visible so it gooey-merges into the arrow blob
-   instead of vanishing. (Near non-gooey magnets like the CV button it just
-   stays — yellow dot over the yellow fill, so effectively invisible there.) */
+/* Magnet active (v2 liquid): the dot SWELLS into a soft blob centred on the
+   cursor — where the magnet has pulled the arrow — instead of a separate fixed
+   sphere. margin:-30px keeps the 70px blob centred on the original 10px centre
+   so it doesn't drift. The gooey filter softens it into a liquid shape. */
 .follow-mouse-active {
+  width: 70px !important;
+  height: 70px !important;
+  margin: -30px !important;
   opacity: 1 !important;
   pointer-events: none !important;
 }
 
 /* ---- Gooey liquid-cursor ---- */
-/* Full-viewport layer holding the cursor dot + the arrow target blob.
-   The pixels at 0,0 keep the dot's inline translate3d() in viewport space even
-   when the filter turns on (filter would otherwise create a containing block). */
+/* Full-viewport layer holding the cursor dot. The pixels at 0,0 keep the dot's
+   inline translate3d() in viewport space even when the filter turns on (filter
+   would otherwise create a containing block). */
 .gooey-layer {
   position: fixed;
   inset: 0;
@@ -2262,28 +2242,10 @@ body.project-page .follow {
 }
 
 /* Switch the (expensive) SVG filter ON only while the arrow magnet is engaged,
-   so normal cursor movement never pays for it. */
+   so normal cursor movement never pays for it. The dot then reads as a soft,
+   liquid blob swelling over the arrow. */
 body:has(.circle.magnet-mouse-active) .gooey-layer {
   filter: url(#gooey);
-}
-
-/* Yellow target blob over the arrow; blooms in on magnet engage so it fuses
-   (gooey) with the cursor dot. Position is approximate — tune to the circle. */
-.gooey-blob--arrow {
-  position: fixed;
-  left: 50%;
-  bottom: 90px;
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background: var(--accent-color);
-  transform: translate(-50%, 50%) scale(0);
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
-
-body:has(.circle.magnet-mouse-active) .gooey-blob--arrow {
-  transform: translate(-50%, 50%) scale(1);
 }
 
 .bg-controls {

@@ -12,7 +12,6 @@
 </svg>
 <div class="gooey-layer hiddenMobile" aria-hidden="true">
     <div class="follow"></div>
-    <div class="gooey-blob gooey-blob--arrow"></div>
 </div>
 <nav class="nav nav--top">
     <ul>
