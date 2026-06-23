@@ -39,7 +39,6 @@ $assetVersion = static function (string $relativePath): string {
 
 <script src="/js/vendor/magnet-mouse.min.js?v=<?php echo $assetVersion('js/vendor/magnet-mouse.min.js'); ?>"></script>
 <script src="/js/magnet.js?v=<?php echo $assetVersion('js/magnet.js'); ?>"></script>
-<script src="/js/gooey-cursor.js?v=<?php echo $assetVersion('js/gooey-cursor.js'); ?>"></script>
 
 <script src="/js/active.js?v=<?php echo $assetVersion('js/active.js'); ?>"></script>
 <script src="/js/project-lightbox.js?v=<?php echo $assetVersion('js/project-lightbox.js'); ?>"></script>
