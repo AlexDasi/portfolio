@@ -2050,12 +2050,12 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
     clip-path: circle(0% at 50% 50%);
     transition: clip-path 0.18s ease;
   }
-  .cv-download-btn:hover {
+  .cv-download-btn:hover, .cv-download-btn.magnet-mouse-active {
     color: var(--bkg-color);
     border-color: var(--accent-color);
     box-shadow: 0 0 10px rgba(236, 249, 142, 0.4);
   }
-  .cv-download-btn.effect:hover:after {
+  .cv-download-btn.effect:hover:after, .cv-download-btn.magnet-mouse-active.effect:after {
     clip-path: circle(150% at 50% 50%);
   }
 }

@@ -316,13 +316,18 @@
             transition: clip-path 0.18s ease;
         }
 
-        &:hover {
+        // Trigger the gooey fill + glow on magnet proximity too (not only :hover),
+        // so it blooms in sync with the magnet movement and the cursor-dot
+        // absorption — matching the arrow's behaviour.
+        &:hover,
+        &.magnet-mouse-active {
             color: var(--bkg-color);
             border-color: var(--accent-color);
             box-shadow: 0 0 10px rgba(236, 249, 142, 0.4);
         }
 
-        &.effect:hover:after {
+        &.effect:hover:after,
+        &.magnet-mouse-active.effect:after {
             clip-path: circle(150% at 50% 50%);
         }
     }
