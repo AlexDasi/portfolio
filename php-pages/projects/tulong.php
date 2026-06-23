@@ -30,7 +30,7 @@ include '../../php-elements/header-works.php'
                 <h2 class="padding3 slice-infos__title">Humanitarian Logistics, Operationally Clear</h2>
 
                 <div class="padding3 slice-infos__text">
-                    <p>Tulong is a humanitarian logistics control system for last-mile aid distribution. Built from real field deployments in Valencia (DANA) and the Philippines, it was developed in 2025–2026 and validated in operational contexts to improve planning clarity, fleet coordination, and delivery visibility.</p>
+                    <p>Tulong is a humanitarian logistics control system for last-mile aid distribution. Shaped by real field operations in Valencia (DANA) and the Philippines, it was developed in 2025–2026 as a working prototype aimed at improving planning clarity, fleet coordination, and delivery visibility.</p>
                 </div>
 
                 <ul class="padding3 slice-infos__columns">
@@ -117,7 +117,7 @@ include '../../php-elements/header-works.php'
 
                 <!-- IMPACT -->
                 <section class="tulong-section">
-                    <p class="padding3 project-content__quote">Field testing showed clearer planning cycles, faster dispatch alignment, and stronger shared awareness across operations. Coordinators also reported better handoffs between planning, loading, and route execution under real constraints.</p>
+                    <p class="padding3 project-content__quote">Tested against real operational scenarios, the prototype pointed to clearer planning cycles, faster dispatch alignment, and stronger shared awareness across teams, with smoother handoffs between planning, loading, and route execution under real constraints.</p>
                 </section>
 
                 <!-- ROLE -->

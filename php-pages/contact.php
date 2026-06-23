@@ -1,23 +1,23 @@
 <div id="contact">
 
     <div class="contact--message">
-        <a class="contact--message__main-link" href="mailto:alejandrodasi@me.com"><h1 class="contact--message__main">REACH<br>ME OUT</h1></a>
+        <a class="contact--message__main-link" href="mailto:alejandrodasi@gmail.com"><h1 class="contact--message__main">REACH<br>OUT</h1></a>
         <div class="contact--message__text">
-            <p>If you liked what you saw, drop me a message or reach me trough my social. Don't be a stranger :)</p>
+            <p>If you liked what you saw, drop me a message or reach me through my socials. Don't be a stranger :)</p>
         </div>
     </div>     
     
 
 
     <div class="contact--social">
-        <a href="https://www.behance.net/alexdasi" class="contact--social__element" target="_blank" rel="noopener noreferrer">
-            <h2>Behance</h2>
-        </a>
         <a href="https://www.linkedin.com/in/alexdasi/" class="contact--social__element" target="_blank" rel="noopener noreferrer">
             <h2>Linkedin</h2>
         </a>
-        <a href="mailto:alejandrodasi@me.com" class="contact--social__element">
+        <a href="mailto:alejandrodasi@gmail.com" class="contact--social__element">
             <h2>Email</h2>
+        </a>
+        <a href="https://www.behance.net/alexdasi" class="contact--social__element" target="_blank" rel="noopener noreferrer">
+            <h2>Behance</h2>
         </a>
     </div>
 
