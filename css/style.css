@@ -90,6 +90,11 @@ h3 {
   padding: 2px;
   z-index: -100;
   position: fixed;
+  border-radius: 50%;
+  transition: box-shadow 0.25s ease;
+}
+.circle.magnet-mouse-active {
+  box-shadow: 0 0 18px rgba(236, 249, 142, 0.5);
 }
 
 .arrow {
@@ -347,11 +352,29 @@ header {
 }
 .categories > ul > li > h2 {
   font-size: 8vw;
-  filter: blur(0px);
   display: inline-block;
+  position: relative;
+  isolation: isolate;
+  padding: 0 0.12em;
+  transition: color 0.28s ease;
 }
-.categories > ul > li > h2:hover {
-  filter: blur(0px);
+.categories > ul > li > h2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+@media (hover: hover) {
+  .categories > ul > li > h2:hover {
+    color: var(--bkg-color);
+  }
+  .categories > ul > li > h2:hover::before {
+    transform: scaleX(1);
+  }
 }
 .categories--designer {
   margin-top: 4rem;

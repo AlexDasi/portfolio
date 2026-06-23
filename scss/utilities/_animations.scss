@@ -62,6 +62,13 @@
 
     position: fixed;
 
+    border-radius: 50%;
+    transition: box-shadow 0.25s ease;
+
+    // Glow when the magnet engages (so the arrow matches the CV button glow).
+    &.magnet-mouse-active{
+        box-shadow: 0 0 18px rgba(236, 249, 142, 0.5);
+    }
 }
 
 .arrow {
