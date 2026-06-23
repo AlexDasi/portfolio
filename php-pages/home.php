@@ -1,12 +1,16 @@
 <div id="home">
 
     <section class="categories">
-        <div><p class="message message-intro">Hi, I'm <span>Alex Dasi</span> —</p>
+        <div><p class="message message-intro">Hi, I'm <span>Alex Dasi</span>,</p>
         </div>
+        <ul>
+            <!--product-->
+            <li id="product" class="categories--items"><h2 class="main-text">PRODUCT</h2></li>
 
-        <h1 class="main-text product-title">Product Designer</h1>
-
-        <p id="" class="secondary-text message message-description">I turn complex, ambiguous problems into clear, usable systems — from data-heavy operational tools to end-to-end product flows. 12+ years across UX/UI, design systems and brand.</p>
+            <!--designer-->
+            <li id="designer" class="categories--items categories--items-web"><h2 class="main-text">DESIGNER</h2></li>
+        </ul>
+        <p id="" class="secondary-text message message-description">As a product and web designer, I turn complex, ambiguous problems into clear, usable systems. 12+ years across UX/UI, design systems and brand.</p>
 
     </section>
 
