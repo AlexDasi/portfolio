@@ -109,8 +109,9 @@
   function parseSlideYear(slide) {
     const yearNode = slide.querySelector('.works--details .yellow-600');
     if (!yearNode) return Number.NEGATIVE_INFINITY;
-    const yearMatch = yearNode.textContent.match(/\d{4}/);
-    return yearMatch ? parseInt(yearMatch[0], 10) : Number.NEGATIVE_INFINITY;
+    // Año más reciente del rango («2025 – 2026» → 2026), para que los proyectos en curso salgan primero
+    const years = yearNode.textContent.match(/\d{4}/g);
+    return years ? Math.max(...years.map((y) => parseInt(y, 10))) : Number.NEGATIVE_INFINITY;
   }
 
   function getDirectSlideElements(wrapper) {

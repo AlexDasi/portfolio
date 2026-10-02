@@ -9,24 +9,6 @@
 
             <!-- ===== PRODUCT-FIRST ORDER ===== -->
 
-            <a href="php-pages/projects/tulong.php" class="swiper-slide">
-                <div class="works works-tulong">
-                <!-- thumbnail -->
-                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/tulong.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/tulong-mobile.jpg"/>
-                <!-- info -->
-                    <div class="works--info">
-                        <h2>TULONG</h2>
-                        <p class="yellow-600">Humanitarian logistics control system for last-mile aid distribution in emergency contexts. Built from field deployments in Valencia and the Philippines, 2025–2026.</p>
-                    </div>
-                    <div class="hiddenMobile works--details">
-                        <p>UX/UI Design, System Design</p>
-                        <p class="yellow-600">2025 – 2026</p>
-                    </div>
-                </div>
-            </a>
-
-
             <a href="php-pages/projects/atelier.php" class="swiper-slide">
                 <div class="works works-atelier">
                 <!-- thumbnail -->
@@ -40,6 +22,24 @@
                     <div class="hiddenMobile works--details">
                         <p>System Design, Art Direction</p>
                         <p class="yellow-600">2026</p>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="php-pages/projects/tulong.php" class="swiper-slide">
+                <div class="works works-tulong">
+                <!-- thumbnail -->
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/tulong.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/tulong-mobile.jpg"/>
+                <!-- info -->
+                    <div class="works--info">
+                        <h2>TULONG</h2>
+                        <p class="yellow-600">Humanitarian logistics control system for last-mile aid distribution in emergency contexts. Built from field deployments in Valencia and the Philippines, 2025–2026.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>UX/UI Design, System Design</p>
+                        <p class="yellow-600">2025 – 2026</p>
                     </div>
                 </div>
             </a>
@@ -295,7 +295,6 @@
             <div class="hiddenMobile swiper-slide works works-11">
             </div>
         </div>
-
 
 
         <!-- pagination -->

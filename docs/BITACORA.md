@@ -9,7 +9,7 @@
 
 > Desde hoy cada conversación va numerada (inicio · turnos · cierre). Las entradas anteriores no tenían número.
 
-**Inicio:** 2026-10-02 ~10:00 · **Turnos:** 3 · **Último msg:** 2026-10-02 ~11:45 · **Cierre:** abierta (pendiente del OK de Alex)
+**Inicio:** 2026-10-02 ~10:00 · **Turnos:** 4 · **Último msg:** 2026-10-02 ~12:15 · **Cierre:** abierta (pendiente del OK de Alex)
 
 **Contexto:** Alex quiere llevar ATELIER al portfolio: un caso de estudio estrella, 3 webs como «Own work» (Otra Vez, Pati, Lenta) y la parte de proceso y herramientas ampliada.
 
@@ -21,6 +21,7 @@
 
 - Turno 2: diapositiva **Process** entre About y Contact (paginación pasa a 5; la flecha «subir» ahora mira la última diapositiva en vez del índice fijo 3). Demo estática privada como artefacto de claude.ai («alexdasi.com Preview»); la web real no se toca.
 - Turno 3 (feedback de Alex): la home de la demo salía en blanco (el visor de artefactos no deja navegar entre páginas: la demo carga cada página con fetch en el mismo documento; solo afecta a la demo, no al repo). Jerarquía de texto: `project-content__quote` solo para destacados; el resto pasa a `project-content__text` (párrafo normal, como la intro). Tarjetas de los 3 conceptos arriba del todo en ATELIER y «More from ATELIER» al final de cada concepto (`php-elements/atelier-concepts.php`). Process rehecha a dos columnas: método + «In practice» (ATELIER + Otra Vez, Pati, Lenta enlazados). Cabe en 1281×720 a 1920×1080. Nueva miniatura de ATELIER.
+- Turno 4: Works abre con ATELIER y Tulong (el orden usa el año más reciente del rango: Tulong «2025 – 2026» = 2026). Cursor negro de las páginas de proyecto: en el código funciona; fallaba solo en la demo (las páginas compartían ventana) → la demo carga cada página en un iframe nuevo.
 
 **Pendientes:** OK de Alex; elegir opciones (dónde van las 3 webs, el proceso y el panel); feedback final de Pati/Lenta.
 
