@@ -11,9 +11,14 @@
 
 **Contexto:** Primera conversación desde el Project «PORTFOLIO alexdasi.com». Tarea: que Alex elija el copy de la home (hero + texto) y aplicarlo en `feat/atelier-case-study`.
 
-**Cambios:** ninguno aún. Opciones presentadas a Alex.
+**Cambios:**
+- Alex elige hero A (PRODUCT, WEB & SYSTEMS) y texto 1. Aplicado en `home.php` (id/clase `uxui` → `web`; el relleno amarillo usa `inset:0`, se adapta solo).
+- Meta description por defecto en `header.php` y `header-works.php` (esta aún decía «graphic designer»).
+- About: titular nuevo para no repetir «complex, ambiguous problems». Process: frase de IA reescrita para no duplicar la del hero. Contact sin cambios.
+- Comprobado en 1281×720, 1366×768, 1440×900, 1920×1080 y 390×844: todo cabe.
+- Demo privada actualizada (versión 6).
 
-**Siguiente paso:** aplicar la elección, revisar meta + About/Contact, actualizar la demo y pedir OK.
+**Siguiente paso:** OK de Alex → merge a `main` → Hostinger.
 
 ---
 

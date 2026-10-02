@@ -22,11 +22,11 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 
 ## Abierto / pendiente
 - OK final de Alex → merge a `main` → Alex actualiza Hostinger (preguntarle cómo lo hace exactamente).
-- **Copy de la home**: propuesta enviada en el chat (2026-10-02), pendiente de que Alex elija.
+- **Copy de la home**: hecho (Conv. 2). Hero PRODUCT, WEB & SYSTEMS (id `web`) + texto opción 1. Meta actualizada. About: titular nuevo «I FIGURE OUT HOW THINGS REALLY WORK, THEN MAKE THEM EASY TO USE» (antes repetía el hero). Process: «AI speeds up production» → «The tools do the heavy lifting» (para no repetir la frase de IA del hero). Demo actualizada.
 - ¿Los 3 conceptos también en Works? (de momento no, para no restar a Tulong/Idrica).
 - Feedback final de Pati y Lenta v1.1 en ATELIER; si cambian, refrescar capturas.
 - Errores de consola previos (magnet-mouse `length`, `onmousemove` null y `clientWidth` en páginas de proyecto): ya estaban en `main`.
 - Idrica: case study flojo (faltan datos). B2 gooey (backlog).
 
 ## Próximo paso exacto
-➡️ Alex elige copy de la home y da el OK → aplicar copy en la rama, actualizar demo, merge a `main`.
+➡️ Alex revisa la demo y da el OK → merge a `main` y push → preguntarle cómo actualiza Hostinger (anotarlo aquí) → comprobar alexdasi.com en vivo.
