@@ -2,9 +2,15 @@
 
     <!-- Swiper -->
     <div class="swiper WorksSwiper WorksSwiperDesktop">
-        <div class="swiper-button-prev hiddenMobile" aria-label="Previous project"></div>
-        <div class="swiper-button-next hiddenMobile" aria-label="Next project"></div>
-        <div class="swiper-pagination"></div>
+        <!-- Navegación del pasafotos: contador, nombre, progreso y flechas (la rellena swiperNew.js) -->
+        <div class="works-nav" aria-label="Projects navigation">
+            <p class="works-nav__status" aria-live="polite"><span class="works-nav__count">01</span><span class="works-nav__total">/ 01</span><span class="works-nav__name"></span></p>
+            <div class="works-nav__progress" role="tablist"></div>
+            <div class="works-nav__arrows">
+                <button class="works-nav__btn works-nav__btn--prev" type="button" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <button class="works-nav__btn works-nav__btn--next" type="button" aria-label="Next project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+            </div>
+        </div>
         <div class="swiper-wrapper">
 
             <!-- ===== PRODUCT-FIRST ORDER ===== -->
@@ -297,7 +303,5 @@
         </div>
 
 
-        <!-- pagination -->
-        <div class="swiper-pagination"></div>
     </div>
 </div>
