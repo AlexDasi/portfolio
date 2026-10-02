@@ -27,6 +27,24 @@
             </a>
 
 
+            <a href="php-pages/projects/atelier.php" class="swiper-slide">
+                <div class="works works-atelier">
+                <!-- thumbnail -->
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/atelier.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/atelier-mobile.jpg"/>
+                <!-- info -->
+                    <div class="works--info">
+                        <h2>ATELIER</h2>
+                        <p class="yellow-600">A design system that tracks web trends, proposes three directions per site, learns from my feedback and builds the final website. AI handles production; art direction and decisions stay mine.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>System Design, Art Direction</p>
+                        <p class="yellow-600">2026</p>
+                    </div>
+                </div>
+            </a>
+
+
             <a href="php-pages/projects/idrica-wastewater.php" class="swiper-slide">
                 <div class="works works-idrica-wastewater">
                 <!-- thumbnail -->

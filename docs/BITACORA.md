@@ -5,6 +5,26 @@
 
 ---
 
+## Conv. 1 · 2026-10-02 10:00 · ATELIER en el portfolio
+
+> Desde hoy cada conversación va numerada (inicio · turnos · cierre). Las entradas anteriores no tenían número.
+
+**Inicio:** 2026-10-02 ~10:00 · **Turnos:** 1 · **Cierre:** abierta (pendiente del OK de Alex)
+
+**Contexto:** Alex quiere llevar ATELIER al portfolio: un caso de estudio estrella, 3 webs como «Own work» (Otra Vez, Pati, Lenta) y la parte de proceso y herramientas ampliada.
+
+**Cambios (rama `feat/atelier-case-study`, `main` intacto):**
+- Página `atelier.php` + fichas `otra-vez.php`, `pati.php`, `lenta.php` (copy en inglés, sin em dash).
+- ATELIER en Works (desktop y móvil), en 2ª posición.
+- Imágenes reales (capturas de las webs construidas en local y de las rondas de propuestas).
+- Propuesta de proceso/herramientas y opciones de las dudas en [specs/2026-10-02_atelier-en-portfolio.md](specs/2026-10-02_atelier-en-portfolio.md).
+
+**Pendientes:** OK de Alex; elegir opciones (dónde van las 3 webs, el proceso y el panel); feedback final de Pati/Lenta.
+
+**Siguiente paso:** Alex revisa las previews → ajustes → merge a `main` → Alex actualiza Hostinger.
+
+---
+
 ## 2026-06-23 — Rework del portfolio a producción (Track B)
 
 **Contexto:** Reposición de `alexdasi.com` de "web/graphic designer" a **Product Designer** (coordinado vía `cowork/INSTRUCCIONES-CC.md`), más mejoras de interacción y fixes de contenido. Pusheado a producción a petición de Alex (`git-all`).

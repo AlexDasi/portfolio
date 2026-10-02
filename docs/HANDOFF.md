@@ -2,8 +2,8 @@
 
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
-**Fecha:** 2026-06-23
-**Rama activa:** `main` (== `origin/main`, en producción)
+**Fecha:** 2026-10-02
+**Rama activa:** `feat/atelier-case-study` (ATELIER en el portfolio, pendiente de OK). `main` sigue en producción.
 
 ## Entorno
 - localhost en **http://localhost:8000** (php -S, background). Sass en `--watch`.
@@ -25,7 +25,7 @@ Rework del portfolio (reposición a Product Designer + glow + fixes de contenido
 - Case studies de Tulong/Idrica (reescritura): pendientes de datos de Alex.
 
 ## Próximo paso exacto (1 línea accionable)
-➡️ Sesión limpia y en producción; siguiente tarea cuando Alex traiga datos (Idrica / IA) o decida.
+➡️ Alex revisa ATELIER + 3 fichas (ver docs/specs/2026-10-02_atelier-en-portfolio.md) y elige opciones; luego merge a main.
 
 ## Bloqueos
 Ninguno.
