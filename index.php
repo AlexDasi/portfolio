@@ -25,6 +25,9 @@ include 'php-elements/header.php'
         <div class="swiper-slide slide-about">
             <?php include 'php-pages/about.php'?>   
         </div>
+        <div class="swiper-slide slide-process">
+            <?php include 'php-pages/process.php'?>   
+        </div>
         <div class="swiper-slide slide-contact">
             <?php include 'php-pages/contact.php'?>   
         </div>
@@ -46,6 +49,9 @@ include 'php-elements/header.php'
         </div>
         <div class="swiper-slide slide-about">
             <?php include 'php-pages/about.php'?>   
+        </div>
+        <div class="swiper-slide slide-process">
+            <?php include 'php-pages/process.php'?>   
         </div>
         <div class="swiper-slide slide-contact">
             <?php include 'php-pages/contact.php'?>   

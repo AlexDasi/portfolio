@@ -43,7 +43,7 @@
     if (window.innerWidth <= 1280) return null;
     if (!mainRoot || typeof Swiper === 'undefined') return null;
 
-    const mainMenu = ['HOME', 'WORKS', 'ABOUT', 'CONTACT'];
+    const mainMenu = ['HOME', 'WORKS', 'ABOUT', 'PROCESS', 'CONTACT'];
 
     const mainPaginationEl = mainRoot.querySelector(':scope > .swiper-pagination');
 
@@ -76,7 +76,8 @@
         slideChange() {
           const arrow = document.querySelector('.arrow');
           if (!arrow) return;
-          if (this.activeIndex === 3) {
+          // Flecha hacia arriba en la última diapositiva (antes índice fijo 3)
+          if (this.activeIndex === this.slides.length - 1) {
             arrow.classList.add('up');
           } else {
             arrow.classList.remove('up');

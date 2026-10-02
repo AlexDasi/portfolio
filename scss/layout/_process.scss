@@ -1,0 +1,154 @@
+//// PROCESS (slide entre About y Contact) ////
+
+#process {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: $z-medium;
+}
+
+.process {
+    width: 80vw;
+    margin: 0 auto;
+    // Hueco abajo para la flecha de la diapositiva
+    padding: 6vh 0 16vh;
+    font-family: $main-font;
+    color: var(--main-color);
+
+    &__title {
+        margin-top: 0;
+    }
+
+    &__lead {
+        max-width: 60rem;
+        margin-top: 2.4rem;
+        font-size: 1.8rem;
+        line-height: 1.5;
+        opacity: .7;
+        color: var(--main-color);
+    }
+
+    &__steps {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 3vw;
+        margin: 4.5rem 0 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: none;
+    }
+
+    &__step {
+        border-top: 1px solid rgba(255, 255, 255, .2);
+        padding-top: 2rem;
+        transition: border-color .2s ease;
+
+        &:hover {
+            border-color: var(--accent-color);
+        }
+    }
+
+    &__num {
+        display: block;
+        font-family: $main-font;
+        font-size: 1.4rem;
+        letter-spacing: .1em;
+        color: var(--accent-color);
+    }
+
+    &__name {
+        margin: 1.2rem 0 0;
+        font-family: $main-font;
+        font-size: 2.6rem;
+        font-weight: 600;
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--main-color);
+    }
+
+    &__text {
+        margin-top: 1.2rem;
+        font-size: 1.5rem;
+        line-height: 1.5;
+        opacity: .7;
+        color: var(--main-color);
+    }
+
+    &__tools {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.2rem 2.4rem;
+        margin-top: 4.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, .2);
+    }
+
+    &__tools-label {
+        font-size: 1.4rem;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: var(--accent-color);
+    }
+
+    &__tools-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .8rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            padding: .6rem 1.4rem;
+            border: 1px solid rgba(255, 255, 255, .35);
+            border-radius: 50px;
+            font-family: $main-font;
+            font-size: 1.4rem;
+            color: var(--main-color);
+        }
+    }
+
+    &__case {
+        margin-left: auto;
+        font-size: 1.6rem;
+        color: var(--bkg-color);
+        background-color: var(--accent-color);
+        padding: .2rem .6rem;
+        text-decoration: none;
+    }
+}
+
+// Pantallas bajas de escritorio: comprimir para que quepa en una diapositiva
+@media (min-width: 1281px) and (max-height: 820px) {
+    .process {
+        padding: 4vh 0 15vh;
+
+        &__steps { margin-top: 3.5rem; }
+        &__tools { margin-top: 3.5rem; }
+        &__text { font-size: 1.4rem; }
+    }
+}
+
+@media (max-width: 1280px) {
+    #process {
+        min-height: auto;
+    }
+
+    .process {
+        width: 90vw;
+        padding: 4rem 0;
+
+        &__steps {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        &__case {
+            margin-left: 0;
+        }
+    }
+}
