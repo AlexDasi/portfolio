@@ -9,7 +9,7 @@
 
 > Desde hoy cada conversación va numerada (inicio · turnos · cierre). Las entradas anteriores no tenían número.
 
-**Inicio:** 2026-10-02 ~10:00 · **Turnos:** 1 · **Cierre:** abierta (pendiente del OK de Alex)
+**Inicio:** 2026-10-02 ~10:00 · **Turnos:** 2 · **Último msg:** 2026-10-02 ~11:00 · **Cierre:** abierta (pendiente del OK de Alex)
 
 **Contexto:** Alex quiere llevar ATELIER al portfolio: un caso de estudio estrella, 3 webs como «Own work» (Otra Vez, Pati, Lenta) y la parte de proceso y herramientas ampliada.
 
@@ -18,6 +18,8 @@
 - ATELIER en Works (desktop y móvil), en 2ª posición.
 - Imágenes reales (capturas de las webs construidas en local y de las rondas de propuestas).
 - Propuesta de proceso/herramientas y opciones de las dudas en [specs/2026-10-02_atelier-en-portfolio.md](specs/2026-10-02_atelier-en-portfolio.md).
+
+- Turno 2: diapositiva **Process** entre About y Contact (paginación pasa a 5; la flecha «subir» ahora mira la última diapositiva en vez del índice fijo 3). Demo estática privada como artefacto de claude.ai («alexdasi.com Preview»); la web real no se toca.
 
 **Pendientes:** OK de Alex; elegir opciones (dónde van las 3 webs, el proceso y el panel); feedback final de Pati/Lenta.
 
