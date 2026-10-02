@@ -5,9 +5,21 @@
 
 ---
 
+## Conv. 3 · 2026-10-02 22:02 · OK y paso a producción
+
+**Inicio:** 2026-10-02 22:02 · **Turnos:** 1 · **Último msg:** 2026-10-02 22:02 · **Cierre:** abierta
+
+**Contexto:** Alex da el OK. Cómo se publica: Hostinger tira del repo con Git (despliegue desde el panel de Hostinger).
+
+**Cambios:** merge `--no-ff` de `feat/atelier-case-study` a `main` y push.
+
+**Siguiente paso:** desplegar en Hostinger (Git) y comprobar alexdasi.com en vivo.
+
+---
+
 ## Conv. 2 · 2026-10-02 21:51 · Copy de la home (primer arranque en el Project)
 
-**Inicio:** 2026-10-02 21:51 · **Turnos:** 1 · **Último msg:** 2026-10-02 21:51 · **Cierre:** abierta
+**Inicio:** 2026-10-02 21:51 · **Turnos:** 1 · **Último msg:** 2026-10-02 21:51 · **Cierre:** 2026-10-02 22:02
 
 **Contexto:** Primera conversación desde el Project «PORTFOLIO alexdasi.com». Tarea: que Alex elija el copy de la home (hero + texto) y aplicarlo en `feat/atelier-case-study`.
 

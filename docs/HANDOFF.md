@@ -3,7 +3,7 @@
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
 **Fecha:** 2026-10-02
-**Rama activa:** `feat/atelier-case-study` (pendiente del OK final de Alex). `main` sigue en producción, sin tocar.
+**Rama activa:** `main` (ATELIER mergeado el 2026-10-02). Para trabajo nuevo, abrir rama desde `main`.
 
 ## Contexto en una frase
 ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Lenta) + diapositiva Process + pasafotos de Works nuevo. Todo en la rama, revisado por Alex en una demo privada.
@@ -21,7 +21,8 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Se genera exportando la rama servida en local (`php -S localhost:8000`) a HTML estático. El visor no deja navegar entre páginas: la demo carga cada una en un iframe nuevo (solo afecta a la demo).
 
 ## Abierto / pendiente
-- OK final de Alex → merge a `main` → Alex actualiza Hostinger (preguntarle cómo lo hace exactamente).
+- **Publicar (Hostinger):** la web se actualiza desde el panel de Hostinger con su despliegue por Git (tira de `main` de `AlexDasi/portfolio`). No hay despliegue automático: tras el push a `main` hay que darle a desplegar en Hostinger.
+- OK de Alex recibido (Conv. 3) → `main` mergeado. Falta desplegar y comprobar en vivo.
 - **Copy de la home**: hecho (Conv. 2). Hero PRODUCT, WEB & SYSTEMS (id `web`) + texto opción 1. Meta actualizada. About: titular nuevo «I FIGURE OUT HOW THINGS REALLY WORK, THEN MAKE THEM EASY TO USE» (antes repetía el hero). Process: «AI speeds up production» → «The tools do the heavy lifting» (para no repetir la frase de IA del hero). Demo actualizada.
 - ¿Los 3 conceptos también en Works? (de momento no, para no restar a Tulong/Idrica).
 - Feedback final de Pati y Lenta v1.1 en ATELIER; si cambian, refrescar capturas.
@@ -29,4 +30,4 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Idrica: case study flojo (faltan datos). B2 gooey (backlog).
 
 ## Próximo paso exacto
-➡️ Alex revisa la demo y da el OK → merge a `main` y push → preguntarle cómo actualiza Hostinger (anotarlo aquí) → comprobar alexdasi.com en vivo.
+➡️ Desplegar en Hostinger (Git) → comprobar alexdasi.com en vivo: home, Works, Process, ATELIER y los 3 conceptos, escritorio y móvil.
