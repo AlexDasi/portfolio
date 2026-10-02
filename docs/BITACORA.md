@@ -9,7 +9,7 @@
 
 > Desde hoy cada conversación va numerada (inicio · turnos · cierre). Las entradas anteriores no tenían número.
 
-**Inicio:** 2026-10-02 ~10:00 · **Turnos:** 5 · **Último msg:** 2026-10-02 ~12:45 · **Cierre:** abierta (pendiente del OK de Alex)
+**Inicio:** 2026-10-02 ~10:00 · **Turnos:** 6 · **Último msg:** 2026-10-02 ~13:10 · **Cierre:** abierta (pendiente del OK de Alex)
 
 **Contexto:** Alex quiere llevar ATELIER al portfolio: un caso de estudio estrella, 3 webs como «Own work» (Otra Vez, Pati, Lenta) y la parte de proceso y herramientas ampliada.
 
@@ -23,6 +23,7 @@
 - Turno 3 (feedback de Alex): la home de la demo salía en blanco (el visor de artefactos no deja navegar entre páginas: la demo carga cada página con fetch en el mismo documento; solo afecta a la demo, no al repo). Jerarquía de texto: `project-content__quote` solo para destacados; el resto pasa a `project-content__text` (párrafo normal, como la intro). Tarjetas de los 3 conceptos arriba del todo en ATELIER y «More from ATELIER» al final de cada concepto (`php-elements/atelier-concepts.php`). Process rehecha a dos columnas: método + «In practice» (ATELIER + Otra Vez, Pati, Lenta enlazados). Cabe en 1281×720 a 1920×1080. Nueva miniatura de ATELIER.
 - Turno 4: Works abre con ATELIER y Tulong (el orden usa el año más reciente del rango: Tulong «2025 – 2026» = 2026). Cursor negro de las páginas de proyecto: en el código funciona; fallaba solo en la demo (las páginas compartían ventana) → la demo carga cada página en un iframe nuevo.
 - Turno 5: pasafotos de Works rehecho. Bucle infinito en escritorio y móvil; escritorio con arrastre y rueda/trackpad horizontal en modo libre con imán (freeMode sticky), sin secuestrar el scroll vertical (forceToAxis); móvil una tarjeta por gesto. «prev/next» y los puntos sustituidos por `.works-nav` (contador 01/07, nombre, barra de progreso clicable y flechas redondas; `scss/layout/_works-nav.scss`). Probado con rueda, arrastre, botones, segmentos, bucle en los dos sentidos, clic que abre proyecto y swipe vertical en móvil.
+- Turno 6: propuesta de copy de la home (en el chat). Alex quiere un Project de claude.ai solo para el portfolio → HANDOFF reescrito como traspaso.
 
 **Pendientes:** OK de Alex; elegir opciones (dónde van las 3 webs, el proceso y el panel); feedback final de Pati/Lenta.
 
