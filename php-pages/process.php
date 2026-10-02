@@ -5,7 +5,7 @@
         <div class="process__col process__col--method">
             <header class="process__head">
                 <h2 class="process__title slice-infos__title">HOW I WORK</h2>
-                <p class="process__lead">Fast tools, slow decisions. AI speeds up production; direction, judgement and what gets thrown away stay with me.</p>
+                <p class="process__lead">Fast tools, slow decisions. The tools do the heavy lifting; direction, judgement and what gets thrown away stay with me.</p>
             </header>
 
             <ol class="process__steps">

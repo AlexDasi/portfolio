@@ -5,7 +5,7 @@ $pageTitle = isset($pageTitle) && is_string($pageTitle) && trim($pageTitle) !== 
     : $siteName;
 $metaDescription = isset($metaDescription) && is_string($metaDescription) && trim($metaDescription) !== ''
     ? trim($metaDescription)
-    : 'Portfolio of Alex Dasi, Product and Web Designer turning complex, ambiguous problems into clear, usable systems across UX/UI, web, design systems and brand.';
+    : 'Portfolio of Alex Dasi, product, web and systems designer. I take complex, ambiguous problems and make them clear: products, websites and the systems behind them.';
 
 $assetVersion = static function (string $relativePath): string {
     $fullPath = dirname(__DIR__) . '/' . ltrim($relativePath, '/');

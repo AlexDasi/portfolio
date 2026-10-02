@@ -7,14 +7,14 @@
             <!--product-->
             <li id="product" class="categories--items categories--items-product text-hover-fill-goes-right"><h2 class="main-text product">PRODUCT</h2><span><p class="message message-comma">,</p></span></li>
 
-            <!--ux/ui-->
-            <li id="uxui" class="categories--items categories--items-uxui"><h2 class="main-text uxui">UX·UI</h2> <span><p class="message message-and">&</p></span></li>
+            <!--web-->
+            <li id="web" class="categories--items categories--items-web"><h2 class="main-text web">WEB</h2> <span><p class="message message-and">&</p></span></li>
 
             <!--systems-->
             <li id="systems" class="categories--items categories--items-systems"><h2 class="main-text systems">SYSTEMS</h2></li>
         </ul>
         <p class="main-text categories--designer">designer</p>
-        <p id="" class="secondary-text message message-description">As a product and web designer, I turn complex, ambiguous problems into clear, usable systems. 12+ years across UX/UI, design systems and brand.</p>
+        <p id="" class="secondary-text message message-description">I take complex, ambiguous problems and make them clear: products, websites and the systems behind them. 12+ years across UX/UI, design systems and brand. AI speeds me up, the decisions stay mine.</p>
 
     </section>
 
