@@ -5,6 +5,18 @@
 
 ---
 
+## Conv. 2 · 2026-10-02 21:51 · Copy de la home (primer arranque en el Project)
+
+**Inicio:** 2026-10-02 21:51 · **Turnos:** 1 · **Último msg:** 2026-10-02 21:51 · **Cierre:** abierta
+
+**Contexto:** Primera conversación desde el Project «PORTFOLIO alexdasi.com». Tarea: que Alex elija el copy de la home (hero + texto) y aplicarlo en `feat/atelier-case-study`.
+
+**Cambios:** ninguno aún. Opciones presentadas a Alex.
+
+**Siguiente paso:** aplicar la elección, revisar meta + About/Contact, actualizar la demo y pedir OK.
+
+---
+
 ## Conv. 1 · 2026-10-02 10:00 · ATELIER en el portfolio
 
 > Desde hoy cada conversación va numerada (inicio · turnos · cierre). Las entradas anteriores no tenían número.
