@@ -1,0 +1,154 @@
+//// NAVEGACIÓN DEL PASAFOTOS DE WORKS ////
+// Sustituye a «prev / next» y a los puntos. Contador + nombre, barra de
+// progreso por proyecto (clicable) y dos flechas redondas.
+
+// Ocultar la navegación antigua de Swiper si quedara algún resto
+.WorksSwiper .swiper-button-prev,
+.WorksSwiper .swiper-button-next,
+.WorksSwiper > .swiper-pagination {
+  display: none !important;
+}
+
+.works-nav {
+  position: absolute;
+  z-index: 500;
+  left: 24px;
+  right: 24px;
+  top: calc(50% - 20vh - 76px);
+  display: grid;
+  grid-template-columns: minmax(18rem, auto) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 3rem;
+  font-family: $main-font;
+  color: var(--main-color);
+  pointer-events: none; // solo los controles capturan el ratón
+
+  &__status,
+  &__progress,
+  &__btn { pointer-events: auto; }
+
+  &__status {
+    display: flex;
+    align-items: baseline;
+    gap: .8rem;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  &__count {
+    font-size: 3.2rem;
+    font-weight: 200;
+    line-height: 1;
+    color: var(--accent-color);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__total {
+    font-size: 1.3rem;
+    letter-spacing: .08em;
+    opacity: .5;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__name {
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  &__progress {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    height: 20px; // zona de clic generosa
+  }
+
+  &__seg {
+    flex: 1 1 0;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, .22);
+      transition: background-color .25s ease, height .25s ease;
+    }
+
+    &:hover::before { background: rgba(255, 255, 255, .55); }
+
+    &.is-active::before {
+      height: 4px;
+      background: var(--accent-color);
+    }
+
+    &:focus-visible { outline: 1px solid var(--accent-color); outline-offset: 2px; }
+  }
+
+  &__arrows {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .35);
+    background: transparent;
+    color: var(--main-color);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      color: var(--bkg-color);
+      outline: none;
+    }
+  }
+}
+
+// Móvil y tablet: debajo de la tarjeta, sin flechas grandes
+@media (max-width: 1280px) {
+  .works-nav {
+    top: auto;
+    bottom: clamp(16px, 5vh, 56px);
+    left: 5vw;
+    right: 5vw;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1.6rem;
+
+    &__count { font-size: 2.4rem; }
+    &__name { display: none; } // el nombre ya va sobre la tarjeta
+    &__btn { width: 38px; height: 38px; svg { width: 16px; height: 16px; } }
+    &__arrows { gap: .6rem; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .works-nav__seg::before,
+  .works-nav__btn { transition: none; }
+}

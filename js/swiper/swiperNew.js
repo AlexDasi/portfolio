@@ -43,7 +43,7 @@
     if (window.innerWidth <= 1280) return null;
     if (!mainRoot || typeof Swiper === 'undefined') return null;
 
-    const mainMenu = ['HOME', 'WORKS', 'ABOUT', 'CONTACT'];
+    const mainMenu = ['HOME', 'WORKS', 'ABOUT', 'PROCESS', 'CONTACT'];
 
     const mainPaginationEl = mainRoot.querySelector(':scope > .swiper-pagination');
 
@@ -76,7 +76,8 @@
         slideChange() {
           const arrow = document.querySelector('.arrow');
           if (!arrow) return;
-          if (this.activeIndex === 3) {
+          // Flecha hacia arriba en la última diapositiva (antes índice fijo 3)
+          if (this.activeIndex === this.slides.length - 1) {
             arrow.classList.add('up');
           } else {
             arrow.classList.remove('up');
@@ -108,8 +109,9 @@
   function parseSlideYear(slide) {
     const yearNode = slide.querySelector('.works--details .yellow-600');
     if (!yearNode) return Number.NEGATIVE_INFINITY;
-    const yearMatch = yearNode.textContent.match(/\d{4}/);
-    return yearMatch ? parseInt(yearMatch[0], 10) : Number.NEGATIVE_INFINITY;
+    // Año más reciente del rango («2025 – 2026» → 2026), para que los proyectos en curso salgan primero
+    const years = yearNode.textContent.match(/\d{4}/g);
+    return years ? Math.max(...years.map((y) => parseInt(y, 10))) : Number.NEGATIVE_INFINITY;
   }
 
   function getDirectSlideElements(wrapper) {
@@ -236,6 +238,106 @@
     window.__worksMobileObserverAttached = true;
   }
 
+  // ---------------------------------------------------------------------------
+  // Navegación propia del pasafotos (contador, nombre, barra de progreso, flechas)
+  // ---------------------------------------------------------------------------
+  function bindWorksNav(worksRoot, swiper) {
+    const nav = worksRoot.querySelector('.works-nav');
+    if (!nav || !swiper) return;
+
+    const originals = Array.from(
+      worksRoot.querySelectorAll('.swiper-wrapper > .swiper-slide:not(.swiper-slide-duplicate)')
+    );
+    const total = originals.length;
+    if (!total) return;
+
+    const names = originals.map((slide) => {
+      const title = slide.querySelector('.works--info h2');
+      return title ? title.textContent.trim() : '';
+    });
+    const pad = (n) => String(n).padStart(2, '0');
+
+    const countEl = nav.querySelector('.works-nav__count');
+    const totalEl = nav.querySelector('.works-nav__total');
+    const nameEl = nav.querySelector('.works-nav__name');
+    const progress = nav.querySelector('.works-nav__progress');
+
+    if (totalEl) totalEl.textContent = '/ ' + pad(total);
+
+    if (progress) {
+      progress.innerHTML = '';
+      names.forEach((name, index) => {
+        const seg = document.createElement('button');
+        seg.type = 'button';
+        seg.className = 'works-nav__seg';
+        seg.setAttribute('role', 'tab');
+        seg.setAttribute('aria-label', name || 'Project ' + (index + 1));
+        seg.addEventListener('click', () => swiper.slideToLoop(index));
+        progress.appendChild(seg);
+      });
+    }
+
+    const update = () => {
+      const i = ((swiper.realIndex % total) + total) % total;
+      if (countEl) countEl.textContent = pad(i + 1);
+      if (nameEl) nameEl.textContent = names[i] || '';
+      if (progress) {
+        Array.from(progress.children).forEach((seg, k) => {
+          seg.classList.toggle('is-active', k === i);
+          seg.setAttribute('aria-selected', k === i ? 'true' : 'false');
+        });
+      }
+    };
+
+    const prev = nav.querySelector('.works-nav__btn--prev');
+    const next = nav.querySelector('.works-nav__btn--next');
+    if (prev) prev.onclick = () => swiper.slidePrev();
+    if (next) next.onclick = () => swiper.slideNext();
+
+    swiper.on('realIndexChange', update);
+    swiper.on('slideChange', update);
+    update();
+  }
+
+  // Parámetros comunes: bucle infinito, arrastre y rueda horizontal con imán
+  // (freeMode + sticky = se suelta y encaja en el proyecto más cercano).
+  // La rueda solo actúa en horizontal (forceToAxis): el scroll vertical sigue
+  // moviendo las diapositivas principales, no se secuestra.
+  const WORKS_SHARED_PARAMS = {
+    direction: 'horizontal',
+    loop: true,
+    loopAdditionalSlides: 6,
+    slidesPerView: 'auto',
+    spaceBetween: 0,
+    allowTouchMove: true,
+    simulateTouch: true,
+    grabCursor: true,
+    threshold: 6,
+    touchAngle: 35,
+    preventClicks: true,
+    preventClicksPropagation: true,
+    watchSlidesProgress: true,
+    roundLengths: true,
+    observer: true,
+    observeParents: true,
+    freeMode: {
+      enabled: true,
+      sticky: true,
+      momentum: true,
+      momentumRatio: 0.55,
+      momentumVelocityRatio: 0.7,
+      minimumVelocity: 0.05
+    },
+    mousewheel: {
+      enabled: true,
+      forceToAxis: true,
+      sensitivity: 0.9,
+      thresholdDelta: 3,
+      releaseOnEdges: false
+    },
+    keyboard: { enabled: true, onlyInViewport: true }
+  };
+
   function initWorksSwiperDesktop() {
     if (isMobile()) return null;
     const worksRoot = document.querySelector('.WorksSwiperDesktop');
@@ -246,32 +348,14 @@
 
     sortWorksSlidesByNewestFirst(wrapper);
 
-    const worksSwiper = new Swiper(worksRoot, {
-      direction: 'horizontal',
-      loop: true,
-      loopAdditionalSlides: 6,
-      rewind: false,
-      grabCursor: false,
-      allowTouchMove: false,
-      simulateTouch: false,
+    const worksSwiper = new Swiper(worksRoot, Object.assign({}, WORKS_SHARED_PARAMS, {
       centeredSlides: false,
-      slidesPerView: 'auto',
-      spaceBetween: 0,
-      speed: 420,
-      watchOverflow: true,
-      watchSlidesProgress: true,
-      roundLengths: true,
-      resistanceRatio: 0.25,
-      slideToClickedSlide: true,
-      observer: true,
-      observeParents: true,
-      freeMode: false,
-      mousewheel: false,
-      navigation: {
-        nextEl: worksRoot.querySelector('.swiper-button-next'),
-        prevEl: worksRoot.querySelector('.swiper-button-prev')
-      }
-    });
+      speed: 520,
+      grabCursor: false // el portfolio ya tiene cursor propio
+    }));
+
+    bindWorksNav(worksRoot, worksSwiper);
+
 
     worksRoot.addEventListener(
       'wheel',
@@ -302,34 +386,15 @@
 
     sortWorksSlidesByNewestFirst(wrapper);
 
-    const mobileSwiper = new Swiper(worksRoot, {
-      direction: 'horizontal',
-      loop: true,
-      loopAdditionalSlides: 6,
-      rewind: false,
-      grabCursor: false,
-      allowTouchMove: true,
-      simulateTouch: true,
+    const mobileSwiper = new Swiper(worksRoot, Object.assign({}, WORKS_SHARED_PARAMS, {
       centeredSlides: true,
-      slidesPerView: 'auto',
-      spaceBetween: 0,
-      speed: 360,
-      watchOverflow: true,
-      watchSlidesProgress: true,
-      roundLengths: true,
+      speed: 420,
+      grabCursor: false,
+      // En móvil, una tarjeta por gesto: encaje clásico (más predecible que el modo libre)
+      freeMode: { enabled: false },
+      shortSwipes: true,
+      longSwipesRatio: 0.2,
       resistanceRatio: 0.85,
-      slideToClickedSlide: true,
-      observer: true,
-      observeParents: true,
-      freeMode: false,
-      mousewheel: false,
-      pagination: {
-        el: worksRoot.querySelector('.swiper-pagination'),
-        clickable: true,
-        renderBullet(index, className) {
-          return `<span class="${className} works-swipe-dot" aria-label="Project ${index + 1}"></span>`;
-        }
-      },
       on: {
         init(swiper) {
           swiper.update();
@@ -338,12 +403,12 @@
           window.requestAnimationFrame(() => {
             refreshWorksSwiperMobile(swiper);
           });
-        },
-        touchEnd(swiper) {
-          swiper.slideToClosest(140);
         }
       }
-    });
+    }));
+
+    bindWorksNav(worksRoot, mobileSwiper);
+
 
     window.setTimeout(() => {
       refreshWorksSwiperMobile(mobileSwiper);

@@ -516,3 +516,94 @@
 }
 
 
+
+
+//// TEXTO NORMAL EN EL CUERPO DEL PROYECTO ////
+// project-content__quote = destacado (grande). project-content__text = párrafo normal,
+// mismo estilo que el texto de introducción (.slice-infos__text).
+
+.project-content__text {
+    opacity: .7;
+
+    & > p {
+        color: var(--bkg-color);
+        text-align: justify;
+        font-weight: 200;
+        line-height: 1.6;
+
+        & + p { margin-top: 1.6rem; }
+
+        a {
+            color: var(--bkg-color);
+            background-color: var(--accent-color);
+            text-decoration: none;
+        }
+    }
+}
+
+
+//// TARJETAS DE CONCEPTOS ATELIER ////
+
+.concept-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2vw;
+}
+
+.concept-card {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    color: var(--bkg-color);
+    text-decoration: none;
+
+    &__image {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        object-position: top;
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    &__name {
+        font-size: 2.2rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 1.1;
+        margin-top: .6rem;
+    }
+
+    &__line {
+        font-size: 1.5rem;
+        font-weight: 200;
+        line-height: 1.4;
+        opacity: .7;
+    }
+
+    &:hover &__image,
+    &:focus-visible &__image {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 0 -4px var(--accent-color);
+    }
+
+    &:hover &__name,
+    &:focus-visible &__name {
+        background-color: var(--accent-color);
+        align-self: flex-start;
+    }
+}
+
+.concept-cards__label {
+    font-size: 1.4rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .6;
+    color: var(--bkg-color);
+}
+
+@media (max-width: 768px) {
+    .concept-cards {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+}

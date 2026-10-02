@@ -5,6 +5,49 @@
 
 ---
 
+## Conv. 2 · 2026-10-02 21:51 · Copy de la home (primer arranque en el Project)
+
+**Inicio:** 2026-10-02 21:51 · **Turnos:** 1 · **Último msg:** 2026-10-02 21:51 · **Cierre:** abierta
+
+**Contexto:** Primera conversación desde el Project «PORTFOLIO alexdasi.com». Tarea: que Alex elija el copy de la home (hero + texto) y aplicarlo en `feat/atelier-case-study`.
+
+**Cambios:**
+- Alex elige hero A (PRODUCT, WEB & SYSTEMS) y texto 1. Aplicado en `home.php` (id/clase `uxui` → `web`; el relleno amarillo usa `inset:0`, se adapta solo).
+- Meta description por defecto en `header.php` y `header-works.php` (esta aún decía «graphic designer»).
+- About: titular nuevo para no repetir «complex, ambiguous problems». Process: frase de IA reescrita para no duplicar la del hero. Contact sin cambios.
+- Comprobado en 1281×720, 1366×768, 1440×900, 1920×1080 y 390×844: todo cabe.
+- Demo privada actualizada (versión 6).
+
+**Siguiente paso:** OK de Alex → merge a `main` → Hostinger.
+
+---
+
+## Conv. 1 · 2026-10-02 10:00 · ATELIER en el portfolio
+
+> Desde hoy cada conversación va numerada (inicio · turnos · cierre). Las entradas anteriores no tenían número.
+
+**Inicio:** 2026-10-02 ~10:00 · **Turnos:** 6 · **Último msg:** 2026-10-02 ~13:10 · **Cierre:** abierta (pendiente del OK de Alex)
+
+**Contexto:** Alex quiere llevar ATELIER al portfolio: un caso de estudio estrella, 3 webs como «Own work» (Otra Vez, Pati, Lenta) y la parte de proceso y herramientas ampliada.
+
+**Cambios (rama `feat/atelier-case-study`, `main` intacto):**
+- Página `atelier.php` + fichas `otra-vez.php`, `pati.php`, `lenta.php` (copy en inglés, sin em dash).
+- ATELIER en Works (desktop y móvil), en 2ª posición.
+- Imágenes reales (capturas de las webs construidas en local y de las rondas de propuestas).
+- Propuesta de proceso/herramientas y opciones de las dudas en [specs/2026-10-02_atelier-en-portfolio.md](specs/2026-10-02_atelier-en-portfolio.md).
+
+- Turno 2: diapositiva **Process** entre About y Contact (paginación pasa a 5; la flecha «subir» ahora mira la última diapositiva en vez del índice fijo 3). Demo estática privada como artefacto de claude.ai («alexdasi.com Preview»); la web real no se toca.
+- Turno 3 (feedback de Alex): la home de la demo salía en blanco (el visor de artefactos no deja navegar entre páginas: la demo carga cada página con fetch en el mismo documento; solo afecta a la demo, no al repo). Jerarquía de texto: `project-content__quote` solo para destacados; el resto pasa a `project-content__text` (párrafo normal, como la intro). Tarjetas de los 3 conceptos arriba del todo en ATELIER y «More from ATELIER» al final de cada concepto (`php-elements/atelier-concepts.php`). Process rehecha a dos columnas: método + «In practice» (ATELIER + Otra Vez, Pati, Lenta enlazados). Cabe en 1281×720 a 1920×1080. Nueva miniatura de ATELIER.
+- Turno 4: Works abre con ATELIER y Tulong (el orden usa el año más reciente del rango: Tulong «2025 – 2026» = 2026). Cursor negro de las páginas de proyecto: en el código funciona; fallaba solo en la demo (las páginas compartían ventana) → la demo carga cada página en un iframe nuevo.
+- Turno 5: pasafotos de Works rehecho. Bucle infinito en escritorio y móvil; escritorio con arrastre y rueda/trackpad horizontal en modo libre con imán (freeMode sticky), sin secuestrar el scroll vertical (forceToAxis); móvil una tarjeta por gesto. «prev/next» y los puntos sustituidos por `.works-nav` (contador 01/07, nombre, barra de progreso clicable y flechas redondas; `scss/layout/_works-nav.scss`). Probado con rueda, arrastre, botones, segmentos, bucle en los dos sentidos, clic que abre proyecto y swipe vertical en móvil.
+- Turno 6: propuesta de copy de la home (en el chat). Alex quiere un Project de claude.ai solo para el portfolio → HANDOFF reescrito como traspaso.
+
+**Pendientes:** OK de Alex; elegir opciones (dónde van las 3 webs, el proceso y el panel); feedback final de Pati/Lenta.
+
+**Siguiente paso:** Alex revisa las previews → ajustes → merge a `main` → Alex actualiza Hostinger.
+
+---
+
 ## 2026-06-23 — Rework del portfolio a producción (Track B)
 
 **Contexto:** Reposición de `alexdasi.com` de "web/graphic designer" a **Product Designer** (coordinado vía `cowork/INSTRUCCIONES-CC.md`), más mejoras de interacción y fixes de contenido. Pusheado a producción a petición de Alex (`git-all`).
