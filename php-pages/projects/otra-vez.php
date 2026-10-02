@@ -41,23 +41,32 @@ include '../../php-elements/header-works.php'
 
                 <img class="element project-content__image" src="../../content/pictures/projects/otra-vez/otra-vez-home-section.jpg" alt="Otra Vez homepage with collection and outfit" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Paper, ink and a single rust accent. Hanken Grotesk for headlines, a monospace for the data of each piece, and 1 px lines holding everything together.</p>
+                <p class="padding3 project-content__quote">Every piece has a number, a label and a price.</p>
+
+
+                <div class="padding3 project-content__text"><p>Paper, ink and a single rust accent. Hanken Grotesk for headlines, a monospace for the data of each piece, and 1 px lines holding everything together.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/otra-vez/otra-vez-piezas.jpg" alt="Otra Vez catalogue with filters and grid or index view" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">On top of that calm structure, the homepage stays alive: new arrivals, events, collections and outfits share one slider. Small shops live on their neighbourhood, so the agenda has DJ nights, flea markets and collaborations with other local businesses.</p>
+                <div class="padding3 project-content__text"><p>On top of that calm structure, the homepage stays alive: new arrivals, events, collections and outfits share one slider. Small shops live on their neighbourhood, so the agenda has DJ nights, flea markets and collaborations with other local businesses.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/otra-vez/otra-vez-agenda.jpg" alt="Otra Vez events agenda" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Outfits are a feature, not the concept: a teaser on the homepage, and on their own page the full look with every piece broken down, bookable as a set or one by one.</p>
+                <div class="padding3 project-content__text"><p>Outfits are a feature, not the concept: a teaser on the homepage, and on their own page the full look with every piece broken down, bookable as a set or one by one.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/otra-vez/otra-vez-conjunto.jpg" alt="Otra Vez outfit page with each piece listed" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Four rounds of directions came before a single page was built. The chosen one, Archivo, kept the thin lines and the grid or index view, and borrowed the shop photos from another direction.</p>
+                <div class="padding3 project-content__text"><p>Four rounds of directions came before a single page was built. The chosen one, Archivo, kept the thin lines and the grid or index view, and borrowed the shop photos from another direction.</p></div>
 
                 <p class="padding3 project-content__quote">The <a href="https://atelier-demo-otra-vez.pages.dev" target="_blank" rel="noopener noreferrer">site is live</a> if you want to explore it. Fictional brand, real website.</p>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/otra-vez/otra-vez-mobile.jpg" alt="Otra Vez on mobile" loading="lazy" decoding="async">
+
+
+                <section class="tulong-section padding3">
+                    <p class="concept-cards__label">More from ATELIER</p>
+                    <?php $conceptsExclude = 'otra-vez'; $conceptsWithAtelier = true; include '../../php-elements/atelier-concepts.php'; ?>
+                </section>
 
             </div>
         </section>

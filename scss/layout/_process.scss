@@ -1,4 +1,6 @@
-//// PROCESS (slide entre About y Contact) ////
+//// PROCESS (diapositiva entre About y Contact) ////
+// Escritorio: dos columnas (método | casos). Debe caber en una pantalla:
+// el slider vertical no deja hacer scroll dentro de la diapositiva.
 
 #process {
     width: 100vw;
@@ -11,57 +13,56 @@
 
 .process {
     width: 80vw;
-    margin: 0 auto;
-    // Hueco abajo para la flecha de la diapositiva
-    padding: 6vh 0 16vh;
+    margin: 0 auto 0 8vw; // a la izquierda, deja libre la paginación de la derecha
+    padding: 5vh 0 14vh; // hueco abajo para la flecha
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 5vw;
+    align-items: start;
     font-family: $main-font;
     color: var(--main-color);
 
-    &__title {
-        margin-top: 0;
-    }
+    &__col { display: flex; flex-direction: column; min-width: 0; }
+
+    &__title { margin-top: 0; }
 
     &__lead {
-        max-width: 60rem;
-        margin-top: 2.4rem;
-        font-size: 1.8rem;
+        max-width: 52rem;
+        margin-top: 1.6rem;
+        font-size: 1.5rem;
+        font-weight: 300;
         line-height: 1.5;
-        opacity: .7;
+        opacity: .75;
         color: var(--main-color);
     }
 
     &__steps {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 3vw;
-        margin: 4.5rem 0 0;
+        margin: 2.6rem 0 0;
         padding: 0;
         list-style: none;
-        counter-reset: none;
     }
 
     &__step {
-        border-top: 1px solid rgba(255, 255, 255, .2);
-        padding-top: 2rem;
+        display: grid;
+        grid-template-columns: 3.6rem 11rem minmax(0, 1fr);
+        align-items: baseline;
+        gap: 1.2rem;
+        padding: .9rem 0;
+        border-top: 1px solid rgba(255, 255, 255, .18);
         transition: border-color .2s ease;
 
-        &:hover {
-            border-color: var(--accent-color);
-        }
+        &:last-child { border-bottom: 1px solid rgba(255, 255, 255, .18); }
+        &:hover { border-top-color: var(--accent-color); }
     }
 
     &__num {
-        display: block;
-        font-family: $main-font;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         letter-spacing: .1em;
         color: var(--accent-color);
     }
 
     &__name {
-        margin: 1.2rem 0 0;
-        font-family: $main-font;
-        font-size: 2.6rem;
+        font-size: 1.8rem;
         font-weight: 600;
         line-height: 1.1;
         text-transform: uppercase;
@@ -69,9 +70,9 @@
     }
 
     &__text {
-        margin-top: 1.2rem;
-        font-size: 1.5rem;
-        line-height: 1.5;
+        font-size: 1.35rem;
+        font-weight: 300;
+        line-height: 1.4;
         opacity: .7;
         color: var(--main-color);
     }
@@ -80,15 +81,13 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 1.2rem 2.4rem;
-        margin-top: 4.5rem;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, .2);
+        gap: 1rem 1.6rem;
+        margin-top: 2.2rem;
     }
 
     &__tools-label {
-        font-size: 1.4rem;
-        letter-spacing: .1em;
+        font-size: 1.3rem;
+        letter-spacing: .12em;
         text-transform: uppercase;
         color: var(--accent-color);
     }
@@ -96,59 +95,119 @@
     &__tools-list {
         display: flex;
         flex-wrap: wrap;
-        gap: .8rem;
+        gap: .6rem;
         margin: 0;
         padding: 0;
         list-style: none;
 
         li {
-            padding: .6rem 1.4rem;
-            border: 1px solid rgba(255, 255, 255, .35);
+            padding: .5rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, .3);
             border-radius: 50px;
             font-family: $main-font;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--main-color);
         }
     }
 
-    &__case {
-        margin-left: auto;
-        font-size: 1.6rem;
-        color: var(--bkg-color);
-        background-color: var(--accent-color);
-        padding: .2rem .6rem;
-        text-decoration: none;
+    &__col--cases { gap: 1.4rem; }
+
+    &__concepts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.4rem;
     }
 }
 
-// Pantallas bajas de escritorio: comprimir para que quepa en una diapositiva
+.process-case {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    color: var(--main-color);
+    text-decoration: none;
+
+    img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        object-position: top;
+        margin-bottom: .6rem;
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    &--main img { aspect-ratio: 16 / 5; object-position: center; }
+
+    &__name {
+        font-size: 1.8rem;
+        font-weight: 600;
+        line-height: 1.1;
+        text-transform: uppercase;
+        align-self: flex-start;
+        transition: background-color .15s ease, color .15s ease;
+    }
+
+    &--main &__name { font-size: 2.6rem; }
+
+    &__line {
+        font-size: 1.4rem;
+        font-weight: 300;
+        line-height: 1.4;
+        opacity: .7;
+    }
+
+    &:hover img,
+    &:focus-visible img {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 0 -3px var(--accent-color);
+    }
+
+    &:hover .process-case__name,
+    &:focus-visible .process-case__name {
+        background-color: var(--accent-color);
+        color: var(--bkg-color);
+    }
+}
+
+// Escritorio con poca altura (portátiles 768-820 px): compactar
 @media (min-width: 1281px) and (max-height: 820px) {
     .process {
-        padding: 4vh 0 15vh;
+        padding: 9vh 0 12vh;
 
-        &__steps { margin-top: 3.5rem; }
-        &__tools { margin-top: 3.5rem; }
-        &__text { font-size: 1.4rem; }
+        &__lead { margin-top: 1rem; font-size: 1.35rem; }
+        &__steps { margin-top: 1.6rem; }
+        &__step { padding: .55rem 0; }
+        &__name { font-size: 1.6rem; }
+        &__text { font-size: 1.25rem; }
+        &__tools { margin-top: 1.4rem; flex-wrap: nowrap; }
+        &__tools-list { flex-wrap: nowrap; li { padding: .35rem .9rem; font-size: 1.15rem; } }
     }
+
+    .process-case--main img { aspect-ratio: 16 / 4.4; }
+    .process-case__line { font-size: 1.25rem; }
 }
 
 @media (max-width: 1280px) {
-    #process {
-        min-height: auto;
-    }
+    #process { min-height: auto; width: 100%; }
 
     .process {
-        width: 90vw;
+        width: 100%;
+        margin: 0;
         padding: 4rem 0;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 5rem;
 
-        &__steps {
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            margin-top: 4rem;
-        }
+        &__step {
+            grid-template-columns: 3.6rem minmax(0, 1fr);
 
-        &__case {
-            margin-left: 0;
+            .process__text { grid-column: 2; }
         }
     }
+}
+
+@media (max-width: 575px) {
+    .process__concepts { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .process-case img, .process__step { transition: none; }
 }

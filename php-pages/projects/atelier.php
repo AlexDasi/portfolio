@@ -67,51 +67,58 @@ include '../../php-elements/header-works.php'
         <section class="project-content">
             <div class="project-content__wrapper tulong-flow">
 
-                <!-- PROBLEM -->
-                <section class="tulong-section">
-                    <p class="padding3 project-content__quote">Today a tool can generate a website from four sentences. That is exactly the problem: the result looks like everything else. I wanted the opposite, a process where speed serves taste and every site has a personality of its own.</p>
+                <!-- LOS TRES CONCEPTOS, ARRIBA -->
+                <section class="tulong-section padding3">
+                    <p class="concept-cards__label">Three concepts built with ATELIER</p>
+                    <?php include '../../php-elements/atelier-concepts.php'; ?>
                 </section>
 
-                <!-- THE LOOP -->
-                <section class="tulong-section">
-                    <p class="padding3 project-content__quote">It runs as one loop: discover, explore, decide, build, learn. Trends and references become a tagged moodboard. Every brief gets three directions. I choose. The chosen one becomes a real site, checked automatically. My feedback goes back into the system.</p>
-                </section>
+                <!-- PROBLEM (destacado) -->
+                <p class="padding3 project-content__quote">A tool can generate a website from four sentences. That is the problem: it looks like everything else.</p>
+
+                <div class="padding3 project-content__text">
+                    <p>I wanted the opposite: a process where speed serves taste and every site has a personality of its own. ATELIER runs as one loop. Trends and saved references become a moodboard tagged by palette, type, layout and motion. Every brief gets three directions. I choose. The chosen direction becomes a real site in Astro, checked automatically for links, accessibility and responsive layouts. My feedback goes back into the system.</p>
+                </div>
 
                 <!-- DIRECTIONS -->
-                <section class="tulong-section">
-                    <p class="padding3 project-content__quote">Directions before builds. Each one defines palette, typography, layout and one signature piece, shown on desktop and mobile. It costs little to throw away, so I throw away a lot.</p>
-                    <figure class="tulong-figure tulong-figure--full">
-                        <img class="element project-content__image" src="../../content/pictures/projects/atelier/atelier-three-directions-otra-vez.jpg" alt="Three visual directions proposed for Otra Vez: Archivo, Mosaico and Ocre" loading="lazy" decoding="async">
+                <p class="padding3 project-content__quote">Directions before builds.</p>
+
+                <div class="padding3 project-content__text">
+                    <p>Each direction defines palette, typography, layout and one signature piece, shown on desktop and mobile with a light demo. It costs little to throw away, so I throw away a lot.</p>
+                </div>
+
+                <figure class="tulong-figure tulong-figure--full">
+                    <img class="element project-content__image" src="../../content/pictures/projects/atelier/atelier-three-directions-otra-vez.jpg" alt="Three visual directions proposed for Otra Vez: Archivo, Mosaico and Ocre" loading="lazy" decoding="async">
+                </figure>
+
+                <div class="padding3 project-content__text">
+                    <p>Otra Vez took four rounds. The first ones were rejected: too similar to each other, too editorial, too much colour. The fourth round landed on Archivo, with the shop photos borrowed from Mosaico. Pati and Lenta each needed two rounds, mixing the best parts of several directions.</p>
+                </div>
+
+                <div class="tulong-grid">
+                    <figure class="tulong-figure">
+                        <img class="element project-content__image" src="../../content/pictures/projects/atelier/atelier-proposals-pati.jpg" alt="Second round of directions for Pati" loading="lazy" decoding="async">
                     </figure>
-                    <p class="padding3 project-content__quote">Otra Vez took four rounds. The first ones were rejected: too similar to each other, too editorial, too much colour. The fourth round landed on Archivo, with the shop photos borrowed from Mosaico.</p>
-                    <div class="tulong-grid">
-                        <figure class="tulong-figure">
-                            <img class="element project-content__image" src="../../content/pictures/projects/atelier/atelier-proposals-pati.jpg" alt="Second round of directions for Pati" loading="lazy" decoding="async">
-                        </figure>
-                        <figure class="tulong-figure">
-                            <img class="element project-content__image" src="../../content/pictures/projects/atelier/atelier-proposals-lenta.jpg" alt="Second round of directions for Lenta" loading="lazy" decoding="async">
-                        </figure>
-                    </div>
-                </section>
+                    <figure class="tulong-figure">
+                        <img class="element project-content__image" src="../../content/pictures/projects/atelier/atelier-proposals-lenta.jpg" alt="Second round of directions for Lenta" loading="lazy" decoding="async">
+                    </figure>
+                </div>
 
-                <!-- TASTE -->
-                <section class="tulong-section">
-                    <p class="padding3 project-content__quote">The system keeps a written taste profile. A comment starts as a suggestion and becomes a rule once it repeats or I generalise it. A few of the rules today: empty and flat is not minimal. Complexity has to earn its place. No template stores. One frame system per site. If a brand detail needs explaining, it should not be there.</p>
-                </section>
+                <!-- TASTE (destacado) -->
+                <p class="padding3 project-content__quote">Empty and flat is not minimal. Complexity has to earn its place.</p>
 
-                <!-- REVIEW -->
-                <section class="tulong-section">
-                    <p class="padding3 project-content__quote">A private control panel ties it together: the trend radar, every round of directions with my notes, the sites and a review mode where I pin comments straight onto live elements. Those pins are the next iteration's to-do list.</p>
-                </section>
-
-                <!-- OUTPUT -->
-                <section class="tulong-section">
-                    <p class="padding3 project-content__quote">In its first weeks ATELIER logged more than 20 design decisions and built ten sites. Three went through the full process, from directions to final site, and made it into this portfolio:</p>
-                    <p class="padding3 project-content__quote"><a href="otra-vez.php">Otra Vez</a>, a vintage store run like an archive.<br><a href="pati.php">Pati</a>, a brunch café built around its courtyard.<br><a href="lenta.php">Lenta</a>, a tattoo studio where flash is sold like product.</p>
-                </section>
+                <div class="padding3 project-content__text">
+                    <p>Those are two of the rules in the taste profile the system keeps in writing. Every comment starts as a suggestion and becomes a rule once it repeats or I generalise it. Others: no template stores, one frame system per site, and if a brand detail needs explaining, it should not be there.</p>
+                    <p>A private control panel ties it together: the trend radar, every round of directions with my notes, the sites, and a review mode where I pin comments straight onto live elements. Those pins become the next iteration's to-do list.</p>
+                    <p>In its first weeks ATELIER logged more than 20 design decisions and built ten sites. Three went through the full process, from directions to final site, and are shown above.</p>
+                </div>
 
                 <!-- ROLE -->
-                <p class="padding3 project-content__quote">I designed the system end to end: the workflow, the decision rules, the taste model, the review tools and the art direction of every site. AI agents handle research, production and QA within those rules. The brands are fictional, the process is real.</p>
+                <p class="padding3 project-content__quote">The brands are fictional. The process is real.</p>
+
+                <div class="padding3 project-content__text">
+                    <p>I designed the system end to end: the workflow, the decision rules, the taste model, the review tools and the art direction of every site. AI agents handle research, production and QA within those rules.</p>
+                </div>
 
             </div>
         </section>

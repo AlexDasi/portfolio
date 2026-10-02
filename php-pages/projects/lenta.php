@@ -41,23 +41,32 @@ include '../../php-elements/header-works.php'
 
                 <img class="element project-content__image" src="../../content/pictures/projects/lenta/lenta-flash.jpg" alt="Lenta flash designs with price, size and artist" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Flash is the core. Each design is shown like a product, with its price, size, who tattoos it and the next free slot. Each flash is matched to the artist whose style it really belongs to.</p>
+                <p class="padding3 project-content__quote">Flash, sold like product.</p>
+
+
+                <div class="padding3 project-content__text"><p>Flash is the core. Each design is shown like a product, with its price, size, who tattoos it and the next free slot. Each flash is matched to the artist whose style it really belongs to.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/lenta/lenta-equipo.jpg" alt="Lenta team page with each artist" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">The team is shown through people, not just their work: a photo of each artist, their style and the days they are in.</p>
+                <div class="padding3 project-content__text"><p>The team is shown through people, not just their work: a photo of each artist, their style and the days they are in.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/lenta/lenta-home-section.jpg" alt="Lenta homepage section" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Booking takes four steps: a flash or your own idea, placement and size on a ruler, then the artist. A live card builds up with a fixed or estimated price. Picking a flash opens the booking with that design already selected.</p>
+                <div class="padding3 project-content__text"><p>Booking takes four steps: a flash or your own idea, placement and size on a ruler, then the artist. A live card builds up with a fixed or estimated price. Picking a flash opens the booking with that design already selected.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/lenta/lenta-cita.jpg" alt="Lenta four-step booking with live summary card" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Black, bone and red. A short, direct site, designed to look its best on a phone.</p>
+                <div class="padding3 project-content__text"><p>Black, bone and red. A short, direct site, designed to look its best on a phone.</p></div>
 
                 <p class="padding3 project-content__quote">The <a href="https://atelier-demo-lenta.pages.dev" target="_blank" rel="noopener noreferrer">site is live</a> if you want to explore it. Fictional brand, real website.</p>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/lenta/lenta-mobile.jpg" alt="Lenta on mobile" loading="lazy" decoding="async">
+
+
+                <section class="tulong-section padding3">
+                    <p class="concept-cards__label">More from ATELIER</p>
+                    <?php $conceptsExclude = 'lenta'; $conceptsWithAtelier = true; include '../../php-elements/atelier-concepts.php'; ?>
+                </section>
 
             </div>
         </section>

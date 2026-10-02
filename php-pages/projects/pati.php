@@ -41,23 +41,32 @@ include '../../php-elements/header-works.php'
 
                 <img class="element project-content__image" src="../../content/pictures/projects/pati/pati-home-section.jpg" alt="Pati homepage section" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">The courtyard is the hero, not the food. A day in the courtyard shows how it changes at 9, at 1 and at 7, and it has a page of its own. One frame system runs through the whole site.</p>
+                <p class="padding3 project-content__quote">The courtyard is the hero, not the food.</p>
+
+
+                <div class="padding3 project-content__text"><p>A day in the courtyard shows how it changes at 9, at 1 and at 7, and it has a page of its own. One frame system runs through the whole site.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/pati/pati-patio.jpg" alt="Pati courtyard page with photo gallery" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">The menu can be read in full. On the homepage, tabs switch on their own with the time of day; on its own page, four sheets that feel printed, with a small round stamp.</p>
+                <div class="padding3 project-content__text"><p>The menu can be read in full. On the homepage, tabs switch on their own with the time of day; on its own page, four sheets that feel printed, with a small round stamp.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/pati/pati-carta.jpg" alt="Pati menu designed as printed sheets" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Coworking passes and table bookings are part of the same story. The booking flow is Pati's own: a strip of days, times by breakfast or brunch, party size, area, and a live ticket that fills in as you go.</p>
+                <div class="padding3 project-content__text"><p>Coworking passes and table bookings are part of the same story. The booking flow is Pati's own: a strip of days, times by breakfast or brunch, party size, area, and a live ticket that fills in as you go.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/pati/pati-reservar.jpg" alt="Pati table booking with live ticket" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Olive, cream, egg yolk and terracotta. A simple, warm site that feels like the neighbourhood.</p>
+                <div class="padding3 project-content__text"><p>Olive, cream, egg yolk and terracotta. A simple, warm site that feels like the neighbourhood.</p></div>
 
                 <p class="padding3 project-content__quote">The <a href="https://atelier-demo-pati.pages.dev" target="_blank" rel="noopener noreferrer">site is live</a> if you want to explore it. Fictional brand, real website.</p>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/pati/pati-mobile.jpg" alt="Pati on mobile" loading="lazy" decoding="async">
+
+
+                <section class="tulong-section padding3">
+                    <p class="concept-cards__label">More from ATELIER</p>
+                    <?php $conceptsExclude = 'pati'; $conceptsWithAtelier = true; include '../../php-elements/atelier-concepts.php'; ?>
+                </section>
 
             </div>
         </section>
