@@ -74,7 +74,7 @@ include '../../php-elements/header-works.php'
 
                 <!-- PROBLEM / CONTEXT -->
                 <section class="tulong-section">
-                    <p class="padding3 project-content__quote">Emergency operations often run with fragmented data and parallel teams. Without a shared operational view, routing decisions, destination prioritization, and fleet usage become harder to align in real time.</p>
+                    <div class="padding3 project-content__text"><p>Emergency operations often run with fragmented data and parallel teams. Without a shared operational view, routing decisions, destination prioritization, and fleet usage become harder to align in real time.</p></div>
                     <figure class="tulong-figure tulong-figure--full">
                         <img class="element project-content__image" src="../../content/pictures/projects/tulong/screenshots/tulong-dashboard-screenshot-01.png" alt="Tulong dashboard showing fragmented logistics context" loading="lazy" decoding="async">
                     </figure>
@@ -98,7 +98,7 @@ include '../../php-elements/header-works.php'
 
                 <!-- MAIN OPERATIONAL VIEW -->
                 <section class="tulong-section">
-                    <p class="padding3 project-content__quote">The distribution matrix acts as the single decision surface for coordinators during active operations, connecting route assignment, trip load, and destination timing in one glance.</p>
+                    <div class="padding3 project-content__text"><p>The distribution matrix acts as the single decision surface for coordinators during active operations, connecting route assignment, trip load, and destination timing in one glance.</p></div>
                     <figure class="tulong-figure tulong-figure--full">
                         <img class="element project-content__image" src="../../content/pictures/projects/tulong/screenshots/tulong-dashboard-screenshot-04.png" alt="Tulong distribution matrix with routes and dispatch status" loading="lazy" decoding="async">
                     </figure>
@@ -109,7 +109,7 @@ include '../../php-elements/header-works.php'
 
                 <!-- PLANNING / OPTIMIZATION -->
                 <section class="tulong-section">
-                    <p class="padding3 project-content__quote">Daily planning and end-of-day optimization are designed as one continuous cycle: build feasible plans, test fleet strain, and rebalance distribution before dispatch deadlines are reached.</p>
+                    <div class="padding3 project-content__text"><p>Daily planning and end-of-day optimization are designed as one continuous cycle: build feasible plans, test fleet strain, and rebalance distribution before dispatch deadlines are reached.</p></div>
                     <div class="tulong-grid">
                         <figure class="tulong-figure tulong-figure--full">
                             <img class="element project-content__image tulong-mockup" src="../../content/pictures/projects/tulong/mockups/tulong-mockup-05.jpg" alt="Tulong operational dashboard on laptop in low-light context" loading="lazy" decoding="async">
@@ -119,15 +119,15 @@ include '../../php-elements/header-works.php'
 
                 <!-- IMPACT -->
                 <section class="tulong-section">
-                    <p class="padding3 project-content__quote">Tested against real operational scenarios, the prototype pointed to clearer planning cycles, faster dispatch alignment, and stronger shared awareness across teams, with smoother handoffs between planning, loading, and route execution under real constraints.</p>
+                    <div class="padding3 project-content__text"><p>Tested against real operational scenarios, the prototype pointed to clearer planning cycles, faster dispatch alignment, and stronger shared awareness across teams, with smoother handoffs between planning, loading, and route execution under real constraints.</p></div>
                 </section>
 
                 <!-- ROLE -->
-                <p class="padding3 project-content__quote">I led the project end-to-end: system concept, UX architecture, interaction logic, and interface design. Tulong is positioned as an operational proposal for World Central Kitchen emergency response scenarios.</p>
+                <div class="padding3 project-content__text"><p>I led the project end-to-end: system concept, UX architecture, interaction logic, and interface design. Tulong is positioned as an operational proposal for World Central Kitchen emergency response scenarios.</p></div>
 
                 <!-- FIELD PHOTOS CAROUSEL -->
                 <section class="tulong-section">
-                    <p class="padding3 project-content__quote">The following field scenes ground the proposal in real deployment conditions and last-mile distribution realities.</p>
+                    <div class="padding3 project-content__text"><p>The following field scenes ground the proposal in real deployment conditions and last-mile distribution realities.</p></div>
                     <div class="tulong-carousel" data-tulong-carousel>
                         <button class="tulong-carousel__button tulong-carousel__button--prev" type="button" aria-label="Previous field photo">&#8249;</button>
                         <div class="tulong-carousel__viewport" data-tulong-viewport>

@@ -51,7 +51,7 @@ include '../../php-elements/header-works.php'
 
                 <img class="element project-content__image" src="../../content/pictures/projects/elsa/Macbook-elsa.jpg" alt="Elsa Moreno desktop website" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">A restrained layout and soft chromatic atmosphere let text, gesture, and visual pauses unfold with intention. <a href="https://www.elsa-moreno.com" target="_blank">Visit the website</a> to experience the project in full.</p>
+                <div class="padding3 project-content__text"><p>A restrained layout and soft chromatic atmosphere let text, gesture, and visual pauses unfold with intention. <a href="https://www.elsa-moreno.com" target="_blank">Visit the website</a> to experience the project in full.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/elsa/Macbook-elsa 2.jpg" alt="Elsa Moreno additional view" loading="lazy" decoding="async">
 

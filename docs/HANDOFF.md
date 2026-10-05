@@ -3,7 +3,7 @@
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
 **Fecha:** 2026-10-05
-**Rama activa:** `main` (R1 Works + R2 casos y Archive publicados el 2026-10-05, Conv. 8). Para trabajo nuevo, abrir rama desde `main`.
+**Rama activa:** `fix/enlaces-movil` (tamaño de enlaces en móvil), pendiente del OK para publicar.
 
 ## Contexto en una frase
 ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Lenta) + diapositiva Process + pasafotos de Works nuevo. Todo en la rama, revisado por Alex en una demo privada.
@@ -39,4 +39,4 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Archive: `php-pages/projects/archive.php` (array `$archive`).
 
 ## Próximo paso exacto
-➡️ Nada urgente. Pendiente: cifras reales de resultado para Idrica, Knowadays, Clustag y Elsa; backlog R3 (navegación), R4 (rendimiento), R5 (legibilidad), R6 (About/Contact).
+➡️ Con el OK de Alex: merge `fix/enlaces-movil` → `main` y push; comprobar en vivo. Propuesta pendiente: pasar los párrafos largos de `__quote` a `__text` (Knowadays, Tulong, Idrica).

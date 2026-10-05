@@ -15,6 +15,16 @@
     margin: 0;
 } 
 
+// Un enlace dentro de un texto mide lo mismo que su frase (la regla de arriba le fijaba 1.5rem)
+p a,
+.project-content__quote a,
+.slice-infos__text a,
+.info-column__text a,
+.case-summary__text a {
+    font-size: inherit;
+    line-height: inherit;
+}
+
 h1{
     color: var(--accent-color);
     font-size: 8rem;

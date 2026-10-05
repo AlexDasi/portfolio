@@ -47,7 +47,7 @@ include '../../php-elements/header-works.php'
 
                 <img class="element project-content__image" src="../../content/pictures/projects/idrica-wastewater/idrica-wastewater-operations.jpg" alt="Idrica Wastewater operational data interface" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">The interface system was shaped for real operational contexts: dense information, multiple decision layers, and the need for fast visual parsing across dashboards, tables, and geographical views.</p>
+                <div class="padding3 project-content__text"><p>The interface system was shaped for real operational contexts: dense information, multiple decision layers, and the need for fast visual parsing across dashboards, tables, and geographical views.</p></div>
 
             </div>
         </section>
