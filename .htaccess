@@ -1,0 +1,4 @@
+# Archivos internos que no deben verse en la web
+RedirectMatch 404 /\.git
+RedirectMatch 404 ^/docs(/|$)
+RedirectMatch 404 /\.ftp-deploy-sync-state\.json$
