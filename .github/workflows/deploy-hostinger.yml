@@ -23,17 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Limpiar la subida a la carpeta equivocada (una sola vez)
-        continue-on-error: true
-        env:
-          P: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          for d in content css docs domains images js php-elements php-pages public_html; do
-            curl -s --max-time 120 --user "u274648775:$P" "ftp://213.130.145.191/" -Q "-RMD $d" -o /dev/null || true
-          done
-          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
-          lftp -u "u274648775,$P" -e "set ftp:ssl-allow false; set net:max-retries 2; set net:timeout 30; rm -r -f content css docs domains images js php-elements php-pages public_html; rm -f index.php; ls; bye" 213.130.145.191 || true
-
       - name: Subir a Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:

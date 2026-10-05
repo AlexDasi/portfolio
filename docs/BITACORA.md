@@ -7,7 +7,7 @@
 
 ## Conv. 4 · 2026-10-05 · Recordatorio del estado del despliegue
 
-**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** abierta
+**Inicio:** 2026-10-05 · **Turnos:** 11 · **Último msg:** 2026-10-05 · **Cierre:** 2026-10-05
 
 **Contexto:** Alex pregunta dónde estábamos con el deploy. Estado: `main` ya mergeado y pusheado (Conv. 3); falta darle a desplegar en Hostinger (Git) y comprobar en vivo. No había ningún error con Hostinger, solo el paso manual pendiente. Desde la nube no se puede cargar alexdasi.com (bloqueado por el proxy), así que no se ha podido comprobar si ya está desplegado.
 
@@ -15,7 +15,11 @@
 
 **Siguiente paso:** decidir con Alex: recrear la entrada Git del panel con `git@github.com:AlexDasi/portfolio.git` (ruta vacía), o despliegue por GitHub Actions. Ojo: `/docs/` se sirve en público.
 
-**Decisión y cambios:** despliegue con GitHub Actions por FTPS (`.github/workflows/deploy-hostinger.yml`) usando la cuenta FTP principal (el plan Single no deja más cuentas extra). Alex cambió la contraseña FTP y creó los secretos `FTP_USERNAME` y `FTP_PASSWORD`. `docs/.htaccess` bloquea /docs en la web. Skill `desplegar-portfolio` creada.
+**Decisión y cambios:** despliegue con GitHub Actions por FTPS (`.github/workflows/deploy-hostinger.yml`) usando la cuenta FTP principal (el plan Single no deja más cuentas extra). Alex cambió la contraseña FTP y creó los secretos `FTP_USERNAME` y `FTP_PASSWORD`. `docs/.htaccess` bloquea /docs en la web. Skill `desplegar-portfolio` creada. Ajustes hasta que funcionó: FTPS da 425 en Hostinger → FTP; el usuario `u274648775` entra en una carpeta vacía que no es la web → usuario `u274648775.alexdasi.com` (raíz = web). `.htaccess` raíz oculta `.git`, `/docs` y el estado del FTP.
+
+**Resultado:** web publicada y comprobada en vivo (home con hero nuevo, Process, Works, ATELIER, Otra Vez, Pati, Lenta, Tulong: 200 y sin imágenes rotas; móvil 375 px sin scroll horizontal; `/docs` y `.git` ya no se ven).
+
+**Cierre:** 2026-10-05 · conversación cerrada.
 
 ---
 
