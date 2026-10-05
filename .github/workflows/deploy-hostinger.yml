@@ -1,5 +1,5 @@
 # Despliegue automático de alexdasi.com
-# Cada push a main sube a Hostinger solo lo que ha cambiado (estado en public_html/.ftp-deploy-sync-state.json).
+# Cada push a main sube a Hostinger solo lo que ha cambiado (estado en domains/alexdasi.com/public_html/.ftp-deploy-sync-state.json).
 # También se lanza a mano en Actions → Run workflow.
 # Secretos: FTP_USERNAME y FTP_PASSWORD (cuenta FTP principal de Hostinger).
 # Protocolo: FTP. Con FTPS, Hostinger corta la conexión de datos (425 Unable to build data connection).
@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: 21
-          server-dir: public_html/
+          server-dir: domains/alexdasi.com/public_html/
           state-name: .ftp-deploy-sync-state.json
           log-level: minimal
           timeout: 120000
