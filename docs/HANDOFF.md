@@ -3,7 +3,7 @@
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
 **Fecha:** 2026-10-05
-**Rama activa:** `feat/works-y-casos` (R1 Works + R2 casos y Archive), pendiente del OK de Alex.
+**Rama activa:** `main` (R1 Works + R2 casos y Archive publicados el 2026-10-05, Conv. 8). Para trabajo nuevo, abrir rama desde `main`.
 
 ## Contexto en una frase
 ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Lenta) + diapositiva Process + pasafotos de Works nuevo. Todo en la rama, revisado por Alex en una demo privada.
@@ -39,4 +39,4 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Archive: `php-pages/projects/archive.php` (array `$archive`).
 
 ## Próximo paso exacto
-➡️ Alex revisa la demo (versión 8). Con el OK: merge `feat/works-y-casos` → `main` y push (deploy automático) y comprobar en vivo. Pedirle cifras de resultado para los casos si las tiene.
+➡️ Nada urgente. Pendiente: cifras reales de resultado para Idrica, Knowadays, Clustag y Elsa; backlog R3 (navegación), R4 (rendimiento), R5 (legibilidad), R6 (About/Contact).

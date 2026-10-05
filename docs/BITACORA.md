@@ -5,9 +5,23 @@
 
 ---
 
+## Conv. 8 · 2026-10-05 14:25 · Publicar R1 + R2
+
+**Inicio:** 2026-10-05 14:25 · **Turnos:** 1 · **Último msg:** 2026-10-05 14:25 · **Cierre:** 2026-10-05 14:35
+
+**Contexto:** Alex da el OK («publícalo así, de momento está bien»).
+
+**Cambios:** merge `feat/works-y-casos` → `main` y push. Run #16 OK.
+
+**Comprobado en vivo:** home EN/ES con filtro y Archive; archive.php EN/ES (9 imágenes 200); Tulong EN/ES y Knowadays con el resumen; CSS y JS nuevos servidos.
+
+**Pendiente:** cifras reales de resultado para Idrica, Knowadays, Clustag y Elsa (si Alex las tiene). Resto del backlog R3-R6.
+
+---
+
 ## Conv. 7 · 2026-10-05 · Rediseño R1 (Works) y R2 (casos + Archive)
 
-**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** abierta (pendiente del OK)
+**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** 2026-10-05 14:20
 
 **Contexto:** Alex elige R1 y R2 de las propuestas de la Conv. 6.
 
