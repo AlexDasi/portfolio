@@ -15,6 +15,8 @@
 
 **Siguiente paso:** decidir con Alex: recrear la entrada Git del panel con `git@github.com:AlexDasi/portfolio.git` (ruta vacía), o despliegue por GitHub Actions. Ojo: `/docs/` se sirve en público.
 
+**Decisión y cambios:** despliegue con GitHub Actions por FTPS (`.github/workflows/deploy-hostinger.yml`) usando la cuenta FTP principal (el plan Single no deja más cuentas extra). Alex cambió la contraseña FTP y creó los secretos `FTP_USERNAME` y `FTP_PASSWORD`. `docs/.htaccess` bloquea /docs en la web. Skill `desplegar-portfolio` creada.
+
 ---
 
 ## Conv. 3 · 2026-10-02 22:02 · OK y paso a producción
