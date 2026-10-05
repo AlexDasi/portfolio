@@ -5,6 +5,20 @@
 
 ---
 
+## Conv. 9 · 2026-10-05 · Enlaces demasiado grandes en móvil
+
+**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** abierta (pendiente del OK para publicar)
+
+**Contexto:** Alex ve en móvil (Pati, entrando desde ATELIER) que los enlaces dentro de una frase salen mucho más grandes que el texto.
+
+**Causa:** `.project-content__quote > a` con `font-size: 4.5rem` fijo; en móvil el destacado baja a ~32 px (Conv. 6) y el enlace se quedaba en 54 px. Además la regla global `a {1.5rem}` dejaba los enlaces de las columnas a 18 px frente a 18,75 px.
+
+**Arreglo (rama `fix/enlaces-movil`):** el enlace del destacado hereda el tamaño; `p a`, `.slice-infos__text a`, `.info-column__text a`, `.case-summary__text a` heredan tamaño e interlineado. Script de comprobación: 0 enlaces con tamaño distinto a su frase en los 20 proyectos EN/ES (375 y 1440 px), salvo el «Volver» de Archive, que es un enlace suelto a propósito. Demo versión 9.
+
+**Visto de paso:** varios párrafos largos (Knowadays, Tulong, Idrica) están como destacado (`__quote`) en vez de texto normal (`__text`).
+
+---
+
 ## Conv. 8 · 2026-10-05 14:25 · Publicar R1 + R2
 
 **Inicio:** 2026-10-05 14:25 · **Turnos:** 1 · **Último msg:** 2026-10-05 14:25 · **Cierre:** 2026-10-05 14:35
