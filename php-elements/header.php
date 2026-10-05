@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/i18n.php';
 $siteName = 'Alex Dasi Portfolio';
 $pageTitle = isset($pageTitle) && is_string($pageTitle) && trim($pageTitle) !== ''
     ? trim($pageTitle)
@@ -31,6 +32,9 @@ $assetVersion = static function (string $relativePath): string {
     <meta property="og:site_name" content="Alex Dasi Portfolio">
     <meta name="twitter:card" content="summary_large_image">
     <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>
+    <link rel="alternate" hreflang="en" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="alternate" hreflang="es" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="alternate" hreflang="x-default" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="icon" type="image/svg+xml" href="/images/vectors/arrow.svg">
         
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

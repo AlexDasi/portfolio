@@ -235,3 +235,15 @@
 
 
 
+
+// En castellano «diseñador de» va en la frase de arriba (orden natural)
+html[lang="es"] .categories--designer{
+    display: none;
+}
+
+// «PRODUCTO» es más larga que «PRODUCT»: en móvil no cabe a 16vw
+@media (max-width:768px) {
+    html[lang="es"] .categories > ul > li > h2 {
+        font-size: 14vw;
+    }
+}

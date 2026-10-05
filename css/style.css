@@ -512,6 +512,15 @@ header {
     font-size: 5vw;
   }
 }
+html[lang=es] .categories--designer {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  html[lang=es] .categories > ul > li > h2 {
+    font-size: 14vw;
+  }
+}
 .nav {
   padding: 20px;
   width: 100vw;
@@ -550,6 +559,36 @@ header {
   background-color: var(--accent-color);
 }
 .single > a {
+  color: var(--bkg-color);
+}
+
+.lang-switch {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 200;
+  display: flex;
+  gap: 2px;
+  font-size: 14px;
+  line-height: 1;
+}
+.lang-switch__item {
+  padding: 4px 6px;
+  color: var(--main-color);
+  text-decoration: none;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+.lang-switch__item:hover, .lang-switch__item:focus-visible {
+  opacity: 1;
+}
+.lang-switch__item.is-active {
+  opacity: 1;
+  background-color: var(--accent-color);
+  color: var(--bkg-color);
+}
+
+.project-page .lang-switch__item:not(.is-active) {
   color: var(--bkg-color);
 }
 
@@ -2645,6 +2684,11 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
   .contact--social {
     bottom: 8vh;
     align-items: start;
+  }
+}
+@media (min-width: 1281px) {
+  html[lang=es] .contact--message__text {
+    left: 2vw;
   }
 }
 .follow {

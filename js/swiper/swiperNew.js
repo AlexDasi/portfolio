@@ -43,7 +43,9 @@
     if (window.innerWidth <= 1280) return null;
     if (!mainRoot || typeof Swiper === 'undefined') return null;
 
-    const mainMenu = ['HOME', 'WORKS', 'ABOUT', 'PROCESS', 'CONTACT'];
+    const mainMenu = document.documentElement.lang === 'es'
+      ? ['INICIO', 'PROYECTOS', 'SOBRE MÍ', 'PROCESO', 'CONTACTO']
+      : ['HOME', 'WORKS', 'ABOUT', 'PROCESS', 'CONTACT'];
 
     const mainPaginationEl = mainRoot.querySelector(':scope > .swiper-pagination');
 

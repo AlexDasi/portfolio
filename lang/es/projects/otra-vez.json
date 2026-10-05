@@ -1,0 +1,23 @@
+{
+  "text": {
+    "Otra Vez | Alex Dasi Portfolio": "",
+    "A Vintage Store Run Like a Well-Kept Archive": "Una tienda vintage llevada como un archivo bien cuidado",
+    "Otra Vez is a fictional vintage store with two shops in Valencia, designed as an independent concept for real second-hand stores. People who buy vintage shop for the piece, not the label: they want to see each garment properly, know its size and condition, and reserve it before it is gone.": "Otra Vez es una tienda vintage ficticia con dos locales en Valencia, diseñada como concepto independiente para tiendas de segunda mano reales. Quien compra vintage busca la pieza, no la etiqueta: quiere ver bien cada prenda, saber su talla y su estado, y reservarla antes de que vuele.",
+    "So the store works like an archive. Every piece has a number, a label and a price, and the catalogue can be browsed as a grid or as an index.": "Por eso la tienda funciona como un archivo. Cada pieza tiene un número, una etiqueta y un precio, y el catálogo se puede ver en cuadrícula o en índice.",
+    "Every piece has a number, a label and a price.": "Cada pieza tiene un número, una etiqueta y un precio.",
+    "Paper, ink and a single rust accent. Hanken Grotesk for headlines, a monospace for the data of each piece, and 1 px lines holding everything together.": "Papel, tinta y un único acento óxido. Hanken Grotesk para los titulares, una monoespaciada para los datos de cada pieza y líneas de 1 px que lo sostienen todo.",
+    "On top of that calm structure, the homepage stays alive: new arrivals, events, collections and outfits share one slider. Small shops live on their neighbourhood, so the agenda has DJ nights, flea markets and collaborations with other local businesses.": "Sobre esa estructura tranquila, la home sigue viva: novedades, eventos, colecciones y outfits comparten un mismo slider. Las tiendas pequeñas viven de su barrio, así que la agenda tiene sesiones de DJ, mercadillos y colaboraciones con otros negocios locales.",
+    "Outfits are a feature, not the concept: a teaser on the homepage, and on their own page the full look with every piece broken down, bookable as a set or one by one.": "Los outfits son una funcionalidad, no el concepto: un adelanto en la home y, en su propia página, el look completo con cada pieza desglosada, para reservar en conjunto o por separado.",
+    "Four rounds of directions came before a single page was built. The chosen one, Archivo, kept the thin lines and the grid or index view, and borrowed the shop photos from another direction.": "Hubo cuatro rondas de direcciones antes de construir una sola página. La elegida, Archivo, mantuvo las líneas finas y la vista en cuadrícula o índice, y tomó prestadas las fotos de tienda de otra dirección.",
+    "The <a href=\"https://atelier-demo-otra-vez.pages.dev\" target=\"_blank\" rel=\"noopener noreferrer\">site is live</a> if you want to explore it. Fictional brand, real website.": "La <a href=\"https://atelier-demo-otra-vez.pages.dev\" target=\"_blank\" rel=\"noopener noreferrer\">web está online</a> por si quieres explorarla. Marca ficticia, web real."
+  },
+  "attr": {
+    "Otra Vez, a fictional vintage store in Valencia. Independent web concept by Alex Dasi, built with ATELIER.": "Otra Vez, una tienda vintage ficticia en Valencia. Concepto web independiente de Alex Dasi, creado con ATELIER.",
+    "Otra Vez | Alex Dasi Portfolio": "",
+    "Otra Vez homepage with collection and outfit": "Home de Otra Vez con colección y outfit",
+    "Otra Vez catalogue with filters and grid or index view": "Catálogo de Otra Vez con filtros y vista en cuadrícula o índice",
+    "Otra Vez events agenda": "Agenda de eventos de Otra Vez",
+    "Otra Vez outfit page with each piece listed": "Página de outfit de Otra Vez con cada pieza",
+    "Otra Vez on mobile": "Otra Vez en móvil"
+  }
+}

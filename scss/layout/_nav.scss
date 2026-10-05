@@ -44,3 +44,36 @@
 
 
 
+
+// Selector de idioma EN / ES (arriba a la izquierda, fijo)
+.lang-switch{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: $z-top;
+    display: flex;
+    gap: 2px;
+    font-size: 14px;
+    line-height: 1;
+
+    &__item{
+        padding: 4px 6px;
+        color: var(--main-color);
+        text-decoration: none;
+        opacity: .55;
+        transition: opacity .2s ease, background-color .2s ease;
+
+        &:hover, &:focus-visible{ opacity: 1; }
+
+        &.is-active{
+            opacity: 1;
+            background-color: var(--accent-color);
+            color: var(--bkg-color);
+        }
+    }
+}
+
+// Páginas de proyecto: fondo claro
+.project-page .lang-switch__item:not(.is-active){
+    color: var(--bkg-color);
+}
