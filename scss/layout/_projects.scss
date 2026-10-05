@@ -192,7 +192,7 @@
         //hover effect
         
         &>a{
-            font-size: 4.5rem;
+            font-size: inherit; // antes 4.5rem fijos: en móvil el enlace salía más grande que su frase
             color: var(--bkg-color);
             background-color: var(--accent-color);
             text-decoration: none;

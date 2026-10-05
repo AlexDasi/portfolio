@@ -25,6 +25,15 @@
   margin: 0;
 }
 
+p a,
+.project-content__quote a,
+.slice-infos__text a,
+.info-column__text a,
+.case-summary__text a {
+  font-size: inherit;
+  line-height: inherit;
+}
+
 h1 {
   color: var(--accent-color);
   font-size: 8rem;
@@ -1894,7 +1903,7 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
   padding: 4vw 0;
 }
 .project-content__quote > a {
-  font-size: 4.5rem;
+  font-size: inherit;
   color: var(--bkg-color);
   background-color: var(--accent-color);
   text-decoration: none;
