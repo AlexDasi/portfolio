@@ -607,3 +607,21 @@
         gap: 4rem;
     }
 }
+
+// Móvil: titulares de proyecto y destacados sin desbordar (antes 54px fijos cortaban palabras largas)
+@media (max-width: 767px) {
+    .project-page .slice-infos__title,
+    .project-page .project-content__quote {
+        font-size: clamp(28px, 8.5vw, 54px);
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    // Columnas cliente / servicios / créditos alineadas a la izquierda y etiquetas sin cortar
+    .project-description__main .slice-infos__columns .info-column:not(:first-child) {
+        margin-left: 0;
+    }
+    .project-page .info-column__title {
+        width: auto;
+    }
+}

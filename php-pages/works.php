@@ -170,7 +170,7 @@
                     <!-- info -->
                     <div class="works--info">
                         <h2>ROTC</h2>
-                        <p class="yellow-600">Edinburgh hosted the Registrars of Title Conference 2017 and a full branding was commisioned by Registers of Scotland. The deconstructed brand geometry becomes a visual language that can express itself in an infinite number of graphically-composed phrases and sentences.</p>
+                        <p class="yellow-600">Edinburgh hosted the Registrars of Title Conference 2017 and a full branding was commissioned by Registers of Scotland. The deconstructed brand geometry becomes a visual language that can express itself in an infinite number of graphically-composed phrases and sentences.</p>
                     </div>
                     <div class="hiddenMobile works--details">
                         <p>Branding, design system, print and web material</p>
@@ -206,7 +206,7 @@
                     <!-- info -->
                     <div class="works--info">
                         <h2 >Burbuja</h2>
-                        <p class="yellow-600">Branding design for an industrial laundry based in Valencia. The idea was to create a fresh and and sytlish branding that could stand out against their competitors in an old fashioned sector</p>
+                        <p class="yellow-600">Branding design for an industrial laundry based in Valencia. The idea was to create a fresh and stylish branding that could stand out against their competitors in an old-fashioned sector.</p>
                     </div>
                     <div class="hiddenMobile hiddenMobile works--details">
                         <p>Branding</p>
