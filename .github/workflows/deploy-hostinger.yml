@@ -26,7 +26,9 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          server-dir: ./
+          security: loose  # el host es una IP: el certificado de Hostinger no casa con ella
+          server-dir: public_html/
+          timeout: 120000
           exclude: |
             **/.git*
             **/.git*/**
