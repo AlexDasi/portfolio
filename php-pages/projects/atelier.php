@@ -58,6 +58,8 @@ include '../../php-elements/header-works.php'
                     </li>
                 </ul>
 
+                <?php $caseSummary = ['challenge' => 'AI can generate a website from four sentences. The problem: it looks like everything else.', 'role' => 'I designed the system end to end: workflow, decision rules, taste model, review tools and the art direction of every site.', 'outcome' => 'In its first weeks: 20+ design decisions logged and ten sites built. Three went all the way, from directions to final site.']; include '../../php-elements/case-summary.php'; ?>
+
             </div>
         </section>
 

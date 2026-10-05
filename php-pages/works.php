@@ -5,6 +5,13 @@
         <!-- Navegación del pasafotos: contador, nombre, progreso y flechas (la rellena swiperNew.js) -->
         <div class="works-nav" aria-label="Projects navigation">
             <p class="works-nav__status" aria-live="polite"><span class="works-nav__count">01</span><span class="works-nav__total">/ 01</span><span class="works-nav__name"></span></p>
+            <div class="works-filter" role="group" aria-label="Filter projects">
+                <button class="works-filter__btn is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+                <button class="works-filter__btn" type="button" data-filter="product" aria-pressed="false">Product</button>
+                <button class="works-filter__btn" type="button" data-filter="web" aria-pressed="false">Web</button>
+                <button class="works-filter__btn" type="button" data-filter="brand" aria-pressed="false">Brand</button>
+                <a class="works-filter__archive" href="php-pages/projects/archive.php">Archive <span aria-hidden="true">&rarr;</span></a>
+            </div>
             <div class="works-nav__progress" role="tablist"></div>
             <div class="works-nav__arrows">
                 <button class="works-nav__btn works-nav__btn--prev" type="button" aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -15,7 +22,7 @@
 
             <!-- ===== PRODUCT-FIRST ORDER ===== -->
 
-            <a href="php-pages/projects/atelier.php" class="swiper-slide">
+            <a href="php-pages/projects/atelier.php" class="swiper-slide" data-tags="product web">
                 <div class="works works-atelier">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/atelier.jpg"/>
@@ -33,7 +40,7 @@
             </a>
 
 
-            <a href="php-pages/projects/tulong.php" class="swiper-slide">
+            <a href="php-pages/projects/tulong.php" class="swiper-slide" data-tags="product">
                 <div class="works works-tulong">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/tulong.jpg"/>
@@ -51,7 +58,7 @@
             </a>
 
 
-            <a href="php-pages/projects/idrica-wastewater.php" class="swiper-slide">
+            <a href="php-pages/projects/idrica-wastewater.php" class="swiper-slide" data-tags="product">
                 <div class="works works-idrica-wastewater">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/idrica-wastewater.jpg"/>
@@ -69,7 +76,7 @@
             </a>
 
 
-            <a href="php-pages/projects/knowadays.php" class="swiper-slide">
+            <a href="php-pages/projects/knowadays.php" class="swiper-slide" data-tags="web brand">
                 <div class="works works-knowadays">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/knowadays.jpg"/>
@@ -87,7 +94,7 @@
             </a>
 
 
-            <a href="php-pages/projects/clustag.php" class="swiper-slide">
+            <a href="php-pages/projects/clustag.php" class="swiper-slide" data-tags="web">
                 <div class="works works-clustag">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/clustag.jpg"/>
@@ -105,7 +112,7 @@
             </a>
 
 
-            <a href="php-pages/projects/elsa.php" class="swiper-slide">
+            <a href="php-pages/projects/elsa.php" class="swiper-slide" data-tags="web">
                 <div class="works works-elsa">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/elsa.jpg"/>
@@ -123,7 +130,7 @@
             </a>
 
 
-            <a href="php-pages/projects/camisola.php" class="swiper-slide">
+            <a href="php-pages/projects/camisola.php" class="swiper-slide" data-tags="brand web">
                 <div class="works works-camisola">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/camisola.jpg"/>
@@ -143,7 +150,7 @@
 
             <!-- ===== EARLIER BRAND / WEB WORK ===== -->
 
-            <a href="php-pages/projects/terralava.php" class="swiper-slide">
+            <a href="php-pages/projects/terralava.php" class="swiper-slide" data-tags="brand web">
                 <div class="works works-2">
                     <!-- thumbnail -->
 
@@ -162,7 +169,7 @@
             </a>
 
 
-            <a href="php-pages/projects/rotc.php" class="swiper-slide">
+            <a href="php-pages/projects/rotc.php" class="swiper-slide" data-tags="brand">
                 <div class="works works-3">
                     <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/ROTCPop-up.jpg"/>
@@ -180,7 +187,7 @@
             </a>
 
 
-            <a href="php-pages/projects/scotland-is-now.php" class="swiper-slide">
+            <a href="php-pages/projects/scotland-is-now.php" class="swiper-slide" data-tags="brand">
                 <div class="works works-4">
                     <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/SE.jpg"/>
@@ -198,7 +205,7 @@
             </a>
 
 
-            <a href="php-pages/projects/burbuja.php" class="swiper-slide">
+            <a href="php-pages/projects/burbuja.php" class="swiper-slide" data-tags="brand">
                 <div class="works works-10">
                     <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/burbuja-wood-banner.jpg"/>
@@ -219,7 +226,7 @@
             <!-- ===== DEMOTED / HIDDEN (2026-06-22): older illustration pieces, several with
                  placeholder/duplicate copy. Kept here (commented) for easy restore. ===== -->
             <!--
-            <a href="php-pages/projects/old-skull.php" class="swiper-slide">
+            <a href="php-pages/projects/old-skull.php" class="swiper-slide" data-tags="brand">
                 <div class="works works-5">
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/SKULL-2.jpg"/>
                     <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/SKULL-2-mobile.jpg"/>
@@ -234,7 +241,7 @@
                 </div>
             </a>
 
-            <a href="php-pages/projects/mef2c-concerts.php" class="swiper-slide">
+            <a href="php-pages/projects/mef2c-concerts.php" class="swiper-slide" data-tags="brand">
                 <div class="works works-6">
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/poster conciertos.jpg"/>
                     <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/poster conciertos-mobile.jpg"/>
@@ -249,7 +256,7 @@
                 </div>
             </a>
 
-            <a href="php-pages/projects/ros-styleguide.php" class="swiper-slide">
+            <a href="php-pages/projects/ros-styleguide.php" class="swiper-slide" data-tags="brand">
                 <div class="works works-7">
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/RoS styleguide.jpg"/>
                     <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/RoS styleguide-mobile.jpg"/>
@@ -264,7 +271,7 @@
                 </div>
             </a>
 
-            <a href="php-pages/projects/pinstripe.php" class="swiper-slide">
+            <a href="php-pages/projects/pinstripe.php" class="swiper-slide" data-tags="product">
                 <div class="works works-9">
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/Pinstripe.jpg"/>
                     <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/Pinstripe-mobile.jpg"/>
@@ -282,7 +289,7 @@
 
             <!-- OFFICE DESIGN PROJECT TEMPORARILY HIDDEN - MISSING THUMBNAIL -->
             <!--
-            <a href="php-pages/projects/office-design.php" class="swiper-slide">
+            <a href="php-pages/projects/office-design.php" class="swiper-slide" data-tags="brand">
                 <div class="works works-8">
                     <img class="hiddenMobile" src="content/pictures/thumbnails/RoS enviromental.jpg"/>
                     <img class="hiddenDesktop" src="content/pictures/thumbnails/RoS enviromental-mobile.jpg"/>

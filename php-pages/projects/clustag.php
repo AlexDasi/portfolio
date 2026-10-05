@@ -38,6 +38,8 @@ include '../../php-elements/header-works.php'
                         <div class="info-column__text"><p>Alex Dasi & <a href="https://freshup.es">FreshUp</a></p></div>
                     </li>
                 </ul>
+
+                <?php $caseSummary = ['challenge' => 'RFID intralogistics is technical and hard to explain. The website had to make it feel clear and trustworthy.', 'role' => 'UX/UI design of the website, together with FreshUp.', 'outcome' => 'A clean modular site with an industrial yet elegant identity, useful data visualization and simple navigation.']; include '../../php-elements/case-summary.php'; ?>
             </div>
         </section>
         <section class="project-content">

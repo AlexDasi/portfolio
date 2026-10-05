@@ -1,0 +1,41 @@
+//// RESUMEN DEL CASO: reto · mi papel · resultado ////
+// Se lee en 10 segundos antes de bajar al detalle. Mismo bloque en todos los casos principales.
+
+.case-summary {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+    margin-top: 6rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(0, 0, 0, .15);
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 4rem;
+    }
+
+    &__item { min-width: 0; }
+
+    &__label {
+        margin: 0 0 1.2rem;
+        font-family: $main-font;
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--bkg-color);
+        display: inline-block;
+        padding: .3rem .6rem;
+        background: var(--accent-color);
+    }
+
+    &__text {
+        margin: 0;
+        font-size: 1.8rem;
+        line-height: 1.45;
+
+        @media (min-width: 768px) { font-size: 1.6rem; }
+        color: var(--bkg-color);
+        text-align: left;
+    }
+}

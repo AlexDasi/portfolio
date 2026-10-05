@@ -32,6 +32,8 @@ include '../../php-elements/header-works.php'
                         <div class="info-column__text"><p>Alex Dasi, Idrica</p></div>
                     </li>
                 </ul>
+
+                <?php $caseSummary = ['challenge' => 'Plant operators juggle monitoring, alarms, maps and dense technical data. The interface has to stay legible under pressure.', 'role' => 'I contributed to the UX/UI of the platform as part of the Idrica team: flows, interface patterns and the design system behind them.', 'outcome' => 'One coherent desktop environment with calm, clear patterns, built for fast visual parsing across dashboards, maps and alerts.']; include '../../php-elements/case-summary.php'; ?>
             </div>
         </section>
         <section class="project-content">
