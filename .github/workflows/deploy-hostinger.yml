@@ -1,19 +1,14 @@
 # Despliegue automático de alexdasi.com
-# Cada push a main sube a Hostinger (FTPS cifrado, con lftp) solo los archivos que han cambiado
-# desde el último commit desplegado (se guarda en public_html/.deployed-commit).
-# Si no hay commit previo, sube todo. También se lanza a mano en Actions → Run workflow.
+# Cada push a main sube a Hostinger solo lo que ha cambiado (estado en public_html/.ftp-deploy-sync-state.json).
+# También se lanza a mano en Actions → Run workflow.
 # Secretos: FTP_USERNAME y FTP_PASSWORD (cuenta FTP principal de Hostinger).
+# Protocolo: FTP. Con FTPS, Hostinger corta la conexión de datos (425 Unable to build data connection).
 name: Deploy alexdasi.com
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      full:
-        description: "Subir todo (no solo lo cambiado)"
-        type: boolean
-        default: false
 
 concurrency:
   group: deploy-hostinger
@@ -23,64 +18,37 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      FTP_HOST: 213.130.145.191
-      REMOTE: public_html
-      FTP_USER: ${{ secrets.FTP_USERNAME }}
-      LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-      # Lo que nunca se sube a la web
-      EXCLUDE: '^(\.git|\.github/|\.vscode/|node_modules/|scss/|prepros\.config$|portfolio\.code-workspace$|package(-lock)?\.json$|copilot-instructions\.md$)'
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Instalar lftp
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
 
       - name: Subir a Hostinger
-        run: |
-          set -euo pipefail
-          SET='set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; set ftp:passive-mode true; set net:max-retries 2; set net:timeout 20; set net:reconnect-interval-base 5; set cmd:fail-exit true'
-          ftp() { lftp --env-password -u "$FTP_USER" -e "$SET; $1; bye" "$FTP_HOST"; }
-
-          prev=$(ftp "cat $REMOTE/.deployed-commit" 2>/dev/null | tr -d '[:space:]' || true)
-          echo "Último commit desplegado: ${prev:-ninguno}"
-
-          full=false
-          if [ "${{ inputs.full }}" = "true" ] || [ -z "$prev" ] || ! git cat-file -e "$prev^{commit}" 2>/dev/null; then
-            full=true
-          fi
-
-          : > cmds.lftp
-          if [ "$full" = true ]; then
-            echo "Subida completa"
-            git ls-files | grep -Ev "$EXCLUDE" > subir.txt || true
-            : > borrar.txt
-          else
-            git diff --name-only --diff-filter=ACMRT "$prev" HEAD | grep -Ev "$EXCLUDE" > subir.txt || true
-            git diff --name-only --diff-filter=D "$prev" HEAD | grep -Ev "$EXCLUDE" > borrar.txt || true
-          fi
-          echo "Archivos a subir: $(wc -l < subir.txt) · a borrar: $(wc -l < borrar.txt)"
-
-          while IFS= read -r f; do
-            d=$(dirname "$f")
-            [ "$d" = "." ] && dest="$REMOTE" || dest="$REMOTE/$d"
-            printf 'mkdir -p -f "%s"\nput -O "%s" "%s"\n' "$dest" "$dest" "$f" >> cmds.lftp
-          done < subir.txt
-          while IFS= read -r f; do
-            printf 'rm -f "%s/%s"\n' "$REMOTE" "$f" >> cmds.lftp
-          done < borrar.txt
-
-          git rev-parse HEAD > .deployed-commit
-          printf 'put -O "%s" .deployed-commit\n' "$REMOTE" >> cmds.lftp
-
-          lftp --env-password -u "$FTP_USER" -e "$SET; debug -t 3; source cmds.lftp; bye" "$FTP_HOST" 2>&1 | grep -v -i "^.*PASS " | tail -n 60
-          echo "Desplegado $(git rev-parse --short HEAD)"
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 213.130.145.191
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          server-dir: public_html/
+          state-name: .ftp-deploy-sync-state.json
+          log-level: minimal
+          timeout: 120000
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            .vscode/**
+            node_modules/**
+            scss/**
+            prepros.config
+            portfolio.code-workspace
+            package.json
+            package-lock.json
+            copilot-instructions.md
 
       - name: Comprobación rápida
         continue-on-error: true
         run: |
           c() { curl -s -o /dev/null -w '%{http_code}' --max-time 20 "https://alexdasi.com$1"; }
-          echo "home: $(c /) · docs bloqueado: $(c /docs/HANDOFF.md)"
+          echo "home: $(c /) · atelier: $(c /php-pages/projects/atelier.php) · docs bloqueado: $(c /docs/HANDOFF.md)"
           test "$(c /)" = 200
