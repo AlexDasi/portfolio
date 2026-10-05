@@ -15,3 +15,7 @@
 **Motivo:** El usuario quiere autonomía total y no repetir instrucciones entre sesiones; la continuidad debe vivir en el repo.
 **Alternativas descartadas:** Mantener todo en `TODO.md` (mezclaba spec con backlog) · usar Issues de GitHub (fricción, no offline-first).
 **Impacto:** `TODO.md` → `docs/specs/cursor-arrow-gooey.md`. `.github/copilot-instructions.md` se mantiene como guía técnica del repo (no se duplica aquí).
+
+## 2026-10-05 · Castellano con diccionarios y ?lang=es
+- Opciones: duplicar páginas en /es/ (doble mantenimiento) vs `t()` en cada texto (ensucia el HTML) vs traducir la salida con diccionarios. Elegido: diccionarios JSON aplicados al HTML de salida; el HTML sigue en inglés y limpio.
+- URL `?lang=es` (compartible e indexable, con hreflang), sin cookies para no chocar con la caché de Hostinger.

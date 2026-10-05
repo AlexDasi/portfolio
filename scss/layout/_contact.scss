@@ -125,3 +125,10 @@
     }
 }
 
+
+// En castellano el titular («DI HOLA») acaba en la A: separar el texto para que no la pise
+@media (min-width: 1281px) {
+    html[lang="es"] .contact--message__text {
+        left: 2vw;
+    }
+}

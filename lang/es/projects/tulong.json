@@ -1,0 +1,43 @@
+{
+  "text": {
+    "Tulong | Alex Dasi Portfolio": "",
+    "Tulong": "",
+    "Humanitarian Logistics, Operationally Clear": "Logística humanitaria, con claridad operativa",
+    "Tulong is a humanitarian logistics control system for last-mile aid distribution. Shaped by real field operations in Valencia (DANA) and the Philippines, it was developed in 2025–2026 as a working prototype aimed at improving planning clarity, fleet coordination, and delivery visibility.": "Tulong es un sistema de control logístico humanitario para la distribución de ayuda en la última milla. Nacido de operaciones reales sobre el terreno en Valencia (DANA) y Filipinas, se desarrolló en 2025–2026 como prototipo funcional para mejorar la claridad de la planificación, la coordinación de la flota y la visibilidad de las entregas.",
+    "Tulong<br>2025 - 2026": "",
+    "\n                                UX/UI Design<br>\n                                System Design<br>\n                                Operational Logic<br>\n                                Data Visualization\n                            ": "\n                                Diseño UX/UI<br>\n                                Diseño de sistemas<br>\n                                Lógica operativa<br>\n                                Visualización de datos\n                            ",
+    "context": "contexto",
+    "Valencia (DANA) + Philippines<br>Field-tested deployments<br>Designed for World Central Kitchen emergency operations": "Valencia (DANA) + Filipinas<br>Despliegues probados sobre el terreno<br>Diseñado para las operaciones de emergencia de World Central Kitchen",
+    "Emergency operations often run with fragmented data and parallel teams. Without a shared operational view, routing decisions, destination prioritization, and fleet usage become harder to align in real time.": "Las operaciones de emergencia suelen funcionar con datos fragmentados y equipos en paralelo. Sin una visión operativa compartida, cuesta mucho más alinear en tiempo real las rutas, la prioridad de los destinos y el uso de la flota.",
+    "Tulong organizes response planning through three linked layers: kits, destination blocks, and fleet assignment.": "Tulong organiza la planificación de la respuesta en tres capas conectadas: kits, bloques de destino y asignación de flota.",
+    "The distribution matrix acts as the single decision surface for coordinators during active operations, connecting route assignment, trip load, and destination timing in one glance.": "La matriz de distribución es la única superficie de decisión para los coordinadores durante las operaciones activas: conecta asignación de rutas, carga de cada viaje y horarios de destino de un vistazo.",
+    "Daily planning and end-of-day optimization are designed as one continuous cycle: build feasible plans, test fleet strain, and rebalance distribution before dispatch deadlines are reached.": "La planificación diaria y la optimización de fin de jornada se diseñaron como un único ciclo continuo: crear planes viables, poner a prueba la flota y reequilibrar la distribución antes de que lleguen los plazos de salida.",
+    "Tested against real operational scenarios, the prototype pointed to clearer planning cycles, faster dispatch alignment, and stronger shared awareness across teams, with smoother handoffs between planning, loading, and route execution under real constraints.": "Probado con escenarios operativos reales, el prototipo apuntó a ciclos de planificación más claros, una coordinación de salidas más rápida y una visión compartida más sólida entre equipos, con traspasos más fluidos entre planificación, carga y ejecución de rutas bajo restricciones reales.",
+    "I led the project end-to-end: system concept, UX architecture, interaction logic, and interface design. Tulong is positioned as an operational proposal for World Central Kitchen emergency response scenarios.": "Lideré el proyecto de principio a fin: concepto del sistema, arquitectura UX, lógica de interacción y diseño de interfaz. Tulong se plantea como una propuesta operativa para escenarios de respuesta de emergencia de World Central Kitchen.",
+    "The following field scenes ground the proposal in real deployment conditions and last-mile distribution realities.": "Las siguientes escenas sobre el terreno anclan la propuesta en condiciones reales de despliegue y en la realidad de la distribución en la última milla."
+  },
+  "attr": {
+    "Tulong | Alex Dasi Portfolio": "",
+    "Volunteers crossing a river carrying aid boxes": "Voluntarios cruzando un río con cajas de ayuda",
+    "Tulong three-screen operational view": "Vista operativa de Tulong en tres pantallas",
+    "Tulong dashboard showing fragmented logistics context": "Dashboard de Tulong con el contexto logístico fragmentado",
+    "Tulong planning calendar and logistics scheduling view": "Calendario de planificación y programación logística de Tulong",
+    "Tulong destination block planning": "Planificación por bloques de destino en Tulong",
+    "Tulong fleet assignment view": "Vista de asignación de flota de Tulong",
+    "Tulong distribution matrix with routes and dispatch status": "Matriz de distribución de Tulong con rutas y estado de salida",
+    "Tulong platform overview mockup": "Mockup general de la plataforma Tulong",
+    "Tulong operational dashboard on laptop in low-light context": "Dashboard operativo de Tulong en un portátil con poca luz",
+    "Previous field photo": "Foto de campo anterior",
+    "Tulong field team and partners": "Equipo de campo y colaboradores de Tulong",
+    "Community-facing aid activation point": "Punto de reparto de ayuda abierto a la comunidad",
+    "Field coordination moment during aid distribution": "Momento de coordinación sobre el terreno durante el reparto de ayuda",
+    "Relief team unloading organized field kits": "Equipo de ayuda descargando kits organizados",
+    "Tulong field photo 06": "Foto de campo de Tulong 06",
+    "Tulong field photo 07": "Foto de campo de Tulong 07",
+    "Tulong field photo 08": "Foto de campo de Tulong 08",
+    "Tulong field photo 09": "Foto de campo de Tulong 09",
+    "Tulong field photo 10": "Foto de campo de Tulong 10",
+    "Tulong field photo 11": "Foto de campo de Tulong 11",
+    "Next field photo": "Foto de campo siguiente"
+  }
+}

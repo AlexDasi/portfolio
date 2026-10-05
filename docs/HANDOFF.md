@@ -3,7 +3,7 @@
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
 **Fecha:** 2026-10-05
-**Rama activa:** `main` (ATELIER mergeado el 2026-10-02). Para trabajo nuevo, abrir rama desde `main`.
+**Rama activa:** `feat/castellano` (versión ES + Pati logo nuevo), pendiente del OK de Alex.
 
 ## Contexto en una frase
 ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Lenta) + diapositiva Process + pasafotos de Works nuevo. Todo en la rama, revisado por Alex en una demo privada.
@@ -29,5 +29,9 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Errores de consola previos (magnet-mouse `length`, `onmousemove` null y `clientWidth` en páginas de proyecto): ya estaban en `main`.
 - Idrica: case study flojo (faltan datos). B2 gooey (backlog).
 
+## Idiomas (desde Conv. 5)
+- EN por defecto; ES con `?lang=es`. Diccionarios en `lang/es/` (claves = HTML exacto en inglés). Si cambias un texto en inglés: `php -S localhost:8000` + `python3 tools/i18n_extract.py` (añade claves vacías) → traducir → `python3 tools/i18n_check.py` (debe dar 0).
+- Demo: `python3 tools/export_demo.py <carpeta>` y publicar en el artefacto (jQuery ya está en el artefacto; borrar media >2 MB).
+
 ## Próximo paso exacto
-➡️ Nada urgente. Pendientes en «Abierto / pendiente» (¿conceptos en Works?, feedback Pati/Lenta, Idrica, B2 gooey). Para publicar: skill `desplegar-portfolio` (push a `main` = deploy automático).
+➡️ Alex revisa la demo (EN/ES + Pati). Con el OK: merge `feat/castellano` → `main` y push (deploy automático), y comprobar en vivo `/?lang=es`.

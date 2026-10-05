@@ -18,7 +18,7 @@ include '../../php-elements/header-works.php'
 
                 <h2 class="padding3 slice-infos__title">A Neighbourhood Brunch Café Built Around Its Courtyard</h2>
 
-                <div class="padding3 slice-infos__text"><p>Pati is a fictional brunch café in Ruzafa, Valencia, with an inner courtyard and a long table for working in the morning. It was designed as an independent concept, deliberately different from a specialty coffee shop.</p><p>The brand comes first: PATI in olive green, with the T and the I joined, set against an arch framing the courtyard. The logo is treated exactly the same everywhere.</p></div>
+                <div class="padding3 slice-infos__text"><p>Pati is a fictional brunch café in Ruzafa, Valencia, with an inner courtyard and a long table for working in the morning. It was designed as an independent concept, deliberately different from a specialty coffee shop.</p><p>The brand comes first: PATI in olive green, with the T and the I side by side, just touching, set against an arch framing the courtyard. The logo is treated exactly the same everywhere.</p></div>
 
                 <ul class="padding3 slice-infos__columns">
                     <li class="info-column">

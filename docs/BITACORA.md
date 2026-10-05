@@ -5,6 +5,25 @@
 
 ---
 
+## Conv. 5 · 2026-10-05 12:43 · Versión en castellano + Pati con logo nuevo
+
+**Inicio:** 2026-10-05 12:43 · **Turnos:** 2 · **Último msg:** 2026-10-05 · **Cierre:** abierta (pendiente del OK)
+
+**Contexto:** Alex pide poder ver la web en castellano. Decide: traducir todo (home + 19 proyectos), selector EN / ES en el nav, tuteo con el mismo tono. A mitad pide actualizar todo lo de Pati porque ha cambiado el logo (v1.1.1, ya live).
+
+**Cambios (rama `feat/castellano`):**
+- `php-elements/i18n.php`: con `?lang=es` traduce la salida al vuelo con `lang/es/common.json`, `home.json` y `projects/<slug>.json` (texto entre etiquetas + alt/aria-label/title/content). Lo que no está en el diccionario sale en inglés. Añade `?lang=es` a los enlaces internos. `<html lang>` y hreflang.
+- Selector EN / ES fijo arriba a la izquierda (`nav new.php`, `_nav.scss`); menú de la paginación traducido en `swiperNew.js`.
+- Ajustes ES: «Hola, soy Alex Dasi, diseñador de» + PRODUCTO, WEB & SISTEMAS (se oculta la línea «designer»); PRODUCTO a 14vw en móvil; Contact «DI HOLA» con el texto separado.
+- `tools/i18n_extract.py` (saca textos nuevos a los JSON sin pisar), `tools/i18n_check.py` (0 problemas), `tools/export_demo.py` (demo EN+ES).
+- Pati: capturas rehechas desde `atelier/sites/pati` v1.1.1 (build local), columna de Pati del collage de ATELIER y miniaturas de Works regeneradas; copy «T and the I side by side, just touching». `atelier-proposals-pati.jpg` se deja (son las rondas históricas).
+
+**Demo:** artefacto «alexdasi.com Preview» actualizado (versión 7), EN y ES de todas las páginas. Sin vídeos/GIF >2 MB para que quepa.
+
+**Pendientes:** OK de Alex → merge a `main` (deploy automático). Erratas en el inglés original (commisioned, sytlish, «and and») sin tocar. Títulos de proyecto muy largos desbordan en móvil 390 px también en inglés (Tulong).
+
+---
+
 ## Conv. 4 · 2026-10-05 · Recordatorio del estado del despliegue
 
 **Inicio:** 2026-10-05 · **Turnos:** 11 · **Último msg:** 2026-10-05 · **Cierre:** 2026-10-05
