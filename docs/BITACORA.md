@@ -5,9 +5,21 @@
 
 ---
 
+## Conv. 10 · 2026-10-05 · Arreglarlo todo y publicar
+
+**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** 2026-10-05
+
+**Contexto:** Alex: «arréglalo todo y publícalo».
+
+**Cambios:** 11 párrafos de más de 20 palabras pasan de `project-content__quote` a `project-content__text` (Knowadays, Tulong, Idrica, Clustag, Elsa); los destacados quedan para frases cortas. Merge `fix/textos-proyectos` (incluye `fix/enlaces-movil`) → `main`. Run #18 OK.
+
+**Comprobado en vivo (375 px):** Pati ES: «ATELIER» 18,75/18,75 px y «web está online» 31,9/31,9 px (enlace = frase). Knowadays 0 destacados, Tulong/Idrica/Clustag 1, Elsa 0.
+
+---
+
 ## Conv. 9 · 2026-10-05 · Enlaces demasiado grandes en móvil
 
-**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** abierta (pendiente del OK para publicar)
+**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** 2026-10-05
 
 **Contexto:** Alex ve en móvil (Pati, entrando desde ATELIER) que los enlaces dentro de una frase salen mucho más grandes que el texto.
 
