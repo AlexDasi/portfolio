@@ -21,6 +21,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Diagnóstico de carpetas FTP (temporal)
+        env:
+          U: ${{ secrets.FTP_USERNAME }}
+          P: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          for d in "" "public_html/" "domains/" "domains/alexdasi.com/" "domains/alexdasi.com/public_html/" "public_html/public_html/"; do
+            echo "== /$d"; curl -s --max-time 20 --user "$U:$P" "ftp://213.130.145.191/$d" | head -n 25 || true
+          done
+          echo "== pwd"; curl -s --max-time 20 --user "$U:$P" -Q "PWD" "ftp://213.130.145.191/" -o /dev/null -v 2>&1 | grep -E "^< 257" || true
+
       - name: Subir a Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
