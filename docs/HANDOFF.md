@@ -3,7 +3,7 @@
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
 **Fecha:** 2026-10-05
-**Rama activa:** `feat/castellano` (versión ES + Pati logo nuevo), pendiente del OK de Alex.
+**Rama activa:** `main` (castellano + Pati logo nuevo publicados el 2026-10-05, Conv. 6). Para trabajo nuevo, abrir rama desde `main`.
 
 ## Contexto en una frase
 ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Lenta) + diapositiva Process + pasafotos de Works nuevo. Todo en la rama, revisado por Alex en una demo privada.
@@ -34,4 +34,4 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Demo: `python3 tools/export_demo.py <carpeta>` y publicar en el artefacto (jQuery ya está en el artefacto; borrar media >2 MB).
 
 ## Próximo paso exacto
-➡️ Alex revisa la demo (EN/ES + Pati). Con el OK: merge `feat/castellano` → `main` y push (deploy automático), y comprobar en vivo `/?lang=es`.
+➡️ Alex elige qué rediseños hacer de la lista propuesta en Conv. 6 (ver BACKLOG). Verificar en vivo: abrir un asset del dominio en el navegador integrado y hacer fetch (la home con fluido cuelga el panel oculto).

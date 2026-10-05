@@ -5,9 +5,23 @@
 
 ---
 
+## Conv. 6 · 2026-10-05 13:05 · OK, publicación y propuestas de rediseño
+
+**Inicio:** 2026-10-05 13:05 · **Turnos:** 1 · **Último msg:** 2026-10-05 13:05 · **Cierre:** 2026-10-05
+
+**Contexto:** Alex da el OK a todo (castellano, Pati, erratas y titular de Tulong) y pide sugerencias de rediseño al terminar.
+
+**Cambios:** erratas EN en Works (commissioned, stylish, old-fashioned) con claves ES al día. Móvil: titulares y destacados de proyecto con tamaño fluido (antes 54px fijos se salían en ~15 páginas) y columnas cliente/servicios/créditos alineadas. `tools/` excluido del deploy y bloqueado en `.htaccess`. Merge `feat/castellano` → `main` (runs #13 y #14 OK).
+
+**Comprobado en vivo:** `/`, `/?lang=es`, Pati EN/ES, ATELIER/Tulong/Idrica ES → 200 con `lang` correcto y textos nuevos; imágenes de Pati y miniatura de ATELIER iguales byte a byte al repo; CSS nuevo; `/tools/` da 404.
+
+**Ojo:** en el navegador integrado con el panel oculto la home (fluido WebGL) bloquea el renderizador; para verificar, abrir un JSON/asset del dominio y hacer fetch desde ahí.
+
+---
+
 ## Conv. 5 · 2026-10-05 12:43 · Versión en castellano + Pati con logo nuevo
 
-**Inicio:** 2026-10-05 12:43 · **Turnos:** 2 · **Último msg:** 2026-10-05 · **Cierre:** abierta (pendiente del OK)
+**Inicio:** 2026-10-05 12:43 · **Turnos:** 2 · **Último msg:** 2026-10-05 · **Cierre:** 2026-10-05 13:05
 
 **Contexto:** Alex pide poder ver la web en castellano. Decide: traducir todo (home + 19 proyectos), selector EN / ES en el nav, tuteo con el mismo tono. A mitad pide actualizar todo lo de Pati porque ha cambiado el logo (v1.1.1, ya live).
 
