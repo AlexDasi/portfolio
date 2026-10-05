@@ -5,6 +5,16 @@
 
 ---
 
+## Conv. 4 · 2026-10-05 · Recordatorio del estado del despliegue
+
+**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** abierta
+
+**Contexto:** Alex pregunta dónde estábamos con el deploy. Estado: `main` ya mergeado y pusheado (Conv. 3); falta darle a desplegar en Hostinger (Git) y comprobar en vivo. No había ningún error con Hostinger, solo el paso manual pendiente. Desde la nube no se puede cargar alexdasi.com (bloqueado por el proxy), así que no se ha podido comprobar si ya está desplegado.
+
+**Siguiente paso:** Alex despliega en Hostinger (o da acceso) → comprobar en vivo.
+
+---
+
 ## Conv. 3 · 2026-10-02 22:02 · OK y paso a producción
 
 **Inicio:** 2026-10-02 22:02 · **Turnos:** 1 · **Último msg:** 2026-10-02 22:02 · **Cierre:** abierta
