@@ -57,6 +57,8 @@ include '../../php-elements/header-works.php'
                     </li>
                 </ul>
 
+                <?php $caseSummary = ['challenge' => 'Emergency teams plan with fragmented data and parallel tools. Routes, priorities and fleet use are hard to align in real time.', 'role' => 'I led it end to end: system concept, UX architecture, interaction logic and interface design.', 'outcome' => 'A working prototype tested against real scenarios: clearer planning cycles, faster dispatch alignment and shared awareness across teams.']; include '../../php-elements/case-summary.php'; ?>
+
             </div>
         </section>
 

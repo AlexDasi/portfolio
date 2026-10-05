@@ -38,6 +38,8 @@ include '../../php-elements/header-works.php'
                         <div class="info-column__text"><p>Alex Dasi</p></div>
                     </li>
                 </ul>
+
+                <?php $caseSummary = ['challenge' => 'Build a whole visual universe for a custom Hawaiian shirt concept, from the name to the website.', 'role' => 'Own project: naming, brand identity, art direction and web development.', 'outcome' => 'A live site with an editorial feel and an interactive editor to play with patterns and colours.']; include '../../php-elements/case-summary.php'; ?>
             </div>
         </section>
         <section class="project-content">

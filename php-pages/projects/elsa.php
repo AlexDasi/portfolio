@@ -38,6 +38,8 @@ include '../../php-elements/header-works.php'
                         <div class="info-column__text"><p>Alex Dasi & <a href="https://www.elsa-moreno.com" target="_blank">Elsa Moreno</a></p></div>
                     </li>
                 </ul>
+
+                <?php $caseSummary = ['challenge' => 'A poet and multidisciplinary artist needed a home for work that moves across performance, literature and ecology.', 'role' => 'Web design, development and visual language, side by side with Elsa.', 'outcome' => 'A calm, minimal site where the work can breathe.']; include '../../php-elements/case-summary.php'; ?>
             </div>
         </section>
         <section class="project-content">

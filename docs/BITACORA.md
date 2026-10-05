@@ -5,6 +5,23 @@
 
 ---
 
+## Conv. 7 · 2026-10-05 · Rediseño R1 (Works) y R2 (casos + Archive)
+
+**Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** abierta (pendiente del OK)
+
+**Contexto:** Alex elige R1 y R2 de las propuestas de la Conv. 6.
+
+**Cambios (rama `feat/works-y-casos`):**
+- R1 Works: nombre, resumen (2 líneas), papel y año siempre visibles bajo cada tarjeta en escritorio; en móvil sobre la foto con degradado y ahora también papel y año (antes ocultos). Filtro All / Product / Web / Brand en la fila de navegación (en móvil, encima): `data-tags` en cada tarjeta, `swiperNew.js` guarda las tarjetas originales y vuelve a montar el pasafotos (sin bucle si quedan < 4). Enlace «Archive». `index.php#works` abre Works.
+- R2: `php-elements/case-summary.php` (Reto / Mi papel / Resultado) en ATELIER, Tulong, Idrica, Knowadays, Clustag, Elsa y Camisola, escrito solo con hechos de cada página (sin cifras inventadas). Nueva `php-pages/projects/archive.php` con los 9 trabajos 2015-2021.
+- ES de todo lo nuevo; `i18n_check` 0 problemas. Capturas: 1281×720, 1366×768, 1440×900, 1920×1080 y 390 px; filtro probado en escritorio y móvil.
+
+**Demo:** artefacto «alexdasi.com Preview» versión 8.
+
+**Pendiente de Alex:** OK para publicar. Datos reales de resultado (cifras) para Idrica, Knowadays, Clustag y Elsa si los tiene.
+
+---
+
 ## Conv. 6 · 2026-10-05 13:05 · OK, publicación y propuestas de rediseño
 
 **Inicio:** 2026-10-05 13:05 · **Turnos:** 1 · **Último msg:** 2026-10-05 13:05 · **Cierre:** 2026-10-05

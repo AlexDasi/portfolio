@@ -34,6 +34,8 @@ include '../../php-elements/header-works.php'
                         <div class="info-column__text"><p>In-house design collaboration for <a href="https://knowadays.com/about/" target="_blank">Knowadays Team</a></p></div>
                     </li>
                 </ul>
+
+                <?php $caseSummary = ['challenge' => 'A growing learning brand had to stay consistent across web, landing pages, email and social, while still converting.', 'role' => 'Three years as their design partner: UX/UI, landing pages, emailing, social and editorial design.', 'outcome' => 'Iterative redesigns and production-ready assets that kept the brand cohesive across channels in an international market.']; include '../../php-elements/case-summary.php'; ?>
             </div>
         </section>
 

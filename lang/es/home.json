@@ -7,6 +7,11 @@
     "SYSTEMS": "SISTEMAS",
     "designer": "",
     "I take complex, ambiguous problems and make them clear: products, websites and the systems behind them. 12+ years across UX/UI, design systems and brand. AI speeds me up, the decisions stay mine.": "Cojo problemas complejos y ambiguos y los vuelvo claros: productos, webs y los sistemas que hay detrás. Más de 12 años entre UX/UI, sistemas de diseño y marca. La IA me acelera, las decisiones son mías.",
+    "All": "Todo",
+    "Product": "Producto",
+    "Web": "",
+    "Brand": "Marca",
+    "Archive <span aria-hidden=\"true\">&rarr;</span>": "Archivo <span aria-hidden=\"true\">&rarr;</span>",
     "A design system that tracks web trends, proposes three directions per site, learns from my feedback and builds the final website. AI handles production; art direction and decisions stay mine.": "Un sistema de diseño que sigue las tendencias web, propone tres direcciones por web, aprende de mi feedback y construye la web final. La IA se encarga de la producción; la dirección de arte y las decisiones son mías.",
     "System Design, Art Direction": "Diseño de sistemas, Dirección de arte",
     "TULONG": "",
@@ -70,6 +75,7 @@
   "attr": {
     "Alex Dasi Portfolio": "",
     "Projects navigation": "Navegación de proyectos",
+    "Filter projects": "Filtrar proyectos",
     "Previous project": "Proyecto anterior",
     "Next project": "Proyecto siguiente",
     "ATELIER: three directions proposed for one site": "ATELIER: tres direcciones propuestas para una web"

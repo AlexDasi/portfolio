@@ -124,13 +124,28 @@
     );
   }
 
-  function sortWorksSlidesByNewestFirst(wrapper) {
-    const slides = getDirectSlideElements(wrapper);
-    if (!slides.length) return;
+  // Filtro activo de Works (all / product / web / brand). Se guarda en el contenedor.
+  function slideMatchesFilter(slide, filter) {
+    if (!filter || filter === 'all') return true;
+    return (slide.getAttribute('data-tags') || '').split(/\s+/).includes(filter);
+  }
 
-    const contentSlides = slides.filter((slide) => slide.querySelector('.works'));
+  function sortWorksSlidesByNewestFirst(wrapper) {
+    // La primera vez se guardan todas las tarjetas originales: el filtro las vuelve a montar desde aquí
+    if (!wrapper.__allWorksSlides) {
+      wrapper.__allWorksSlides = getDirectSlideElements(wrapper).filter((slide) => slide.querySelector('.works'));
+    }
+    const slides = getDirectSlideElements(wrapper);
+    const contentSlides = wrapper.__allWorksSlides;
+    if (!contentSlides.length) return;
+    const root = wrapper.closest('.WorksSwiper');
+    const filter = root ? root.getAttribute('data-filter') : 'all';
+
     const visibleSlides = contentSlides.filter(
-      (slide) => parseSlideYear(slide) >= MIN_VISIBLE_PROJECT_YEAR && !isProjectHidden(slide)
+      (slide) =>
+        parseSlideYear(slide) >= MIN_VISIBLE_PROJECT_YEAR &&
+        !isProjectHidden(slide) &&
+        slideMatchesFilter(slide, filter)
     );
 
     visibleSlides.sort((a, b) => {
@@ -301,6 +316,43 @@
     update();
   }
 
+  // ---------------------------------------------------------------------------
+  // Filtro de Works: All / Product / Web / Brand. Vuelve a montar el pasafotos
+  // solo con las tarjetas de esa categoría (se enlaza una vez por contenedor).
+  // ---------------------------------------------------------------------------
+  function bindWorksFilter(worksRoot, mode) {
+    if (!worksRoot || worksRoot.__worksFilterBound) return;
+    const group = worksRoot.querySelector('.works-filter');
+    if (!group) return;
+    worksRoot.__worksFilterBound = true;
+
+    group.addEventListener('click', (event) => {
+      const btn = event.target.closest('.works-filter__btn');
+      if (!btn) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const filter = btn.getAttribute('data-filter') || 'all';
+      if ((worksRoot.getAttribute('data-filter') || 'all') === filter) return;
+
+      worksRoot.setAttribute('data-filter', filter);
+      group.querySelectorAll('.works-filter__btn').forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+
+      if (mode === 'desktop') {
+        destroySwiper(window.worksSwiperDesktop);
+        window.worksSwiperDesktop = initWorksSwiperDesktop();
+        window.worksSwiper = window.worksSwiperDesktop;
+      } else {
+        destroySwiper(window.worksSwiperMobile);
+        window.worksSwiperMobile = initWorksSwiperMobile();
+        window.worksSwiper = window.worksSwiperMobile;
+      }
+    });
+  }
+
   // Parámetros comunes: bucle infinito, arrastre y rueda horizontal con imán
   // (freeMode + sticky = se suelta y encaja en el proyecto más cercano).
   // La rueda solo actúa en horizontal (forceToAxis): el scroll vertical sigue
@@ -351,12 +403,14 @@
     sortWorksSlidesByNewestFirst(wrapper);
 
     const worksSwiper = new Swiper(worksRoot, Object.assign({}, WORKS_SHARED_PARAMS, {
+      loop: getDirectSlideElements(wrapper).length >= 4,
       centeredSlides: false,
       speed: 520,
       grabCursor: false // el portfolio ya tiene cursor propio
     }));
 
     bindWorksNav(worksRoot, worksSwiper);
+    bindWorksFilter(worksRoot, 'desktop');
 
 
     worksRoot.addEventListener(
@@ -389,6 +443,7 @@
     sortWorksSlidesByNewestFirst(wrapper);
 
     const mobileSwiper = new Swiper(worksRoot, Object.assign({}, WORKS_SHARED_PARAMS, {
+      loop: getDirectSlideElements(wrapper).length >= 4,
       centeredSlides: true,
       speed: 420,
       grabCursor: false,
@@ -410,6 +465,7 @@
     }));
 
     bindWorksNav(worksRoot, mobileSwiper);
+    bindWorksFilter(worksRoot, 'mobile');
 
 
     window.setTimeout(() => {
@@ -433,9 +489,21 @@
     window.worksSwiper = isMobile() ? window.worksSwiperMobile : window.worksSwiperDesktop;
   }
 
+  // Enlaces a «index.php#works» (p. ej. desde Archive): abrir directamente en Works
+  function goToHashSection() {
+    if (window.location.hash !== '#works') return;
+    if (window.mainSwiper) {
+      window.mainSwiper.slideTo(1, 0);
+    } else {
+      const mobileWorks = document.querySelector('.hiddenDesktop #works');
+      if (mobileWorks) window.setTimeout(() => mobileWorks.scrollIntoView(), 50);
+    }
+  }
+
   function boot() {
     let currentMode = isMobile() ? 'mobile' : 'desktop';
     initAllSwipers();
+    goToHashSection();
 
     window.addEventListener(
       'wheel',

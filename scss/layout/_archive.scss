@@ -1,0 +1,106 @@
+//// ARCHIVE: trabajos anteriores a 2022 ////
+
+.archive-page { background-color: var(--main-color); }
+
+.archive {
+    padding-top: 12vh;
+    padding-bottom: 12vh;
+    max-width: 1280px;
+    margin: 0 auto;
+
+    &__head { margin-bottom: 6rem; }
+
+    &__title {
+        margin: 0;
+        display: inline-block;
+        color: var(--bkg-color);
+        background: var(--accent-color);
+        font-size: clamp(4.8rem, 9vw, 12rem);
+        line-height: 1.1;
+    }
+
+    &__lead {
+        max-width: 60rem;
+        margin: 2.4rem 0 0;
+        font-size: 1.8rem;
+        line-height: 1.5;
+        color: var(--bkg-color);
+        opacity: .75;
+        text-align: left;
+    }
+
+    &__back {
+        display: inline-block;
+        margin-top: 2.4rem;
+        font-size: 1.3rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: var(--bkg-color);
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+        padding-bottom: .2rem;
+
+        &:hover, &:focus-visible { background: var(--accent-color); outline: none; }
+    }
+
+    &__grid {
+        list-style: none;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4rem 3rem;
+
+        @media (min-width: 640px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @media (min-width: 1100px) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+}
+
+.archive-card {
+    &__link {
+        display: block;
+        color: var(--bkg-color);
+        text-decoration: none;
+
+        &:focus-visible { outline: 2px solid var(--bkg-color); outline-offset: 4px; }
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        filter: grayscale(1);
+        transition: filter .3s ease;
+    }
+
+    &__link:hover &__image,
+    &__link:focus-visible &__image { filter: grayscale(0); }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+        margin-top: 1.4rem;
+    }
+
+    &__name {
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+    }
+
+    &__link:hover &__name { background: var(--accent-color); }
+
+    &__year { font-size: 1.4rem; font-variant-numeric: tabular-nums; opacity: .6; }
+
+    &__what,
+    &__client { display: block; font-size: 1.5rem; line-height: 1.4; }
+    &__what { margin-top: .4rem; }
+    &__client { opacity: .55; font-size: 1.3rem; margin-top: .2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .archive-card__image { transition: none; }
+}
