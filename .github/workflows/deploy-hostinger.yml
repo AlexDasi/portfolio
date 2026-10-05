@@ -17,7 +17,7 @@ on:
 
 concurrency:
   group: deploy-hostinger
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -41,7 +41,7 @@ jobs:
       - name: Subir a Hostinger
         run: |
           set -euo pipefail
-          SET='set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; set ftp:passive-mode true; set net:max-retries 3; set net:timeout 30; set net:reconnect-interval-base 5'
+          SET='set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; set ftp:passive-mode true; set net:max-retries 2; set net:timeout 20; set net:reconnect-interval-base 5; set cmd:fail-exit true'
           ftp() { lftp --env-password -u "$FTP_USER" -e "$SET; $1; bye" "$FTP_HOST"; }
 
           prev=$(ftp "cat $REMOTE/.deployed-commit" 2>/dev/null | tr -d '[:space:]' || true)
@@ -75,7 +75,7 @@ jobs:
           git rev-parse HEAD > .deployed-commit
           printf 'put -O "%s" .deployed-commit\n' "$REMOTE" >> cmds.lftp
 
-          lftp --env-password -u "$FTP_USER" -e "$SET; source cmds.lftp; bye" "$FTP_HOST"
+          lftp --env-password -u "$FTP_USER" -e "$SET; debug -t 3; source cmds.lftp; bye" "$FTP_HOST" 2>&1 | grep -v -i "^.*PASS " | tail -n 60
           echo "Desplegado $(git rev-parse --short HEAD)"
 
       - name: Comprobación rápida
