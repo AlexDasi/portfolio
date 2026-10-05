@@ -43,6 +43,7 @@ jobs:
             .vscode/**
             node_modules/**
             scss/**
+            tools/**
             prepros.config
             portfolio.code-workspace
             package.json

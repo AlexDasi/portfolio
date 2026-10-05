@@ -2,3 +2,4 @@
 RedirectMatch 404 /\.git
 RedirectMatch 404 ^/docs(/|$)
 RedirectMatch 404 /\.ftp-deploy-sync-state\.json$
+RedirectMatch 404 ^/tools(/|$)
