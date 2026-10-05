@@ -46,7 +46,7 @@ include '../../php-elements/header-works.php'
 
                 <img class="element project-content__image" src="../../content/pictures/projects/knowadays/mobile/knowadays-mobile-01.jpg" alt="Knowadays mobile view" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">The focus was to keep the interface clear, editorial, and conversion-oriented across multiple channels: from website updates and landing pages to mailing design and social media communication. You can explore the project on the <a href="https://knowadays.com/" target="_blank">Knowadays website</a>, and follow their ongoing content on <a href="https://www.instagram.com/knowadayslearning/" target="_blank">Instagram</a>.</p>
+                <div class="padding3 project-content__text"><p>The focus was to keep the interface clear, editorial, and conversion-oriented across multiple channels: from website updates and landing pages to mailing design and social media communication. You can explore the project on the <a href="https://knowadays.com/" target="_blank">Knowadays website</a>, and follow their ongoing content on <a href="https://www.instagram.com/knowadayslearning/" target="_blank">Instagram</a>.</p></div>
 
                 <img class="element project-content__image" src="../../content/pictures/projects/knowadays/tablet/knowadays-tablet-01.jpg" alt="Knowadays tablet mockup" loading="lazy" decoding="async">
 
@@ -54,7 +54,7 @@ include '../../php-elements/header-works.php'
 
                 <img class="element project-content__image" src="../../content/pictures/projects/knowadays/mobile/knowadays-mobile-02.jpg" alt="Knowadays mobile screens" loading="lazy" decoding="async">
 
-                <p class="padding3 project-content__quote">Work included iterative redesigns and production-ready design applications that supported growth, trust, and a more cohesive user experience in an international learning context.</p>
+                <div class="padding3 project-content__text"><p>Work included iterative redesigns and production-ready design applications that supported growth, trust, and a more cohesive user experience in an international learning context.</p></div>
 
             </div>
         </section>

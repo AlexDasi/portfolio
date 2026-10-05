@@ -56,7 +56,7 @@ include '../../php-elements/header-works.php'
                 <img class="element project-content__image" src="../../content/pictures/projects/clustag/clustag-warehouse.jpg" alt="Clustag Environmental Context" loading="lazy" decoding="async">
 
                 <!-- Additional project content would go here -->
-                <p class="padding3 project-content__quote">The interface prioritizes clarity, useful data visualization, and intuitive navigation. Neutral tones, geometric structure, and controlled motion help communicate reliability and a forward-thinking engineering mindset.</p>
+                <div class="padding3 project-content__text"><p>The interface prioritizes clarity, useful data visualization, and intuitive navigation. Neutral tones, geometric structure, and controlled motion help communicate reliability and a forward-thinking engineering mindset.</p></div>
 
             </div>
         </section>
