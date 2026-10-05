@@ -3,7 +3,7 @@
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
 **Fecha:** 2026-10-05
-**Rama activa:** `main` (castellano + Pati logo nuevo publicados el 2026-10-05, Conv. 6). Para trabajo nuevo, abrir rama desde `main`.
+**Rama activa:** `feat/works-y-casos` (R1 Works + R2 casos y Archive), pendiente del OK de Alex.
 
 ## Contexto en una frase
 ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Lenta) + diapositiva Process + pasafotos de Works nuevo. Todo en la rama, revisado por Alex en una demo privada.
@@ -33,5 +33,10 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - EN por defecto; ES con `?lang=es`. Diccionarios en `lang/es/` (claves = HTML exacto en inglés). Si cambias un texto en inglés: `php -S localhost:8000` + `python3 tools/i18n_extract.py` (añade claves vacías) → traducir → `python3 tools/i18n_check.py` (debe dar 0).
 - Demo: `python3 tools/export_demo.py <carpeta>` y publicar en el artefacto (jQuery ya está en el artefacto; borrar media >2 MB).
 
+## Works y casos (desde Conv. 7)
+- Categorías de Works en `data-tags` de cada tarjeta (works.php y works-mobile.php). Filtro en `swiperNew.js` (`bindWorksFilter`).
+- Resumen de caso: `$caseSummary` + include de `php-elements/case-summary.php` tras las columnas. Solo hechos de la página.
+- Archive: `php-pages/projects/archive.php` (array `$archive`).
+
 ## Próximo paso exacto
-➡️ Alex elige qué rediseños hacer de la lista propuesta en Conv. 6 (ver BACKLOG). Verificar en vivo: abrir un asset del dominio en el navegador integrado y hacer fetch (la home con fluido cuelga el panel oculto).
+➡️ Alex revisa la demo (versión 8). Con el OK: merge `feat/works-y-casos` → `main` y push (deploy automático) y comprobar en vivo. Pedirle cifras de resultado para los casos si las tiene.

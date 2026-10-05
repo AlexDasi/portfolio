@@ -48,8 +48,8 @@
 _(mover aquí las entradas completadas con fecha)_
 
 ## Propuestas de rediseño (Conv. 6, 2026-10-05) · pendientes de que Alex elija
-- R1 Works: info visible sin hover (nombre, rol, año) + filtro Product / Web / Brand.
-- R2 Plantilla única de caso (reto → mi papel → proceso → resultado con datos) y «Archive» para los trabajos de branding antiguos.
+- ✅ R1 Works: info visible sin hover (nombre, rol, año) + filtro Product / Web / Brand (Conv. 7).
+- ✅ R2 (parcial, Conv. 7: bloque Reto / Mi papel / Resultado + Archive; falta añadir cifras reales) Plantilla única de caso (reto → mi papel → proceso → resultado con datos) y «Archive» para los trabajos de branding antiguos.
 - R3 Navegación: menú mínimo fijo + «siguiente proyecto» al final de cada caso.
 - R4 Rendimiento: vídeos/GIF de 8-12 MB a MP4/WebM ligeros, fluido WebGL solo con buena GPU, jQuery fuera.
 - R5 Legibilidad: texto de proyecto sin justificar y con más contraste (ahora opacity .7 + justify).
