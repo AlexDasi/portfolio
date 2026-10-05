@@ -11,7 +11,9 @@
 
 **Contexto:** Alex pregunta dónde estábamos con el deploy. Estado: `main` ya mergeado y pusheado (Conv. 3); falta darle a desplegar en Hostinger (Git) y comprobar en vivo. No había ningún error con Hostinger, solo el paso manual pendiente. Desde la nube no se puede cargar alexdasi.com (bloqueado por el proxy), así que no se ha podido comprobar si ya está desplegado.
 
-**Siguiente paso:** Alex despliega en Hostinger (o da acceso) → comprobar en vivo.
+**Hallazgo:** Claude entró en hPanel (navegador integrado, sesión de Alex) y le dio a «Implementar» dos veces. El log dice OK, pero la web sigue en la versión de junio (`/php-pages/projects/atelier.php` da 404, `docs/HANDOFF.md` del 23 jun). Causa: la entrada Git de Hostinger usa `https://github.com/AlexDasi/portfolio.git` y el repo es privado, así que no descarga nada. La clave SSH de Hostinger ya está en GitHub como deploy key (huella coincide). Alex cambió la URL a SSH en `public_html/.git/config`, pero Hostinger usa la URL guardada en el panel y sigue sin descargar.
+
+**Siguiente paso:** decidir con Alex: recrear la entrada Git del panel con `git@github.com:AlexDasi/portfolio.git` (ruta vacía), o despliegue por GitHub Actions. Ojo: `/docs/` se sirve en público.
 
 ---
 
