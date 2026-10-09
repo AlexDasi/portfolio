@@ -445,6 +445,9 @@
     const mobileSwiper = new Swiper(worksRoot, Object.assign({}, WORKS_SHARED_PARAMS, {
       loop: getDirectSlideElements(wrapper).length >= 4,
       centeredSlides: true,
+      // Sin redondeo: la tarjeta mide 90vw con decimales (p. ej. 353,7 px en 393 px). Si Swiper
+      // redondea, el error se acumula en cada clon del bucle y la tarjeta acaba desplazada a la derecha.
+      roundLengths: false,
       speed: 420,
       grabCursor: false,
       // En móvil, una tarjeta por gesto: encaje clásico (más predecible que el modo libre)

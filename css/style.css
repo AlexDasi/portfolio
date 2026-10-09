@@ -504,7 +504,7 @@ header {
   .categories {
     position: relative;
     margin: 5vw 0;
-    width: 100vw;
+    width: 100%;
   }
 }
 @media (max-width: 768px) {
