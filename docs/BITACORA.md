@@ -5,6 +5,24 @@
 
 ---
 
+## Conv. 11 · 2026-10-08 22:10 · Casa Albar y alè + Works centrado en móvil
+
+**Inicio:** 2026-10-08 22:10 · **Turnos:** 1 · **Último msg:** 2026-10-08 22:10 · **Cierre:** 2026-10-09 09:45
+
+**Contexto:** Alex: subir al portfolio Casa Albar y la web de yoga (alè), que no están en el post de ATELIER; y que los thumbnails de Works en móvil estén centrados (se iban a la derecha).
+
+**Cambios (rama `feat/casa-albar-ale`):**
+- `php-pages/projects/casa-albar.php` y `ale.php` (Own work · independent concept), mismo patrón que Otra Vez. Textos sacados de `sites/<slug>/resumen.md` y `CHANGELOG.md` de `AlexDasi/atelier`. ES completo en `lang/es/projects/`.
+- Capturas propias (1440×900 + composición de 3 móviles) en `content/pictures/projects/<slug>/` y thumbnails 1536×1024 en `thumbnails/lq/`. Casa Albar se compiló en local (Astro) con sus 14 fotos de Unsplash bajadas por el navegador del Mac de Alex (desde la nube Unsplash y pages.dev están bloqueados). alè es HTML autocontenido; fuentes Fraunces/Manrope de fontsource.
+- Works (escritorio y móvil): tarjetas CASA ALBAR y ALÈ (tag `web`, 2026), tras Tulong.
+- `atelier-concepts.php`: 5 conceptos (Casa Albar, alè, Otra Vez, Pati, Lenta).
+- **Fix móvil:** (1) Swiper de Works móvil con `roundLengths: false`: 90vw con decimales se redondeaba y el error se sumaba en cada clon del bucle (17 px a la derecha a 768 px). (2) `.categories` medía 100vw dentro de un hueco de 90vw: el body se salía 5vw y la página se podía arrastrar en horizontal. Ahora body = viewport y tarjeta centrada (±1 px) de 360 a 1024 px.
+- Demo privada actualizada (versión 10).
+
+**Pendientes:** OK de Alex → merge a `main` (despliega solo). En móvil el enlace «Archive» de la fila de filtros queda fuera de pantalla (ya pasaba en `main`).
+
+---
+
 ## Conv. 10 · 2026-10-05 · Arreglarlo todo y publicar
 
 **Inicio:** 2026-10-05 · **Turnos:** 1 · **Último msg:** 2026-10-05 · **Cierre:** 2026-10-05
