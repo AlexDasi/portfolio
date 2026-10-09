@@ -1,0 +1,24 @@
+{
+  "text": {
+    "Casa Albar | Alex Dasi Portfolio": "",
+    "A Hotel That Closes Its Eyes at Sunset": "Un hotel que cierra los ojos al atardecer",
+    "Casa Albar is a fictional hotel with nine rooms in an old whitewashed house on a cliff in Cabo de Gata. It is made for people who choose a hotel by how it feels, not by its list of amenities.": "Casa Albar es un hotel ficticio de nueve habitaciones en una vieja casa encalada sobre un acantilado del Cabo de Gata. Está pensado para gente que elige hotel por cómo se siente, no por su lista de servicios.",
+    "So the website is one whole day at the house. It opens in white morning light and, as you scroll down, the page slowly dims into night, through dinner and up to the stars.": "Por eso la web es un día entero en la casa. Empieza con la luz blanca de la mañana y, a medida que bajas, la página se va apagando hasta la noche, pasando por la cena y llegando a las estrellas.",
+    "Scrolling is the hours going by.": "El scroll es el paso de las horas.",
+    "Two palettes do the work: bone and ink by day, night blue and pale bone by night. A Sunset section turns one into the other, and the text flips colour at the exact point where it would stop being readable.": "Dos paletas hacen el trabajo: hueso y tinta de día, azul noche y hueso claro de noche. Una sección «Sunset» convierte una en la otra, y el texto cambia de color justo en el punto en que dejaría de leerse bien.",
+    "Cormorant Garamond, with italics woven in, gives the old house its voice. Geist keeps the data and the prices clean. The nine rooms run along a horizontal corridor, one card each, none of them alike.": "Cormorant Garamond, con cursivas intercaladas, le da su voz a la casa antigua. Geist mantiene limpios los datos y los precios. Las nueve habitaciones se recorren en un pasillo horizontal, una tarjeta cada una, ninguna igual.",
+    "The motion follows the same idea: three hero photos that melt into each other, big images with parallax, line drawings that sketch themselves on the plan cards and a menu that drops like a curtain. If the visitor asks for less motion, the site stays in daylight, still and complete.": "El movimiento sigue la misma idea: tres fotos de portada que se funden entre sí, imágenes grandes con parallax, ilustraciones de línea que se dibujan solas en las tarjetas de planes y un menú que baja como una cortina. Si el visitante pide menos movimiento, la web se queda de día, quieta y completa.",
+    "It also works as a hotel site. Pick your nights and it tells you which rooms are free and roughly what the stay costs, depending on the season.": "Y funciona como web de hotel. Eliges tus noches y te dice qué habitaciones están libres y cuánto costaría más o menos la estancia según la temporada.",
+    "The footer is the last hour of the day: a sky full of stars, the moon in its real phase for tonight and the current time at the house, with whatever is happening there right now.": "El footer es la última hora del día: un cielo lleno de estrellas, la luna con su fase real de esta noche y la hora que es ahora mismo en la casa, con lo que está pasando allí.",
+    "The <a href=\"https://atelier-demo-casa-albar.pages.dev\" target=\"_blank\" rel=\"noopener noreferrer\">site is live</a> if you want to spend a day there. Fictional hotel, real website.": "La <a href=\"https://atelier-demo-casa-albar.pages.dev\" target=\"_blank\" rel=\"noopener noreferrer\">web está online</a> por si quieres pasar allí un día. Hotel ficticio, web real."
+  },
+  "attr": {
+    "Casa Albar, a fictional nine-room hotel in Cabo de Gata. Independent web concept by Alex Dasi, built with ATELIER.": "Casa Albar, un hotel ficticio de nueve habitaciones en el Cabo de Gata. Concepto web independiente de Alex Dasi, creado con ATELIER.",
+    "Casa Albar | Alex Dasi Portfolio": "",
+    "Casa Albar rooms in a horizontal corridor": "Habitaciones de Casa Albar en un pasillo horizontal",
+    "Casa Albar sunset section where day turns into night": "Sección de atardecer de Casa Albar, donde el día se vuelve noche",
+    "Casa Albar dinner menu at night": "Menú de la cena de Casa Albar, de noche",
+    "Casa Albar footer with the night sky and the time at the house": "Footer de Casa Albar con el cielo de noche y la hora en la casa",
+    "Casa Albar on mobile": "Casa Albar en móvil"
+  }
+}

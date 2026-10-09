@@ -214,7 +214,7 @@
     .categories{
         position: relative;
         margin: 5vw 0; // Elimina margin lateral, mantiene vertical
-        width: 100vw; // Ocupa todo el ancho
+        width: 100%; // Ocupa todo el ancho de su diapositiva (con 100vw se salía 5vw por la derecha y la página se podía arrastrar en horizontal)
     }
 }
 

@@ -58,6 +58,42 @@
             </a>
 
 
+            <a href="php-pages/projects/casa-albar.php" class="swiper-slide" data-tags="web">
+                <div class="works works-casa-albar">
+                <!-- thumbnail -->
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/casa-albar.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/casa-albar-mobile.jpg"/>
+                <!-- info -->
+                    <div class="works--info">
+                        <h2>CASA ALBAR</h2>
+                        <p class="yellow-600">Website for a fictional nine-room hotel in Cabo de Gata. The page goes from morning to night as you scroll, and booking shows free rooms and an estimated price. Built with ATELIER.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Art Direction, Web Design</p>
+                        <p class="yellow-600">2026</p>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="php-pages/projects/ale.php" class="swiper-slide" data-tags="web">
+                <div class="works works-ale">
+                <!-- thumbnail -->
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/ale.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/ale-mobile.jpg"/>
+                <!-- info -->
+                    <div class="works--info">
+                        <h2>ALÈ</h2>
+                        <p class="yellow-600">Website for a fictional yoga studio by the sea. The whole page breathes, four seconds in and six out, and scrolling becomes a breath. Built with ATELIER.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Art Direction, Web Design</p>
+                        <p class="yellow-600">2026</p>
+                    </div>
+                </div>
+            </a>
+
+
             <a href="php-pages/projects/idrica-wastewater.php" class="swiper-slide" data-tags="product">
                 <div class="works works-idrica-wastewater">
                 <!-- thumbnail -->
