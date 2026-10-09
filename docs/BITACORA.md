@@ -7,7 +7,7 @@
 
 ## Conv. 11 · 2026-10-08 22:10 · Casa Albar y alè + Works centrado en móvil
 
-**Inicio:** 2026-10-08 22:10 · **Turnos:** 1 · **Último msg:** 2026-10-08 22:10 · **Cierre:** 2026-10-09 09:45
+**Inicio:** 2026-10-08 22:10 · **Turnos:** 2 · **Último msg:** 2026-10-09 10:20 · **Cierre:** 2026-10-09 10:30
 
 **Contexto:** Alex: subir al portfolio Casa Albar y la web de yoga (alè), que no están en el post de ATELIER; y que los thumbnails de Works en móvil estén centrados (se iban a la derecha).
 
@@ -19,7 +19,9 @@
 - **Fix móvil:** (1) Swiper de Works móvil con `roundLengths: false`: 90vw con decimales se redondeaba y el error se sumaba en cada clon del bucle (17 px a la derecha a 768 px). (2) `.categories` medía 100vw dentro de un hueco de 90vw: el body se salía 5vw y la página se podía arrastrar en horizontal. Ahora body = viewport y tarjeta centrada (±1 px) de 360 a 1024 px.
 - Demo privada actualizada (versión 10).
 
-**Pendientes:** OK de Alex → merge a `main` (despliega solo). En móvil el enlace «Archive» de la fila de filtros queda fuera de pantalla (ya pasaba en `main`).
+**Publicado (turno 2, «ok»):** merge a `main` (85aaaf2), run #20 Success. En vivo: Casa Albar y alè (EN/ES) 200, thumbnails 200, `swiperNew.js` con el fix, 9 tarjetas en Works móvil; a 375 px body = 375 y tarjeta 20/18 px.
+
+**Pendientes:** en móvil el enlace «Archive» de la fila de filtros queda fuera de pantalla (ya pasaba en `main`).
 
 ---
 

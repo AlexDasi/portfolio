@@ -3,7 +3,7 @@
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
 **Fecha:** 2026-10-09
-**Rama activa:** `feat/casa-albar-ale` (Conv. 11), pendiente del OK de Alex. Lleva Casa Albar y alè (páginas, Works, tarjetas de ATELIER) y el centrado de Works en móvil. Con el OK: merge a `main`.
+**Rama activa:** `main`. Casa Albar, alè y el centrado de Works en móvil publicados el 2026-10-09 (Conv. 11). Para trabajo nuevo, abrir rama desde `main`.
 
 ## Contexto en una frase
 ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Lenta) + diapositiva Process + pasafotos de Works nuevo. Todo en la rama, revisado por Alex en una demo privada.
@@ -39,7 +39,7 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Archive: `php-pages/projects/archive.php` (array `$archive`).
 
 ## Próximo paso exacto
-➡️ OK de Alex a `feat/casa-albar-ale` (demo v10) → merge a `main` y comprobar en vivo Casa Albar, alè y Works en móvil.
+➡️ Nada urgente. Pendiente menor: en móvil el enlace «Archive» de los filtros de Works queda fuera de pantalla.
 
 ## Capturas de webs de ATELIER (desde Conv. 11)
 - Desde la nube no cargan `*.pages.dev` ni Unsplash. Se compila la web en local (`sites/<slug>`, `npm i && npx astro build`) y las fotos de Unsplash se bajan con el navegador integrado del Mac a Descargas (`casa-albar-foto-<id>.jpg`), se suben con stage y Playwright las sirve interceptando `images.unsplash.com`. Ojo: en Playwright la ruta comodín de abortar va registrada PRIMERO (la última registrada gana).
