@@ -1,12 +1,14 @@
 <?php
 /**
- * Tarjetas de los conceptos de ATELIER (Otra Vez, Pati, Lenta).
+ * Tarjetas de los conceptos de ATELIER (Casa Albar, alè, Otra Vez, Pati, Lenta).
  * Uso desde php-pages/projects/*.php:
  *   $conceptsExclude = 'pati';          // opcional: no mostrar la página actual
  *   $conceptsWithAtelier = true;        // opcional: añade la tarjeta del caso ATELIER
  *   include '../../php-elements/atelier-concepts.php';
  */
 $atelierConcepts = [
+    ['slug' => 'casa-albar', 'name' => 'Casa Albar', 'line' => 'A hotel website that goes from day to night'],
+    ['slug' => 'ale',      'name' => 'alè',      'line' => 'A yoga studio website that breathes with you'],
     ['slug' => 'otra-vez', 'name' => 'Otra Vez', 'line' => 'A vintage store run like an archive'],
     ['slug' => 'pati',     'name' => 'Pati',     'line' => 'A brunch café built around its courtyard'],
     ['slug' => 'lenta',    'name' => 'Lenta',    'line' => 'A tattoo studio where flash is sold like product'],
