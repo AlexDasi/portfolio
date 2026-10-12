@@ -625,3 +625,49 @@
         width: auto;
     }
 }
+
+
+// Tablet (768-1280): proyecto / alcance / stack se salían por la derecha
+// (cada título tenía min-width 25vw + márgenes de 5.5rem entre columnas).
+@media (min-width:768px) and (max-width:1280px) {
+    .project-description__main .slice-infos__columns {
+        gap: 4vw;
+
+        .info-column {
+            min-width: 0;
+            &:not(:first-child) { margin-left: 0; }
+        }
+
+        .info-column__title { min-width: 0; }
+    }
+}
+
+// Texto corrido de proyecto por debajo de 1280: el p global va a 4-5vw y en tablet salía a 33-47 px.
+@media (max-width:1280px) {
+    .project-page .slice-infos__text > p,
+    .project-page .project-content__text > p,
+    .project-page .info-column__text > p {
+        font-size: clamp(18px, 5vw, 22px);
+    }
+}
+
+// Tablet (768-1280): la columna de 50vw dejaba el texto apretado y las capturas pequeñas.
+// Columna a 80vw (imágenes más grandes) y texto corrido a ~19 px.
+@media (min-width:768px) and (max-width:1280px) {
+    .project-header__image { width: 80vw; }
+
+    .project-description__main,
+    .project-content__wrapper { width: 80vw; }
+
+    .project-header__title {
+        margin-left: 10vw;
+        max-width: 85vw;
+        font-size: min(7vw, 9rem);
+    }
+
+    .project-page .slice-infos__text > p,
+    .project-page .project-content__text > p,
+    .project-page .info-column__text > p {
+        font-size: clamp(17px, 2.3vw, 20px);
+    }
+}

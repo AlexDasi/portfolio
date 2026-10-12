@@ -5,6 +5,53 @@
 
 ---
 
+## Conv. 14 · 2026-10-12 15:32 · Revisión tablet + conceptos como posts en Works
+
+**Inicio:** 2026-10-12 15:32 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:32 · **Cierre:** abierta (pendiente OK)
+
+**Contexto:** Alex: subrayar enlaces de la línea local; en tablet las columnas proyecto/alcance/stack se salen por la derecha y el texto corrido es demasiado grande; Casa Albar, alè, Pati y Lenta deben verse como posts propios; revisar thumbnails en tablet y las tres vistas.
+
+**Cambios (rama `feat/copy-conceptos-atelier`):**
+- Enlaces WhatsApp / email del hero subrayados (`_index.scss`).
+- Fichas de proyecto 768-1280: columnas sin `min-width: 25vw` (ya no se salen), columna de contenido 50vw → 80vw (capturas más grandes), texto corrido 17-20 px (antes 33-47 px), título del proyecto a 7vw (Idrica se cortaba). Comprobadas las 22 fichas a 390, 768, 820, 1024×1366, 1024×768, 1180 y 1440: sin desbordes.
+- Home 768-1280: p global a 18-24 px (About salía a 41 px), hero a 20-28 px, Contact sin solaparse (enlaces en el flujo), tarjeta de Works más baja en horizontal (60vh) para no pisar los filtros.
+- Works: tarjetas propias para Otra Vez, Pati y Lenta (thumbnails nuevos desde la captura del hero). Total 12. ES en `lang/es/home.json`.
+- Thumbnails verticales `<slug>-portrait.jpg` (captura del móvil centrada) para los 5 conceptos: `<picture>` los usa solo en ≤1280 en vertical; en horizontal y escritorio sigue la captura apaisada.
+- Escritorio sin cambios (hero cabe en 1281×720 … 1920×1080). `i18n_check` = 0. Demo v12.
+
+**Pendientes:** OK de Alex para merge a `main`. `export_demo.py` no copia imágenes de `srcset` (se copiaron a mano). «Archive» en móvil sigue fuera de pantalla (ya pasaba).
+
+---
+
+## Conv. 13 · 2026-10-12 15:25 · Aplicar copy elegido (ATELIER A, línea local A)
+
+**Inicio:** 2026-10-12 15:25 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:25 · **Cierre:** 2026-10-12 15:30
+
+**Contexto:** Alex elige A en titular ATELIER y A en línea local; WhatsApp +34 616420048; hola@alexdasi.com existe; quitar la frase de IA del hero.
+
+**Cambios (rama `feat/copy-conceptos-atelier`):**
+- Ficha ATELIER reescrita como proceso propio (titular «My Design Process, Turned Into a System», intro, resumen, destacado, último párrafo con la IA como herramienta, stack reordenado, meta). EN + ES.
+- Tarjeta ATELIER de Works (escritorio y móvil): sin IA.
+- Home: hero sin «AI speeds me up…»; línea local dentro del mismo párrafo (sin CSS nuevo) con enlaces `wa.me/34616420048` y `mailto:hola@alexdasi.com`. EN + ES.
+- Cabe en 1281×720, 1366×768, 1440×900, 1920×1080 y 375 px. `i18n_check` = 0.
+- Demo privada actualizada (versión 11).
+
+**Pendientes:** OK de Alex para merge a `main`. Los enlaces de la línea local no se distinguen del texto (sin subrayado): ¿subrayarlos?
+
+---
+
+## Conv. 12 · 2026-10-12 15:19 · Copy: conceptos, ficha ATELIER y negocios locales
+
+**Inicio:** 2026-10-12 15:19 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:19 · **Cierre:** 2026-10-12 15:22
+
+**Contexto:** Alex: (1) quitar «Built with ATELIER» de los conceptos y poner «Concept · 2026»; (2) reescribir ATELIER como su proceso de diseño propio, sin IA en titular ni en el resumen de la home; (3) línea para negocios locales con CTA (WhatsApp / hola@alexdasi.com). Enseñar textos antes de publicar.
+
+**Cambios (rama `feat/copy-conceptos-atelier`):** punto 1 aplicado en EN y ES. Puntos 2 y 3 propuestos en `docs/specs/2026-10-12_copy-atelier-conceptos-local.md`.
+
+**Pendientes:** elección de Alex (titular ATELIER, línea local), número de WhatsApp, confirmar hola@alexdasi.com, ¿quitar la frase de IA del hero?
+
+---
+
 ## Conv. 11 · 2026-10-08 22:10 · Casa Albar y alè + Works centrado en móvil
 
 **Inicio:** 2026-10-08 22:10 · **Turnos:** 2 · **Último msg:** 2026-10-09 10:20 · **Cierre:** 2026-10-09 10:30

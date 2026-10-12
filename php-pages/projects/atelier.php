@@ -1,7 +1,7 @@
 <?php
 
 $pageTitle = 'ATELIER | Alex Dasi Portfolio';
-$metaDescription = 'ATELIER, a design system by Alex Dasi that tracks web design trends, proposes three directions per site, learns from feedback and builds the final website.';
+$metaDescription = 'ATELIER, Alex Dasi\'s own design process turned into a system: it follows web trends, proposes three directions per site, learns from feedback and builds the final website.';
 include '../../php-elements/header-works.php'
 
 ?>
@@ -27,11 +27,11 @@ include '../../php-elements/header-works.php'
         <section class="project-description">
             <div class="project-description__main">
 
-                <h2 class="padding3 slice-infos__title">A Design System That Learns My Taste</h2>
+                <h2 class="padding3 slice-infos__title">My Design Process, Turned Into a System</h2>
 
                 <div class="padding3 slice-infos__text">
-                    <p>ATELIER is a system I designed to explore web design at speed without giving up art direction. It tracks design trends, keeps a structured moodboard, proposes three visual directions for every website, learns from my feedback and builds the final site.</p>
-                    <p>AI does the heavy lifting in production. I set the direction, make the calls and decide what gets thrown away.</p>
+                    <p>ATELIER is how I design websites, written down as a system. It follows web design trends, keeps a structured moodboard, proposes three directions for every site, learns from my feedback and builds the final website.</p>
+                    <p>Speed matters, but taste comes first. I set the direction, make the calls and decide what gets thrown away.</p>
                 </div>
 
                 <ul class="padding3 slice-infos__columns">
@@ -53,12 +53,12 @@ include '../../php-elements/header-works.php'
                     <li class="info-column">
                         <h3 class="info-column__title title title--2">stack</h3>
                         <div class="info-column__text">
-                            <p>Claude, Astro, Tailwind<br>GitHub, Cloudflare Pages<br>Figma</p>
+                            <p>Figma, Astro, Tailwind<br>Claude, GitHub<br>Cloudflare Pages</p>
                         </div>
                     </li>
                 </ul>
 
-                <?php $caseSummary = ['challenge' => 'AI can generate a website from four sentences. The problem: it looks like everything else.', 'role' => 'I designed the system end to end: workflow, decision rules, taste model, review tools and the art direction of every site.', 'outcome' => 'In its first weeks: 20+ design decisions logged and ten sites built. Three went all the way, from directions to final site.']; include '../../php-elements/case-summary.php'; ?>
+                <?php $caseSummary = ['challenge' => 'Fast websites tend to look like everything else. I wanted speed without losing a point of view.', 'role' => 'I designed the system end to end: workflow, decision rules, taste model, review tools and the art direction of every site.', 'outcome' => 'In its first weeks: 20+ design decisions logged and ten sites built. Three went all the way, from directions to final site.']; include '../../php-elements/case-summary.php'; ?>
 
             </div>
         </section>
@@ -71,12 +71,12 @@ include '../../php-elements/header-works.php'
 
                 <!-- LOS TRES CONCEPTOS, ARRIBA -->
                 <section class="tulong-section padding3">
-                    <p class="concept-cards__label">Three concepts built with ATELIER</p>
+                    <p class="concept-cards__label">Concepts made with ATELIER</p>
                     <?php include '../../php-elements/atelier-concepts.php'; ?>
                 </section>
 
                 <!-- PROBLEM (destacado) -->
-                <p class="padding3 project-content__quote">A tool can generate a website from four sentences. That is the problem: it looks like everything else.</p>
+                <p class="padding3 project-content__quote">A website can be made in an afternoon. That is the problem: it looks like everything else.</p>
 
                 <div class="padding3 project-content__text">
                     <p>I wanted the opposite: a process where speed serves taste and every site has a personality of its own. ATELIER runs as one loop. Trends and saved references become a moodboard tagged by palette, type, layout and motion. Every brief gets three directions. I choose. The chosen direction becomes a real site in Astro, checked automatically for links, accessibility and responsive layouts. My feedback goes back into the system.</p>
@@ -119,7 +119,7 @@ include '../../php-elements/header-works.php'
                 <p class="padding3 project-content__quote">The brands are fictional. The process is real.</p>
 
                 <div class="padding3 project-content__text">
-                    <p>I designed the system end to end: the workflow, the decision rules, the taste model, the review tools and the art direction of every site. AI agents handle research, production and QA within those rules.</p>
+                    <p>I designed the system end to end: the workflow, the decision rules, the taste model, the review tools and the art direction of every site. Tools, AI included, handle research, production and checks inside those rules. They never pick the direction.</p>
                 </div>
 
             </div>

@@ -30,7 +30,7 @@
                 <!-- info -->
                     <div class="works--info">
                         <h2>ATELIER</h2>
-                        <p class="yellow-600">A design system that tracks web trends, proposes three directions per site, learns from my feedback and builds the final website. AI handles production; art direction and decisions stay mine.</p>
+                        <p class="yellow-600">My own design process, turned into a system. It follows web trends, proposes three directions per site, learns from my feedback and builds the final website.</p>
                     </div>
                     <div class="hiddenMobile works--details">
                         <p>System Design, Art Direction</p>
@@ -62,11 +62,11 @@
                 <div class="works works-casa-albar">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/casa-albar.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/casa-albar-mobile.jpg"/>
+                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/casa-albar-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/casa-albar-mobile.jpg"/></picture>
                 <!-- info -->
                     <div class="works--info">
                         <h2>CASA ALBAR</h2>
-                        <p class="yellow-600">Website for a fictional nine-room hotel in Cabo de Gata. The page goes from morning to night as you scroll, and booking shows free rooms and an estimated price. Built with ATELIER.</p>
+                        <p class="yellow-600">Website for a fictional nine-room hotel in Cabo de Gata. The page goes from morning to night as you scroll, and booking shows free rooms and an estimated price. Concept · 2026.</p>
                     </div>
                     <div class="hiddenMobile works--details">
                         <p>Art Direction, Web Design</p>
@@ -80,11 +80,65 @@
                 <div class="works works-ale">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/ale.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/ale-mobile.jpg"/>
+                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/ale-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/ale-mobile.jpg"/></picture>
                 <!-- info -->
                     <div class="works--info">
                         <h2>ALÈ</h2>
-                        <p class="yellow-600">Website for a fictional yoga studio by the sea. The whole page breathes, four seconds in and six out, and scrolling becomes a breath. Built with ATELIER.</p>
+                        <p class="yellow-600">Website for a fictional yoga studio by the sea. The whole page breathes, four seconds in and six out, and scrolling becomes a breath. Concept · 2026.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Art Direction, Web Design</p>
+                        <p class="yellow-600">2026</p>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="php-pages/projects/otra-vez.php" class="swiper-slide" data-tags="web">
+                <div class="works works-otra-vez">
+                <!-- thumbnail -->
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/otra-vez.jpg"/>
+                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/otra-vez-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/otra-vez-mobile.jpg"/></picture>
+                <!-- info -->
+                    <div class="works--info">
+                        <h2>OTRA VEZ</h2>
+                        <p class="yellow-600">Website for a fictional vintage store in Valencia, run like an archive: every piece has a number, a label and a price. Concept · 2026.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Art Direction, Web Design</p>
+                        <p class="yellow-600">2026</p>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="php-pages/projects/pati.php" class="swiper-slide" data-tags="web">
+                <div class="works works-pati">
+                <!-- thumbnail -->
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/pati.jpg"/>
+                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/pati-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/pati-mobile.jpg"/></picture>
+                <!-- info -->
+                    <div class="works--info">
+                        <h2>PATI</h2>
+                        <p class="yellow-600">Website for a fictional brunch café in Ruzafa, built around its hidden courtyard. Brand first: an olive green logo set against an arch. Concept · 2026.</p>
+                    </div>
+                    <div class="hiddenMobile works--details">
+                        <p>Branding, Web Design</p>
+                        <p class="yellow-600">2026</p>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="php-pages/projects/lenta.php" class="swiper-slide" data-tags="web">
+                <div class="works works-lenta">
+                <!-- thumbnail -->
+                    <img class="hiddenMobile" src="content/pictures/thumbnails/lq/lenta.jpg"/>
+                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/lenta-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/lenta-mobile.jpg"/></picture>
+                <!-- info -->
+                    <div class="works--info">
+                        <h2>LENTA</h2>
+                        <p class="yellow-600">Website for a fictional tattoo studio in Ruzafa where nothing is rushed: four artists, original designs and flash at a fixed price. Concept · 2026.</p>
                     </div>
                     <div class="hiddenMobile works--details">
                         <p>Art Direction, Web Design</p>
