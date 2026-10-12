@@ -5,9 +5,23 @@
 
 ---
 
+## Conv. 15 · 2026-10-12 16:00 · Publicar (OK)
+
+**Inicio:** 2026-10-12 16:00 · **Turnos:** 1 · **Último msg:** 2026-10-12 16:00 · **Cierre:** 2026-10-12 16:15
+
+**Contexto:** Alex: «ok».
+
+**Cambios:** merge `feat/copy-conceptos-atelier` → `main` (0d1cc8d), push; despliegue automático por GitHub Actions.
+
+**Comprobado en vivo** (navegador del Mac; desde la nube alexdasi.com está bloqueado y el token no lee Actions): la home carga `style.css?v=1791813647` (nuevo) y pide las tarjetas nuevas (otra-vez, pati, lenta) y los 5 `*-portrait.jpg`, todo 200. `atelier.php` (EN/ES) y `pati.php` 200. El panel del navegador estaba oculto y no dejó leer el texto ni hacer capturas.
+
+**Pendientes:** que Alex mire en vivo la tablet y el móvil. «Archive» en móvil fuera de pantalla. `export_demo.py` no copia `srcset`.
+
+---
+
 ## Conv. 14 · 2026-10-12 15:32 · Revisión tablet + conceptos como posts en Works
 
-**Inicio:** 2026-10-12 15:32 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:32 · **Cierre:** abierta (pendiente OK)
+**Inicio:** 2026-10-12 15:32 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:32 · **Cierre:** 2026-10-12 15:55
 
 **Contexto:** Alex: subrayar enlaces de la línea local; en tablet las columnas proyecto/alcance/stack se salen por la derecha y el texto corrido es demasiado grande; Casa Albar, alè, Pati y Lenta deben verse como posts propios; revisar thumbnails en tablet y las tres vistas.
 
