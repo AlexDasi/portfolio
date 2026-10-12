@@ -39,7 +39,7 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Archive: `php-pages/projects/archive.php` (array `$archive`).
 
 ## Próximo paso exacto
-➡️ Rama `feat/copy-conceptos-atelier` (Conv. 12-13): conceptos «Concept · 2026», ficha ATELIER como proceso propio, hero sin IA y línea para negocios locales (WhatsApp + hola@alexdasi.com). Demo v11. Pendiente del OK de Alex para merge a `main`.
+➡️ Rama `feat/copy-conceptos-atelier` (Conv. 12-13): conceptos «Concept · 2026», ficha ATELIER como proceso propio, hero sin IA y línea para negocios locales (WhatsApp + hola@alexdasi.com). Conv. 14: revisión tablet (columnas, tamaños de texto, Contact, Works) + Otra Vez, Pati y Lenta en Works + thumbnails verticales de los conceptos. Demo v12. Pendiente del OK de Alex para merge a `main`. Ojo: `export_demo.py` no copia imágenes de `srcset`.
 ➡️ Nada urgente. Pendiente menor: en móvil el enlace «Archive» de los filtros de Works queda fuera de pantalla.
 
 ## Capturas de webs de ATELIER (desde Conv. 11)

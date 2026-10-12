@@ -530,6 +530,25 @@ html[lang=es] .categories--designer {
     font-size: 14vw;
   }
 }
+.message-description a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.message-description a:hover, .message-description a:focus-visible {
+  background-color: var(--accent-color);
+  color: var(--bkg-color);
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+  p {
+    font-size: clamp(18px, 2.4vw, 24px);
+  }
+  .message-description {
+    font-size: clamp(20px, 2.8vw, 28px);
+  }
+}
 .nav {
   padding: 20px;
   width: 100vw;
@@ -1767,6 +1786,11 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
     transition: none;
   }
 }
+@media (min-width: 768px) and (max-width: 1280px) and (orientation: landscape) {
+  .WorksSwiperMobile .swiper-slide img {
+    height: 60vh;
+  }
+}
 .project-header {
   position: relative;
   padding-bottom: 10rem;
@@ -2260,6 +2284,46 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
   }
   .project-page .info-column__title {
     width: auto;
+  }
+}
+@media (min-width: 768px) and (max-width: 1280px) {
+  .project-description__main .slice-infos__columns {
+    gap: 4vw;
+  }
+  .project-description__main .slice-infos__columns .info-column {
+    min-width: 0;
+  }
+  .project-description__main .slice-infos__columns .info-column:not(:first-child) {
+    margin-left: 0;
+  }
+  .project-description__main .slice-infos__columns .info-column__title {
+    min-width: 0;
+  }
+}
+@media (max-width: 1280px) {
+  .project-page .slice-infos__text > p,
+  .project-page .project-content__text > p,
+  .project-page .info-column__text > p {
+    font-size: clamp(18px, 5vw, 22px);
+  }
+}
+@media (min-width: 768px) and (max-width: 1280px) {
+  .project-header__image {
+    width: 80vw;
+  }
+  .project-description__main,
+  .project-content__wrapper {
+    width: 80vw;
+  }
+  .project-header__title {
+    margin-left: 10vw;
+    max-width: 85vw;
+    font-size: min(7vw, 9rem);
+  }
+  .project-page .slice-infos__text > p,
+  .project-page .project-content__text > p,
+  .project-page .info-column__text > p {
+    font-size: clamp(17px, 2.3vw, 20px);
   }
 }
 .case-summary {
@@ -3067,6 +3131,15 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
     left: 2vw;
   }
 }
+@media (min-width: 768px) and (max-width: 1280px) {
+  .contact--message__text p {
+    font-size: clamp(20px, 2.8vw, 28px);
+  }
+  .contact--social {
+    position: static;
+    margin-top: 6vh;
+  }
+}
 .follow {
   /* Use fixed so the dot stays relative to the viewport during scroll */
   position: fixed;
@@ -3261,5 +3334,3 @@ canvas {
     display: none;
   }
 }
-
-/*# sourceMappingURL=style.css.map */

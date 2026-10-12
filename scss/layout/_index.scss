@@ -247,3 +247,20 @@ html[lang="es"] .categories--designer{
         font-size: 14vw;
     }
 }
+
+// Enlaces de la línea para negocios locales (WhatsApp / email): subrayados para que se lean como enlace
+.message-description a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .2em;
+
+    &:hover,
+    &:focus-visible { background-color: var(--accent-color); color: var(--bkg-color); }
+}
+
+// Tablet (768-1280): el p global a 4vw salía a 31-51 px (About, hero). Tamaño de lectura normal.
+@media (min-width: 768px) and (max-width: 1280px) {
+    p { font-size: clamp(18px, 2.4vw, 24px); }
+    .message-description { font-size: clamp(20px, 2.8vw, 28px); }
+}

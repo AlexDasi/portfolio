@@ -5,9 +5,27 @@
 
 ---
 
+## Conv. 14 · 2026-10-12 15:32 · Revisión tablet + conceptos como posts en Works
+
+**Inicio:** 2026-10-12 15:32 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:32 · **Cierre:** abierta (pendiente OK)
+
+**Contexto:** Alex: subrayar enlaces de la línea local; en tablet las columnas proyecto/alcance/stack se salen por la derecha y el texto corrido es demasiado grande; Casa Albar, alè, Pati y Lenta deben verse como posts propios; revisar thumbnails en tablet y las tres vistas.
+
+**Cambios (rama `feat/copy-conceptos-atelier`):**
+- Enlaces WhatsApp / email del hero subrayados (`_index.scss`).
+- Fichas de proyecto 768-1280: columnas sin `min-width: 25vw` (ya no se salen), columna de contenido 50vw → 80vw (capturas más grandes), texto corrido 17-20 px (antes 33-47 px), título del proyecto a 7vw (Idrica se cortaba). Comprobadas las 22 fichas a 390, 768, 820, 1024×1366, 1024×768, 1180 y 1440: sin desbordes.
+- Home 768-1280: p global a 18-24 px (About salía a 41 px), hero a 20-28 px, Contact sin solaparse (enlaces en el flujo), tarjeta de Works más baja en horizontal (60vh) para no pisar los filtros.
+- Works: tarjetas propias para Otra Vez, Pati y Lenta (thumbnails nuevos desde la captura del hero). Total 12. ES en `lang/es/home.json`.
+- Thumbnails verticales `<slug>-portrait.jpg` (captura del móvil centrada) para los 5 conceptos: `<picture>` los usa solo en ≤1280 en vertical; en horizontal y escritorio sigue la captura apaisada.
+- Escritorio sin cambios (hero cabe en 1281×720 … 1920×1080). `i18n_check` = 0. Demo v12.
+
+**Pendientes:** OK de Alex para merge a `main`. `export_demo.py` no copia imágenes de `srcset` (se copiaron a mano). «Archive» en móvil sigue fuera de pantalla (ya pasaba).
+
+---
+
 ## Conv. 13 · 2026-10-12 15:25 · Aplicar copy elegido (ATELIER A, línea local A)
 
-**Inicio:** 2026-10-12 15:25 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:25 · **Cierre:** abierta (pendiente OK)
+**Inicio:** 2026-10-12 15:25 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:25 · **Cierre:** 2026-10-12 15:30
 
 **Contexto:** Alex elige A en titular ATELIER y A en línea local; WhatsApp +34 616420048; hola@alexdasi.com existe; quitar la frase de IA del hero.
 
