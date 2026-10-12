@@ -5,6 +5,18 @@
 
 ---
 
+## Conv. 12 · 2026-10-12 15:19 · Copy: conceptos, ficha ATELIER y negocios locales
+
+**Inicio:** 2026-10-12 15:19 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:19 · **Cierre:** abierta
+
+**Contexto:** Alex: (1) quitar «Built with ATELIER» de los conceptos y poner «Concept · 2026»; (2) reescribir ATELIER como su proceso de diseño propio, sin IA en titular ni en el resumen de la home; (3) línea para negocios locales con CTA (WhatsApp / hola@alexdasi.com). Enseñar textos antes de publicar.
+
+**Cambios (rama `feat/copy-conceptos-atelier`):** punto 1 aplicado en EN y ES. Puntos 2 y 3 propuestos en `docs/specs/2026-10-12_copy-atelier-conceptos-local.md`.
+
+**Pendientes:** elección de Alex (titular ATELIER, línea local), número de WhatsApp, confirmar hola@alexdasi.com, ¿quitar la frase de IA del hero?
+
+---
+
 ## Conv. 11 · 2026-10-08 22:10 · Casa Albar y alè + Works centrado en móvil
 
 **Inicio:** 2026-10-08 22:10 · **Turnos:** 2 · **Último msg:** 2026-10-09 10:20 · **Cierre:** 2026-10-09 10:30

@@ -1,7 +1,7 @@
 <?php
 
 $pageTitle = 'Pati | Alex Dasi Portfolio';
-$metaDescription = 'Pati, a fictional brunch café with a courtyard in Ruzafa, Valencia. Independent web concept by Alex Dasi, built with ATELIER.';
+$metaDescription = 'Pati, a fictional brunch café with a courtyard in Ruzafa, Valencia. Independent web concept by Alex Dasi, 2026.';
 include '../../php-elements/header-works.php'
 
 ?>
@@ -31,7 +31,7 @@ include '../../php-elements/header-works.php'
                     </li>
                     <li class="info-column">
                         <h3 class="info-column__title title title--2">credits</h3>
-                        <div class="info-column__text"><p>Alex Dasi<br>Built with <a href="atelier.php">ATELIER</a></p></div>
+                        <div class="info-column__text"><p>Alex Dasi<br>Concept · 2026</p></div>
                     </li>
                 </ul>
             </div>
@@ -64,7 +64,7 @@ include '../../php-elements/header-works.php'
 
 
                 <section class="tulong-section padding3">
-                    <p class="concept-cards__label">More from ATELIER</p>
+                    <p class="concept-cards__label">More concepts</p>
                     <?php $conceptsExclude = 'pati'; $conceptsWithAtelier = true; include '../../php-elements/atelier-concepts.php'; ?>
                 </section>
 
