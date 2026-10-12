@@ -2,7 +2,7 @@
 
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
-**Fecha:** 2026-10-09
+**Fecha:** 2026-10-12
 **Rama activa:** `main`. Casa Albar, alè y el centrado de Works en móvil publicados el 2026-10-09 (Conv. 11). Para trabajo nuevo, abrir rama desde `main`.
 
 ## Contexto en una frase
@@ -39,6 +39,7 @@ ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Le
 - Archive: `php-pages/projects/archive.php` (array `$archive`).
 
 ## Próximo paso exacto
+➡️ Rama `feat/copy-conceptos-atelier` (Conv. 12-13): conceptos «Concept · 2026», ficha ATELIER como proceso propio, hero sin IA y línea para negocios locales (WhatsApp + hola@alexdasi.com). Demo v11. Pendiente del OK de Alex para merge a `main`.
 ➡️ Nada urgente. Pendiente menor: en móvil el enlace «Archive» de los filtros de Works queda fuera de pantalla.
 
 ## Capturas de webs de ATELIER (desde Conv. 11)

@@ -14,7 +14,7 @@
             <li id="systems" class="categories--items categories--items-systems"><h2 class="main-text systems">SYSTEMS</h2></li>
         </ul>
         <p class="main-text categories--designer">designer</p>
-        <p id="" class="secondary-text message message-description">I take complex, ambiguous problems and make them clear: products, websites and the systems behind them. 12+ years across UX/UI, design systems and brand. AI speeds me up, the decisions stay mine.</p>
+        <p id="" class="secondary-text message message-description">I take complex, ambiguous problems and make them clear: products, websites and the systems behind them. 12+ years across UX/UI, design systems and brand.<br><br>Local business in Valencia? I make websites that feel like you, not like a template. Say hi on <a href="https://wa.me/34616420048" target="_blank" rel="noopener noreferrer">WhatsApp</a> or at <a href="mailto:hola@alexdasi.com">hola@alexdasi.com</a></p>
 
     </section>
 

@@ -30,7 +30,7 @@
                 <!-- info -->
                     <div class="works--info">
                         <h2>ATELIER</h2>
-                        <p class="yellow-600">A design system that tracks web trends, proposes three directions per site, learns from my feedback and builds the final website. AI handles production; art direction and decisions stay mine.</p>
+                        <p class="yellow-600">My own design process, turned into a system. It follows web trends, proposes three directions per site, learns from my feedback and builds the final website.</p>
                     </div>
                     <div class="hiddenMobile works--details">
                         <p>System Design, Art Direction</p>

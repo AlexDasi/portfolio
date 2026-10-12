@@ -5,9 +5,26 @@
 
 ---
 
+## Conv. 13 · 2026-10-12 15:25 · Aplicar copy elegido (ATELIER A, línea local A)
+
+**Inicio:** 2026-10-12 15:25 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:25 · **Cierre:** abierta (pendiente OK)
+
+**Contexto:** Alex elige A en titular ATELIER y A en línea local; WhatsApp +34 616420048; hola@alexdasi.com existe; quitar la frase de IA del hero.
+
+**Cambios (rama `feat/copy-conceptos-atelier`):**
+- Ficha ATELIER reescrita como proceso propio (titular «My Design Process, Turned Into a System», intro, resumen, destacado, último párrafo con la IA como herramienta, stack reordenado, meta). EN + ES.
+- Tarjeta ATELIER de Works (escritorio y móvil): sin IA.
+- Home: hero sin «AI speeds me up…»; línea local dentro del mismo párrafo (sin CSS nuevo) con enlaces `wa.me/34616420048` y `mailto:hola@alexdasi.com`. EN + ES.
+- Cabe en 1281×720, 1366×768, 1440×900, 1920×1080 y 375 px. `i18n_check` = 0.
+- Demo privada actualizada (versión 11).
+
+**Pendientes:** OK de Alex para merge a `main`. Los enlaces de la línea local no se distinguen del texto (sin subrayado): ¿subrayarlos?
+
+---
+
 ## Conv. 12 · 2026-10-12 15:19 · Copy: conceptos, ficha ATELIER y negocios locales
 
-**Inicio:** 2026-10-12 15:19 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:19 · **Cierre:** abierta
+**Inicio:** 2026-10-12 15:19 · **Turnos:** 1 · **Último msg:** 2026-10-12 15:19 · **Cierre:** 2026-10-12 15:22
 
 **Contexto:** Alex: (1) quitar «Built with ATELIER» de los conceptos y poner «Concept · 2026»; (2) reescribir ATELIER como su proceso de diseño propio, sin IA en titular ni en el resumen de la home; (3) línea para negocios locales con CTA (WhatsApp / hola@alexdasi.com). Enseñar textos antes de publicar.
 
