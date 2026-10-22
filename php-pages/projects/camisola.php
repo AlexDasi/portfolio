@@ -53,7 +53,7 @@ include '../../php-elements/header-works.php'
 
                 <img class="element project-content__image" src="../../content/pictures/projects/camisola/Camisola1.jpg" alt="Camisola branding layout" loading="lazy" decoding="async"> 
 
-                <p class="padding3 project-content__quote">The <a href="https://camisola.alexdasi.com/">site is still online</a> if you want to explore the concept and play with the editor.</p>
+                <p class="padding3 project-content__quote">The <a href="https://alexdasi.com/camisola/">site is still online</a> if you want to explore the concept and play with the editor.</p>
 
                 <video class="element project-content__video" autoplay loop muted playsinline preload="metadata"> 
                     <source src="../../content/videos-gifs/camisola/dsk/2.mp4" type="video/mp4"></source>
