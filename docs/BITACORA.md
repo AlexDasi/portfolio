@@ -373,3 +373,4 @@
 **Riesgos/dudas:** Ninguna acción destructiva ejecutada aún (no se ha borrado ninguna rama ni el zip). A la espera de elegir tarea nueva.
 
 **Siguiente paso:** Elegir tarea nueva a ejecutar (o cerrar A1).
+- 2026-10-30 · Contact: mailto a hola@alexdasi.com (antes alejandrodasi@gmail.com). ATELIER conv. 829.
