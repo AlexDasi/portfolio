@@ -5,6 +5,15 @@
 **Fecha:** 2026-10-12
 **Rama activa:** `main`. Copy de ATELIER/conceptos, línea para negocios locales, arreglos de tablet y Otra Vez/Pati/Lenta en Works publicados el 2026-10-12 (Conv. 15). Para trabajo nuevo, abrir rama desde `main`.
 
+## Arreglo urgente (2026-11-18, ATELIER conv. 1321) — publicado
+- La web no estaba caída (200 con y sin www; certificado cubre los dos).
+- og:image + og:url en `header.php` y `header-works.php` (imagen general `images/og-alexdasi-portfolio.jpg`; cada proyecto usa su miniatura `content/pictures/thumbnails/lq/<slug>.jpg`, o `$ogImage` si la página lo define).
+- Works escritorio: imágenes a todo color (sin gris ni opacidad). ATELIER: composición nueva (`atelier.jpg`).
+- Works móvil/tablet: miniaturas 4:5 `*-mobile-4x5.jpg` (ATELIER, Casa Albar, alè, Otra Vez, Pati, Lenta) sacadas de la versión móvil de cada web; texto bajo la imagen; filtros y contador arriba, en el flujo. Los `*-portrait.jpg` ya no se usan.
+- Móvil: franja oscura bajo la cabecera fija (`_nav.scss`); titular de About más pequeño y párrafo sin justificar (`_about.scss`).
+- Contacto: WhatsApp en vez de Behance.
+- Pendiente: rediseño completo (después de la marca personal) y tarjetas de visita (Airtable › Procesos).
+
 ## Contexto en una frase
 ATELIER entra en el portfolio: caso de estudio + 3 conceptos (Otra Vez, Pati, Lenta) + diapositiva Process + pasafotos de Works nuevo. Todo en la rama, revisado por Alex en una demo privada.
 
