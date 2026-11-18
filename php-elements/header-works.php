@@ -36,6 +36,13 @@ $assetVersion = static function (string $relativePath): string {
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:type" content="website">
+    <?php if (!isset($ogImage) || !is_string($ogImage) || trim($ogImage) === '') { $ogSlug = basename($_SERVER['SCRIPT_NAME'] ?? '', '.php'); $ogThumb = __DIR__ . '/../content/pictures/thumbnails/lq/' . $ogSlug . '.jpg'; $ogImage = ($ogSlug !== '' && is_file($ogThumb)) ? 'https://alexdasi.com/content/pictures/thumbnails/lq/' . rawurlencode($ogSlug) . '.jpg' : 'https://alexdasi.com/images/og-alexdasi-portfolio.jpg'; } else { $ogImage = trim($ogImage); } $ogUrl = 'https://alexdasi.com' . strtok($_SERVER['REQUEST_URI'] ?? '/', '?'); ?>
+    <meta property="og:url" content="<?php echo htmlspecialchars($ogUrl, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:image" content="<?php echo htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:image:secure_url" content="<?php echo htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="Alex Dasi — product, web and systems designer">
+    <meta name="twitter:image" content="<?php echo htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:site_name" content="Alex Dasi Portfolio">
     <meta name="twitter:card" content="summary_large_image">
     <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>

@@ -184,6 +184,11 @@ h3 {
   -o-transition: all 0.15s ease-in-out;
 }
 
+.circle {
+  /* Effect 2 */
+  /* Effect 2b — accent bloom on hover OR when the magnet engages, so the
+     circle fills exactly as the cursor dot is absorbed into it. */
+}
 .circle:after {
   pointer-events: none;
   position: absolute;
@@ -205,9 +210,6 @@ h3 {
   display: block;
   -webkit-font-smoothing: antialiased;
 }
-.circle {
-  /* Effect 2 */
-}
 .circle.effect:after {
   top: -2px;
   left: -2px;
@@ -216,10 +218,6 @@ h3 {
   background: var(--accent-color);
   transform: scale(0);
   transition: transform 0.2s;
-}
-.circle {
-  /* Effect 2b — accent bloom on hover OR when the magnet engages, so the
-     circle fills exactly as the cursor dot is absorbed into it. */
 }
 .circle.effect:hover:after, .circle.magnet-mouse-active.effect:after {
   transform: scale(1);
@@ -424,6 +422,16 @@ header {
   z-index: 200;
 }
 
+.floor {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  background: var(--accent-color);
+  opacity: 0.4;
+  transform: rotate(135deg) skew(20deg, 20deg);
+  border: none;
+  border-radius: 0;
+}
 .floor--1 {
   top: 0;
   z-index: 204;
@@ -439,16 +447,6 @@ header {
 .floor--4 {
   top: -60px;
   z-index: 201;
-}
-.floor {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  background: var(--accent-color);
-  opacity: 0.4;
-  transform: rotate(135deg) skew(20deg, 20deg);
-  border: none;
-  border-radius: 0;
 }
 .floor:hover {
   box-shadow: 0px 0px 4px 0px var(--accent-color);
@@ -620,6 +618,19 @@ html[lang=es] .categories--designer {
   color: var(--bkg-color);
 }
 
+@media (max-width: 1280px) {
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: linear-gradient(to bottom, rgba(20, 20, 20, 0.96) 0%, rgba(20, 20, 20, 0.85) 60%, rgba(20, 20, 20, 0) 100%);
+    pointer-events: none;
+    z-index: 199;
+  }
+}
 html,
 body {
   position: relative;
@@ -1653,63 +1664,83 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
     opacity: 1;
   }
   .WorksSwiper .swiper-slide img {
-    opacity: 0.55;
+    opacity: 1 !important;
+    filter: none !important;
+    -webkit-filter: none !important;
   }
 }
 @media (max-width: 1280px) {
+  .WorksSwiper .swiper-slide {
+    padding: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    height: auto !important;
+  }
   .WorksSwiper .swiper-slide .works {
     height: auto;
+    display: flex;
+    flex-direction: column;
   }
   .WorksSwiper .swiper-slide .works::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 65%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
-    pointer-events: none;
+    content: none !important;
+    display: none !important;
+  }
+  .WorksSwiper .swiper-slide img,
+  .WorksSwiper .swiper-slide:hover img,
+  .WorksSwiper .swiper-slide:active img,
+  .WorksSwiper .swiper-slide:focus img {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    width: 100%;
+    height: min(62vh, 112vw) !important;
+    object-fit: cover;
+    object-position: center top !important;
+    border-radius: 6px;
   }
   .WorksSwiper .swiper-slide .works .works--info {
-    z-index: 2;
-    bottom: 64px !important;
+    position: static !important;
+    width: auto !important;
+    margin: 1.6rem 0 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
   }
   .WorksSwiper .swiper-slide .works .works--info > h2 {
-    margin-bottom: 1.2rem;
+    margin: 0 0 0.8rem;
+    font-size: 2.6rem;
+    line-height: 1;
+    text-align: left;
   }
   .WorksSwiper .swiper-slide .works .works--info > p {
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    width: auto !important;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    opacity: 0.75;
   }
   .WorksSwiper .swiper-slide .works .works--details {
-    z-index: 2;
+    position: static !important;
     opacity: 1 !important;
     display: flex !important;
-    position: absolute;
-    top: auto !important;
-    bottom: 20px;
-    left: calc(10px + 2vw) !important;
-    right: 5vw;
-    width: auto !important;
-    transform: none !important;
-    gap: 1.2rem;
+    justify-content: space-between;
     align-items: baseline;
+    gap: 1.2rem;
+    width: auto !important;
+    margin: 0.8rem 0 0;
+    transform: none !important;
   }
   .WorksSwiper .swiper-slide .works .works--details > p {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     letter-spacing: 0.1em;
-    opacity: 0.75;
+    opacity: 0.6;
   }
   .WorksSwiper .swiper-slide .works .works--details .yellow-600 {
     padding-top: 0;
     opacity: 1;
-  }
-  .WorksSwiper .swiper-slide .works:hover .works--details,
-  .WorksSwiper .swiper-slide .works:active .works--details,
-  .WorksSwiper .swiper-slide .works:focus .works--details {
-    opacity: 1 !important;
   }
 }
 .works-filter {
@@ -1789,6 +1820,36 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
 @media (min-width: 768px) and (max-width: 1280px) and (orientation: landscape) {
   .WorksSwiperMobile .swiper-slide img {
     height: 60vh;
+  }
+}
+@media (max-width: 1280px) {
+  #works {
+    height: auto;
+    min-height: 0;
+    padding: 6vh 0 4vh;
+  }
+  .WorksSwiper {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    min-height: 0;
+    padding: 0 5vw;
+  }
+  .WorksSwiper .swiper-wrapper {
+    height: auto !important;
+    min-height: 0 !important;
+    align-items: flex-start !important;
+  }
+  .WorksSwiper .works-nav {
+    position: static;
+    margin-bottom: 1.6rem;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    row-gap: 1.4rem;
+  }
+  .WorksSwiper .works-nav .works-filter {
+    position: static;
+    grid-column: 1/-1;
+    order: -1;
   }
 }
 .project-header {
@@ -2359,15 +2420,13 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
   margin: 0;
   font-size: 1.8rem;
   line-height: 1.45;
+  color: var(--bkg-color);
+  text-align: left;
 }
 @media (min-width: 768px) {
   .case-summary__text {
     font-size: 1.6rem;
   }
-}
-.case-summary__text {
-  color: var(--bkg-color);
-  text-align: left;
 }
 
 .archive-page {
@@ -2776,6 +2835,20 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
   .cv-download-btn:hover, .cv-download-btn:active, .cv-download-btn:focus {
     background: var(--accent-color) !important;
     color: var(--bkg-color) !important;
+  }
+}
+@media (max-width: 768px) {
+  .slice-infos__title {
+    font-size: clamp(3.2rem, 10.5vw, 4.4rem) !important;
+    line-height: 1.05;
+  }
+  .slice-infos__text {
+    margin-top: 2.4rem;
+  }
+  .slice-infos__text > p {
+    text-align: left;
+    font-size: 1.6rem;
+    line-height: 1.55;
   }
 }
 #process {

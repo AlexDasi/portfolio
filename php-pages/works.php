@@ -26,7 +26,7 @@
                 <div class="works works-atelier">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/atelier.jpg"/>
-                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/atelier-mobile.jpg"/>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/atelier-mobile-4x5.jpg" alt="ATELIER"/>
                 <!-- info -->
                     <div class="works--info">
                         <h2>ATELIER</h2>
@@ -62,7 +62,7 @@
                 <div class="works works-casa-albar">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/casa-albar.jpg"/>
-                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/casa-albar-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/casa-albar-mobile.jpg"/></picture>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/casa-albar-mobile-4x5.jpg"/>
                 <!-- info -->
                     <div class="works--info">
                         <h2>CASA ALBAR</h2>
@@ -80,7 +80,7 @@
                 <div class="works works-ale">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/ale.jpg"/>
-                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/ale-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/ale-mobile.jpg"/></picture>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/ale-mobile-4x5.jpg"/>
                 <!-- info -->
                     <div class="works--info">
                         <h2>ALÈ</h2>
@@ -98,7 +98,7 @@
                 <div class="works works-otra-vez">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/otra-vez.jpg"/>
-                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/otra-vez-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/otra-vez-mobile.jpg"/></picture>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/otra-vez-mobile-4x5.jpg"/>
                 <!-- info -->
                     <div class="works--info">
                         <h2>OTRA VEZ</h2>
@@ -116,7 +116,7 @@
                 <div class="works works-pati">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/pati.jpg"/>
-                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/pati-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/pati-mobile.jpg"/></picture>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/pati-mobile-4x5.jpg"/>
                 <!-- info -->
                     <div class="works--info">
                         <h2>PATI</h2>
@@ -134,7 +134,7 @@
                 <div class="works works-lenta">
                 <!-- thumbnail -->
                     <img class="hiddenMobile" src="content/pictures/thumbnails/lq/lenta.jpg"/>
-                    <picture><source media="(max-width: 1280px) and (orientation: portrait)" srcset="content/pictures/thumbnails/lq/lenta-portrait.jpg"><img class="hiddenDesktop" src="content/pictures/thumbnails/lq/lenta-mobile.jpg"/></picture>
+                    <img class="hiddenDesktop" src="content/pictures/thumbnails/lq/lenta-mobile-4x5.jpg"/>
                 <!-- info -->
                     <div class="works--info">
                         <h2>LENTA</h2>

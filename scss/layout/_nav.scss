@@ -77,3 +77,19 @@
 .project-page .lang-switch__item:not(.is-active){
     color: var(--bkg-color);
 }
+
+// Móvil y tablet (18/11): franja oscura bajo la cabecera fija para que
+// «EN ES» y «alex dasi» no se monten sobre el texto al hacer scroll.
+@media (max-width: 1280px) {
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: linear-gradient(to bottom, rgba(20, 20, 20, .96) 0%, rgba(20, 20, 20, .85) 60%, rgba(20, 20, 20, 0) 100%);
+    pointer-events: none;
+    z-index: $z-top - 1;
+  }
+}

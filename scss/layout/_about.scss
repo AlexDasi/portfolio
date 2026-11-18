@@ -355,3 +355,16 @@
     }
 }
 
+
+// Móvil (18/11): el titular ocupaba casi dos pantallas y el párrafo
+// justificado abría huecos entre palabras.
+@media (max-width: 768px) {
+    .slice-infos__title {
+        font-size: clamp(3.2rem, 10.5vw, 4.4rem) !important;
+        line-height: 1.05;
+    }
+    .slice-infos__text {
+        margin-top: 2.4rem;
+        & > p { text-align: left; font-size: 1.6rem; line-height: 1.55; }
+    }
+}

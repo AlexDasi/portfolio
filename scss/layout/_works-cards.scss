@@ -67,62 +67,83 @@
     &:hover .works--details > p { opacity: 1; }
   }
 
-  // Imagen visible aunque no tenga el ratón encima (antes 35 %)
-  .WorksSwiper .swiper-slide img { opacity: .55; }
+  // Imagen a todo color y sin oscurecer (Alex, 18/11: «está oscurecido»)
+  .WorksSwiper .swiper-slide img {
+    opacity: 1 !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
 }
 
 // ---------- Móvil y tablet (≤ 1280 px) ----------
+// Alex, 18/11: imagen limpia (sin oscurecer ni degradado) y el texto debajo,
+// no encima de la foto. Miniaturas 4:5 sacadas de la versión móvil de cada web.
 @media (max-width: 1280px) {
-  // La tarjeta mide lo que la imagen (antes 100 % de la diapositiva, sobraban ~45 px)
-  .WorksSwiper .swiper-slide .works { height: auto; }
+  .WorksSwiper .swiper-slide {
+    padding: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    height: auto !important;
+  }
 
-  // Degradado para leer el texto sobre la foto
-  .WorksSwiper .swiper-slide .works::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 65%;
-    background: linear-gradient(to top, rgba(0, 0, 0, .85), rgba(0, 0, 0, 0));
-    pointer-events: none;
+  .WorksSwiper .swiper-slide .works {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .WorksSwiper .swiper-slide .works::after { content: none !important; display: none !important; }
+
+  .WorksSwiper .swiper-slide img,
+  .WorksSwiper .swiper-slide:hover img,
+  .WorksSwiper .swiper-slide:active img,
+  .WorksSwiper .swiper-slide:focus img {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    width: 100%;
+    height: min(62vh, 112vw) !important;
+    object-fit: cover;
+    object-position: center top !important;
+    border-radius: 6px;
   }
 
   .WorksSwiper .swiper-slide .works .works--info {
-    z-index: 2;
-    bottom: 64px !important;
+    position: static !important;
+    width: auto !important;
+    margin: 1.6rem 0 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
 
-    & > h2 { margin-bottom: 1.2rem; }
+    & > h2 { margin: 0 0 .8rem; font-size: 2.6rem; line-height: 1; text-align: left; }
     & > p {
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      width: auto !important;
+      font-size: 1.5rem;
+      line-height: 1.4;
+      opacity: .75;
     }
   }
 
-  // Papel y año: ahora sí se ven, en una línea bajo el resumen
+  // Papel y año en una línea bajo el resumen
   .WorksSwiper .swiper-slide .works .works--details {
-    z-index: 2;
+    position: static !important;
     opacity: 1 !important;
     display: flex !important; // la tarjeta lleva .hiddenMobile en el HTML
-    position: absolute;
-    top: auto !important;
-    bottom: 20px;
-    left: calc(10px + 2vw) !important;
-    right: 5vw;
-    width: auto !important;
-    transform: none !important;
-    gap: 1.2rem;
+    justify-content: space-between;
     align-items: baseline;
+    gap: 1.2rem;
+    width: auto !important;
+    margin: .8rem 0 0;
+    transform: none !important;
 
-    & > p { font-size: 1.2rem; letter-spacing: .1em; opacity: .75; }
+    & > p { font-size: 1.15rem; letter-spacing: .1em; opacity: .6; }
     & .yellow-600 { padding-top: 0; opacity: 1; }
   }
-
-  .WorksSwiper .swiper-slide .works:hover .works--details,
-  .WorksSwiper .swiper-slide .works:active .works--details,
-  .WorksSwiper .swiper-slide .works:focus .works--details { opacity: 1 !important; }
 }
 
 // ---------- Filtro ----------
@@ -205,4 +226,35 @@
 // Tablet en horizontal: la tarjeta (70vh) quedaba debajo de los filtros. Un poco más baja.
 @media (min-width: 768px) and (max-width: 1280px) and (orientation: landscape) {
   .WorksSwiperMobile .swiper-slide img { height: 60vh; }
+}
+
+// ---------- Móvil y tablet: navegación en el flujo, bajo la tarjeta (18/11) ----------
+// Antes la barra (contador, filtros, flechas) iba absoluta abajo y se montaba
+// sobre el texto en cuanto la tarjeta crecía.
+@media (max-width: 1280px) {
+  #works { height: auto; min-height: 0; padding: 6vh 0 4vh; }
+
+  .WorksSwiper {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    min-height: 0;
+    padding: 0 5vw;
+  }
+
+  .WorksSwiper .swiper-wrapper { height: auto !important; min-height: 0 !important; align-items: flex-start !important; }
+
+  // Barra arriba de la tarjeta: filtros en su propia fila y debajo contador + flechas
+  .WorksSwiper .works-nav {
+    position: static;
+    margin-bottom: 1.6rem;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    row-gap: 1.4rem;
+  }
+
+  .WorksSwiper .works-nav .works-filter {
+    position: static;
+    grid-column: 1 / -1;
+    order: -1;
+  }
 }

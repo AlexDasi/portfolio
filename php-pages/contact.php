@@ -16,8 +16,8 @@
         <a href="mailto:hola@alexdasi.com" class="contact--social__element">
             <h2>Email</h2>
         </a>
-        <a href="https://www.behance.net/alexdasi" class="contact--social__element" target="_blank" rel="noopener noreferrer">
-            <h2>Behance</h2>
+        <a href="https://wa.me/34616420048" class="contact--social__element" target="_blank" rel="noopener noreferrer">
+            <h2>WhatsApp</h2>
         </a>
     </div>
 
