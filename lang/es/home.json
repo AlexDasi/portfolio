@@ -82,7 +82,11 @@
     "If you liked what you saw, drop me a message or reach me through my socials. Don't be a stranger :)": "Si te ha gustado lo que has visto, mándame un mensaje o búscame en redes. No te cortes :)",
     "Linkedin": "",
     "Email": "",
-    "Behance": ""
+    "Behance": "",
+    "Hi, I'm": "Hola, soy",
+    "Product, web &amp; systems designer in Valencia": "Diseñador de producto, webs y sistemas en València",
+    "About": "Sobre mí",
+    "Contact": "Contacto"
   },
   "attr": {
     "Alex Dasi Portfolio": "",
@@ -90,6 +94,8 @@
     "Filter projects": "Filtrar proyectos",
     "Previous project": "Proyecto anterior",
     "Next project": "Proyecto siguiente",
-    "ATELIER: three directions proposed for one site": "ATELIER: tres direcciones propuestas para una web"
+    "ATELIER: three directions proposed for one site": "ATELIER: tres direcciones propuestas para una web",
+    "Day / night": "Día / noche",
+    "More": "Más"
   }
 }

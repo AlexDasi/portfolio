@@ -374,3 +374,25 @@
 
 **Siguiente paso:** Elegir tarea nueva a ejecutar (o cerrar A1).
 - 2026-10-30 · Contact: mailto a hola@alexdasi.com (antes alejandrodasi@gmail.com). ATELIER conv. 829.
+
+---
+
+## 2026-11-18 — Rama `rediseno-baraja-2026-11`: home = intro + baraja, sobre su web (ATELIER conv. 1330)
+
+**Contexto:** giro de Alex (feedback ronda 6, puntos 66-74; además 53-55 y 60): la v0.3 Astro queda aparcada como camino y se trabaja sobre esta web. `main` sin tocar (un push a main despliega en vivo).
+
+**Rescatado tal cual:** cursor (fluido + punto con imán, magnet-mouse), flecha con su círculo y su bloom, «los pisos» (paginación del MainSwiper), cabecera (EN/ES + «alex dasi»), Inter, About/Process/Contact y el pasafotos de UX/UI (ahora en `about.php`, en su oscuro de siempre).
+
+**Rediseñado:**
+- `index.php`: solo dos pantallas, intro (`php-pages/intro.php`, saludo sencillo; la bola solo como punto final lima con imán) + baraja (`php-elements/baraja.php`, `js/baraja.js`, datos y flags en `content/baraja.json`, vídeos en `content/baraja/`). La rueda NO cambia de pantalla (`data-wheel="off"`): en la intro empuja el fluido y en la baraja pasa cartas. Solo pisos y flecha cambian de pantalla.
+- Baraja sin HUD, bucle infinito, inclinada a la izquierda y menos frontal (rotateY -16°, rotateZ -7°), de esquina a esquina; rueda/trackpad, arrastre, swipe y flechas; solo transform/opacity por frame; solo la carta de delante reproduce vídeo y la siguiente se precarga. Móvil (< 900 px): una carta grande con swipe.
+- Día (blanco roto #f5f3ec + lima #ECF98E + tinta) / noche (#000 + lima), botón fino arriba a la derecha junto a UX/UI · About · Contact (`php-elements/nav-baraja.php`, `js/tema.js`).
+- Fluido: preset por página (`window.__FLUID_PRESET` en `header-baraja.php`): plano (`FLAT`, sin relieve ni arcoíris), lima fijo, sin manchas al cargar (fuera la «textura»), cola `window.__fluidQueue` para la rueda y el dedo. Sin preset, `fluid.js` se comporta como siempre.
+- Arreglos de paso: error de consola de magnet-mouse (doble `init()` sin `destroy()`), página en blanco a 1280 px justos (`_site.scss`, 1281), favicon/dither con ruta relativa.
+- `tools/export_preview.py`: exportación estática con rutas relativas para Cloudflare (`--con-proyectos` para incluir los casos).
+
+**QA (export servida en local):** vivo.mjs 0 rojos en iPhone 13 / SE / Android 360 / desktop, EN y ES (2 avisos de póster móvil a 780 px nativos). medir.mjs: home sin rojos; About arrastra rojos de antes (HOW I WORK 3,4 pantallas en móvil, chips de filtro de 33 px). Fluidez: `pinta()` p95 2,1 ms/frame en escritorio, 1,4 ms en móvil (4,4 ms con CPU ×4); sin layout por frame (solo al cambiar de carta). Los fps absolutos del contenedor (sin GPU, 2 núcleos) no sirven: falta verlo en un dispositivo real.
+
+**Preview:** https://atelier-demo-propuestas.pages.dev/2026-11-19_alexdasi-baraja-sobre-su-web/
+
+**Pendiente (Alex):** ver la fluidez en su Mac y su móvil; Imperio (permiso de Mauro; el vídeo enseña la franja «web nueva en revisión»); Mas Vesprada sin enlace hasta tener subdominio; Elsa neutra hasta el 30/11 (sus datos no están en este repo a propósito).

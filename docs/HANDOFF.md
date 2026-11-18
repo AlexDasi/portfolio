@@ -2,6 +2,11 @@
 
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
+## Rama `rediseno-baraja-2026-11` (2026-11-18, ATELIER conv. 1330) — SIN publicar
+- Home = intro + baraja; About/UX-UI/Process/Contact en `about.php`. Detalle en BITACORA (última entrada).
+- Preview estática: `python3 tools/export_preview.py <carpeta>` → https://atelier-demo-propuestas.pages.dev/2026-11-19_alexdasi-baraja-sobre-su-web/
+- NO mergear a `main` sin el sí de Alex (main despliega en vivo).
+
 **Fecha:** 2026-10-12
 **Rama activa:** `main`. Copy de ATELIER/conceptos, línea para negocios locales, arreglos de tablet y Otra Vez/Pati/Lenta en Works publicados el 2026-10-12 (Conv. 15). Para trabajo nuevo, abrir rama desde `main`.
 

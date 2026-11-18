@@ -64,6 +64,13 @@ let config = {
     SUNRAYS_WEIGHT: 1.0,
 }
 
+// Ajustes de la página (rama rediseno-baraja-2026-11): window.__FLUID_PRESET se define antes de cargar este
+// archivo. FLAT = lima plano sobre el fondo (2D, sin relieve); NO_INTRO_SPLATS = sin manchas al cargar
+// (solo pinta el cursor). Sin preset, todo queda como siempre.
+if (window.__FLUID_PRESET && typeof window.__FLUID_PRESET === 'object') {
+    Object.assign(config, window.__FLUID_PRESET);
+}
+
 function trackEvent (category, action, label) {
     if (typeof window.gtag === 'function') {
         window.gtag('event', action, {
@@ -630,9 +637,17 @@ const displayShaderSource = `
         c += bloom;
     #endif
 
+    #ifdef FLAT
+        // Plano: el tinte del fluido (lima) sin relieve ni mezcla aditiva; alfa = cantidad de tinte.
+        float m = max(c.r, max(c.g, c.b));
+        vec3 hue = c / max(m, 0.0001);
+        float a = clamp(m * 2.4, 0.0, 1.0) * effectOpacity;
+        gl_FragColor = vec4(hue * a, a);
+    #else
         c *= effectOpacity;
         float a = max(c.r, max(c.g, c.b));
         gl_FragColor = vec4(c, a);
+    #endif
     }
 `;
 
@@ -982,7 +997,7 @@ let bloomFramebuffers = [];
 let sunrays;
 let sunraysTemp;
 
-let ditheringTexture = createTextureAsync('/images/vectors/arrow.svg');
+let ditheringTexture = createTextureAsync((window.__FLUID_PRESET && window.__FLUID_PRESET.DITHER_URL) || '/images/vectors/arrow.svg');
 
 const blurProgram            = new Program(blurVertexShader, blurShader);
 const copyProgram            = new Program(baseVertexShader, copyShader);
@@ -1187,6 +1202,7 @@ function updateKeywords () {
     if (config.SHADING) displayKeywords.push("SHADING");
     if (config.BLOOM) displayKeywords.push("BLOOM");
     if (config.SUNRAYS) displayKeywords.push("SUNRAYS");
+    if (config.FLAT) displayKeywords.push("FLAT");
     displayMaterial.setKeywords(displayKeywords);
 }
 
@@ -1198,7 +1214,7 @@ function registerFluidRuntimeAPI () {
         'SUNRAYS_RESOLUTION'
     ];
 
-    const keywordKeys = ['SHADING', 'BLOOM', 'SUNRAYS'];
+    const keywordKeys = ['SHADING', 'BLOOM', 'SUNRAYS', 'FLAT'];
 
     function applySettings (partialConfig) {
         if (!partialConfig || typeof partialConfig !== 'object') return;
@@ -1248,7 +1264,7 @@ registerFluidRuntimeAPI();
 
 updateKeywords();
 initFramebuffers();
-multipleSplats(parseInt(Math.random() * 8) + 6);
+if (!config.NO_INTRO_SPLATS) multipleSplats(parseInt(Math.random() * 8) + 6);
 
 let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;
@@ -1300,6 +1316,14 @@ function updateColors (dt) {
 function applyInputs () {
     if (splatStack.length > 0)
         multipleSplats(splatStack.pop());
+
+    // Golpes de fuera (la rueda en la intro): window.__fluidQueue.push({x, y, dx, dy}) en 0-1.
+    const queue = window.__fluidQueue;
+    while (queue && queue.length) {
+        const q = queue.shift();
+        const col = generateColor();
+        splat(q.x, q.y, q.dx, q.dy, { r: col.r * (q.k || 3), g: col.g * (q.k || 3), b: col.b * (q.k || 3) });
+    }
 
     pointers.forEach(p => {
         if (p.moved) {
@@ -1619,7 +1643,7 @@ window.addEventListener('keydown', e => {
         config.PAUSED = !config.PAUSED;
     if (e.key === ' ') {
         e.preventDefault();
-        multipleSplats(parseInt(Math.random() * 20) + 16, true);
+        multipleSplats(parseInt(Math.random() * 20) + 16, !config.FLAT);
     }
 });
 

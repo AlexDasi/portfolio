@@ -1,0 +1,445 @@
+// ============================================================
+// Rama rediseno-baraja-2026-11 (ATELIER conv. 1330)
+// Home = intro + baraja. Solo afecta a body.sitio-baraja (index.php y about.php);
+// las páginas de proyecto siguen como estaban.
+// Plano y 2D: solo color, tipografía (Inter, la de siempre) y el fluido como cursor.
+// ============================================================
+
+$lima: #ECF98E;
+$tinta: #141415;
+$papel: #f5f3ec;
+
+// ---------- Día / noche ----------
+html.tema-dia body.sitio-baraja {
+  --bkg-color: #{$papel};
+  --main-color: #{$tinta};
+  --accent-color: #{$lima};
+  --tinta-suave: #5d5d58;
+  --linea: rgba(20, 20, 21, .16);
+}
+
+html.tema-noche body.sitio-baraja {
+  --bkg-color: #000;
+  --main-color: hsla(54, 18%, 97%, 1);
+  --accent-color: #{$lima};
+  --tinta-suave: #a9a8a1;
+  --linea: rgba(247, 247, 245, .18);
+}
+
+html.tema-dia, html.tema-noche { background: var(--bkg-color); }
+body.sitio-baraja {
+  background-color: var(--bkg-color);
+  transition: background-color .4s ease;
+}
+
+// Texto sobre lima: siempre tinta (en día y en noche)
+.sitio-baraja {
+  .single > a { color: $tinta; }
+  .lang-switch__item.is-active { color: $tinta; }
+  .follow { background-color: var(--main-color); }
+  .credits { display: none; }
+}
+
+// Móvil: la franja de debajo de la cabecera, del color del fondo
+@media (max-width: 1280px) {
+  html.tema-dia body.sitio-baraja::before {
+    background: linear-gradient(to bottom, rgba(245, 243, 236, .96) 0%, rgba(245, 243, 236, .85) 60%, rgba(245, 243, 236, 0) 100%);
+  }
+  html.tema-noche body.sitio-baraja::before {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .96) 0%, rgba(0, 0, 0, .85) 60%, rgba(0, 0, 0, 0) 100%);
+  }
+}
+
+// ---------- Los pisos y la flecha en día ----------
+// Mismo dibujo; en blanco roto el lima solo se pierde, así que el piso apagado lleva un filo fino.
+html.tema-dia .sitio-baraja {
+  .MainSwiper .swiper-pagination-bullet {
+    opacity: .55;
+    box-shadow: inset 0 0 0 1px rgba(20, 20, 21, .28);
+  }
+  .MainSwiper .swiper-pagination-bullet-active {
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(20, 20, 21, .45);
+  }
+  .arrow-container .circle { border-color: $tinta; }
+  .arrow, .arrow::before, .arrow::after { border-color: $tinta; }
+}
+
+// ---------- Accesos sutiles (arriba a la derecha) ----------
+.nav-sutil {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: $z-top;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-family: $main-font;
+
+  &__item {
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 300;
+    letter-spacing: .02em;
+    color: var(--main-color);
+    text-decoration: none;
+    opacity: .6;
+    padding: 6px 0;
+    position: relative;
+    transition: opacity .2s ease;
+
+    // el subrayado lima de siempre, fino
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 2px;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform .3s cubic-bezier(.22, 1, .36, 1);
+    }
+    &:hover, &:focus-visible, &.is-active { opacity: 1; }
+    &:hover::after, &:focus-visible::after, &.is-active::after { transform: scaleX(1); }
+  }
+
+  &__tema {
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+    margin-left: 2px;
+    border: 0;
+    background: none;
+    color: var(--main-color);
+    opacity: .6;
+    transition: opacity .2s ease, transform .4s cubic-bezier(.22, 1, .36, 1);
+    svg { display: block; width: 16px; height: 16px; }
+    &:hover, &:focus-visible { opacity: 1; }
+  }
+}
+html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
+
+@media (max-width: 1280px) {
+  .nav-sutil { top: 8px; right: 8px; gap: 0; }
+  .nav-sutil__item { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; font-size: 13px; }
+  .nav-sutil__item::after { left: 8px; right: 8px; bottom: 12px; }
+  .nav-sutil__tema { width: 44px; height: 44px; padding: 14px; }
+}
+// Móvil estrecho: «alex dasi» se pega al idioma y UX/UI se queda dentro de About (es su primera pantalla)
+@media (max-width: 560px) {
+  .sitio-baraja .nav--top > ul { justify-content: flex-start; padding-left: 86px; }
+  .nav-sutil__item--uxui { display: none; }
+}
+
+// ---------- Intro ----------
+.intro {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 8vw;
+  pointer-events: none; // el ratón juega con el fondo; el texto no estorba
+
+  &__saludo {
+    margin: 0;
+    color: var(--main-color);
+    font-family: $main-font;
+    text-transform: none;
+    font-size: clamp(44px, 7.4vw, 132px);
+    line-height: .98;
+    letter-spacing: -.035em;
+    font-weight: 200;
+  }
+  &__linea, &__nombre { display: block; }
+  &__nombre {
+    font-weight: 600;
+    position: relative;
+    width: fit-content;
+  }
+  // La bola, solo como gesto: el punto final, lima, con el imán del cursor.
+  &__punto {
+    display: inline-block;
+    width: .2em;
+    height: .2em;
+    margin-left: .06em;
+    border-radius: 50%;
+    background: var(--accent-color);
+    box-shadow: inset 0 0 0 1px rgba(20, 20, 21, .12);
+    pointer-events: auto;
+    vertical-align: baseline;
+  }
+  &__sub {
+    margin-top: 2.4rem;
+    color: var(--tinta-suave);
+    font-size: clamp(15px, 1.25vw, 19px);
+    font-weight: 300;
+    letter-spacing: .01em;
+  }
+}
+
+// ---------- Baraja ----------
+.slide-baraja { height: 100vh; }
+
+.baraja {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+
+  &__mesa {
+    position: absolute;
+    inset: 0;
+    perspective: 1800px;
+    perspective-origin: 30% 50%;
+    touch-action: pan-y;
+  }
+
+  // Ficha de la carta de delante: abajo a la izquierda, fina
+  &__pie {
+    position: absolute;
+    left: 6vw;
+    bottom: 8vh;
+    width: min(21vw, 310px);
+    z-index: 200;
+    pointer-events: none;
+  }
+
+  &__pista {
+    position: absolute;
+    right: 104px;
+    bottom: 5.4vh;
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: var(--tinta-suave);
+    opacity: .8;
+    transition: opacity .6s ease;
+    z-index: 200;
+  }
+  &.is-tocada &__pista { opacity: 0; }
+  &__pista-una { display: none; }
+  &[data-modo="una"] &__pista-mesa { display: none; }
+  &[data-modo="una"] &__pista-una { display: inline; }
+}
+
+.carta {
+  position: absolute;
+  left: 54%;
+  top: 56%;
+  width: min(42vw, 62vh * 1.6);
+  aspect-ratio: 16 / 10;
+  margin-left: calc(min(42vw, 62vh * 1.6) / -2);
+  margin-top: calc(min(42vw, 62vh * 1.6) / -3.2);
+  display: block;
+  transform-origin: 50% 60%;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+
+  &__cara {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #e9e6dc;
+    box-shadow: 0 1px 0 rgba(20, 20, 21, .06), 0 24px 48px -28px rgba(20, 20, 21, .45);
+    transition: transform .45s cubic-bezier(.22, 1, .36, 1);
+  }
+  // resaltado lima fino al pasar por encima (solo la de delante)
+  &__cara::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 3px var(--accent-color);
+    opacity: 0;
+    transition: opacity .3s ease;
+    pointer-events: none;
+  }
+  &.is-frente:hover &__cara, &.is-frente:focus-visible &__cara { transform: translateY(-6px); }
+  &.is-frente:hover &__cara::after, &.is-frente:focus-visible &__cara::after { opacity: 1; }
+
+  &__poster, &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    pointer-events: none;
+  }
+  &__video { opacity: 0; transition: opacity .35s ease; }
+  &.is-video &__video { opacity: 1; }
+
+  // Carta neutra «Próximamente»: plana, lima, sin nombre ni vídeo
+  &--neutra &__cara { background: var(--accent-color); }
+  &__neutra {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 7%;
+    p {
+      color: $tinta;
+      font-size: clamp(20px, 2vw, 30px);
+      font-weight: 600;
+      letter-spacing: -.02em;
+      line-height: 1;
+    }
+  }
+  &__neutra-punto {
+    width: 14%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid $tinta;
+    margin-bottom: auto;
+  }
+}
+html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(247, 247, 245, .08), 0 24px 48px -28px rgba(0, 0, 0, .9); }
+
+.ficha {
+  &.is-entra { animation: ficha-entra .42s cubic-bezier(.22, 1, .36, 1) both; }
+  &__nombre {
+    font-size: clamp(20px, 1.7vw, 26px);
+    font-weight: 600;
+    letter-spacing: -.015em;
+    line-height: 1.1;
+    color: var(--main-color);
+  }
+  &__tag {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+    padding: 3px 8px 2px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: .02em;
+    line-height: 1.2;
+    color: var(--main-color);
+    border: 1px solid var(--linea);
+    border-radius: 99px;
+    position: relative;
+    top: -2px;
+  }
+  &__meta {
+    margin-top: 8px;
+    font-size: 13px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: var(--tinta-suave);
+  }
+  &__texto {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 300;
+    color: var(--main-color);
+  }
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--main-color);
+    text-decoration: none;
+    pointer-events: auto;
+    background-image: linear-gradient(var(--accent-color), var(--accent-color));
+    background-size: 100% 0;
+    background-position: 0 85%;
+    background-repeat: no-repeat;
+    transition: background-size .3s cubic-bezier(.22, 1, .36, 1);
+    svg { width: 11px; height: 11px; }
+    &:hover, &:focus-visible { background-size: 100% 40%; }
+  }
+}
+@keyframes ficha-entra {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+// ---------- Móvil y tablet (≤ 1280 px): pantallas apiladas ----------
+@media (max-width: 1280px) {
+  .sitio-baraja .hiddenDesktop { position: relative; z-index: 1; }
+  .pantalla {
+    position: relative;
+    width: 100%;
+  }
+  .pantalla--intro {
+    min-height: 88svh;
+    display: flex;
+    .intro { padding: 96px 7vw 40px; justify-content: center; }
+  }
+  .pantalla--baraja { min-height: 100svh; }
+  .pantalla--baraja .baraja { height: auto; min-height: 100svh; overflow: hidden; }
+}
+
+// Modo «una» (< 900 px): una carta grande con swipe, ficha debajo
+.baraja[data-modo="una"] {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0 40px;
+
+  .baraja__mesa {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: calc(min(76vw, 52svh * .8) * 1.25 + 40px);
+    perspective: none;
+  }
+  .carta {
+    left: 50%;
+    top: 20px;
+    width: min(76vw, 52svh * .8);
+    aspect-ratio: 4 / 5;
+    margin-left: calc(min(76vw, 52svh * .8) / -2);
+    margin-top: 0;
+    transform-origin: 50% 100%;
+  }
+  .carta__neutra p { font-size: 24px; }
+  .baraja__pie {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: min(76vw, 52svh * .8);
+    margin: 8px auto 0;
+  }
+  .ficha__texto { font-size: 15px; }
+  .ficha__link { padding: 12px 0; }
+  .baraja__pista {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: min(76vw, 52svh * .8);
+    margin: 20px auto 0;
+  }
+}
+
+// Tablet apaisada / portátil ≤ 1280 en modo mesa (pantalla apilada)
+@media (max-width: 1280px) and (min-width: 900px) {
+  .pantalla--baraja .baraja[data-modo="mesa"] { height: 100svh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ficha.is-entra { animation: none; }
+  .carta__cara { transition: none; }
+}
+
+// About sin botón de día/noche: el último enlace no se pega al borde
+.pagina-about .nav-sutil { right: 16px; }

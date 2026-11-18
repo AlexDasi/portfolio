@@ -77,7 +77,8 @@ ul{
   }
 
 
-  @media (min-width:1280px) {
+  // 1281: a 1280 px justos se ocultaban las dos versiones (página en blanco); el JS ya usa > 1280
+  @media (min-width:1281px) {
     .hiddenDesktop{
       display: none!important;
     }

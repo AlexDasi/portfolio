@@ -43,9 +43,15 @@
     if (window.innerWidth <= 1280) return null;
     if (!mainRoot || typeof Swiper === 'undefined') return null;
 
-    const mainMenu = document.documentElement.lang === 'es'
-      ? ['INICIO', 'PROYECTOS', 'SOBRE MÍ', 'PROCESO', 'CONTACTO']
-      : ['HOME', 'WORKS', 'ABOUT', 'PROCESS', 'CONTACT'];
+    // Etiquetas de «los pisos»: data-menu="HOME|WORKS" (rama rediseno-baraja-2026-11); si no, las de siempre.
+    const mainMenu = mainRoot.dataset.menu
+      ? mainRoot.dataset.menu.split('|')
+      : document.documentElement.lang === 'es'
+        ? ['INICIO', 'PROYECTOS', 'SOBRE MÍ', 'PROCESO', 'CONTACTO']
+        : ['HOME', 'WORKS', 'ABOUT', 'PROCESS', 'CONTACT'];
+    // data-wheel="off": la rueda NO cambia de pantalla; solo los pisos y la flecha (Alex, conv. 1330).
+    const wheelOff = mainRoot.dataset.wheel === 'off';
+    const initialSlide = parseInt(mainRoot.dataset.initial || '0', 10) || 0;
 
     const mainPaginationEl = mainRoot.querySelector(':scope > .swiper-pagination');
 
@@ -56,7 +62,8 @@
       spaceBetween: 0,
       slidesPerView: 'auto',
       centeredSlides: true,
-      mousewheel: {
+      initialSlide,
+      mousewheel: wheelOff ? false : {
         enabled: true,
         forceToAxis: true,
         releaseOnEdges: false,
@@ -76,6 +83,8 @@
       },
       on: {
         slideChange() {
+          // Aviso para la baraja y la intro (rama rediseno-baraja-2026-11)
+          window.dispatchEvent(new CustomEvent('pisos:cambio', { detail: { index: this.activeIndex, total: this.slides.length } }));
           const arrow = document.querySelector('.arrow');
           if (!arrow) return;
           // Flecha hacia arriba en la última diapositiva (antes índice fijo 3)
@@ -104,6 +113,12 @@
         true
       );
     }
+
+    if (initialSlide && initialSlide === mainSwiper.slides.length - 1) {
+      const arrowUp = document.querySelector('.arrow');
+      if (arrowUp) arrowUp.classList.add('up');
+    }
+    window.dispatchEvent(new CustomEvent('pisos:cambio', { detail: { index: mainSwiper.activeIndex, total: mainSwiper.slides.length } }));
 
     return mainSwiper;
   }

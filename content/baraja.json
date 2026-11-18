@@ -1,0 +1,139 @@
+{
+  "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: el 30/11, neutra: false (y copiar sus vídeos a content/baraja/). Brot: si Alex dice sí, oculta: false (y copiar sus vídeos).",
+  "actualizado": "2026-11-18",
+  "proyectos": [
+    {
+      "slug": "berto-sanchez",
+      "nombre": "Berto Sánchez",
+      "tipo": "cliente",
+      "sector": {
+        "es": "Diseño industrial · portfolio",
+        "en": "Industrial design · portfolio"
+      },
+      "lugar": "València",
+      "anio": 2026,
+      "url": "https://bertosanchez.com",
+      "problema": {
+        "es": "Un diseñador industrial necesitaba que sus piezas hablaran solas: fotos a pantalla completa, casi sin interfaz, y un panel para subir proyectos sin depender de nadie.",
+        "en": "An industrial designer needed his pieces to speak for themselves: full-screen photos, almost no interface, and a panel to publish new work on his own."
+      },
+      "neutra": false,
+      "oculta": false
+    },
+    {
+      "slug": "imperio",
+      "nombre": "Librería El Imperio",
+      "tipo": "cliente",
+      "sector": {
+        "es": "Librería · espacio cultural",
+        "en": "Bookshop · cultural space"
+      },
+      "lugar": "Ruzafa, València",
+      "anio": 2026,
+      "url": "https://imperio.alexdasi.com",
+      "problema": {
+        "es": "Una librería de barrio con clubes de lectura, presentaciones y la tienda online en otra plataforma: una sola web que ordena la agenda y lleva cada libro recomendado a su compra.",
+        "en": "A neighbourhood bookshop with reading clubs, book launches and its online shop on another platform: one site that organises the calendar and takes every recommended book straight to checkout."
+      },
+      "neutra": false,
+      "oculta": false
+    },
+    {
+      "slug": "elsa-moreno",
+      "neutra": true,
+      "oculta": false,
+      "nota": "Datos reales en el repo ATELIER (proyectos.json). Aquí no se guardan para no destripar la sorpresa del 30/11."
+    },
+    {
+      "slug": "casa-albar",
+      "nombre": "Casa Albar",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Hotel pequeño",
+        "en": "Small hotel"
+      },
+      "lugar": "Cabo de Gata (inventado)",
+      "anio": 2026,
+      "url": "https://casa-albar.alexdasi.com",
+      "problema": {
+        "es": "Cómo vender calma sin decir «calma»: un hotel de nueve habitaciones donde la página pasa del mediodía a la noche mientras bajas, hasta la cena.",
+        "en": "How to sell calm without saying 'calm': a nine-room hotel whose page turns from noon to night as you scroll, all the way to dinner."
+      },
+      "neutra": false,
+      "oculta": false
+    },
+    {
+      "slug": "mas-vesprada",
+      "nombre": "Mas Vesprada",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Finca de bodas",
+        "en": "Wedding venue"
+      },
+      "lugar": "Interior de València (inventado)",
+      "anio": 2026,
+      "url": null,
+      "problema": {
+        "es": "Una finca no se entiende con fotos sueltas: el plano se dibuja con el scroll y recorre cada espacio de la boda hasta la maqueta al atardecer.",
+        "en": "A venue is hard to grasp from loose photos: the site plan draws itself as you scroll, walking through every space of the day until the model at sunset."
+      },
+      "neutra": false,
+      "oculta": false,
+      "nota_url": "Sin subdominio propio todavía: la carta no enlaza hasta que exista mas-vesprada.alexdasi.com (ok de Alex)."
+    },
+    {
+      "slug": "solvera",
+      "nombre": "Solvera",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Bodega",
+        "en": "Winery"
+      },
+      "lugar": "Montaña (inventado)",
+      "anio": 2026,
+      "url": "https://solvera.alexdasi.com",
+      "problema": {
+        "es": "Una bodega con un solo vino y 36 meses de espera: una web que se mueve mucho pero nunca deprisa, para que la paciencia se note.",
+        "en": "A winery with a single wine and 36 months of waiting: a site that moves a lot but never fast, so patience is something you feel."
+      },
+      "neutra": false,
+      "oculta": false
+    },
+    {
+      "slug": "coccio",
+      "nombre": "Cocció",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Taller de cerámica",
+        "en": "Ceramics studio"
+      },
+      "lugar": "Benimaclet, València (inventado)",
+      "anio": 2026,
+      "url": "https://coccio.alexdasi.com",
+      "problema": {
+        "es": "Explicar qué pasa en un taller sin un texto largo: el scroll es el horno y la página va del barro crudo al esmalte a 1260 °C.",
+        "en": "Explaining what happens in a studio without a wall of text: the scroll is the kiln, and the page goes from raw clay to glaze at 1260 °C."
+      },
+      "neutra": false,
+      "oculta": false
+    },
+    {
+      "slug": "brot",
+      "nombre": "Brot",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Floristería",
+        "en": "Florist"
+      },
+      "lugar": "Ruzafa, València (inventado)",
+      "anio": 2026,
+      "url": "https://brot.alexdasi.com",
+      "problema": {
+        "es": "Que la web de una floristería no se quede vieja: cambia sola cada mes, con la paleta, el ramo y las flores del mes en que la abres.",
+        "en": "Keeping a florist's website from going stale: it changes by itself every month, with the palette, bouquet and flowers of the month you open it."
+      },
+      "neutra": false,
+      "oculta": true
+    }
+  ]
+}
