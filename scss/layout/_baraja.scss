@@ -97,15 +97,17 @@ html.tema-dia .sitio-baraja {
 // (feedback 139); de noche, los de siempre: acento al 40 % y el activo del acento, lleno.
 html.tema-dia .sitio-baraja .MainSwiper {
   .swiper-pagination-bullet { background: $tinta; opacity: .12; }
-  .swiper-pagination-bullet:hover { opacity: .3; box-shadow: none; }
-  .swiper-pagination-bullet-active,
-  .swiper-pagination-bullet-active:hover { background: $tinta; opacity: .86; }
+  @media (hover: hover) and (pointer: fine) { .swiper-pagination-bullet:hover { opacity: .3; box-shadow: none; } } // v9 (feedback 160 · QA): hover solo con ratón
+  .swiper-pagination-bullet-active { background: $tinta; opacity: .86; }
+  @media (hover: hover) and (pointer: fine) { .swiper-pagination-bullet-active:hover { background: $tinta; opacity: .86; } } // v9 (feedback 160 · QA): hover solo con ratón
 }
 // v7 (feedback 124): el punto del cursor del acento y SIN aro de tinta (tampoco de día).
 // v6 (feedback 118): sobre el acento de la flecha (imán o hover), la flecha va en tinta, también con la esfera abierta
-html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow,
-html body.sitio-baraja .arrow-container .circle:hover .arrow {
+html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow {
   &::before, &::after { border-color: $tinta; }
+}
+@media (hover: hover) and (pointer: fine) { // v9: hover solo con ratón
+  html body.sitio-baraja .arrow-container .circle:hover .arrow { &::before, &::after { border-color: $tinta; } }
 }
 
 // ---------- Accesos sutiles (arriba a la derecha) ----------
@@ -143,8 +145,10 @@ html body.sitio-baraja .arrow-container .circle:hover .arrow {
       transform-origin: left center;
       transition: transform .3s cubic-bezier(.22, 1, .36, 1);
     }
-    &:hover, &:focus-visible, &.is-active { opacity: 1; }
-    &:hover::after, &:focus-visible::after, &.is-active::after { transform: scaleX(1); }
+    &:focus-visible, &.is-active { opacity: 1; }
+    @media (hover: hover) and (pointer: fine) { &:hover { opacity: 1; } } // v9 (feedback 160 · QA): hover solo con ratón
+    &:focus-visible::after, &.is-active::after { transform: scaleX(1); }
+    @media (hover: hover) and (pointer: fine) { &:hover::after { transform: scaleX(1); } } // v9 (feedback 160 · QA): hover solo con ratón
     // v8 (feedback 154): la página activa, subrayada en el acento (de día, su variante oscura) y un poco más gruesa
     &.is-active::after { background: var(--accent-color); height: 2px; }
   }
@@ -160,7 +164,8 @@ html body.sitio-baraja .arrow-container .circle:hover .arrow {
     opacity: .6;
     transition: opacity .2s ease, transform .4s cubic-bezier(.22, 1, .36, 1);
     svg { display: block; width: 16px; height: 16px; }
-    &:hover, &:focus-visible { opacity: 1; }
+    &:focus-visible { opacity: 1; }
+    @media (hover: hover) and (pointer: fine) { &:hover { opacity: 1; } } // v9 (feedback 160 · QA): hover solo con ratón
   }
 }
 html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
@@ -366,9 +371,11 @@ html.punto-cerca .follow { opacity: 0 !important; transition: opacity .2s ease; 
     transition: opacity .3s ease;
     pointer-events: none;
   }
-  &.is-frente:hover &__cara, &.is-frente:focus-visible &__cara { transform: translateY(-6px); }
+  &.is-frente:focus-visible &__cara { transform: translateY(-6px); }
+  @media (hover: hover) and (pointer: fine) { &.is-frente:hover &__cara { transform: translateY(-6px); } } // v9 (feedback 160 · QA): hover solo con ratón
   // resaltado en CUALQUIER carta al pasar el ratón (feedback 89)
-  &:hover &__cara::after, &:focus-visible &__cara::after { opacity: 1; }
+  &:focus-visible &__cara::after { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) { &:hover &__cara::after { opacity: 1; } } // v9 (feedback 160 · QA): hover solo con ratón
 
   &__poster, &__video {
     position: absolute;
@@ -490,10 +497,12 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
     background-repeat: no-repeat;
     transition: background-size .35s cubic-bezier(.22, 1, .36, 1), color .2s ease;
     svg { width: 11px; height: 11px; transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
-    &:hover, &:focus-visible { background-size: 100% 1px; }
-    &:hover svg, &:focus-visible svg { transform: translateX(3px); }
+    &:focus-visible { background-size: 100% 1px; }
+    @media (hover: hover) and (pointer: fine) { &:hover { background-size: 100% 1px; } } // v9 (feedback 160 · QA): hover solo con ratón
+    &:focus-visible svg { transform: translateX(3px); }
+    @media (hover: hover) and (pointer: fine) { &:hover svg { transform: translateX(3px); } } // v9 (feedback 160 · QA): hover solo con ratón
     &--fuera { color: var(--tinta-suave); }
-    &--fuera:hover svg { transform: translate(2px, -2px); }
+    @media (hover: hover) and (pointer: fine) { &--fuera:hover svg { transform: translate(2px, -2px); } } // v9 (feedback 160 · QA): hover solo con ratón
   }
 }
 @keyframes ficha-entra {
@@ -703,7 +712,8 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
     background-repeat: no-repeat;
     transition: background-size .3s cubic-bezier(.22, 1, .36, 1);
     svg { width: 11px; height: 11px; }
-    &:hover, &:focus-visible { background-size: 100% 36%; }
+    &:focus-visible { background-size: 100% 36%; }
+    @media (hover: hover) and (pointer: fine) { &:hover { background-size: 100% 36%; } } // v9 (feedback 160 · QA): hover solo con ratón
   }
   &__cv { font-size: 14px; color: var(--tinta-suave) !important; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 
@@ -722,8 +732,10 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
       text-decoration: none;
       transition: background-color .25s ease, padding .3s cubic-bezier(.22, 1, .36, 1);
       svg { width: 11px; height: 11px; align-self: center; opacity: .5; }
-      &:hover, &:focus-visible { background: var(--accent-color); padding-left: 12px; }
-      &:hover span, &:focus-visible span { color: $tinta; }
+      &:focus-visible { background: var(--accent-color); padding-left: 12px; }
+      @media (hover: hover) and (pointer: fine) { &:hover { background: var(--accent-color); padding-left: 12px; } } // v9 (feedback 160 · QA): hover solo con ratón
+      &:focus-visible span { color: $tinta; }
+      @media (hover: hover) and (pointer: fine) { &:hover span { color: $tinta; } } // v9 (feedback 160 · QA): hover solo con ratón
     }
   }
   &__caso-n { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
@@ -742,7 +754,8 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
     font-weight: 400;
     text-decoration: none;
     transition: background-color .25s ease, color .25s ease;
-    &:hover, &:focus-visible { background: var(--accent-color); border-color: var(--accent-color); color: $tinta !important; }
+    &:focus-visible { background: var(--accent-color); border-color: var(--accent-color); color: $tinta !important; }
+    @media (hover: hover) and (pointer: fine) { &:hover { background: var(--accent-color); border-color: var(--accent-color); color: $tinta !important; } } // v9 (feedback 160 · QA): hover solo con ratón
     &--lleno { background: var(--main-color); color: var(--bkg-color) !important; }
   }
 }
@@ -945,7 +958,7 @@ html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
   transform: scaleX(0);
   transition: transform .5s cubic-bezier(.22, 1, .36, 1);
 }
-.sm__rejilla--4 li:hover::before { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) { .sm__rejilla--4 li:hover::before { transform: scaleX(1); } } // v9 (feedback 160 · QA): hover solo con ratón
 
 // la cifra dentro de la bola
 .sm__cabeza { display: flex; align-items: flex-end; justify-content: space-between; gap: 6vw; }
@@ -990,8 +1003,8 @@ html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
   transition: scale .35s cubic-bezier(.34, 1.56, .64, 1);
 }
 .sm__pasos li { align-items: flex-start; transition: padding .35s cubic-bezier(.22, 1, .36, 1); }
-.sm__pasos li:hover { padding-left: 8px; }
-.sm__pasos li:hover .sm__num { scale: 1.18; }
+@media (hover: hover) and (pointer: fine) { .sm__pasos li:hover { padding-left: 8px; } } // v9 (feedback 160 · QA): hover solo con ratón
+@media (hover: hover) and (pointer: fine) { .sm__pasos li:hover .sm__num { scale: 1.18; } } // v9 (feedback 160 · QA): hover solo con ratón
 .sm__pasos .sm__item-t { padding-top: 5px; }
 
 // ATELIER en bloque de acento
@@ -1010,7 +1023,8 @@ html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
     background-position: 0 85%;
     font-weight: 500;
     svg { transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
-    &:hover, &:focus-visible { background-size: 100% 1px; svg { transform: translate(2px, -2px); } }
+    &:focus-visible { background-size: 100% 1px; svg { transform: translate(2px, -2px); } }
+    @media (hover: hover) and (pointer: fine) { &:hover { background-size: 100% 1px; svg { transform: translate(2px, -2px); } } } // v9 (feedback 160 · QA): hover solo con ratón
   }
 }
 
@@ -1026,7 +1040,7 @@ html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
   box-shadow: 0 0 0 3px var(--bkg-color);
   transition: scale .35s cubic-bezier(.34, 1.56, .64, 1);
 }
-.sm__hitos li:hover .sm__hito { scale: 1.8; }
+@media (hover: hover) and (pointer: fine) { .sm__hitos li:hover .sm__hito { scale: 1.8; } } // v9 (feedback 160 · QA): hover solo con ratón
 .sm__hitos li:last-child .sm__hito { animation: hito-hoy 2.4s ease-in-out infinite; }
 @keyframes hito-hoy { 0%, 100% { box-shadow: 0 0 0 3px var(--bkg-color), 0 0 0 3px color-mix(in srgb, var(--accent-color) 0%, transparent); } 50% { box-shadow: 0 0 0 3px var(--bkg-color), 0 0 0 8px color-mix(in srgb, var(--accent-color) 35%, transparent); } }
 
@@ -1044,7 +1058,7 @@ html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
 // UX/UI: titular grande con su punto; casos numerados
 .sm__titulo--seccion { font-size: clamp(56px, 7vw, 120px); line-height: .95; letter-spacing: -.045em; margin-bottom: 26px; }
 .sm__caso-i { font-size: 13px; font-weight: 400; letter-spacing: .08em; color: var(--tinta-suave); margin-right: 12px; vertical-align: 2px; font-variant-numeric: tabular-nums; }
-.sm__casos a:hover .sm__caso-i { color: $tinta; }
+@media (hover: hover) and (pointer: fine) { .sm__casos a:hover .sm__caso-i { color: $tinta; } } // v9 (feedback 160 · QA): hover solo con ratón
 
 // Hablamos: titular enorme y la bola del acento detrás, que te sigue un poco
 .sm--habla { overflow: hidden; }
@@ -1088,7 +1102,8 @@ html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
 }
 html.cursor-en-esfera .follow { opacity: 0 !important; }
 .sm--habla .sm__boton--lleno { background: var(--accent-color); border-color: var(--accent-color); color: $tinta !important; }
-.sm--habla .sm__boton--lleno:hover, .sm--habla .sm__boton--lleno:focus-visible { background: var(--main-color); border-color: var(--main-color); color: var(--bkg-color) !important; }
+.sm--habla .sm__boton--lleno:focus-visible { background: var(--main-color); border-color: var(--main-color); color: var(--bkg-color) !important; }
+@media (hover: hover) and (pointer: fine) { .sm--habla .sm__boton--lleno:hover { background: var(--main-color); border-color: var(--main-color); color: var(--bkg-color) !important; } } // v9 (feedback 160 · QA): hover solo con ratón
 
 // entrada escalonada al llegar a cada pantalla (solo con JS: sin él, todo se ve)
 html.sm-anima {
@@ -1170,15 +1185,15 @@ html.sm-anima {
 html.fusion-activa .follow { opacity: 0 !important; transition-duration: .06s !important; }
 html.cursor-fusion {
   // el fondo de acento ahora lo pone la mancha (el teclado sigue teniendo el suyo con :focus-visible)
-  .sm__casos a:hover { background: transparent; }
+  @media (hover: hover) and (pointer: fine) { .sm__casos a:hover { background: transparent; } } // v9 (feedback 160 · QA): hover solo con ratón
   .sm__casos a span { transition: color .2s ease .05s; }
-  .sm__boton:hover { background: transparent; }
+  @media (hover: hover) and (pointer: fine) { .sm__boton:hover { background: transparent; } } // v9 (feedback 160 · QA): hover solo con ratón
   // v7 (feedback 132): una sola línea del acento: con la fusión, el subrayado del enlace lo pone la mancha (no el CSS)
-  .ficha__link:hover { background-size: 0 1px; }
+  @media (hover: hover) and (pointer: fine) { .ficha__link:hover { background-size: 0 1px; } } // v9 (feedback 160 · QA): hover solo con ratón
   // v7 (feedback 146): en los accesos de arriba igual: al pasar, solo la línea de la mancha (fuera la propia en tinta)
-  .nav-sutil__item:hover::after { transform: scaleX(0); transition-duration: 0s; }
+  @media (hover: hover) and (pointer: fine) { .nav-sutil__item:hover::after { transform: scaleX(0); transition-duration: 0s; } } // v9 (feedback 160 · QA): hover solo con ratón
   .sm--habla .sm__boton--lleno { --fusion-color: var(--main-color); }
-  .sm--habla .sm__boton--lleno:hover { background: transparent; }
+  @media (hover: hover) and (pointer: fine) { .sm--habla .sm__boton--lleno:hover { background: transparent; } } // v9 (feedback 160 · QA): hover solo con ratón
 }
 
 // ============================================================
@@ -1404,4 +1419,16 @@ html.cursor-fusion {
     width: min(46vw, 300px);
     margin: 0 -10vw 18px auto;
   }
+}
+
+// Feedback 160 · QA (tabla de interacciones): en táctil nada se dispara por :hover (todo :hover va dentro de
+// (hover: hover) and (pointer: fine)). Lo que es enlace o botón responde al dedo con un :active breve; las filas de
+// «Cómo trabajo» y los puntos de la trayectoria no son enlaces: al tocarlos no se mueven.
+@media (hover: none), (pointer: coarse) {
+  .sm__boton, .sm__casos a, .ficha__link, .sm__link, .sm__cv, .fp__sig, .fp__volver, .bajar, .menu-movil__enlace {
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity .12s ease, background-color .25s ease, color .25s ease;
+    &:active { opacity: .62; }
+  }
+  .sm__casos a:active { background: color-mix(in srgb, var(--accent-color) 22%, transparent); }
 }

@@ -221,9 +221,15 @@ h3 {
   /* Effect 2b — accent bloom on hover OR when the magnet engages, so the
      circle fills exactly as the cursor dot is absorbed into it. */
 }
-.circle.effect:hover:after, .circle.magnet-mouse-active.effect:after {
+.circle.magnet-mouse-active.effect:after {
   transform: scale(1);
   transition: transform 0.4s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .circle.effect:hover:after {
+    transform: scale(1);
+    transition: transform 0.4s;
+  }
 }
 
 .swiper-button-next {
@@ -607,8 +613,13 @@ html[lang=es] .categories--designer {
   opacity: 0.55;
   transition: opacity 0.2s ease, background-color 0.2s ease;
 }
-.lang-switch__item:hover, .lang-switch__item:focus-visible {
+.lang-switch__item:focus-visible {
   opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .lang-switch__item:hover {
+    opacity: 1;
+  }
 }
 .lang-switch__item.is-active {
   opacity: 1;
@@ -3494,22 +3505,32 @@ html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet {
   background: #141415;
   opacity: 0.12;
 }
-html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet:hover {
-  opacity: 0.3;
-  box-shadow: none;
+@media (hover: hover) and (pointer: fine) {
+  html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet:hover {
+    opacity: 0.3;
+    box-shadow: none;
+  }
 }
-html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet-active,
-html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet-active:hover {
+html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet-active {
   background: #141415;
   opacity: 0.86;
 }
+@media (hover: hover) and (pointer: fine) {
+  html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet-active:hover {
+    background: #141415;
+    opacity: 0.86;
+  }
+}
 
-html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow::before, html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow::after,
-html body.sitio-baraja .arrow-container .circle:hover .arrow::before,
-html body.sitio-baraja .arrow-container .circle:hover .arrow::after {
+html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow::before, html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow::after {
   border-color: #141415;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  html body.sitio-baraja .arrow-container .circle:hover .arrow::before, html body.sitio-baraja .arrow-container .circle:hover .arrow::after {
+    border-color: #141415;
+  }
+}
 .nav-sutil {
   position: fixed;
   top: 20px;
@@ -3545,11 +3566,21 @@ html body.sitio-baraja .arrow-container .circle:hover .arrow::after {
   transform-origin: left center;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.nav-sutil__item:hover, .nav-sutil__item:focus-visible, .nav-sutil__item.is-active {
+.nav-sutil__item:focus-visible, .nav-sutil__item.is-active {
   opacity: 1;
 }
-.nav-sutil__item:hover::after, .nav-sutil__item:focus-visible::after, .nav-sutil__item.is-active::after {
+@media (hover: hover) and (pointer: fine) {
+  .nav-sutil__item:hover {
+    opacity: 1;
+  }
+}
+.nav-sutil__item:focus-visible::after, .nav-sutil__item.is-active::after {
   transform: scaleX(1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-sutil__item:hover::after {
+    transform: scaleX(1);
+  }
 }
 .nav-sutil__item.is-active::after {
   background: var(--accent-color);
@@ -3571,8 +3602,13 @@ html body.sitio-baraja .arrow-container .circle:hover .arrow::after {
   width: 16px;
   height: 16px;
 }
-.nav-sutil__tema:hover, .nav-sutil__tema:focus-visible {
+.nav-sutil__tema:focus-visible {
   opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-sutil__tema:hover {
+    opacity: 1;
+  }
 }
 
 html.tema-noche .nav-sutil__tema {
@@ -3822,11 +3858,21 @@ html.punto-cerca .follow {
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
-.carta.is-frente:hover .carta__cara, .carta.is-frente:focus-visible .carta__cara {
+.carta.is-frente:focus-visible .carta__cara {
   transform: translateY(-6px);
 }
-.carta:hover .carta__cara::after, .carta:focus-visible .carta__cara::after {
+@media (hover: hover) and (pointer: fine) {
+  .carta.is-frente:hover .carta__cara {
+    transform: translateY(-6px);
+  }
+}
+.carta:focus-visible .carta__cara::after {
   opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .carta:hover .carta__cara::after {
+    opacity: 1;
+  }
 }
 .carta__poster, .carta__video {
   position: absolute;
@@ -4042,17 +4088,29 @@ html.tema-noche .carta__cara {
   height: 11px;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.ficha__link:hover, .ficha__link:focus-visible {
+.ficha__link:focus-visible {
   background-size: 100% 1px;
 }
-.ficha__link:hover svg, .ficha__link:focus-visible svg {
+@media (hover: hover) and (pointer: fine) {
+  .ficha__link:hover {
+    background-size: 100% 1px;
+  }
+}
+.ficha__link:focus-visible svg {
   transform: translateX(3px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ficha__link:hover svg {
+    transform: translateX(3px);
+  }
 }
 .ficha__link--fuera {
   color: var(--tinta-suave);
 }
-.ficha__link--fuera:hover svg {
-  transform: translate(2px, -2px);
+@media (hover: hover) and (pointer: fine) {
+  .ficha__link--fuera:hover svg {
+    transform: translate(2px, -2px);
+  }
 }
 
 @keyframes ficha-entra {
@@ -4332,8 +4390,13 @@ html.tema-noche .carta__cara {
   width: 11px;
   height: 11px;
 }
-.sm__link:hover, .sm__link:focus-visible, .sm__cv:hover, .sm__cv:focus-visible {
+.sm__link:focus-visible, .sm__cv:focus-visible {
   background-size: 100% 36%;
+}
+@media (hover: hover) and (pointer: fine) {
+  .sm__link:hover, .sm__cv:hover {
+    background-size: 100% 36%;
+  }
 }
 .sm__cv {
   font-size: 14px;
@@ -4368,12 +4431,23 @@ html.tema-noche .carta__cara {
   align-self: center;
   opacity: 0.5;
 }
-.sm__casos a:hover, .sm__casos a:focus-visible {
+.sm__casos a:focus-visible {
   background: var(--accent-color);
   padding-left: 12px;
 }
-.sm__casos a:hover span, .sm__casos a:focus-visible span {
+@media (hover: hover) and (pointer: fine) {
+  .sm__casos a:hover {
+    background: var(--accent-color);
+    padding-left: 12px;
+  }
+}
+.sm__casos a:focus-visible span {
   color: #141415;
+}
+@media (hover: hover) and (pointer: fine) {
+  .sm__casos a:hover span {
+    color: #141415;
+  }
 }
 .sm__caso-n {
   font-size: 17px;
@@ -4409,10 +4483,17 @@ html.tema-noche .carta__cara {
   text-decoration: none;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
-.sm__boton:hover, .sm__boton:focus-visible {
+.sm__boton:focus-visible {
   background: var(--accent-color);
   border-color: var(--accent-color);
   color: #141415 !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  .sm__boton:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #141415 !important;
+  }
 }
 .sm__boton--lleno {
   background: var(--main-color);
@@ -4728,10 +4809,11 @@ html.tema-noche .carta--neutra .carta__cara {
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.sm__rejilla--4 li:hover::before {
-  transform: scaleX(1);
+@media (hover: hover) and (pointer: fine) {
+  .sm__rejilla--4 li:hover::before {
+    transform: scaleX(1);
+  }
 }
-
 .sm__cabeza {
   display: flex;
   align-items: flex-end;
@@ -4811,14 +4893,16 @@ html.tema-noche .carta--neutra .carta__cara {
   transition: padding 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.sm__pasos li:hover {
-  padding-left: 8px;
+@media (hover: hover) and (pointer: fine) {
+  .sm__pasos li:hover {
+    padding-left: 8px;
+  }
 }
-
-.sm__pasos li:hover .sm__num {
-  scale: 1.18;
+@media (hover: hover) and (pointer: fine) {
+  .sm__pasos li:hover .sm__num {
+    scale: 1.18;
+  }
 }
-
 .sm__pasos .sm__item-t {
   padding-top: 5px;
 }
@@ -4849,11 +4933,19 @@ html.tema-noche .carta--neutra .carta__cara {
 .sm__bloque .sm__link svg {
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.sm__bloque .sm__link:hover, .sm__bloque .sm__link:focus-visible {
+.sm__bloque .sm__link:focus-visible {
   background-size: 100% 1px;
 }
-.sm__bloque .sm__link:hover svg, .sm__bloque .sm__link:focus-visible svg {
+.sm__bloque .sm__link:focus-visible svg {
   transform: translate(2px, -2px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .sm__bloque .sm__link:hover {
+    background-size: 100% 1px;
+  }
+  .sm__bloque .sm__link:hover svg {
+    transform: translate(2px, -2px);
+  }
 }
 
 .sm__hitos {
@@ -4878,10 +4970,11 @@ html.tema-noche .carta--neutra .carta__cara {
   transition: scale 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.sm__hitos li:hover .sm__hito {
-  scale: 1.8;
+@media (hover: hover) and (pointer: fine) {
+  .sm__hitos li:hover .sm__hito {
+    scale: 1.8;
+  }
 }
-
 .sm__hitos li:last-child .sm__hito {
   animation: hito-hoy 2.4s ease-in-out infinite;
 }
@@ -4924,10 +5017,11 @@ html.tema-noche .carta--neutra .carta__cara {
   font-variant-numeric: tabular-nums;
 }
 
-.sm__casos a:hover .sm__caso-i {
-  color: #141415;
+@media (hover: hover) and (pointer: fine) {
+  .sm__casos a:hover .sm__caso-i {
+    color: #141415;
+  }
 }
-
 .sm--habla {
   overflow: hidden;
 }
@@ -4996,12 +5090,19 @@ html.cursor-en-esfera .follow {
   color: #141415 !important;
 }
 
-.sm--habla .sm__boton--lleno:hover, .sm--habla .sm__boton--lleno:focus-visible {
+.sm--habla .sm__boton--lleno:focus-visible {
   background: var(--main-color);
   border-color: var(--main-color);
   color: var(--bkg-color) !important;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .sm--habla .sm__boton--lleno:hover {
+    background: var(--main-color);
+    border-color: var(--main-color);
+    color: var(--bkg-color) !important;
+  }
+}
 html.sm-anima .slide-sm .sm > *, html.sm-anima .pantalla--sm .sm > * {
   opacity: 0;
   translate: 0 22px;
@@ -5160,27 +5261,37 @@ html.fusion-activa .follow {
   transition-duration: 0.06s !important;
 }
 
-html.cursor-fusion .sm__casos a:hover {
-  background: transparent;
+@media (hover: hover) and (pointer: fine) {
+  html.cursor-fusion .sm__casos a:hover {
+    background: transparent;
+  }
 }
 html.cursor-fusion .sm__casos a span {
   transition: color 0.2s ease 0.05s;
 }
-html.cursor-fusion .sm__boton:hover {
-  background: transparent;
+@media (hover: hover) and (pointer: fine) {
+  html.cursor-fusion .sm__boton:hover {
+    background: transparent;
+  }
 }
-html.cursor-fusion .ficha__link:hover {
-  background-size: 0 1px;
+@media (hover: hover) and (pointer: fine) {
+  html.cursor-fusion .ficha__link:hover {
+    background-size: 0 1px;
+  }
 }
-html.cursor-fusion .nav-sutil__item:hover::after {
-  transform: scaleX(0);
-  transition-duration: 0s;
+@media (hover: hover) and (pointer: fine) {
+  html.cursor-fusion .nav-sutil__item:hover::after {
+    transform: scaleX(0);
+    transition-duration: 0s;
+  }
 }
 html.cursor-fusion .sm--habla .sm__boton--lleno {
   --fusion-color: var(--main-color);
 }
-html.cursor-fusion .sm--habla .sm__boton--lleno:hover {
-  background: transparent;
+@media (hover: hover) and (pointer: fine) {
+  html.cursor-fusion .sm--habla .sm__boton--lleno:hover {
+    background: transparent;
+  }
 }
 
 .barra-movil, .menu-movil {
@@ -5491,6 +5602,18 @@ html.cursor-fusion .sm--habla .sm__boton--lleno:hover {
     align-self: flex-end;
     width: min(46vw, 300px);
     margin: 0 -10vw 18px auto;
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .sm__boton, .sm__casos a, .ficha__link, .sm__link, .sm__cv, .fp__sig, .fp__volver, .bajar, .menu-movil__enlace {
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.12s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+  .sm__boton:active, .sm__casos a:active, .ficha__link:active, .sm__link:active, .sm__cv:active, .fp__sig:active, .fp__volver:active, .bajar:active, .menu-movil__enlace:active {
+    opacity: 0.62;
+  }
+  .sm__casos a:active {
+    background: color-mix(in srgb, var(--accent-color) 22%, transparent);
   }
 }
 /* CANVAS */

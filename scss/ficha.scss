@@ -41,7 +41,7 @@ body.pagina-ficha { display: block; }
   &__barra { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   &__volver {
     svg { width: 12px; height: 12px; transition: transform .3s $suave; }
-    &:hover svg { transform: translateX(-3px); }
+    @media (hover: hover) and (pointer: fine) { &:hover svg { transform: translateX(-3px); } } // v9 (feedback 160 · QA): hover solo con ratón
   }
   &__cuenta {
     @include micro;
@@ -328,13 +328,15 @@ body.pagina-ficha { display: block; }
     svg { width: 16px; height: 16px; color: var(--main-color); transition: transform .4s $suave; }
   }
   &__sig-k { margin-bottom: 18px; }
-  &__sig:hover, &__sig:focus-visible {
+  @mixin fp-sig-encima {
     .fp__sig-n { background-size: 100% .09em; }
     .fp__sig-s svg { transform: translateX(8px); }
     .fp__naipe--1 { transform: rotateY(-10deg); }
     .fp__naipe--2 { transform: translateX(28vw) rotateY(-66deg); }
     .fp__naipe--3 { transform: translateX(32vw) rotateY(-68deg); }
   }
+  &__sig:focus-visible { @include fp-sig-encima; }
+  @media (hover: hover) and (pointer: fine) { &__sig:hover { @include fp-sig-encima; } } // v9 (feedback 160 · QA): hover solo con ratón
 
   &__mazo {
     grid-column: 8 / span 5;
@@ -390,7 +392,7 @@ body.pagina-ficha { display: block; }
   .fp__concepto { display: block; text-decoration: none; min-width: 0;
     b { display: block; margin-top: 12px; font-size: 17px; font-weight: 500; letter-spacing: -.01em; }
     .fp__concepto-l { display: block; margin-top: 4px; font-size: 14px; line-height: 1.35; font-weight: 300; color: var(--tinta-suave); }
-    .fp__m-pantalla { transition: opacity .3s ease; } &:hover .fp__m-pantalla { opacity: .82; }
+    .fp__m-pantalla { transition: opacity .3s ease; } @media (hover: hover) and (pointer: fine) { &:hover .fp__m-pantalla { opacity: .82; } } // v9: hover solo con ratón
   }
   .fp__m-pantalla video { display: block; width: 100%; height: 100%; object-fit: cover; }
   .fp__resultado { .fp__h2 { grid-column: 1 / span 3; } .fp__p--grande { grid-column: 4 / span 9; max-width: 28ch; } }
@@ -526,5 +528,6 @@ html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
   .fp__naipe { position: relative; top: auto; width: 82vw; max-width: none; margin-top: 0; }
   .fp__naipe--1 { transform: rotateY(-14deg); }
   .fp__naipe--2, .fp__naipe--3 { display: none; }
-  .fp__sig:hover .fp__naipe--1, .fp__sig:focus-visible .fp__naipe--1 { transform: rotateY(-14deg); }
+  .fp__sig:focus-visible .fp__naipe--1 { transform: rotateY(-14deg); }
+  @media (hover: hover) and (pointer: fine) { .fp__sig:hover .fp__naipe--1 { transform: rotateY(-14deg); } } // v9 (feedback 160 · QA): hover solo con ratón
 }

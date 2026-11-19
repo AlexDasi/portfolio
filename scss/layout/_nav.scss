@@ -63,7 +63,8 @@
         opacity: .55;
         transition: opacity .2s ease, background-color .2s ease;
 
-        &:hover, &:focus-visible{ opacity: 1; }
+        &:focus-visible{ opacity: 1; }
+        @media (hover: hover) and (pointer: fine) { &:hover { opacity: 1; } } // v9: hover solo con ratón
 
         &.is-active{
             opacity: 1;
