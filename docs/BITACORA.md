@@ -507,3 +507,28 @@ La esfera se tiñe de cualquiera (giro de tono desde el lima en el último pase,
 - **Queda sin uso** el bloque `.pf` de `scss/layout/_baraja.scss` (no se borra aquí para no recompilar `style.css` mientras se trabaja la home).
 
 **QA (exportación servida en local):** vivo.mjs 0 rojos en Casa Albar, Berto Studio e Imperio (iPhone 13, SE, Android 360, desktop) · medir.mjs 0 rojos (aviso: en móvil la cabecera + vídeo 4:5 suman 1,5-1,9 pantallas) · nitidez 0 rojos (naranja: el vídeo HD de 1600 px en pantallas retina de 1440).
+
+## 2026-11-19 — v6 · arreglos (feedback 115 y 118-122, ATELIER conv. 1330)
+
+- **115 · Acentos al azar:** el espacio salta a otro color AL AZAR, nunca el que hay (antes, en orden de rueda). Paleta: los 6 de siempre + 3 locos (abajo). Fuera los 12 de la v5.
+- **118 · Flecha:** se quedaba imantada si el ratón salía de ella hacia fuera de la ventana (está a 40 px del borde) o hacia el marco de la esfera: magnet-mouse solo escucha el mousemove de la ventana y no le llegaba nada más; el mouseout sí quitaba `.active`, por eso la flecha se quedaba BLANCA sobre el acento. Ahora `js/magnet.js` la suelta al salir de la ventana, al entrar en un marco, al perder el foco, al cambiar de pantalla y si el ratón ya está fuera de su zona en reposo (caja de diseño, sin el desplazamiento). Sobre el acento (imán o hover) la flecha va siempre en tinta, también con la esfera abierta.
+- **119 · La piel cambia:** nueva al azar en cada carga y otra cada vez que se vuelve a abrir la esfera, nunca la misma que la anterior. La última vista se apunta en `localStorage` (`alexdasi-piel-ultima`) solo para no repetirla y para que «Hablamos» enseñe esa. Fuera el `sessionStorage` de la v5. `?piel=` sigue forzando una.
+- **120 · El fluido no se congela nunca:** fuera el `PAUSED` al abrir la esfera. El marco de la esfera va con `pointer-events: none` y la página decide: cuando el ratón entra en la bola, el marco recoge el ratón (gas, chicle, caras, arrastre con inercia, clic) y el fluido de fuera no pinta encima; al salir de la bola sin arrastrar, el marco lo devuelve (`{esfera:'fuera'}`, `?mano`) y el fluido sigue, sin salto (`window.__fluidSinSalto`). Igual en «Hablamos» (antes el marco, 1,8 veces la bola, se comía el ratón en un cuadrado enorme: por eso el fondo parecía congelado y la bola se movía al arrastrarla); allí la bola deja de seguirte mientras estás dentro. Clic fuera de la bola (no en enlaces, flecha ni pisos) la cierra.
+- **121 · Pisos con imán:** `js/pisos-iman.js`: el piso más cercano (34 px) se deja llevar hacia el ratón (propiedad `translate`, el rombo sigue en `transform`), se enciende del acento con su brillo y el punto se funde en él (`html.piso-iman`). Activo y hover SIEMPRE del acento, en día y en noche (de día con un filo de tinta para leerse sobre el papel; `?pisos=a|b` ya no cambia nada). El punto del cursor es del acento siempre (de día con un aro fino de tinta).
+- **122 · Día más claro:** la esfera sabe si es día (`?dia` y mensajes `{esferaTema}` al cambiar) y sube la exposición por piel (`EXPO_DIA` 1,32-1,95) y levanta las sombras en el último pase (`uLuz`, solo donde hay bola). La noche no cambia.
+- Fuera el bloque `.pf` de la ficha v3 de `_baraja.scss` (la ficha nueva vive en `scss/ficha.scss`).
+
+### Paleta (9)
+| Nombre | Hex | Tinta encima (día) | Sobre negro (noche) |
+|---|---|---|---|
+| lima | #ECF98E | 16,2 | 18,5 |
+| coral | #FFA88C | 9,9 | 11,2 |
+| cielo | #96C8FF | 10,5 | 12,0 |
+| lila | #C8AAFF | 9,3 | 10,7 |
+| menta | #8CE6B9 | 12,4 | 14,1 |
+| albaricoque | #FFD46E | 13,1 | 14,9 |
+| magenta (loco) | #FF4FD8 | 6,5 | 7,4 |
+| verde ácido (loco) | #8CFF3C | 14,5 | 16,5 |
+| naranja eléctrico (loco) | #FF7A1A | 7,1 | 8,1 |
+
+**QA (exportación servida en local):** vivo.mjs 0 rojos en home, Hablamos y la ficha de Casa Albar (iPhone 13, SE, Android 360, desktop) · medir.mjs 0 rojos · rendimiento con el mismo servidor que la v5: escritorio 0,85 MB / 30 peticiones (v5 0,85 / 29; +`pisos-iman.js`), móvil 1,03 MB / 37 (v5 1,16 / 36), rAF en reposo 0 en intro y baraja. Las 7 pieles comprobadas de día antes/después y de noche sin cambios.
