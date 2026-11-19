@@ -22,7 +22,19 @@
   var html = document.documentElement;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function apuntar(p) { try { localStorage.setItem('alexdasi-piel-ultima', p); } catch (e) {} }
+  // v8 (feedback 153): la home apunta además la piel que se ha visto en ESTA visita (sessionStorage); «Hablamos» solo la
+  // repite si vienes de la home sin recargar. Si recargas o entras directo, otra al azar en cada carga.
+  function apuntar(p, enHome) { try { localStorage.setItem('alexdasi-piel-ultima', p); if (enHome) sessionStorage.setItem('alexdasi-piel-home', p); } catch (e) {} }
+  function pielHabla() {
+    if (forzada) return piel;
+    var vista = null, recarga = false, deHome = false;
+    try { vista = sessionStorage.getItem('alexdasi-piel-home'); } catch (e) {}
+    try { var nav = performance.getEntriesByType('navigation')[0]; recarga = !!nav && nav.type === 'reload'; } catch (e) {}
+    try { var r = new URL(document.referrer); deHome = r.host === location.host && /^\/(index(-en)?\.(php|html))?$/.test(r.pathname); } catch (e) {}
+    if (vista && PIELES.indexOf(vista) >= 0 && deHome && !recarga) return vista;
+    var ultima = window.__PIEL_ULTIMA, resto = PIELES.filter(function (x) { return x !== ultima; });
+    return resto[Math.floor(Math.random() * resto.length)];
+  }
   function otraPiel() { // al azar entre las demás (nunca repite la que se acaba de ver)
     if (forzada) return piel;
     var resto = PIELES.filter(function (x) { return x !== piel; });
@@ -32,7 +44,7 @@
   // el día/noche llega a todas las esferas abiertas (la de día sale más clara, feedback 122)
   new MutationObserver(function () {
     document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe, .sm__habla-bola iframe').forEach(function (f) {
-      try { f.contentWindow.postMessage({ esferaTema: dia() ? 'dia' : 'noche' }, '*'); } catch (e) {}
+      try { f.contentWindow.postMessage({ esferaTema: dia() ? 'dia' : 'noche' }, '*'); f.contentWindow.postMessage({ esferaAcento: acento().split(',') }, '*'); } catch (e) {}
     });
   }).observe(html, { attributes: true, attributeFilter: ['class'] });
 
@@ -83,9 +95,10 @@
     return { soltar: soltar, revisar: revisar, quitar: function () { soltar(); window.removeEventListener('mousemove', mira); } };
   }
 
-  function acento() {
+  function acento() { // v8 (feedback 147): de día, la variante de día del acento (la bola plana y la esfera, del mismo color)
     var c = window.__CURSOR;
     var col = c && c.paleta ? c.paleta[c.i] : { r: 236, g: 249, b: 142 };
+    if (col.d && dia()) col = col.d;
     return col.r + ',' + col.g + ',' + col.b;
   }
   function src(extra, p) { return 'esfera/esfera-pieles.html?embed&piel=' + (p || piel) + '&acento=' + acento() + (dia() ? '&dia' : '') + (extra || ''); }
@@ -102,7 +115,7 @@
       marcoH.title = 'Sphere';
       marcoH.setAttribute('allowtransparency', 'true');
       marcoH.setAttribute('tabindex', '-1');
-      var pielH = PIELES.indexOf(window.__PIEL_ULTIMA) >= 0 ? window.__PIEL_ULTIMA : piel;
+      var pielH = pielHabla();
       marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : '&mano'), pielH);
       apuntar(pielH);
       bolaH.appendChild(marcoH);
@@ -143,7 +156,7 @@
       if (caja.querySelector('iframe')) return;
       var f = document.createElement('iframe');
       f.src = src('&movil');
-      apuntar(piel);
+      apuntar(piel, true);
       f.title = 'Sphere';
       f.setAttribute('allowtransparency', 'true');
       f.addEventListener('load', function () { caja.classList.add('is-lista'); });
@@ -243,7 +256,7 @@
     origen = { x: r.left + r.width / 2 - b.left, y: r.top + r.height / 2 - b.top, d: r.width };
     piel = proxima; // v6 (feedback 119): cada vez que se vuelve a abrir, otra piel (se decide al cerrar: proxima)
     vecesAbierta++;
-    apuntar(piel);
+    apuntar(piel, true);
     var listaYa = false;
     if (pre && pre.piel === piel && pre.capa.isConnected) {
       capa = pre.capa; marco = pre.marco; listaYa = pre.lista;

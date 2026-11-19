@@ -3372,10 +3372,35 @@ body.fx-hovering .follow {
   visibility: hidden !important;
 }
 
+@property --bkg-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #000;
+}
+@property --main-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f7f7f5;
+}
+@property --accent-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ECF98E;
+}
+@property --tinta-suave {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a9a8a1;
+}
+@property --linea {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(247, 247, 245, 0.18);
+}
 html.tema-dia body.sitio-baraja {
   --bkg-color: #f5f3ec;
   --main-color: #141415;
-  --accent-color: var(--cursor-color, #ECF98E);
+  --accent-color: var(--cursor-color-dia, var(--cursor-color, #ECF98E));
   --tinta-suave: #5d5d58;
   --linea: rgba(20, 20, 21, .16);
 }
@@ -3396,9 +3421,18 @@ html.tema-noche {
   background: #000;
 }
 
+html {
+  transition: background-color 0.5s ease;
+}
+
 body.sitio-baraja {
   background-color: var(--bkg-color);
-  transition: background-color 0.4s ease;
+  transition: --bkg-color 0.5s ease, --main-color 0.5s ease, --accent-color 0.5s ease, --tinta-suave 0.5s ease, --linea 0.5s ease;
+}
+
+html.tema-cambiando .sitio-baraja :is(a, button, p, span, h1, h2, h3, li, .arrow, .circle, .swiper-pagination-bullet, svg),
+html.tema-cambiando .sitio-baraja .arrow::before, html.tema-cambiando .sitio-baraja .arrow::after {
+  transition: background-color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease, fill 0.5s ease, stroke 0.5s ease !important;
 }
 
 .sitio-baraja .single > a {
@@ -3512,6 +3546,10 @@ html body.sitio-baraja .arrow-container .circle:hover .arrow::after {
 }
 .nav-sutil__item:hover::after, .nav-sutil__item:focus-visible::after, .nav-sutil__item.is-active::after {
   transform: scaleX(1);
+}
+.nav-sutil__item.is-active::after {
+  background: var(--accent-color);
+  height: 2px;
 }
 .nav-sutil__tema {
   width: 28px;
@@ -4156,7 +4194,7 @@ html.tema-noche .carta__cara {
   height: 0.2em;
   margin-left: 0.06em;
   border-radius: 50%;
-  background: var(--cursor-color, #ECF98E);
+  background: var(--accent-color);
 }
 .sm__entrada {
   margin-top: 28px;

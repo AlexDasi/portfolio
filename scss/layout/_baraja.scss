@@ -10,10 +10,19 @@ $tinta: #141415;
 $papel: #f5f3ec;
 
 // ---------- Día / noche ----------
+// v8 (feedback 155): variables registradas: al cambiar de modo (o de acento) los colores se funden ~500 ms en toda la web,
+// sin parpadeo, porque body.sitio-baraja las transiciona y todo lo de dentro hereda el valor intermedio.
+@property --bkg-color { syntax: '<color>'; inherits: true; initial-value: #000; }
+@property --main-color { syntax: '<color>'; inherits: true; initial-value: #f7f7f5; }
+@property --accent-color { syntax: '<color>'; inherits: true; initial-value: #{$lima}; }
+@property --tinta-suave { syntax: '<color>'; inherits: true; initial-value: #a9a8a1; }
+@property --linea { syntax: '<color>'; inherits: true; initial-value: rgba(247, 247, 245, .18); }
+
 html.tema-dia body.sitio-baraja {
   --bkg-color: #{$papel};
   --main-color: #{$tinta};
-  --accent-color: var(--cursor-color, #{$lima});
+  // v8 (feedback 147): de día, la variante de día del acento (más oscura y saturada; header-baraja.php)
+  --accent-color: var(--cursor-color-dia, var(--cursor-color, #{$lima}));
   --tinta-suave: #5d5d58;
   --linea: rgba(20, 20, 21, .16);
 }
@@ -29,9 +38,17 @@ html.tema-noche body.sitio-baraja {
 
 html.tema-dia { background: #{$papel}; }
 html.tema-noche { background: #000; }
+html { transition: background-color .5s ease; }
 body.sitio-baraja {
   background-color: var(--bkg-color);
-  transition: background-color .4s ease;
+  transition: --bkg-color .5s ease, --main-color .5s ease, --accent-color .5s ease, --tinta-suave .5s ease, --linea .5s ease;
+}
+// v8 (feedback 155): durante el cambio de modo, lo que va en color fijo (tinta, pisos, flecha, cabecera) también se funde
+html.tema-cambiando .sitio-baraja {
+  :is(a, button, p, span, h1, h2, h3, li, .arrow, .circle, .swiper-pagination-bullet, svg),
+  .arrow::before, .arrow::after {
+    transition: background-color .5s ease, border-color .5s ease, opacity .5s ease, fill .5s ease, stroke .5s ease !important;
+  }
 }
 
 // Texto sobre lima: siempre tinta (en día y en noche)
@@ -128,6 +145,8 @@ html body.sitio-baraja .arrow-container .circle:hover .arrow {
     }
     &:hover, &:focus-visible, &.is-active { opacity: 1; }
     &:hover::after, &:focus-visible::after, &.is-active::after { transform: scaleX(1); }
+    // v8 (feedback 154): la página activa, subrayada en el acento (de día, su variante oscura) y un poco más gruesa
+    &.is-active::after { background: var(--accent-color); height: 2px; }
   }
 
   &__tema {
@@ -591,7 +610,7 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
     width: .2em; height: .2em;
     margin-left: .06em;
     border-radius: 50%;
-    background: var(--cursor-color, #{$lima});
+    background: var(--accent-color); // v8 (feedback 147): de día, la variante oscura
   }
   &__entrada {
     margin-top: 28px;

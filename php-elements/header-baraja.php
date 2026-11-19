@@ -94,21 +94,25 @@ $assetVersion = static function (string $relativePath): string {
             /* v6 (feedback 115): vuelven los 6 de siempre + 3 «locos» (magenta, verde ácido, naranja eléctrico). Al abrir sale uno
                al azar y el espacio salta a otro AL AZAR (nunca el mismo que hay). Tinta encima ≥ 6,4:1 en día y ≥ 7,3:1 sobre el
                negro de noche (todos AA de texto; los 6 de siempre y el verde, AAA). Documentada en docs/BITACORA.md. */
+            /* v8 (feedback 147): cada acento tiene su variante de DÍA, más oscura y saturada (mismo tono; ≈ 3:1 sobre el papel,
+               la tinta encima ≥ 5,1:1). De día todo lo que usa acento toma la variante (--cursor-color-dia → --accent-color):
+               subrayados, fusión del cursor, fluido, PRESS SPACE, resaltados. La noche no cambia. Tabla en docs/BITACORA.md. */
             var paleta = [
-                { r: 236, g: 249, b: 142, n: 'lima' },
-                { r: 255, g: 168, b: 140, n: 'coral' },
-                { r: 150, g: 200, b: 255, n: 'cielo' },
-                { r: 200, g: 170, b: 255, n: 'lila' },
-                { r: 140, g: 230, b: 185, n: 'menta' },
-                { r: 255, g: 212, b: 110, n: 'albaricoque' },
-                { r: 255, g: 79, b: 216, n: 'magenta' },          /* loco */
-                { r: 140, g: 255, b: 60, n: 'verde-acido' },      /* loco */
-                { r: 255, g: 122, b: 26, n: 'naranja-electrico' } /* loco */
+                { r: 236, g: 249, b: 142, n: 'lima', d: { r: 122, g: 155, b: 24 } },
+                { r: 255, g: 168, b: 140, n: 'coral', d: { r: 240, g: 98, b: 58 } },
+                { r: 150, g: 200, b: 255, n: 'cielo', d: { r: 28, g: 143, b: 245 } },
+                { r: 200, g: 170, b: 255, n: 'lila', d: { r: 167, g: 112, b: 246 } },
+                { r: 140, g: 230, b: 185, n: 'menta', d: { r: 52, g: 158, b: 113 } },
+                { r: 255, g: 212, b: 110, n: 'albaricoque', d: { r: 192, g: 136, b: 15 } },
+                { r: 255, g: 79, b: 216, n: 'magenta', d: { r: 238, g: 42, b: 203 } },          /* loco */
+                { r: 140, g: 255, b: 60, n: 'verde-acido', d: { r: 69, g: 161, b: 22 } },      /* loco */
+                { r: 255, g: 122, b: 26, n: 'naranja-electrico', d: { r: 234, g: 101, b: 12 } } /* loco */
             ];
             var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
             var i = fijo ? 0 : Math.floor(Math.random() * paleta.length);
             var c = paleta[i];
             html.style.setProperty('--cursor-color', 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')');
+            html.style.setProperty('--cursor-color-dia', 'rgb(' + c.d.r + ',' + c.d.g + ',' + c.d.b + ')');
             window.__CURSOR = { paleta: paleta, i: i, fijo: fijo };
             /* v6 (feedback 119): la piel de la esfera CAMBIA: una nueva al azar en cada carga (nunca la última que se vio) y otra
                cada vez que se vuelve a abrir (js/esfera.js). La última que se ha visto se apunta (localStorage, solo para no
@@ -135,7 +139,8 @@ $assetVersion = static function (string $relativePath): string {
                 SPLAT_RADIUS: 0.2 /* v5 (feedback 108): 0,3 → 0,2, manchas más pequeñas */, SPLAT_FORCE: 4000 /* v5: 6000 → 4500, rastro más corto · v7 (feedback 141): → 4000 */,
                 EFFECT_OPACITY: 0.35 /* v4 (feedback 99): 0,9 → 0,65 · v5 (feedback 108): → 0,45 · v7 (feedback 141): → 0,35, que moleste menos */, DYE_RESOLUTION: 512 };
             var base = tema === 'noche' ? window.__FLUID_NOCHE : window.__FLUID_DIA;
-            window.__FLUID_PRESET = Object.assign({}, comun, base, { EFFECT_COLOR: { r: c.r, g: c.g, b: c.b } });
+            var col = tema === 'noche' ? c : c.d; // v8 (feedback 147): de día el fluido va en la variante de día
+            window.__FLUID_PRESET = Object.assign({}, comun, base, { EFFECT_COLOR: { r: col.r, g: col.g, b: col.b } });
         })();
     </script>
 

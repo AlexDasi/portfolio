@@ -13,15 +13,23 @@
     raton.y = 1 - e.clientY / window.innerHeight;
   }, { passive: true });
 
+  // v8 (feedback 147): de día el fluido (y todo el acento, vía CSS) usa la variante de día del color
+  function colorFluido() {
+    var p = c.paleta[c.i], d = p.d && document.documentElement.classList.contains('tema-dia') ? p.d : p;
+    return { r: d.r, g: d.g, b: d.b };
+  }
+  window.__colorFluido = colorFluido;
   function aplicar() {
     var p = c.paleta[c.i], color = { r: p.r, g: p.g, b: p.b };
     document.documentElement.style.setProperty('--cursor-color', 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')');
-    if (window.__FLUID_PRESET) window.__FLUID_PRESET.EFFECT_COLOR = color;
+    if (p.d) document.documentElement.style.setProperty('--cursor-color-dia', 'rgb(' + p.d.r + ',' + p.d.g + ',' + p.d.b + ')');
+    var fl = colorFluido();
+    if (window.__FLUID_PRESET) window.__FLUID_PRESET.EFFECT_COLOR = fl;
     var api = window.__fluidBackgroundAPI;
-    if (api && typeof api.applySettings === 'function') api.applySettings({ EFFECT_COLOR: color });
+    if (api && typeof api.applySettings === 'function') api.applySettings({ EFFECT_COLOR: fl });
     // v4 (feedback 98): la esfera (si está abierta) toma el acento nuevo
     document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe, .sm__habla-bola iframe').forEach(function (f) {
-      try { f.contentWindow.postMessage({ esferaAcento: [color.r, color.g, color.b] }, '*'); } catch (err) {}
+      try { f.contentWindow.postMessage({ esferaAcento: [fl.r, fl.g, fl.b] }, '*'); } catch (err) {}
     });
     window.dispatchEvent(new CustomEvent('acento:cambio', { detail: color }));
   }

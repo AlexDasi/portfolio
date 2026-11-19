@@ -7,8 +7,10 @@
  */
 $barajaData = json_decode((string) file_get_contents(dirname(__DIR__) . '/content/baraja.json'), true);
 $barajaLang = (isset($lang) && $lang === 'es') ? 'es' : 'en';
-$barajaCartas = array_values(array_filter($barajaData['proyectos'] ?? [], static function ($p) {
-    return empty($p['oculta']);
+// v8 (feedback 152): ?baraja=corta oculta además las que se proponen quitar (quitar_propuesta), para comparar
+$barajaCorta = ($_GET['baraja'] ?? '') === 'corta';
+$barajaCartas = array_values(array_filter($barajaData['proyectos'] ?? [], static function ($p) use ($barajaCorta) {
+    return empty($p['oculta']) && !($barajaCorta && !empty($p['quitar_propuesta']));
 }));
 $barajaTxt = [
     'concept' => $barajaLang === 'es' ? 'Concepto' : 'Concept',
