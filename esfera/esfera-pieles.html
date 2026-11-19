@@ -1,7 +1,9 @@
 <!doctype html>
 <!-- Esfera del portfolio PORTADA TAL CUAL de la demo aprobada (ATELIER sites/propuestas/public/lab/2026-11-05_esfera-demo-cursor/…_v9.html,
      conv. 1048-1050). Rama rediseno-baraja-2026-11 (feedback 83-85, 95; L-1330c: portar, no rehacer).
-     Solo se añade el modo ?embed (sin cabecera, menú ni pista; avisa a la página con postMessage) y ?piel=solare|chicle|glaseado|gota|prisma. -->
+     Solo se añade el modo ?embed (sin cabecera, menú ni pista; avisa a la página con postMessage) y ?piel=solare|chicle|glaseado|gota|prisma|cuarzo|gema.
+     v5 (feedback 106-115): + Cuarzo (v2) y Gema turbia (v3) portadas tal cual; ?frac= (tamaño de la bola en el marco);
+     embebida: luz por piel (la gota salía muy oscura) y Solare remueve el gas de DENTRO en vez de pintar el rastro del fluido encima. -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -41,7 +43,7 @@
   #cur.m0 i,#cur.m2 i,#cur.m3 i,#cur.m4 i{width:10px;height:10px;border-radius:50%;background:var(--lima);box-shadow:0 0 14px 4px color-mix(in srgb,var(--lima) 45%,transparent)}
   #cur.m1 i{width:24px;height:24px;border-radius:50%;border:1px solid var(--lima)}
   #cur.down i{transform:translate(-50%,-50%) scale(1.7);opacity:.6}
-  #cur.m5 i{width:22px;height:22px;background:linear-gradient(var(--lima),var(--lima)) center/1px 100% no-repeat,linear-gradient(var(--lima),var(--lima)) center/100% 1px no-repeat}
+  #cur.m5 i,#cur.m6 i,#cur.m7 i{width:22px;height:22px;background:linear-gradient(var(--lima),var(--lima)) center/1px 100% no-repeat,linear-gradient(var(--lima),var(--lima)) center/100% 1px no-repeat}
   body.tactil #cur{display:none}
   /* embebida en alexdasi.com: solo la bola */
   body.embed header, body.embed nav, body.embed #hint{display:none}
@@ -75,6 +77,8 @@
   <button data-m="4"><i>05</i><span class="n">Gota</span></button>
   <span class="grupo">Tech</span>
   <button data-m="5"><i>06</i><span class="n">Prisma</span></button>
+  <button data-m="6"><i>07</i><span class="n">Cuarzo</span></button>
+  <button data-m="7"><i>08</i><span class="n">Gema</span></button>
 </nav>
 <div id="hud"><svg><line id="hl"/><circle id="hc" r="4"/></svg><div class="tag mono" id="ht"></div></div>
 <div id="cur" class="m0"><i></i></div>
@@ -89,7 +93,7 @@ import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 
 /* ?m=1|2|3 textura · ?still&t=s fotograma fijo · ?auto cursor fantasma (pruebas) */
 const Q = new URLSearchParams(location.search), STILL = Q.has('still'), AUTO = Q.has('auto'), T0 = +(Q.get('t') || 0);
-let modo = Math.min(5, Math.max(0, (+Q.get('m') || 1) - 1));
+let modo = Math.min(7, Math.max(0, (+Q.get('m') || 1) - 1));
 /* alexdasi.com (rama rediseno-baraja-2026-11): ?embed y ?piel= */
 const EMBED = Q.has('embed');
 if (EMBED) { document.documentElement.classList.add('embed'); document.body.classList.add('embed'); if (Q.has('movil')) document.body.classList.add('movil'); }
@@ -107,7 +111,7 @@ let PAUSA = false;
 addEventListener('message', e => { const d = e.data || {};
   if (d.esferaAcento) ponerAcento(d.esferaAcento);
   if ('esferaPausa' in d) { const antes = PAUSA; PAUSA = !!d.esferaPausa; if (antes && !PAUSA) { last = performance.now(); requestAnimationFrame(frame); } } });
-const PIELES = {solare: 0, chicle: 1, glaseado: 2, niebla: 3, gota: 4, prisma: 5};
+const PIELES = {solare: 0, chicle: 1, glaseado: 2, niebla: 3, gota: 4, prisma: 5, cuarzo: 6, gema: 7};
 if (Q.has('piel') && Q.get('piel') in PIELES) modo = PIELES[Q.get('piel')];
 const avisar = (msg) => { if (EMBED && parent !== window) parent.postMessage({esfera: msg}, '*'); };
 let pulsado = null;
@@ -117,7 +121,9 @@ const HINTS = [
   'Glaseado · ráyalo: quitas la escarcha, se ve brillante por dentro y se vuelve a helar',
   'Niebla · mete la mano: el humo se mueve con ella y vuelve a su sitio',
   'Gota · pásale el dedo: la arrastras y gira; si le das fuerte, salpica como un cubo de agua y las gotas vuelven a caer',
-  'Prisma · la cara bajo el cursor se enciende y te da su medida'
+  'Prisma · la cara bajo el cursor se enciende y te da su medida',
+  'Cuarzo · punta de cuarzo con velos lechosos: la cara bajo el cursor se enciende y te da su medida',
+  'Gema turbia · cuarzo del suelo, gastado: la cara bajo el cursor se enciende desde dentro'
 ];
 const LIMA = new THREE.Color('#ECF98E');
 
@@ -125,9 +131,14 @@ const canvas = document.getElementById('c');
 const renderer = new THREE.WebGLRenderer({canvas, antialias: false, alpha: EMBED, powerPreference: 'high-performance', preserveDrawingBuffer: STILL});
 if (EMBED) renderer.setClearColor(0, 0);
 const MOVIL = EMBED && Q.has('movil');
+const FRAC = +Q.get('frac') || 0;
+/* v5 (feedback 107): embebida, la luz se sube por piel (exposición del AgX) para que se lean sus elementos sobre noche y día.
+   solare · chicle · glaseado · niebla · gota · prisma · cuarzo · gema */
+const EXPO = [1.12, 1.3, 1.12, 1.1, 1.45, 1.15, 1.3, 1.4];   // v5: fracción del lado corto que ocupa la bola (por defecto .56 / .66 en estrecho)
 renderer.setPixelRatio(Math.min(devicePixelRatio, MOVIL ? 1.25 : 1.75));   // v4: en el móvil, la bola pequeña no necesita más
 renderer.toneMapping = THREE.AgXToneMapping;
 renderer.toneMappingExposure = 1.05;
+if (EMBED) renderer.toneMappingExposure = EXPO[modo];
 
 /* ---------- ruido (simplex 3D, Ashima) ---------- */
 const NOISE = /* glsl */`
@@ -267,17 +278,19 @@ const objetos = [];
    surco fino que se ensancha (presión), con peso, y vuelve a cerrarse en ~1 s. */
 const solare = (() => {
   const m = new THREE.ShaderMaterial({
-    uniforms: Object.assign({uCamObj: {value: new THREE.Vector3()}, uViewToObj: {value: new THREE.Matrix3()}, uEnv: {value: ENV_ORG.cube}}, U),
+    uniforms: Object.assign({uCamObj: {value: new THREE.Vector3()}, uViewToObj: {value: new THREE.Matrix3()}, uEnv: {value: ENV_ORG.cube}, uGas: {value: EMBED ? 1 : 0}}, U),
     vertexShader: `varying vec3 vPos,vN,vW;void main(){vPos=position;vN=normalize(mat3(modelMatrix)*normal);vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`,
     fragmentShader: NOISE + UV_GLSL + `
       varying vec3 vPos,vN,vW;
-      uniform float uTime,uVelK;uniform vec2 uRes,uDyeTexel,uTexel;uniform vec3 uCamObj;uniform mat3 uViewToObj;uniform samplerCube uEnv;uniform sampler2D uVel,uDye;
+      uniform float uTime,uVelK,uGas;uniform vec2 uRes,uDyeTexel,uTexel;uniform vec3 uCamObj;uniform mat3 uViewToObj;uniform samplerCube uEnv;uniform sampler2D uVel,uDye;
       void main(){
         vec2 suv=uvEsf(vPos);                                                   // el fluido vive en la piel de la bola
         vec2 vu=texture2D(uVel,suv).xy*uTexel*uVelK;
         vec3 sq=normalize(vPos);float lon=atan(sq.z,sq.x),lat=asin(clamp(sq.y,-1.,1.));
         vec3 este=vec3(-sin(lon),0.,cos(lon)),norte=vec3(-sin(lat)*cos(lon),cos(lat),-sin(lat)*sin(lon));
-        vec3 warp=este*vu.x*6.2832*cos(lat)+norte*vu.y*3.1416;                  // el agua se aparta con el palo
+        vec3 warp=(este*vu.x*6.2832*cos(lat)+norte*vu.y*3.1416)*mix(1.,2.6,uGas); // el agua se aparta con el palo
+        // v5 (feedback 113): embebida en alexdasi.com el cursor REMUEVE EL GAS DE DENTRO (todas las capas) y no se pinta encima
+        // el rastro del fluido (se confundía con el fluido de la web); el campo de velocidad es el mismo
         float tinta=clamp(texture2D(uDye,suv).r,0.,1.2);
         vec2 e2=uDyeTexel*2.;
         vec2 gr=.6*vec2(texture2D(uDye,suv+vec2(e2.x,0.)).r-texture2D(uDye,suv-vec2(e2.x,0.)).r,texture2D(uDye,suv+vec2(0.,e2.y)).r-texture2D(uDye,suv-vec2(0.,e2.y)).r);
@@ -291,7 +304,7 @@ const solare = (() => {
           float s=float(i)/5.;vec3 p=vPos+rd*s*chord*.7;
           float w=exp(-s*3.6);
           // la capa de fuera es la más densa y la que se lleva el dedo; las de dentro, menos (paralaje)
-          float n=fbm4((p-warp*mix(1.,.4,s))*2.1+dw+vec3(t,-t*.7,t*.45));
+          float n=fbm4((p-warp*mix(1.,mix(.4,.9,uGas),s))*2.1+dw+vec3(t,-t*.7,t*.45));
           acc+=n*w*(i==0?1.6:1.);ws+=w*(i==0?1.6:1.);
         }
         float g=acc/ws*.74+.52;
@@ -307,9 +320,10 @@ const solare = (() => {
         col+=vec3(.3,.6,1.)*dC*.42*(.35+.65*(1.-ndv));
         col*=mix(.5,1.,pow(ndv,.55));
         col+=textureLod(uEnv,reflect(-V,N),6.).rgb*.05*(.25+.75*pow(1.-ndv,3.));
-        col*=1.-min(tinta,1.)*.32;                                              // el surco abierto, más hondo
+        col*=1.-min(tinta,1.)*.32*(1.-uGas);                                    // el surco abierto, más hondo
+        col+=gas*uGas*smoothstep(.0,.35,length(warp))*.22;                       // v5: el gas removido se aviva un poco
         float borde=clamp(length(gr)*4.,0.,1.);
-        col+=vec3(.9,1.,.5)*borde*.32*(.6+.4*dot(normalize(gr+1e-5),vec2(-.7,.7)));   // sus bordes cogen luz (como el sombreado de tu web)
+        col+=vec3(.9,1.,.5)*borde*.32*(1.-uGas)*(.6+.4*dot(normalize(gr+1e-5),vec2(-.7,.7)));   // sus bordes cogen luz (como el sombreado de tu web)
         gl_FragColor=vec4(col,1.);
       }`
   });
@@ -456,6 +470,9 @@ const niebla = (() => {
    un abanico de gotas de tamaños distintos que vuela en la dirección del dedo, cae por gravedad y al volver abre ondas en la superficie. */
 const MAT_GOTA = {color: '#7f9418', metalness: .85, roughness: .27, clearcoat: .6, clearcoatRoughness: .1,
   iridescence: .5, iridescenceIOR: 1.4, iridescenceThicknessRange: [240, 420], envMap: ENV_ORG.pmrem, envMapIntensity: 1.25};
+// v5 (feedback 107): embebida sobre la página, la gota (el «planeta» de Alex) se veía casi negra: el metal reflejaba la franja
+// oscura del entorno. Menos metal, más reflejo y un poco de luz propia: se leen las vetas, el surco y el brillo sobre noche y día.
+if (EMBED) Object.assign(MAT_GOTA, {metalness: .5, envMapIntensity: 1.7, emissive: new THREE.Color('#56650c'), emissiveIntensity: .55});
 const N_GOTITAS = 18, N_ONDAS = 8;
 const aceite = (() => {
   const surcos = Array.from({length: 10}, () => new THREE.Vector4(0, 0, 1, 0));
@@ -559,9 +576,99 @@ const prisma = (() => {
   return cristal({pos, mask: new Float32Array(nt * 9).fill(1), face: Array.from({length: nt}, (_, t) => t), caras: nt, bev: .6, cuarzo: false});
 })();
 
-objetos.push(solare, chicle, glaseado, niebla, aceite, prisma);
+/* v5 (feedback 114, ATELIER conv. 1330): dos pieles rescatadas de las demos guardadas, PORTADAS TAL CUAL (L-1330c).
+   07 · Cuarzo = la punta de cuarzo lima de la v2 (conv. 1020; mismo cristal() que el prisma, con uQ = velos lechosos).
+   08 · Gema = la «gema turbia» de la v3 (conv. 1024): icosaedro irregular y gastado de cuarzo turbio (el poliedro cuarcificado). */
+const cuarzo = (() => {
+  let sd = 1013; const rnd = () => { sd |= 0; sd = sd + 0x6D2B79F5 | 0; let x = Math.imul(sd ^ sd >>> 15, 1 | sd); x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x; return ((x ^ x >>> 14) >>> 0) / 4294967296; };
+  const V = (x, y, z) => new THREE.Vector3(x, y, z), R = .46, bot = [], top = [];
+  for (let k = 0; k < 6; k++) { const an = k * Math.PI / 3 + (rnd() - .5) * .14, r = R * (1 + (rnd() - .5) * .18);
+    bot.push(V(Math.cos(an) * r, -.74 + (rnd() - .5) * .12, Math.sin(an) * r));
+    top.push(V(Math.cos(an) * r * .97, .4 + (rnd() - .5) * .24, Math.sin(an) * r * .97)); }
+  const apex = V(.05, 1.04, -.03), apexB = V(-.04, -1.0, .05), T = [];
+  for (let k = 0; k < 6; k++) { const k1 = (k + 1) % 6;
+    T.push({v: [bot[k], bot[k1], top[k1]], m: [1, 0, 1], f: k}, {v: [bot[k], top[k1], top[k]], m: [1, 1, 0], f: k},
+           {v: [top[k], top[k1], apex], m: [1, 1, 1], f: 6 + k}, {v: [bot[k1], bot[k], apexB], m: [1, 1, 1], f: 12 + k}); }
+  const pos = new Float32Array(T.length * 9), mask = new Float32Array(T.length * 9), face = [];
+  T.forEach((t, i) => {
+    const [p0, p1, p2] = t.v, nrm = p1.clone().sub(p0).cross(p2.clone().sub(p0)), cen = p0.clone().add(p1).add(p2);
+    if (nrm.dot(cen) < 0) { t.v = [p0, p2, p1]; t.m = [t.m[0], t.m[2], t.m[1]]; }   // caras siempre hacia fuera
+    t.v.forEach((p, j) => { pos.set([p.x * 1.12, p.y * 1.12, p.z * 1.12], i * 9 + j * 3); mask.set(t.m, i * 9 + j * 3); });
+    face.push(t.f);
+  });
+  return cristal({pos, mask, face, caras: 18, bev: .2, cuarzo: true});
+})();
+cuarzo.mesh.rotation.order = 'ZYX';
+/* 08 · Gema turbia (v3, conv. 1024) — gema encontrada en el suelo: icosaedro irregular y gastado, cuarzo turbio amarillento.
+   Una sola pasada: el rayo entra refractado, se calcula por dónde sale (20 planos) y se recorre el volumen con niebla y velos lechosos. */
+const gema = (() => {
+  let sd = 1024; const rnd = () => { sd |= 0; sd = sd + 0x6D2B79F5 | 0; let x = Math.imul(sd ^ sd >>> 15, 1 | sd); x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x; return ((x ^ x >>> 14) >>> 0) / 4294967296; };
+  const base = new THREE.IcosahedronGeometry(1, 0).attributes.position.array, pos = new Float32Array(base.length), jit = new Map();
+  for (let i = 0; i < base.length; i += 3) {   // cada vértice movido igual en todas sus caras → poliedro irregular pero cerrado
+    const k = base.slice(i, i + 3).map(v => v.toFixed(3)).join();
+    if (!jit.has(k)) jit.set(k, [(rnd() - .5) * .16, (rnd() - .5) * .16, (rnd() - .5) * .16]);
+    const j = jit.get(k); pos[i] = (base[i] + j[0]) * 1.02; pos[i + 1] = (base[i + 1] + j[1]) * .93; pos[i + 2] = (base[i + 2] + j[2]) * 1.04;
+  }
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.computeVertexNormals();
+  const n = pos.length / 3, caras = n / 3, bary = new Float32Array(n * 3), glow = new Float32Array(n);
+  for (let i = 0; i < n; i++) bary[i * 3 + (i % 3)] = 1;
+  geo.setAttribute('aBary', new THREE.BufferAttribute(bary, 3)); geo.setAttribute('aGlow', new THREE.BufferAttribute(glow, 1));
+  const planos = [];
+  for (let t = 0; t < caras; t++) { const A = new THREE.Vector3(...pos.slice(t * 9, t * 9 + 3)), B = new THREE.Vector3(...pos.slice(t * 9 + 3, t * 9 + 6)), C = new THREE.Vector3(...pos.slice(t * 9 + 6, t * 9 + 9));
+    const nn = B.clone().sub(A).cross(C.clone().sub(A)).normalize(); if (nn.dot(A) < 0) nn.negate(); planos.push(new THREE.Vector4(nn.x, nn.y, nn.z, nn.dot(A))); }
+  const m = new THREE.ShaderMaterial({
+    uniforms: Object.assign({uEnv: {value: ENV_TECH.cube}, uLima: {value: new THREE.Vector3(LIMA.r, LIMA.g, LIMA.b)}, uPl: {value: planos}, uCamObj: {value: new THREE.Vector3()}, uM3: {value: new THREE.Matrix3()}}, U),
+    vertexShader: `attribute vec3 aBary;attribute float aGlow;varying vec3 vB,vO,vNo,vW;varying float vG;
+      void main(){vB=aBary;vG=aGlow;vO=position;vNo=normal;vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`,
+    fragmentShader: NOISE + `varying vec3 vB,vO,vNo,vW;varying float vG;
+      uniform samplerCube uEnv;uniform vec3 uLima,uCamObj;uniform vec4 uPl[20];uniform mat3 uM3;uniform float uTime;
+      vec3 aMundo(vec3 d){return normalize(uM3*d);}
+      void main(){
+        vec3 nF=normalize(vNo);
+        float e=min(min(vB.x,vB.y),vB.z);
+        float gasto=.035+.03*snoise(vO*5.);                                   // aristas gastadas, irregulares
+        float bev=1.-smoothstep(0.,gasto,e);
+        // superficie: picada y esmerilada (nada de metacrilato)
+        vec3 pit=vec3(snoise(vO*11.),snoise(vO*11.+4.1),snoise(vO*11.+8.3))*.07+vec3(snoise(vO*31.),snoise(vO*31.+2.),snoise(vO*31.+5.))*.035;
+        vec3 nS=normalize(nF+pit+(normalize(vO)-nF)*bev*.65);
+        vec3 rd=normalize(vO-uCamObj);
+        float ndv=clamp(dot(-rd,nS),0.,1.);
+        float F=.05+.95*pow(1.-ndv,5.);
+        // dentro: por dónde sale el rayo
+        vec3 ri=refract(rd,nS,1./1.55);
+        float tEx=4.;vec3 nEx=-nF;
+        for(int i=0;i<20;i++){vec3 pn=uPl[i].xyz;float dn=dot(pn,ri);if(dn>1e-4){float tt=(uPl[i].w-dot(pn,vO))/dn;if(tt>1e-3&&tt<tEx){tEx=tt;nEx=pn;}}}
+        // volumen turbio: niebla amarillenta + velos lechosos, la luz entra cálida por la izquierda y fría por la derecha
+        vec3 sigA=vec3(.28,.12,2.1),sc=vec3(1.,.92,.58);
+        vec3 T=vec3(1.),acc=vec3(0.);float ds=tEx/9.;
+        for(int k=0;k<9;k++){
+          vec3 p=vO+ri*(float(k)+.5)*ds;
+          float nube=.25+.9*smoothstep(-.15,.7,fbm3(p*2.2+3.7));
+          float velo=smoothstep(.32,.72,abs(snoise(vec3(p.x*1.3+p.y*.4,p.y*3.2,p.z*1.1)*1.6)));   // planos de inclusiones
+          float dens=nube*.8+velo*1.9;
+          vec3 pw=uM3*p;
+          vec3 L=mix(vec3(1.,.82,.55)*1.25,vec3(.55,.72,1.)*.9,smoothstep(-.9,.9,pw.x))*(.55+.45*clamp(pw.y*.6+.5,0.,1.))+uLima*.18;
+          acc+=T*dens*sc*L*ds*.62;
+          T*=exp(-(sigA+dens*.8)*ds);
+        }
+        vec3 ro=refract(ri,-nEx,1.55);if(dot(ro,ro)<.01)ro=reflect(ri,-nEx);
+        vec3 col=acc*vec3(.95,1.,.62)+T*textureLod(uEnv,aMundo(ro),5.).rgb*vec3(.9,1.,.45)*.7;
+        // brillo de superficie esmerilado
+        vec3 refl=textureLod(uEnv,aMundo(reflect(rd,nS)),4.6).rgb;
+        col=mix(col,refl,F*.6)+refl*bev*.05;
+        // cara bajo el cursor: se enciende desde dentro, con su contorno solo mientras está encendida
+        col+=uLima*vG*.58*(.55+.45*smoothstep(0.,.3,e));
+        col+=uLima*(1.-smoothstep(0.,.016,e))*vG*1.1;
+        gl_FragColor=vec4(col,1.);
+      }`
+  });
+  const mesh = new THREE.Mesh(geo, m);
+  return {mesh, m, geo, glow, face: Array.from({length: caras}, (_, t) => t), tris: Array.from({length: caras}, (_, t) => [t]), caras, gl: new Float32Array(caras), radio: 1};
+})();
+
+objetos.push(solare, chicle, glaseado, niebla, aceite, prisma, cuarzo, gema);
 objetos.forEach((o, i) => { o.aparece = i === modo ? (STILL || EMBED ? 1 : 0) : 0; o.mesh.visible = false; scene.add(o.mesh); });
-solare.mesh.rotation.set(.2, 0, .44); chicle.mesh.rotation.set(.2, 0, .3); glaseado.mesh.rotation.set(.3, 0, .2); niebla.mesh.rotation.set(.1, 0, .3); aceite.mesh.rotation.set(.2, 0, .1); prisma.mesh.rotation.set(.35, .4, .2);
+solare.mesh.rotation.set(.2, 0, .44); chicle.mesh.rotation.set(.2, 0, .3); glaseado.mesh.rotation.set(.3, 0, .2); niebla.mesh.rotation.set(.1, 0, .3); aceite.mesh.rotation.set(.2, 0, .1); prisma.mesh.rotation.set(.35, .4, .2); cuarzo.mesh.rotation.set(.12, .3, .5); gema.mesh.rotation.set(.35, .4, .2);
 
 /* ---------- postproceso: bloom suave + AgX + grano fino ---------- */
 const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, {type: THREE.HalfFloatType, samples: 4}));
@@ -603,7 +710,7 @@ function resize(){
   U.uRes.value.set(Math.round(w * pr), Math.round(h * pr));
   camera.aspect = w / h;
   // la bola ocupa ~56 % del lado corto (algo menos en móvil por el menú)
-  const f = w < 560 ? .66 : .56, frac = f * Math.min(w, h) / h;
+  const f = FRAC || (w < 560 ? .66 : .56), frac = f * Math.min(w, h) / h;
   camera.position.set(0, 0, 1 / (frac * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))));
   camera.updateProjectionMatrix();
 }
@@ -639,7 +746,7 @@ const soltar = e => { P.down = false; if (chicle.agarre) { chicle.pell[chicle.ag
 canvas.addEventListener('pointerup', e => {
   // embebida: un clic (sin arrastrar) fuera de la bola la cierra
   if (EMBED && pulsado && !Q.has('movil')) {
-    const mov = Math.hypot(e.clientX - pulsado.x, e.clientY - pulsado.y), r = (innerWidth < 560 ? .66 : .56) * Math.min(innerWidth, innerHeight) / 2;
+    const mov = Math.hypot(e.clientX - pulsado.x, e.clientY - pulsado.y), r = (FRAC || (innerWidth < 560 ? .66 : .56)) * Math.min(innerWidth, innerHeight) / 2;
     const fuera = Math.hypot(e.clientX - innerWidth / 2, e.clientY - innerHeight / 2) > r * 1.08;
     if (mov < 6 && fuera) avisar('cerrar');
   }
@@ -660,7 +767,7 @@ function elegir(i){
   if (typeof bloom !== 'undefined') bloom.strength += .35;          // destello suave al cambiar
 }
 botones.forEach((b, i) => b.addEventListener('click', () => elegir(i)));
-addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === ' ' && EMBED) { e.preventDefault(); avisar('espacio'); } if (e.key === 'ArrowRight') elegir((modo + 1) % 6); if (e.key === 'ArrowLeft') elegir((modo + 5) % 6); if (e.key >= '1' && e.key <= '6') elegir(+e.key - 1); });
+addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === ' ' && EMBED) { e.preventDefault(); avisar('espacio'); } if (e.key === 'ArrowRight') elegir((modo + 1) % objetos.length); if (e.key === 'ArrowLeft') elegir((modo + objetos.length - 1) % objetos.length); if (e.key >= '1' && e.key <= String(objetos.length)) elegir(+e.key - 1); });
 elegir(modo);
 
 /* ---------- HUD del prisma ---------- */
@@ -813,9 +920,11 @@ function frame(now){
     }
   }
 
-  // 06 Prisma: cara bajo el cursor
-  let caraHud = -1, cr = prisma;
-  for (const [k, X] of [[5, prisma]]) {
+  // 06 Prisma · 07 Cuarzo · 08 Gema: cara bajo el cursor (v5: los tres cristales comparten el HUD)
+  gema.m.uniforms.uCamObj.value.copy(camera.position).applyMatrix4(tmpM.copy(gema.mesh.matrixWorld).invert());
+  gema.m.uniforms.uM3.value.setFromMatrix4(gema.mesh.matrixWorld);
+  let caraHud = -1, cr = modo === 6 ? cuarzo : modo === 7 ? gema : prisma;
+  for (const [k, X] of [[5, prisma], [6, cuarzo], [7, gema]]) {
     let cara = -1;
     if (modo === k && dentro && X.aparece > .5) { const r = ray.intersectObject(X.mesh, false)[0]; if (r) { cara = X.face[r.faceIndex]; sobre = true; } }
     if (modo === k) caraHud = cara;
@@ -839,7 +948,8 @@ function frame(now){
       const sc = cen.clone().project(camera), sx = (sc.x * .5 + .5) * innerWidth, sy = (-sc.y * .5 + .5) * innerHeight;
       if (!hudPos.ok) { hudPos.x = sx; hudPos.y = sy; hudPos.ok = true; }
       hudPos.x += (sx - hudPos.x) * (1 - Math.exp(-dt * 18)); hudPos.y += (sy - hudPos.y) * (1 - Math.exp(-dt * 18));
-      const lado = hudPos.x > innerWidth / 2 ? 1 : -1, largo = Math.min(120, innerWidth * .16), estrecho = innerWidth < 560;
+      const lado = Q.has('hudizq') ? -1 : hudPos.x > innerWidth / 2 ? 1 : -1,   // v5: en «Hablamos» la medida sale hacia dentro (a la derecha están los pisos)
+         largo = Math.min(120, innerWidth * .16), estrecho = innerWidth < 560;
       let ex = hudPos.x + lado * largo, ey = hudPos.y - largo * .45;
       if (estrecho) { // en móvil la etiqueta va encima del cristal, nunca tapándolo
         const top = tmp.set(0, 1.12 * cr.mesh.scale.x, 0).add(cr.mesh.position).project(camera);
@@ -854,7 +964,8 @@ function frame(now){
     } else { hud.style.opacity = 0; hudPos.ok = false; }
   }
 
-  bloom.strength += ([.1, .06, .06, .14, .1, .26][modo] - bloom.strength) * (1 - Math.exp(-dt * 6));
+  if (EMBED) { const ex = EXPO[modo] || 1.05; renderer.toneMappingExposure += (ex - renderer.toneMappingExposure) * (1 - Math.exp(-dt * 5)); }
+  bloom.strength += ([.1, .06, .06, .14, .1, .26, .22, .12][modo] - bloom.strength) * (1 - Math.exp(-dt * 6));
   if (sobre !== P.sobre) { P.sobre = sobre; document.body.classList.toggle('sobre', sobre); }
   composer.render(dt);
   if (EMBED && !window.__avisada && t - T0 > .25) { window.__avisada = true; avisar('lista'); }

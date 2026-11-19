@@ -1343,6 +1343,13 @@ function updateColors (dt) {
 }
 
 function applyInputs () {
+    // v5 (feedback 113): en pausa (esfera abierta) el fluido de fuera se queda CONGELADO tal cual: no entra ninguna
+    // mancha nueva (antes un gesto o el espacio pintaban encima y se quedaban fijas). Lo pendiente se descarta.
+    if (config.PAUSED) {
+        if (window.__fluidQueue) window.__fluidQueue.length = 0;
+        pointers.forEach(p => { p.moved = false; });
+        return;
+    }
     if (splatStack.length > 0)
         multipleSplats(splatStack.pop());
 
@@ -1615,6 +1622,7 @@ updatePointerDownData(pointer, -1, posX, posY);
 document.body.addEventListener('mousemove', e => {
     let pointer = pointers[0];
     if (!pointer.down) return;
+    if (config.PAUSED) return; // v5: congelado mientras la esfera está abierta
     despertar();
     let posX = scaleByPixelRatio(e.x);
     let posY = scaleByPixelRatio(e.y);

@@ -459,3 +459,38 @@
 **Preview vs web final:** la carpeta exportada pesa 27 MB (antes 37 MB) porque copia TODOS los medios de la baraja (vídeos HD de las fichas, jpg de respaldo, versiones móvil y escritorio), pero la home solo transfiere lo de la tabla. La web final en Hostinger transfiere lo mismo + Google Analytics (gtag, que la exportación quita; ~100 KB, asíncrono, no bloquea).
 
 **QA (exportación servida en local):** vivo.mjs 0 rojos en home ES y EN, About y ficha (iPhone 13, SE, Android 360, desktop) · nitidez 0 · medir.mjs 0 rojos (avisos: el bloque «hola» del About en móvil ocupa 1,4-1,8 pantallas en SE/13, y la cabecera de las fichas). Paridad día/noche comprobada con script: espacio, acento, glow, PRESS SPACE y esfera hacen lo mismo en los dos.
+
+---
+
+## 2026-11-19 — v5 de la rama `rediseno-baraja-2026-11` (feedback 106-116, ATELIER conv. 1330)
+
+- **106 · Una piel por sesión:** la piel de la esfera sale al azar UNA vez por sesión (`sessionStorage` `alexdasi-piel`, decidido en `header-baraja.php` antes de pintar → `window.__PIEL`) y es la misma en la home y en «Hablamos» del Sobre mí. En «Hablamos» la bola del acento es ahora el marcador de la esfera de verdad (`[data-esfera-habla]`, iframe `?frac=0.56&hudizq`), que solo se carga al llegar a esa pantalla (escritorio: pisos; móvil: al entrar en vista) y se pausa al salir. `?piel=` sigue forzando una (y se queda para la sesión).
+- **107 · Más luz:** embebida, la exposición del AgX va por piel (`EXPO` en `esfera/esfera-pieles.html`: solare 1,12 · chicle 1,3 · glaseado 1,12 · gota 1,45 · prisma 1,15 · cuarzo 1,3 · gema 1,4). La gota (el «planeta» de Alex) salía casi negra: el metal reflejaba la franja oscura del entorno → metal 0,85 → 0,5, reflejo 1,25 → 1,7 y algo de luz propia; ya se leen vetas, surco y brillo en noche y día.
+- **114-115 · Pieles rescatadas, portadas tal cual** de `ATELIER sites/propuestas/public/lab/2026-11-05_esfera-demo-cursor/`: **Cuarzo** = punta de cuarzo lima de la `_v2.html` (conv. 1020; mismo `cristal()` que el prisma con velos lechosos) y **Gema** = la «gema turbia» de la `_v3.html` (conv. 1024; icosaedro irregular y gastado de cuarzo turbio: el poliedro cuarcificado). Las dos con la cara bajo el cursor que se enciende y el HUD de medida del prisma. El **Chicle** ya estaba (v8/v9, con su agarre de clic y arrastre). Sorteo: solare · chicle · glaseado · gota · prisma · cuarzo · gema. Fuera del sorteo: niebla (descartada por Alex en la v8), aceite (v5, sustituido por la gota) y el cubo de cuarzo turbio (v4, «demasiado cubo»).
+- **112 · Saludo sin invertir:** fuera el `mix-blend-mode: difference` del saludo con la esfera abierta: blanco de noche, tinta de día.
+- **113 · El ratón juega con la esfera:** con la esfera abierta el fluido de fuera se queda CONGELADO tal cual (en pausa ya no entra ninguna mancha: `applyInputs` y el `mousemove` de `fluid.js` salen si `PAUSED`; antes un gesto o el espacio pintaban encima y se quedaban fijas). Dentro, Solare ya no pinta el rastro del fluido sobre la piel (era el mismo fluido de la web y parecía el de fuera): el mismo campo de velocidad REMUEVE EL GAS de dentro, en todas sus capas, y el gas removido se aviva un poco (`uGas`, solo embebida).
+- **108 · Fluido de día:** opacidad 0,65 → 0,45, radio 0,3 → 0,2 y fuerza 6000 → 4500 (rastro más corto). Noche sin cambios.
+- **111 · El punto se funde con lo interactivo:** `js/cursor-fusion.js`, PORTADO de la pieza de la librería de ATELIER «Cursor contextual que se convierte en botón» (`aww-dynamic-contextual-cursor-studiors`, kit `tools/templates/motion-kit/cursorShape.ts` modo `shape`, lab `2026-10-22_cursor-contextual-forma` V1). Una mancha del acento nace debajo del punto al entrar, se estira hasta ser el fondo del elemento (rect + 2 px con su radio, lerp 0,4/0,28, paralaje del kit acotado a ±3 px) y al salir vuelve a ser el punto. Va DEBAJO del texto (z 1, antes de la pantalla en el DOM). Solo en filas de UX/UI, botones (Sobre mí y fichas; el WhatsApp lleno se funde en el color del texto), «Ver proyecto / Visitar web» de la baraja (subrayado de 3 px) y los accesos de arriba (subrayado). La flecha conserva su absorción (D-0002) y los pisos su imán. Bucle parado en reposo. `?fusion=no` la apaga.
+- **109 · PRESS SPACE :)** sin tocar.
+
+### Paleta de acentos (feedback 110): 12, dando la vuelta al círculo de color
+Al abrir sale uno al azar; espacio = el siguiente (en este orden). Todos claros: la tinta encima se lee en día (≥ 8,6:1, AAA) y sobre el negro de noche ≥ 9,8:1. `?cursor=fijo` = lima.
+
+| # | Nombre | RGB | Tono | Tinta encima | Sobre negro |
+|---|---|---|---|---|---|
+| 1 | lima | 236, 249, 142 | 67° | 16,2 | 18,5 |
+| 2 | pistacho | 190, 235, 140 | 88° | 13,5 | 15,5 |
+| 3 | menta | 140, 230, 185 | 150° | 12,4 | 14,1 |
+| 4 | aqua | 120, 225, 230 | 183° | 12,0 | 13,7 |
+| 5 | cielo | 150, 200, 255 | 211° | 10,5 | 12,0 |
+| 6 | pervinca | 168, 180, 255 | 232° | 9,3 | 10,6 |
+| 7 | lila | 200, 170, 255 | 261° | 9,3 | 10,6 |
+| 8 | orquídea | 240, 165, 240 | 300° | 9,9 | 11,3 |
+| 9 | rosa | 255, 170, 210 | 332° | 10,5 | 11,9 |
+| 10 | cereza | 255, 145, 155 | 355° | 8,6 | 9,8 |
+| 11 | coral | 255, 168, 140 | 15° | 9,8 | 11,2 |
+| 12 | albaricoque | 255, 212, 110 | 42° | 13,1 | 14,9 |
+
+La esfera se tiñe de cualquiera (giro de tono desde el lima en el último pase, v4).
+
+**QA (exportación servida en local, sin «clean URLs»):** vivo.mjs 0 rojos en home, About UX/UI, Hablamos y una ficha (iPhone 13, SE, Android 360, desktop) · medir.mjs 0 rojos (4 avisos de siempre: bloques del About en móvil de 1,4-1,7 pantallas) · las 7 pieles comprobadas en noche y día (escritorio) y gema/cuarzo/chicle en iPhone 13 e iPad vertical/horizontal. Rendimiento home: escritorio 0,49 MB / 29 peticiones (v4: 0,48 / 28; +`cursor-fusion.js`), rAF en reposo 0 (intro y baraja), LCP 164-404 ms; móvil 0,80 MB / 36 (v4: 0,79 / 35), rAF en reposo 0. Ojo al probar en local con `serve`: sus «clean URLs» quitan la query del iframe (`?embed&piel=…`) y sale la demo entera; Cloudflare y Hostinger no lo hacen.

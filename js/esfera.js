@@ -4,13 +4,16 @@
    (el saludo queda delante y legible), sin cambiar el fondo ni el color: día/noche y acento, los activos en ese momento.
    La esfera es la demo aprobada v9 (esfera/esfera-pieles.html, modo ?embed, transparente y teñida con el acento).
    El iframe (three.js) solo se crea al hacer clic: nada de WebGL de la esfera en la primera carga.
-   Clic fuera o Esc la devuelve al punto. ?piel=solare|chicle|glaseado|gota|prisma (por defecto solare).
+   Clic fuera o Esc la devuelve al punto.
+   v5 (feedback 106-115): la piel sale al azar una vez por sesión (window.__PIEL, header-baraja.php) entre
+   solare|chicle|glaseado|gota|prisma|cuarzo|gema y es la misma en «Hablamos» del Sobre mí; ?piel= fuerza una.
+   Con la esfera abierta el fluido de fuera se queda congelado y el ratón juega con la esfera (iframe encima del fondo).
    Móvil (sin ratón): sin fluido; la esfera flota en el centro de la intro, con spin con el dedo; se pausa fuera de pantalla. */
 (function () {
   'use strict';
   var q = new URLSearchParams(location.search);
-  var PIELES = ['solare', 'chicle', 'glaseado', 'gota', 'prisma'];
-  var piel = PIELES.indexOf(q.get('piel')) >= 0 ? q.get('piel') : 'solare';
+  var PIELES = ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'];
+  var piel = window.__PIEL && PIELES.indexOf(window.__PIEL) >= 0 ? window.__PIEL : (PIELES.indexOf(q.get('piel')) >= 0 ? q.get('piel') : 'solare');
   var fino = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var html = document.documentElement;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -21,6 +24,45 @@
     return col.r + ',' + col.g + ',' + col.b;
   }
   function src(extra) { return 'esfera/esfera-pieles.html?embed&piel=' + piel + '&acento=' + acento() + (extra || ''); }
+
+  // ---------- «Hablamos» (Sobre mí): la misma esfera, con la misma piel (feedback 106) ----------
+  // La bola plana del acento se queda de marcador hasta que la esfera está lista. three.js solo baja al llegar a esa pantalla.
+  document.querySelectorAll('[data-esfera-habla]').forEach(function (bolaH) {
+    var esMovil = !fino || window.innerWidth <= 1280;
+    var marcoH = null, enVista = false;
+    function pausa(p) { if (marcoH) try { marcoH.contentWindow.postMessage({ esferaPausa: p }, '*'); } catch (e) {} }
+    function cargarH() {
+      if (marcoH) { pausa(false); return; }
+      marcoH = document.createElement('iframe');
+      marcoH.title = 'Sphere';
+      marcoH.setAttribute('allowtransparency', 'true');
+      marcoH.setAttribute('tabindex', '-1');
+      marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : ''));
+      // dentro del marco pinta la esfera su propio cursor: el de la página se esconde mientras estás encima
+      marcoH.addEventListener('mouseenter', function () { html.classList.add('cursor-en-esfera'); });
+      marcoH.addEventListener('mouseleave', function () { html.classList.remove('cursor-en-esfera'); });
+      bolaH.appendChild(marcoH);
+    }
+    window.addEventListener('message', function (e) {
+      if (marcoH && e.source === marcoH.contentWindow && e.data && e.data.esfera === 'lista') bolaH.classList.add('is-lista');
+    });
+    var pantalla = bolaH.closest('.swiper-slide');
+    if (pantalla && !esMovil) {
+      var indice = [].indexOf.call(pantalla.parentNode.children, pantalla);
+      window.addEventListener('pisos:cambio', function (e) {
+        enVista = e.detail.index === indice;
+        if (enVista) cargarH(); else pausa(true);
+      });
+      var sw = pantalla.closest('[data-initial]');
+      if (sw && +sw.getAttribute('data-initial') === indice) setTimeout(cargarH, 400);
+    } else if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        enVista = en[0].isIntersecting;
+        if (enVista) cargarH(); else pausa(true);
+        if (marcoH) marcoH.style.visibility = enVista ? 'visible' : 'hidden';
+      }, { rootMargin: '200px 0px' }).observe(bolaH);
+    }
+  });
 
   // ---------- móvil / tablet táctil ----------
   if (!fino || window.innerWidth <= 1280) {

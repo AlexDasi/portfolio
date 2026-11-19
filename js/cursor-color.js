@@ -19,7 +19,7 @@
     var api = window.__fluidBackgroundAPI;
     if (api && typeof api.applySettings === 'function') api.applySettings({ EFFECT_COLOR: color });
     // v4 (feedback 98): la esfera (si está abierta) toma el acento nuevo
-    document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe').forEach(function (f) {
+    document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe, .sm__habla-bola iframe').forEach(function (f) {
       try { f.contentWindow.postMessage({ esferaAcento: [color.r, color.g, color.b] }, '*'); } catch (err) {}
     });
     window.dispatchEvent(new CustomEvent('acento:cambio', { detail: color }));

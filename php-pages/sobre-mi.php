@@ -197,7 +197,7 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
 <?php break;
         case 'habla': ?>
 <section class="sm sm--habla">
-    <span class="sm__habla-bola" data-sigue aria-hidden="true"></span>
+    <span class="sm__habla-bola" data-sigue data-esfera-habla aria-hidden="true"></span>
     <h2 class="sm__titulo sm__titulo--enorme"><span class="sm__grueso"><?php echo $e($T['habla_t']); ?></span><span class="sm__punto" aria-hidden="true"></span></h2>
     <p class="sm__entrada"><?php echo $e($T['habla_p']); ?></p>
     <div class="sm__botones">

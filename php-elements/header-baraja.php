@@ -91,12 +91,20 @@ $assetVersion = static function (string $relativePath): string {
             var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', tema === 'noche' ? '#000000' : '#f5f3ec');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));
+            /* v5 (feedback 110): 12 acentos, dando la vuelta al círculo de color (espacio = el siguiente, como un arcoíris lento).
+               Todos claros: tinta encima ≥ 8,6:1 (AAA) en día y ≥ 9,8:1 sobre el negro de noche. Documentada en docs/BITACORA.md. */
             var paleta = [
                 { r: 236, g: 249, b: 142 },  /* lima */
-                { r: 255, g: 168, b: 140 },  /* coral */
-                { r: 150, g: 200, b: 255 },  /* cielo */
-                { r: 200, g: 170, b: 255 },  /* lila */
+                { r: 190, g: 235, b: 140 },  /* pistacho */
                 { r: 140, g: 230, b: 185 },  /* menta */
+                { r: 120, g: 225, b: 230 },  /* aqua */
+                { r: 150, g: 200, b: 255 },  /* cielo */
+                { r: 168, g: 180, b: 255 },  /* pervinca */
+                { r: 200, g: 170, b: 255 },  /* lila */
+                { r: 240, g: 165, b: 240 },  /* orquídea */
+                { r: 255, g: 170, b: 210 },  /* rosa */
+                { r: 255, g: 145, b: 155 },  /* cereza */
+                { r: 255, g: 168, b: 140 },  /* coral */
                 { r: 255, g: 212, b: 110 }   /* albaricoque */
             ];
             var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
@@ -104,6 +112,14 @@ $assetVersion = static function (string $relativePath): string {
             var c = paleta[i];
             html.style.setProperty('--cursor-color', 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')');
             window.__CURSOR = { paleta: paleta, i: i, fijo: fijo };
+            /* v5 (feedback 106, 107, 114-115): la piel de la esfera sale al azar UNA vez por sesión entre todas las aprobadas
+               y es la misma en toda la visita (home e «Hablamos» del Sobre mí). ?piel= fuerza una (y se queda para la sesión). */
+            var PIELES = ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'];
+            var piel = q.get('piel'), guardada = null;
+            try { guardada = sessionStorage.getItem('alexdasi-piel'); } catch (e) {}
+            if (PIELES.indexOf(piel) < 0) piel = PIELES.indexOf(guardada) >= 0 ? guardada : PIELES[Math.floor(Math.random() * PIELES.length)];
+            try { sessionStorage.setItem('alexdasi-piel', piel); } catch (e) {}
+            window.__PIEL = piel;
             /* v4 (feedback 100): lienzo a 1× aunque la pantalla sea retina y tinte a 512 (el fluido es blando: no se nota y pesa ~4× menos) */
             var comun = { BLOOM: false, SUNRAYS: false, COLORFUL: false, NO_INTRO_SPLATS: true, MAX_DPR: 1,
                 DITHER_URL: 'images/vectors/arrow.svg' /* relativa: vale en vivo y en la exportación estática */ };
@@ -114,7 +130,8 @@ $assetVersion = static function (string $relativePath): string {
                 SPLAT_RADIUS: 0.19, SPLAT_FORCE: 12000, EFFECT_OPACITY: 0.5, DYE_RESOLUTION: 512 };
             window.__FLUID_DIA = { FLAT: true, SHADING: false, BACK_COLOR: { r: 245, g: 243, b: 236 },
                 DENSITY_DISSIPATION: 1.1, VELOCITY_DISSIPATION: 0.9, CURL: 2, PRESSURE_ITERATIONS: 20,
-                SPLAT_RADIUS: 0.3, SPLAT_FORCE: 6000, EFFECT_OPACITY: 0.65 /* v4 (feedback 99): 0,9 → 0,65, distraía */, DYE_RESOLUTION: 512 };
+                SPLAT_RADIUS: 0.2 /* v5 (feedback 108): 0,3 → 0,2, manchas más pequeñas */, SPLAT_FORCE: 4500 /* v5: 6000 → 4500, rastro más corto */,
+                EFFECT_OPACITY: 0.45 /* v4 (feedback 99): 0,9 → 0,65 · v5 (feedback 108): → 0,45, se ve pero no tapa la lectura */, DYE_RESOLUTION: 512 };
             var base = tema === 'noche' ? window.__FLUID_NOCHE : window.__FLUID_DIA;
             window.__FLUID_PRESET = Object.assign({}, comun, base, { EFFECT_COLOR: c });
         })();

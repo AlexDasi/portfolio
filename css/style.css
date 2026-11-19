@@ -184,11 +184,6 @@ h3 {
   -o-transition: all 0.15s ease-in-out;
 }
 
-.circle {
-  /* Effect 2 */
-  /* Effect 2b — accent bloom on hover OR when the magnet engages, so the
-     circle fills exactly as the cursor dot is absorbed into it. */
-}
 .circle:after {
   pointer-events: none;
   position: absolute;
@@ -210,6 +205,9 @@ h3 {
   display: block;
   -webkit-font-smoothing: antialiased;
 }
+.circle {
+  /* Effect 2 */
+}
 .circle.effect:after {
   top: -2px;
   left: -2px;
@@ -218,6 +216,10 @@ h3 {
   background: var(--accent-color);
   transform: scale(0);
   transition: transform 0.2s;
+}
+.circle {
+  /* Effect 2b — accent bloom on hover OR when the magnet engages, so the
+     circle fills exactly as the cursor dot is absorbed into it. */
 }
 .circle.effect:hover:after, .circle.magnet-mouse-active.effect:after {
   transform: scale(1);
@@ -422,16 +424,6 @@ header {
   z-index: 200;
 }
 
-.floor {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  background: var(--accent-color);
-  opacity: 0.4;
-  transform: rotate(135deg) skew(20deg, 20deg);
-  border: none;
-  border-radius: 0;
-}
 .floor--1 {
   top: 0;
   z-index: 204;
@@ -447,6 +439,16 @@ header {
 .floor--4 {
   top: -60px;
   z-index: 201;
+}
+.floor {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  background: var(--accent-color);
+  opacity: 0.4;
+  transform: rotate(135deg) skew(20deg, 20deg);
+  border: none;
+  border-radius: 0;
 }
 .floor:hover {
   box-shadow: 0px 0px 4px 0px var(--accent-color);
@@ -2420,13 +2422,15 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
   margin: 0;
   font-size: 1.8rem;
   line-height: 1.45;
-  color: var(--bkg-color);
-  text-align: left;
 }
 @media (min-width: 768px) {
   .case-summary__text {
     font-size: 1.6rem;
   }
+}
+.case-summary__text {
+  color: var(--bkg-color);
+  text-align: left;
 }
 
 .archive-page {
@@ -4550,10 +4554,6 @@ html.esfera-abierta .follow {
   background: transparent;
 }
 
-html.tema-noche.esfera-abierta .slide-index .intro {
-  mix-blend-mode: difference;
-}
-
 .esfera-bola {
   position: absolute;
   left: 0;
@@ -5125,6 +5125,32 @@ html.tema-noche .carta--neutra .carta__cara {
   pointer-events: none;
 }
 
+.sm__habla-bola {
+  transition: background-color 0.5s ease;
+}
+.sm__habla-bola iframe {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 178.6%;
+  height: 178.6%;
+  translate: -50% -50%;
+  border: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: auto;
+}
+.sm__habla-bola.is-lista {
+  background-color: transparent;
+}
+.sm__habla-bola.is-lista iframe {
+  opacity: 1;
+}
+
+html.cursor-en-esfera .follow {
+  opacity: 0 !important;
+}
+
 .sm--habla .sm__boton--lleno {
   background: var(--accent-color);
   border-color: var(--accent-color);
@@ -5262,6 +5288,44 @@ html.sm-anima .is-vista .sm__habla-bola {
     padding-top: 20px !important;
   }
 }
+.fusion {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, width, height;
+}
+.fusion.is-visible {
+  opacity: 1;
+}
+
+html.fusion-activa .follow {
+  opacity: 0 !important;
+  transition-duration: 0.06s !important;
+}
+
+html.cursor-fusion .sm__casos a:hover {
+  background: transparent;
+}
+html.cursor-fusion .sm__casos a span {
+  transition: color 0.2s ease 0.05s;
+}
+html.cursor-fusion .sm__boton:hover {
+  background: transparent;
+}
+html.cursor-fusion .sm--habla .sm__boton--lleno {
+  --fusion-color: var(--main-color);
+}
+html.cursor-fusion .sm--habla .sm__boton--lleno:hover {
+  background: transparent;
+}
+
 /* CANVAS */
 canvas {
   z-index: 0;

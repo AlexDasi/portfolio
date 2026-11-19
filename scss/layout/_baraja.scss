@@ -814,9 +814,7 @@ html.esfera-abierta .follow { opacity: 0 !important; }
   z-index: 0;
   background: transparent;
 }
-// el saludo, siempre legible encima de la bola: de noche (texto claro) se invierte sobre ella;
-// de día el texto ya es tinta sobre un acento claro
-html.tema-noche.esfera-abierta .slide-index .intro { mix-blend-mode: difference; }
+// v5 (feedback 112): el saludo NO se invierte sobre la bola: se queda en su color (blanco de noche, tinta de día)
 .esfera-bola {
   position: absolute;
   left: 0; top: 0;
@@ -1123,6 +1121,26 @@ html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
   transition: background-color .4s ease;
   pointer-events: none;
 }
+// v5 (feedback 106): dentro de la bola de «Hablamos» vive la esfera de la home, con la misma piel de la sesión.
+// La bola plana del acento es el marcador hasta que la esfera avisa de que está lista. El marco es más grande que la bola
+// (la esfera ocupa el 56 % de su lado: ?frac=0.56) y está centrado sobre ella.
+.sm__habla-bola {
+  transition: background-color .5s ease;
+  iframe {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 178.6%;
+    height: 178.6%;
+    translate: -50% -50%;
+    border: 0;
+    opacity: 0;
+    transition: opacity .6s ease;
+    pointer-events: auto;
+  }
+  &.is-lista { background-color: transparent; iframe { opacity: 1; } }
+}
+html.cursor-en-esfera .follow { opacity: 0 !important; }
 .sm--habla .sm__boton--lleno { background: var(--accent-color); border-color: var(--accent-color); color: $tinta !important; }
 .sm--habla .sm__boton--lleno:hover, .sm--habla .sm__boton--lleno:focus-visible { background: var(--main-color); border-color: var(--main-color); color: var(--bkg-color) !important; }
 
@@ -1172,4 +1190,33 @@ html.sm-anima {
   .sm__titulo--seccion { font-size: 52px; }
   .sm__titulo--enorme { font-size: 54px; }
   .sm__hitos li { padding-top: 20px !important; }
+}
+
+// ============================================================
+// v5 · El punto se funde con lo interactivo (feedback 111). Pieza de la librería «Cursor contextual que se convierte
+// en botón» (cursorShape.ts, modo shape) portada en js/cursor-fusion.js. La mancha va DEBAJO del contenido (z 1, antes
+// de la pantalla en el DOM: encima del fluido, debajo del texto) y hace de fondo del elemento.
+// ============================================================
+.fusion {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, width, height;
+  &.is-visible { opacity: 1; }
+}
+html.fusion-activa .follow { opacity: 0 !important; transition-duration: .06s !important; }
+html.cursor-fusion {
+  // el fondo de acento ahora lo pone la mancha (el teclado sigue teniendo el suyo con :focus-visible)
+  .sm__casos a:hover { background: transparent; }
+  .sm__casos a span { transition: color .2s ease .05s; }
+  .sm__boton:hover { background: transparent; }
+  .sm--habla .sm__boton--lleno { --fusion-color: var(--main-color); }
+  .sm--habla .sm__boton--lleno:hover { background: transparent; }
 }
