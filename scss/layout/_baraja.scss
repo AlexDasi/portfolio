@@ -1390,3 +1390,18 @@ html.cursor-fusion {
   .bajar svg { animation: bajar-pulso 2.2s cubic-bezier(.45, 0, .2, 1) infinite; }
   @keyframes bajar-pulso { 0%, 100% { translate: 0 -2px; } 50% { translate: 0 4px; } }
 }
+
+// H-05 · «Hablamos» en móvil y tablet: la esfera tiene su sitio encima del titular, a la derecha (sangrando como antes por el
+// borde), y ya no pisa el titular ni el párrafo: se lee igual con todas las pieles, de día y de noche.
+@media (max-width: 1280px) {
+  .sm--habla { justify-content: flex-start; padding-top: 72px !important; }
+  .sm__habla-bola {
+    position: relative;
+    right: auto;
+    top: auto;
+    flex: none;
+    align-self: flex-end;
+    width: min(46vw, 300px);
+    margin: 0 -10vw 18px auto;
+  }
+}

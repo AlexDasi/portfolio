@@ -5478,6 +5478,21 @@ html.cursor-fusion .sm--habla .sm__boton--lleno:hover {
     }
   }
 }
+@media (max-width: 1280px) {
+  .sm--habla {
+    justify-content: flex-start;
+    padding-top: 72px !important;
+  }
+  .sm__habla-bola {
+    position: relative;
+    right: auto;
+    top: auto;
+    flex: none;
+    align-self: flex-end;
+    width: min(46vw, 300px);
+    margin: 0 -10vw 18px auto;
+  }
+}
 /* CANVAS */
 canvas {
   z-index: 0;
