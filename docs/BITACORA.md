@@ -596,3 +596,48 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Enlaces:** la lista de UX/UI de «Sobre mí» (`php-pages/sobre-mi.php`) apunta a `caso.php?c=…`. Las páginas antiguas siguen en su sitio (no se borran; el resto de `php-pages/projects/*` no se ha tocado). `tools/export_preview.py` exporta también `caso-<slug>.html`.
 - **QA (local):** vivo.mjs 0 rojos en Tulong y Knowadays (iPhone 13, SE, Android 360, desktop) · peso de primera carga 0,7-0,9 MB · nitidez 0 rojos · **medir.mjs marca en rojo el bloque «Decisiones y pantallas» en móvil** (3,3 pantallas en Knowadays, 6,6-6,8 en Tulong, sin «ver todo»): es la secuencia de pantallas del caso; la galería de fotos de campo ya va en carril. Queda a decisión de Alex si se pliega.
 
+
+---
+
+## 2026-11-19 — v8 · arreglos (feedback 147-149, 151-159, ATELIER conv. 1330, agente Web v8)
+
+- **149 · La primera apertura «rarísima» a pantalla completa:** causa encontrada con Playwright (fotograma a fotograma). El sello de tiempo del primer `requestAnimationFrame` de la esfera era ANTERIOR a `last` (fijado con `performance.now()` al acabar de cargar el módulo, una tarea larga): **dt negativo** → las 8 pieles «aparecían» a la vez (aparece 1,8) y el brillo se disparaba (bloom ×31): una mancha borrosa que llenaba la pantalla y lo atascaba todo hasta que la cuenta se recuperaba. Ahora `dt` nunca es < 0. Además el marco embebido es transparente desde el primer pintado (antes, negro hasta que bajaba three.js). La apertura es siempre la misma: el punto crece a bola plana detrás del texto y la esfera la sustituye con un fundido cuando está lista. Comprobado con screencast: 0 fotogramas oscuros (antes, 6).
+- **148 · Luz de la esfera:** el «ojo» era el disco de contraluz azul del entorno reflejado (y girado de tono hacia verde/turquesa con acentos cálidos); el halo, el brillo (bloom) que salía de la silueta y sumaba luz sobre el papel. Embebida: entorno de estudio (discos más grandes y difusos, contraluz casi neutro), los reflejos de otro tono se desaturan, y de día el brillo no sale de la silueta ni deja filo claro (color ≤ alfa). Hojas de las 7 pieles día/noche antes/después con el acento naranja (el peor caso).
+- **156 · El clic en la esfera a veces fallaba:** causa: el marco solo recogía el ratón tras un MOVIMIENTO dentro de la bola ya lista; al abrirla el ratón ya está dentro (el punto queda en el disco) y el primer clic sin mover caía en la página. Ahora se mira la última posición en cuanto la bola está lista. Comprobado: clic sin mover, tras un salto, arrastre, salir/entrar, tras espacio y tras día/noche: los 7 llegan a la esfera (antes, el primero se perdía). Zona de clic del punto: 19 → 46 px (`::before`). Ninguna capa tapa el punto (saludo, fusión, marco: `elementFromPoint` = el botón).
+- **158 · Punto sobre la flecha con la esfera abierta:** fuera la excepción de la v7 (punto en tinta): se absorbe como en la web original. Fuera de la flecha sigue a la vista.
+- **147 · Variante de día de cada acento** (`--cursor-color-dia` → `--accent-color` en día; fluido, esfera y bola plana también): tabla abajo.
+- **154 · Menú:** la página activa, subrayada en el acento (2 px; de día, la variante oscura).
+- **155 · Día/noche en fundido de ~500 ms:** variables de color registradas con `@property` (se interpolan en toda la web), fondo/opacidad/color del fluido interpolados fotograma a fotograma (`js/tema.js`), la esfera ya suavizaba su luz. Medido: fondo y titular pasan de papel a negro en ~500 ms, a la vez.
+- **153 · «Hablamos»:** piel nueva al azar en cada carga (4 recargas: cuarzo, glaseado, solare, prisma, cuarzo); solo si vienes de la home sin recargar sale la última vista allí (sessionStorage `alexdasi-piel-home`). Comprobado.
+- **152 · Orden de la baraja:** clientes reales por calidad (Berto Sánchez · El Imperio 7/10 · Elsa Moreno · Berto Sánchez Studio, la variante más derivada) y luego conceptos por nota (autopsia conv. 452 y criba del 18/11): Casa Albar 8 · Cocció 7,5 · Solvera 7,5 · Mas Vesprada 7 · Brot 7 · Vapor 6,5 · REISSUE · Nómada. Propuesta de quitar **REISSUE y Nómada** (T1, sin pieza propia; ya fuera en la criba) con el flag `quitar_propuesta`: `?baraja=corta` las oculta para comparar; para quitarlas, `oculta: true`. Tercera candidata: Vapor (6,5).
+- **157 · Niebla de Solare:** los torbellinos venían de la proyección de presión (50 iteraciones: cada pasada = pareja de remolinos), una velocidad que tardaba ~3 s en apagarse y el gas desplazado ×2,6. Embebida: `?niebla=b` (por defecto) arrastre sin proyección de presión, disipación 2,4, ×1,4, toque más ancho y suave; `?niebla=a` estela con algo de remolino (presión 12, disipación 2,6, ×1,5). Vuelve a su movimiento en 1-2 s. La demo del laboratorio no cambia.
+- **151 · Rendimiento:** (1) el dt negativo (149) también era el peor atasco: primeros fotogramas de 1,4-2,3 s con las 8 pieles y el brillo ×30; (2) la esfera se monta en trozos (cede el hilo entre entornos, cada piel y el postproceso: el módulo era una tarea de ~470 ms en el hilo de la página, el marco es del mismo origen) y compila los shaders de su piel con `compileAsync` antes del primer fotograma; (3) con la esfera abierta el fluido NO se congela pero trabaja a media resolución (simulación 64, tinte 256, presión ≤ 20) y vuelve al cerrar. Vídeos fuera de vista: ya no se decodifican (en la intro, 1 vídeo con datos y en pausa; en la baraja, 2).
+- **159 · Menú del móvil (≤ 768 px) + QA H-06:** barra fija con fondo del modo (95 % + desenfoque: nada pasa por debajo de los textos) con «alex dasi» y un menú de dos líneas (SVG propio); panel a pantalla completa con UX/UI · Sobre mí · Contacto en grande (activo subrayado en el acento), ES/EN, día/noche, WhatsApp y email; entrada escalonada, bloquea el fondo, se cierra con la X, un enlace o Esc; foco atrapado dentro. En las fichas se aparta al bajar como la de escritorio. Probado a 390, 320, 300, 260 y 768 px en día y noche: sin solapes, todos los toques ≥ 44 px, nada fuera de pantalla, 0 errores.
+
+### Acento de día (feedback 147)
+| Acento | Noche | Sobre papel antes | Día | Sobre papel | Tinta encima |
+|---|---|---|---|---|---|
+| lima | #ECF98E | 1,02 | #7A9B18 | 2,90 | 5,72 |
+| coral | #FFA88C | 1,68 | #F0623A | 2,90 | 5,71 |
+| cielo | #96C8FF | 1,58 | #1C8FF5 | 3,00 | 5,52 |
+| lila | #C8AAFF | 1,78 | #A770F6 | 3,01 | 5,52 |
+| menta | #8CE6B9 | 1,34 | #349E71 | 3,01 | 5,50 |
+| albaricoque | #FFD46E | 1,27 | #C0880F | 2,79 | 5,94 |
+| magenta | #FF4FD8 | 2,57 | #EE2ACB | 3,24 | 5,11 |
+| verde ácido | #8CFF3C | 1,15 | #45A116 | 2,97 | 5,58 |
+| naranja eléctrico | #FF7A1A | 2,35 | #EA650C | 2,97 | 5,58 |
+
+### Rendimiento v7 → v8 (php -S local sin gzip; WebGL por software: los absolutos de render no valen, las comparaciones sí)
+| | v7 | v8 |
+|---|---|---|
+| Esfera: tarea más larga al montarse (solare · chicle · prisma) | 533 · 400 · 387 ms | 65 · 80 · 115 ms |
+| Esfera: primeros fotogramas (chicle) | 2.304 · 1.379 · 1.064 ms (8 pieles + brillo ×30) | 547 · 332 · 427 ms |
+| Esfera: lista desde que se crea (chicle · prisma) | 7.448 · 6.768 ms | 2.305 · 1.862 ms |
+| Home, tarea más larga por fase: carga · fluido · ir a la baraja · baraja · abrir esfera · esfera abierta | 470 · 2.384 · 113 · 157 · 424 · 1.694 ms | 195 · 121 · 109 · 131 · 349 · 1.121 ms |
+| Home, tiempo bloqueado (TBT) en «fluido» · «esfera abierta» | 4.025 · 42.277 ms | 1.680 · 38.491 ms |
+| Escritorio: peso · peticiones · LCP | 1,34 MB · 46 · 564 ms | 1,36 MB · 48 · 388 ms |
+| Escritorio: rAF en reposo intro · baraja | 0 · 0 | 0 · 0 |
+| Escritorio: JS por frame moviendo la baraja | 1,18 ms | 1,17 ms |
+| Móvil: peso · peticiones · LCP | 1,38 MB · 40 · 220 ms | 1,40 MB · 41 · 392 ms |
+
+**QA v8 (php -S local):** `vivo.mjs` 0 rojos en home, Hablamos y la ficha de Casa Albar · `medir.mjs` (iPhone 13, SE, iPad, desktop) 0 rojos, 1 aviso de siempre (bloque «De dónde vengo» del About en SE) · menú del móvil a 390/320/300/260/768 · clics de la esfera (7 casos) · Hablamos (recargas y desde la home) · punto sobre la flecha con la esfera abierta (absorbido; a la vista fuera).
