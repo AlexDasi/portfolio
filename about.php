@@ -72,7 +72,9 @@ $pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|UX/UI|HABLAMOS' : 'H
                 var b = el.classList.contains('sm__cifra') ? el.querySelector('.sm__cifra-bola') : el;
                 return { el: b, x: 0, y: 0, mx: 0, my: 0, k: el.classList.contains('sm__cifra') ? 0.05 : 0.07, max: el.classList.contains('sm__cifra') ? 14 : 34 };
             });
-            var raf = 0;
+            var raf = 0, enEsfera = false;
+            // v6 (feedback 120): con el ratón dentro de la esfera de «Hablamos», la bola se queda quieta (se agarra bien)
+            window.addEventListener('esfera:mano', function (e) { enEsfera = e.detail; });
             function paso() {
                 raf = 0; var sigue = false;
                 bolas.forEach(function (b) {
@@ -83,6 +85,7 @@ $pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|UX/UI|HABLAMOS' : 'H
                 if (sigue) raf = requestAnimationFrame(paso);
             }
             window.addEventListener('mousemove', function (e) {
+                if (enEsfera) return;
                 bolas.forEach(function (b) {
                     var r = b.el.getBoundingClientRect(); if (!r.width || r.bottom < 0 || r.top > innerHeight) return;
                     var cx = r.left + r.width / 2 - b.x, cy = r.top + r.height / 2 - b.y;

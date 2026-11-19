@@ -38,7 +38,8 @@ body.sitio-baraja {
 .sitio-baraja {
   .single > a { color: $tinta; }
   .lang-switch__item.is-active { color: $tinta; }
-  .follow { background-color: var(--main-color); }
+  // v6 (feedback 121): el punto del cursor SIEMPRE del acento (de día con un aro fino de tinta para que se vea sobre el papel)
+  .follow { background-color: var(--accent-color); }
   .credits { display: none; }
 }
 
@@ -74,17 +75,35 @@ html.tema-dia .sitio-baraja {
     transition: opacity .3s ease, background-color .3s ease;
   }
 }
-// A · todo en tinta: apagados casi transparentes, el activo en tinta casi llena
-html.tema-dia.pisos-a .sitio-baraja .MainSwiper {
+// v6 (feedback 121): el piso activo y el piso bajo el ratón SIEMPRE del acento (día y noche; ?pisos=a|b ya no cambia nada).
+// De día los apagados siguen en tinta muy suave y el acento lleva un filo de tinta para leerse sobre el papel.
+html.tema-dia .sitio-baraja .MainSwiper {
   .swiper-pagination-bullet { background: $tinta; opacity: .12; }
-  .swiper-pagination-bullet:hover { opacity: .3; box-shadow: none; }
-  .swiper-pagination-bullet-active { opacity: .86; }
 }
-// B · apagados en tinta muy suave; el activo, del color del cursor (el lima por defecto)
-html.tema-dia.pisos-b .sitio-baraja .MainSwiper {
-  .swiper-pagination-bullet { background: $tinta; opacity: .1; }
-  .swiper-pagination-bullet:hover { opacity: .24; box-shadow: none; }
-  .swiper-pagination-bullet-active { background: var(--cursor-color, #{$lima}); opacity: 1; }
+html.tema-noche .sitio-baraja .MainSwiper .swiper-pagination-bullet { background: var(--accent-color); }
+html[class] body.sitio-baraja .MainSwiper > .swiper-pagination {
+  .swiper-pagination-bullet {
+    translate: var(--px, 0px) var(--py, 0px); // el imán (js/pisos-iman.js); el rombo sigue en transform
+    transition: opacity .25s ease, background-color .25s ease, box-shadow .25s ease;
+  }
+  .swiper-pagination-bullet-active,
+  .swiper-pagination-bullet:hover,
+  .swiper-pagination-bullet.is-iman { background: var(--accent-color); opacity: 1; }
+  .swiper-pagination-bullet:hover,
+  .swiper-pagination-bullet.is-iman { box-shadow: 0 0 14px color-mix(in srgb, var(--accent-color) 60%, transparent); }
+}
+html.tema-dia body.sitio-baraja .MainSwiper > .swiper-pagination {
+  .swiper-pagination-bullet-active,
+  .swiper-pagination-bullet:hover,
+  .swiper-pagination-bullet.is-iman { box-shadow: inset 0 0 0 1px rgba(20, 20, 21, .38); }
+}
+html.tema-dia body.sitio-baraja .follow { box-shadow: 0 0 0 1px rgba(20, 20, 21, .35); }
+// con un piso imantado, el punto se funde en él (como en la flecha)
+html.piso-iman .follow { opacity: 0 !important; transition: opacity .15s ease; }
+// v6 (feedback 118): sobre el acento de la flecha (imán o hover), la flecha va en tinta, también con la esfera abierta
+html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow,
+html body.sitio-baraja .arrow-container .circle:hover .arrow {
+  &::before, &::after { border-color: $tinta; }
 }
 
 // ---------- Accesos sutiles (arriba a la derecha) ----------

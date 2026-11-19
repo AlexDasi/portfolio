@@ -3412,7 +3412,7 @@ body.sitio-baraja {
   color: #141415;
 }
 .sitio-baraja .follow {
-  background-color: var(--main-color);
+  background-color: var(--accent-color);
 }
 .sitio-baraja .credits {
   display: none;
@@ -3456,29 +3456,49 @@ html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet {
   transition: opacity 0.3s ease, background-color 0.3s ease;
 }
 
-html.tema-dia.pisos-a .sitio-baraja .MainSwiper .swiper-pagination-bullet {
+html.tema-dia .sitio-baraja .MainSwiper .swiper-pagination-bullet {
   background: #141415;
   opacity: 0.12;
 }
-html.tema-dia.pisos-a .sitio-baraja .MainSwiper .swiper-pagination-bullet:hover {
-  opacity: 0.3;
-  box-shadow: none;
-}
-html.tema-dia.pisos-a .sitio-baraja .MainSwiper .swiper-pagination-bullet-active {
-  opacity: 0.86;
+
+html.tema-noche .sitio-baraja .MainSwiper .swiper-pagination-bullet {
+  background: var(--accent-color);
 }
 
-html.tema-dia.pisos-b .sitio-baraja .MainSwiper .swiper-pagination-bullet {
-  background: #141415;
-  opacity: 0.1;
+html[class] body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet {
+  translate: var(--px, 0px) var(--py, 0px);
+  transition: opacity 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
-html.tema-dia.pisos-b .sitio-baraja .MainSwiper .swiper-pagination-bullet:hover {
-  opacity: 0.24;
-  box-shadow: none;
-}
-html.tema-dia.pisos-b .sitio-baraja .MainSwiper .swiper-pagination-bullet-active {
-  background: var(--cursor-color, #ECF98E);
+html[class] body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet-active,
+html[class] body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet:hover,
+html[class] body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet.is-iman {
+  background: var(--accent-color);
   opacity: 1;
+}
+html[class] body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet:hover,
+html[class] body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet.is-iman {
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-color) 60%, transparent);
+}
+
+html.tema-dia body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet-active,
+html.tema-dia body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet:hover,
+html.tema-dia body.sitio-baraja .MainSwiper > .swiper-pagination .swiper-pagination-bullet.is-iman {
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 21, 0.38);
+}
+
+html.tema-dia body.sitio-baraja .follow {
+  box-shadow: 0 0 0 1px rgba(20, 20, 21, 0.35);
+}
+
+html.piso-iman .follow {
+  opacity: 0 !important;
+  transition: opacity 0.15s ease;
+}
+
+html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow::before, html body.sitio-baraja .arrow-container .circle.magnet-mouse-active .arrow::after,
+html body.sitio-baraja .arrow-container .circle:hover .arrow::before,
+html body.sitio-baraja .arrow-container .circle:hover .arrow::after {
+  border-color: #141415;
 }
 
 .nav-sutil {

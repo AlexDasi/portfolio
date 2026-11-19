@@ -39,6 +39,7 @@ $assetVersion = static function (string $relativePath): string {
 
 <script src="/js/tema.js?v=<?php echo $assetVersion('js/tema.js'); ?>"></script>
 <script src="/js/cursor-color.js?v=<?php echo $assetVersion('js/cursor-color.js'); ?>"></script>
+<script src="/js/pisos-iman.js?v=<?php echo $assetVersion('js/pisos-iman.js'); ?>"></script>
 <script src="/js/cursor-fusion.js?v=<?php echo $assetVersion('js/cursor-fusion.js'); ?>"></script>
 <script src="/js/intro.js?v=<?php echo $assetVersion('js/intro.js'); ?>"></script>
 <script src="/js/baraja.js?v=<?php echo $assetVersion('js/baraja.js'); ?>"></script>

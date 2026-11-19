@@ -1,5 +1,6 @@
 /* Color del cursor (feedback 80, rama rediseno-baraja-2026-11).
-   Al abrir la web sale un color de la paleta (header-baraja.php elige al azar); la tecla espacio pasa al siguiente.
+   Al abrir la web sale un color de la paleta (header-baraja.php elige al azar); la tecla espacio salta a otro AL AZAR,
+   nunca el que ya hay (v6, feedback 115: antes iba en orden de rueda).
    ?cursor=fijo = solo lima. Al cambiar: pincelada del color nuevo donde está el ratón + ráfaga corta del acento
    (v4: igual en día y en noche; antes la noche soltaba además una ráfaga arcoíris y el día no). */
 (function () {
@@ -13,7 +14,7 @@
   }, { passive: true });
 
   function aplicar() {
-    var color = c.paleta[c.i];
+    var p = c.paleta[c.i], color = { r: p.r, g: p.g, b: p.b };
     document.documentElement.style.setProperty('--cursor-color', 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')');
     if (window.__FLUID_PRESET) window.__FLUID_PRESET.EFFECT_COLOR = color;
     var api = window.__fluidBackgroundAPI;
@@ -43,7 +44,8 @@
     siguiente();
   });
   function siguiente() {
-    c.i = (c.i + 1) % c.paleta.length;
+    var j = Math.floor(Math.random() * (c.paleta.length - 1));
+    c.i = j >= c.i ? j + 1 : j; // al azar entre los demás: nunca repite el actual
     aplicar();
     rafaga();
     document.documentElement.classList.add('cursor-cambiado');

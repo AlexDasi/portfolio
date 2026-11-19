@@ -5,27 +5,72 @@
    La esfera es la demo aprobada v9 (esfera/esfera-pieles.html, modo ?embed, transparente y teñida con el acento).
    El iframe (three.js) solo se crea al hacer clic: nada de WebGL de la esfera en la primera carga.
    Clic fuera o Esc la devuelve al punto.
-   v5 (feedback 106-115): la piel sale al azar una vez por sesión (window.__PIEL, header-baraja.php) entre
-   solare|chicle|glaseado|gota|prisma|cuarzo|gema y es la misma en «Hablamos» del Sobre mí; ?piel= fuerza una.
-   Con la esfera abierta el fluido de fuera se queda congelado y el ratón juega con la esfera (iframe encima del fondo).
+   v5 (feedback 106-115): pieles solare|chicle|glaseado|gota|prisma|cuarzo|gema.
+   v6 (feedback 119-120): la piel CAMBIA: nueva al azar en cada carga (header-baraja.php) y otra cada vez que se vuelve a
+   abrir, nunca la misma que la anterior; la última que se ha visto se apunta y «Hablamos» enseña esa. El fluido de fuera
+   ya NO se congela nunca: el marco de la esfera no recoge el ratón (pointer-events: none) hasta que el ratón entra en la
+   bola; entonces la interacción es de la esfera (gas, chicle, caras…) y el fluido no pinta encima; al salir de la bola sin
+   arrastrar, el marco lo devuelve ({esfera:'fuera'}) y el fluido sigue. Igual en la home y en «Hablamos».
    Móvil (sin ratón): sin fluido; la esfera flota en el centro de la intro, con spin con el dedo; se pausa fuera de pantalla. */
 (function () {
   'use strict';
   var q = new URLSearchParams(location.search);
-  var PIELES = ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'];
-  var piel = window.__PIEL && PIELES.indexOf(window.__PIEL) >= 0 ? window.__PIEL : (PIELES.indexOf(q.get('piel')) >= 0 ? q.get('piel') : 'solare');
+  var PIELES = window.__PIELES || ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'];
+  var piel = PIELES.indexOf(window.__PIEL) >= 0 ? window.__PIEL : 'solare';
+  var forzada = PIELES.indexOf(q.get('piel')) >= 0;
   var fino = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var html = document.documentElement;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function apuntar(p) { try { localStorage.setItem('alexdasi-piel-ultima', p); } catch (e) {} }
+  function otraPiel() { // al azar entre las demás (nunca repite la que se acaba de ver)
+    if (forzada) return piel;
+    var resto = PIELES.filter(function (x) { return x !== piel; });
+    return resto[Math.floor(Math.random() * resto.length)];
+  }
+  function dia() { return html.classList.contains('tema-dia'); }
+  // el día/noche llega a todas las esferas abiertas (la de día sale más clara, feedback 122)
+  new MutationObserver(function () {
+    document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe, .sm__habla-bola iframe').forEach(function (f) {
+      try { f.contentWindow.postMessage({ esferaTema: dia() ? 'dia' : 'noche' }, '*'); } catch (e) {}
+    });
+  }).observe(html, { attributes: true, attributeFilter: ['class'] });
+
+  /* La mano (feedback 120): el marco solo recoge el ratón dentro de la bola. disco() da centro y radio en pantalla. */
+  function mano(marco, disco) {
+    var dentro = false;
+    marco.style.pointerEvents = 'none';
+    function soltar() {
+      if (!dentro) return;
+      dentro = false;
+      marco.style.pointerEvents = 'none';
+      html.classList.remove('cursor-en-esfera');
+      window.__fluidSinSalto = true;
+      window.dispatchEvent(new CustomEvent('esfera:mano', { detail: false }));
+    }
+    function mira(e) {
+      if (dentro || !marco.isConnected) return;
+      var d = disco(); if (!d) return;
+      if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < d.r * 0.96) {
+        dentro = true;
+        marco.style.pointerEvents = 'auto';
+        html.classList.add('cursor-en-esfera');
+        window.dispatchEvent(new CustomEvent('esfera:mano', { detail: true }));
+      }
+    }
+    window.addEventListener('mousemove', mira, { passive: true });
+    window.addEventListener('message', function (e) { if (e.source === marco.contentWindow && e.data && e.data.esfera === 'fuera') soltar(); });
+    return { soltar: soltar, quitar: function () { soltar(); window.removeEventListener('mousemove', mira); } };
+  }
 
   function acento() {
     var c = window.__CURSOR;
     var col = c && c.paleta ? c.paleta[c.i] : { r: 236, g: 249, b: 142 };
     return col.r + ',' + col.g + ',' + col.b;
   }
-  function src(extra) { return 'esfera/esfera-pieles.html?embed&piel=' + piel + '&acento=' + acento() + (extra || ''); }
+  function src(extra, p) { return 'esfera/esfera-pieles.html?embed&piel=' + (p || piel) + '&acento=' + acento() + (dia() ? '&dia' : '') + (extra || ''); }
 
-  // ---------- «Hablamos» (Sobre mí): la misma esfera, con la misma piel (feedback 106) ----------
+  // ---------- «Hablamos» (Sobre mí): la esfera con la ÚLTIMA piel que se ha visto (feedback 106, 119) ----------
   // La bola plana del acento se queda de marcador hasta que la esfera está lista. three.js solo baja al llegar a esa pantalla.
   document.querySelectorAll('[data-esfera-habla]').forEach(function (bolaH) {
     var esMovil = !fino || window.innerWidth <= 1280;
@@ -37,11 +82,16 @@
       marcoH.title = 'Sphere';
       marcoH.setAttribute('allowtransparency', 'true');
       marcoH.setAttribute('tabindex', '-1');
-      marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : ''));
-      // dentro del marco pinta la esfera su propio cursor: el de la página se esconde mientras estás encima
-      marcoH.addEventListener('mouseenter', function () { html.classList.add('cursor-en-esfera'); });
-      marcoH.addEventListener('mouseleave', function () { html.classList.remove('cursor-en-esfera'); });
+      var pielH = PIELES.indexOf(window.__PIEL_ULTIMA) >= 0 ? window.__PIEL_ULTIMA : piel;
+      marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : '&mano'), pielH);
+      apuntar(pielH);
       bolaH.appendChild(marcoH);
+      // dentro de la bola manda la esfera (su propio cursor, arrastre con inercia, clic); fuera, el fluido de la página
+      if (!esMovil) mano(marcoH, function () {
+        if (!bolaH.classList.contains('is-lista')) return null;
+        var r = bolaH.getBoundingClientRect();
+        return r.width ? { x: r.left + r.width / 2, y: r.top + r.height / 2, r: r.width / 2 } : null;
+      });
     }
     window.addEventListener('message', function (e) {
       if (marcoH && e.source === marcoH.contentWindow && e.data && e.data.esfera === 'lista') bolaH.classList.add('is-lista');
@@ -73,6 +123,7 @@
       if (caja.querySelector('iframe')) return;
       var f = document.createElement('iframe');
       f.src = src('&movil');
+      apuntar(piel);
       f.title = 'Sphere';
       f.setAttribute('allowtransparency', 'true');
       f.addEventListener('load', function () { caja.classList.add('is-lista'); });
@@ -96,7 +147,7 @@
   var punto = document.querySelector('.MainSwiper [data-esfera]');
   if (!punto) return;
   var cont = punto.closest('.swiper-slide') || document.body; // la capa vive en la pantalla de la intro, detrás del texto
-  var capa = null, bola = null, marco = null, abierta = false, origen = null;
+  var capa = null, bola = null, marco = null, manoH = null, abierta = false, origen = null, vecesAbierta = 0;
 
   // --- el punto anuncia el clic: imán + aro (solo transform; el bucle se para cuando llega) ---
   var IMAN = { radio: 120, fuerza: 0.32, max: 18 };
@@ -149,8 +200,15 @@
     marco.className = 'esfera-marco';
     marco.title = 'Sphere';
     marco.setAttribute('allowtransparency', 'true');
-    marco.src = src(); // import dinámico de verdad: three.js solo baja ahora, al hacer clic
+    if (vecesAbierta++ > 0) piel = otraPiel(); // v6 (feedback 119): cada vez que se vuelve a abrir, otra piel
+    apuntar(piel);
+    marco.src = src('&mano'); // import dinámico de verdad: three.js solo baja ahora, al hacer clic
     capa.appendChild(marco);
+    manoH = mano(marco, function () {
+      if (!capa || !capa.classList.contains('is-lista')) return null;
+      var b2 = caja0();
+      return { x: b2.left + b2.width / 2, y: b2.top + b2.height / 2, r: diametro() / 2 };
+    });
     capa.appendChild(bola);
     cont.insertBefore(capa, cont.firstChild);
     // la bola sale del punto…
@@ -166,8 +224,7 @@
     punto.style.visibility = 'hidden';
     meta.x = meta.y = off.x = off.y = 0;
     punto.style.setProperty('--mx', '0px'); punto.style.setProperty('--my', '0px');
-    var api = window.__fluidBackgroundAPI;
-    if (api && api.applySettings) api.applySettings({ PAUSED: true }); // la escena 3D se lleva la GPU; el fluido se duerme
+    // v6 (feedback 120): el fluido de fondo NO se congela; sigue vivo alrededor de la esfera
   }
 
   function lista() {
@@ -190,10 +247,9 @@
       punto.style.visibility = '';
       html.classList.remove('esfera-abierta');
     }, reduce ? 0 : 720);
-    capa = bola = marco = null;
+    if (manoH) manoH.quitar();
+    capa = bola = marco = manoH = null;
     abierta = false;
-    var api = window.__fluidBackgroundAPI;
-    if (api && api.applySettings) api.applySettings({ PAUSED: false });
   }
 
   punto.addEventListener('click', function (e) { e.preventDefault(); abrir(); });
@@ -205,6 +261,11 @@
   });
   window.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrar(); });
   window.addEventListener('pisos:cambio', function (e) { if (e.detail.index !== 0) cerrar(); });
-  // si el iframe no avisa (sin WebGL), se queda la bola plana; un clic en el fondo la cierra
-  document.addEventListener('click', function (e) { if (abierta && e.target === capa) cerrar(); });
+  // un clic fuera de la bola (no en un enlace, botón, flecha o pisos) la cierra; el marco ya no recoge esos clics
+  document.addEventListener('click', function (e) {
+    if (!abierta || !capa) return;
+    if (e.target.closest && e.target.closest('a, button, .circle, .swiper-pagination, [data-esfera], .nav-sutil, .nav')) return;
+    var b2 = caja0();
+    if (Math.hypot(e.clientX - (b2.left + b2.width / 2), e.clientY - (b2.top + b2.height / 2)) > diametro() / 2 * 1.08) cerrar();
+  });
 })();

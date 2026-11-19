@@ -1622,11 +1622,13 @@ updatePointerDownData(pointer, -1, posX, posY);
 document.body.addEventListener('mousemove', e => {
     let pointer = pointers[0];
     if (!pointer.down) return;
-    if (config.PAUSED) return; // v5: congelado mientras la esfera está abierta
+    if (config.PAUSED) return; // (v6: la esfera ya no lo pausa; queda para el panel FX)
     despertar();
     let posX = scaleByPixelRatio(e.x);
     let posY = scaleByPixelRatio(e.y);
     updatePointerMoveData(pointer, posX, posY);
+    // v6 (feedback 120): el ratón vuelve de la esfera (allí el fluido no recibe nada) en otro sitio: sin salto, sin mancha gorda
+    if (window.__fluidSinSalto) { window.__fluidSinSalto = false; pointer.deltaX = pointer.deltaY = 0; pointer.moved = false; }
 });
 
 // window.addEventListener('mouseup', () => {

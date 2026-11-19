@@ -44,3 +44,43 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('pisos:cambio', () => {
     setTimeout(() => window.dispatchEvent(new Event('resize')), 1050);
 });
+/* v6 (feedback 118): la flecha imantada SIEMPRE se suelta al salir. magnet-mouse solo se entera por el mousemove de la
+   ventana: si el ratón salía de la flecha hacia fuera de la ventana (está a 40 px del borde de abajo) o hacia un marco (la
+   esfera abierta), no llegaba ningún movimiento más y se quedaba imantada (y con la flecha en blanco sobre el acento,
+   porque el mouseout sí quitaba .active). Ahora se suelta al salir de la ventana, al entrar en un marco, al perder el
+   foco y al cambiar de pantalla; y además, en cada movimiento, si el ratón ya está fuera de su zona en reposo. */
+(function () {
+    if (!canUseMagnet) return;
+    const ZONA = 28; // la misma distancia que el imán
+    function soltar(el) {
+        el.classList.remove('magnet-mouse-active');
+        el.style.transform = '';
+        const flecha = el.querySelector('.arrow');
+        if (flecha) flecha.classList.remove('active');
+    }
+    function soltarTodo() {
+        document.querySelectorAll('.magnet.magnet-mouse-active').forEach(soltar);
+        document.querySelectorAll('.follow').forEach((f) => f.classList.remove('follow-mouse-active'));
+    }
+    document.addEventListener('mouseout', (e) => { if (!e.relatedTarget || e.relatedTarget.tagName === 'IFRAME') soltarTodo(); });
+    window.addEventListener('blur', soltarTodo);
+    window.addEventListener('pisos:cambio', soltarTodo);
+    window.addEventListener('mousemove', (e) => {
+        document.querySelectorAll('.magnet.magnet-mouse-active').forEach((el) => {
+            // zona en reposo (sin el desplazamiento del imán ni su transición): la caja de diseño del elemento fijo
+            let x0, x1, y0, y1;
+            if (el.offsetParent === null && getComputedStyle(el).position === 'fixed') {
+                x0 = el.offsetLeft - ZONA; x1 = el.offsetLeft + el.offsetWidth + ZONA;
+                y0 = el.offsetTop - ZONA; y1 = el.offsetTop + el.offsetHeight + ZONA;
+            } else {
+                const m = /translate3d\(([-\d.]+)px,\s*([-\d.]+)px/.exec(el.style.transform || '');
+                const ox = m ? +m[1] : 0, oy = m ? +m[2] : 0, r = el.getBoundingClientRect();
+                x0 = r.left - ox - ZONA; x1 = r.right - ox + ZONA; y0 = r.top - oy - ZONA; y1 = r.bottom - oy + ZONA;
+            }
+            if (e.clientX < x0 || e.clientX > x1 || e.clientY < y0 || e.clientY > y1) {
+                soltar(el);
+                document.querySelectorAll('.follow').forEach((f) => f.classList.remove('follow-mouse-active'));
+            }
+        });
+    }, { passive: true });
+})();
