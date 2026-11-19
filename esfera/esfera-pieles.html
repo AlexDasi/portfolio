@@ -156,6 +156,11 @@ renderer.toneMapping = THREE.AgXToneMapping;
 renderer.toneMappingExposure = 1.05;
 if (EMBED) renderer.toneMappingExposure = expo();
 
+/* v8 (feedback 151): la esfera se monta en TROZOS. Antes el módulo entero (entornos, 8 pieles, postproceso) era una sola tarea
+   de ~470 ms en el hilo de la página (el marco es del mismo origen: comparte hilo con el fluido y el ratón) y luego el primer
+   fotograma compilaba todos los shaders de golpe (~210 ms). Ahora cede el hilo entre etapas (ninguna pasa de ~90 ms aquí) y
+   compila los shaders de la piel en segundo plano (compileAsync) antes del primer fotograma. */
+const ceder = () => new Promise(r => setTimeout(r, 0));
 /* ---------- ruido (simplex 3D, Ashima) ---------- */
 const NOISE = /* glsl */`
 vec3 m289(vec3 x){return x-floor(x*(1./289.))*289.;}
@@ -222,12 +227,25 @@ function entorno(tech){
   new THREE.CubeCamera(.1, 100, crt).update(renderer, s);
   return {pmrem, cube: crt.texture};
 }
-const ENV_ORG = entorno(false), ENV_TECH = entorno(true);
+await ceder();
+const ENV_ORG = entorno(false);
+await ceder();
+const ENV_TECH = entorno(true);
 
 /* ---------- fluido de alexdasi.com (WebGL Fluid de P. Dobryakov) pero PEGADO A LA BOLA: la simulación corre en el mapa
    equirectangular de la esfera (256×128, tinta 1024×512, costura en longitud), así el rastro sigue la curvatura y gira con ella.
    Configuración = la del panel FX que pasó Alex (conv. 1035): densidad 0,35 (el rastro dura), velocidad 1,05, vorticidad 0,
    presión 50 iteraciones, radio 0,19 (aquí 0,12 para que no sea tan grande sobre la bola), fuerza 12000, sombreado sí. */
+/* v8 (feedback 157): «la niebla se queda en torbellinos marcados que no se disipan». Causa: la proyección de presión (50
+   iteraciones) convierte cada pasada en una pareja de remolinos y la velocidad tardaba ~3 s en apagarse (disipación 1,05),
+   y embebida el gas se desplazaba ×2,6. Dos ajustes para comparar (solo embebida; la demo del laboratorio no cambia):
+   ?niebla=a  estela con un poco de remolino: presión 12 iteraciones, disipación 2,6, desplazamiento ×1,5, toque más ancho y suave
+   ?niebla=b  (por defecto) arrastre sin remolinos: sin proyección de presión (el gas se aparta en la dirección del cursor y
+              se difumina), disipación 2,4, desplazamiento ×1,4. En los dos, a los 1-2 s vuelve a su movimiento propio. */
+const NIEBLA = !EMBED ? null : Q.get('niebla') === 'a'
+  ? {presion: 12, disVel: 2.6, gas: 1.5, radio: .0028, fuerza: 7000}
+  : {presion: 0, disVel: 2.4, gas: 1.4, radio: .0034, fuerza: 6000};
+await ceder();
 const fluido = (() => {
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), esc = new THREE.Scene(), quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2)); esc.add(quad);
   const RT = (w, h) => new THREE.WebGLRenderTarget(w, h, {type: THREE.HalfFloatType, depthBuffer: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.RepeatWrapping});
@@ -264,17 +282,22 @@ const fluido = (() => {
       const prev = renderer.getRenderTarget();
       for (const [u, v, du, dv] of cola.splice(0)) {
         splat.uniforms.point.value.set(u, v);
-        splat.uniforms.uT.value = vel.read.texture; splat.uniforms.color.value.set(du * 12000, dv * 12000, 0); run(splat, vel.write); vel.swap();
+        splat.uniforms.radius.value = NIEBLA ? NIEBLA.radio : .0012; const F = NIEBLA ? NIEBLA.fuerza : 12000;
+        splat.uniforms.uT.value = vel.read.texture; splat.uniforms.color.value.set(du * F, dv * F, 0); run(splat, vel.write); vel.swap();
+        splat.uniforms.radius.value = .0012;
         splat.uniforms.uT.value = dye.read.texture; splat.uniforms.color.value.set(.35, .35, .35); run(splat, dye.write); dye.swap();
       }
       curlM.uniforms.uV.value = vel.read.texture; run(curlM, curl);
       vort.uniforms.uV.value = vel.read.texture; vort.uniforms.uC.value = curl.texture; vort.uniforms.dt.value = dt; run(vort, vel.write); vel.swap();
-      divM.uniforms.uV.value = vel.read.texture; run(divM, div);
-      clr.uniforms.uT.value = pres.read.texture; run(clr, pres.write); pres.swap();
-      presM.uniforms.uD.value = div.texture;
-      for (let i = 0; i < 50; i++) { presM.uniforms.uP.value = pres.read.texture; run(presM, pres.write); pres.swap(); }
-      grad.uniforms.uP.value = pres.read.texture; grad.uniforms.uV.value = vel.read.texture; run(grad, vel.write); vel.swap();
-      adv.uniforms.dt.value = dt; adv.uniforms.uV.value = vel.read.texture; adv.uniforms.uS.value = vel.read.texture; adv.uniforms.dis.value = 1.05; run(adv, vel.write); vel.swap();
+      const iters = NIEBLA ? NIEBLA.presion : 50;
+      if (iters > 0) {
+        divM.uniforms.uV.value = vel.read.texture; run(divM, div);
+        clr.uniforms.uT.value = pres.read.texture; run(clr, pres.write); pres.swap();
+        presM.uniforms.uD.value = div.texture;
+        for (let i = 0; i < iters; i++) { presM.uniforms.uP.value = pres.read.texture; run(presM, pres.write); pres.swap(); }
+        grad.uniforms.uP.value = pres.read.texture; grad.uniforms.uV.value = vel.read.texture; run(grad, vel.write); vel.swap();
+      }
+      adv.uniforms.dt.value = dt; adv.uniforms.uV.value = vel.read.texture; adv.uniforms.uS.value = vel.read.texture; adv.uniforms.dis.value = NIEBLA ? NIEBLA.disVel : 1.05; run(adv, vel.write); vel.swap();
       adv.uniforms.uV.value = vel.read.texture; adv.uniforms.uS.value = dye.read.texture; adv.uniforms.dis.value = .35; run(adv, dye.write); dye.swap();
       renderer.setRenderTarget(prev);
     }
@@ -294,19 +317,20 @@ const objetos = [];
 
 /* 01 · Solare lima — mate y luminosa desde dentro. El cursor es un palo en el agua: el fluido de alexdasi.com abre el gas en un
    surco fino que se ensancha (presión), con peso, y vuelve a cerrarse en ~1 s. */
+await ceder();
 const solare = (() => {
   const m = new THREE.ShaderMaterial({
-    uniforms: Object.assign({uCamObj: {value: new THREE.Vector3()}, uViewToObj: {value: new THREE.Matrix3()}, uEnv: {value: ENV_ORG.cube}, uGas: {value: EMBED ? 1 : 0}}, U),
+    uniforms: Object.assign({uCamObj: {value: new THREE.Vector3()}, uViewToObj: {value: new THREE.Matrix3()}, uEnv: {value: ENV_ORG.cube}, uGas: {value: EMBED ? 1 : 0}, uGasK: {value: NIEBLA ? NIEBLA.gas : 2.6}}, U),
     vertexShader: `varying vec3 vPos,vN,vW;void main(){vPos=position;vN=normalize(mat3(modelMatrix)*normal);vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`,
     fragmentShader: NOISE + UV_GLSL + `
       varying vec3 vPos,vN,vW;
-      uniform float uTime,uVelK,uGas;uniform vec2 uRes,uDyeTexel,uTexel;uniform vec3 uCamObj;uniform mat3 uViewToObj;uniform samplerCube uEnv;uniform sampler2D uVel,uDye;
+      uniform float uTime,uVelK,uGas,uGasK;uniform vec2 uRes,uDyeTexel,uTexel;uniform vec3 uCamObj;uniform mat3 uViewToObj;uniform samplerCube uEnv;uniform sampler2D uVel,uDye;
       void main(){
         vec2 suv=uvEsf(vPos);                                                   // el fluido vive en la piel de la bola
         vec2 vu=texture2D(uVel,suv).xy*uTexel*uVelK;
         vec3 sq=normalize(vPos);float lon=atan(sq.z,sq.x),lat=asin(clamp(sq.y,-1.,1.));
         vec3 este=vec3(-sin(lon),0.,cos(lon)),norte=vec3(-sin(lat)*cos(lon),cos(lat),-sin(lat)*sin(lon));
-        vec3 warp=(este*vu.x*6.2832*cos(lat)+norte*vu.y*3.1416)*mix(1.,2.6,uGas); // el agua se aparta con el palo
+        vec3 warp=(este*vu.x*6.2832*cos(lat)+norte*vu.y*3.1416)*mix(1.,uGasK,uGas); // el agua se aparta con el palo (v8: embebida ×1,4-1,5, antes ×2,6)
         // v5 (feedback 113): embebida en alexdasi.com el cursor REMUEVE EL GAS DE DENTRO (todas las capas) y no se pinta encima
         // el rastro del fluido (se confundía con el fluido de la web); el campo de velocidad es el mismo
         float tinta=clamp(texture2D(uDye,suv).r,0.,1.2);
@@ -350,6 +374,7 @@ const solare = (() => {
 })();
 
 /* 02 · Chicle — cuerpo blando: el dedo lo hunde, el borde se levanta, rebota y tiembla (muelle) */
+await ceder();
 const chicle = (() => {
   const m = new THREE.MeshPhysicalMaterial({
     color: '#C8E83A', roughness: .4, clearcoat: .45, clearcoatRoughness: .28,
@@ -416,6 +441,7 @@ const PIN_GLSL = `float pin(sampler2D t,vec3 p){vec3 q=normalize(p);return textu
 
 /* 03 · Glaseado — escarcha lima con cristalitos; el cursor la raja (un trazo fino, solo si mueves): debajo, cristal brillante con un
    caramelo lima que brilla dentro. La escarcha vuelve a crecer desde los bordes en unos segundos. */
+await ceder();
 const glaseado = (() => {
   const pin = pincel(.28, .14);
   const m = new THREE.ShaderMaterial({
@@ -450,6 +476,7 @@ const glaseado = (() => {
 
 /* 04 · Niebla — bola de humo densa y esférica. El cursor es una mano metida dentro: arrastra el humo con ella (estela de 8 puntos
    con su velocidad) y lo aparta; al irse, cada punto se apaga y el humo vuelve a su sitio. */
+await ceder();
 const niebla = (() => {
   const mano = Array.from({length: 8}, () => new THREE.Vector4(0, 0, 0, 0)), manoV = Array.from({length: 8}, () => new THREE.Vector3());
   const m = new THREE.ShaderMaterial({
@@ -492,6 +519,7 @@ const MAT_GOTA = {color: '#7f9418', metalness: .85, roughness: .27, clearcoat: .
 // oscura del entorno. Menos metal, más reflejo y un poco de luz propia: se leen las vetas, el surco y el brillo sobre noche y día.
 if (EMBED) Object.assign(MAT_GOTA, {metalness: .5, envMapIntensity: 1.7, emissive: new THREE.Color('#56650c'), emissiveIntensity: .55});
 const N_GOTITAS = 18, N_ONDAS = 8;
+await ceder();
 const aceite = (() => {
   const surcos = Array.from({length: 10}, () => new THREE.Vector4(0, 0, 1, 0));
   const ondas = Array.from({length: N_ONDAS}, () => new THREE.Vector4(0, 0, 1, 9)), ondaA = new Float32Array(N_ONDAS);
@@ -588,6 +616,7 @@ function cristal({pos, mask, face, caras, bev, cuarzo}){
   const tris = Array.from({length: caras}, () => []); face.forEach((f, t) => tris[f].push(t));
   return {mesh, m, geo, glow, face, tris, caras, gl: new Float32Array(caras), radio: 1};
 }
+await ceder();
 const prisma = (() => {
   const pos = new THREE.IcosahedronGeometry(1, 0).attributes.position.array.slice(); // 20 caras, liso y geométrico
   const nt = pos.length / 9;
@@ -597,6 +626,7 @@ const prisma = (() => {
 /* v5 (feedback 114, ATELIER conv. 1330): dos pieles rescatadas de las demos guardadas, PORTADAS TAL CUAL (L-1330c).
    07 · Cuarzo = la punta de cuarzo lima de la v2 (conv. 1020; mismo cristal() que el prisma, con uQ = velos lechosos).
    08 · Gema = la «gema turbia» de la v3 (conv. 1024): icosaedro irregular y gastado de cuarzo turbio (el poliedro cuarcificado). */
+await ceder();
 const cuarzo = (() => {
   let sd = 1013; const rnd = () => { sd |= 0; sd = sd + 0x6D2B79F5 | 0; let x = Math.imul(sd ^ sd >>> 15, 1 | sd); x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x; return ((x ^ x >>> 14) >>> 0) / 4294967296; };
   const V = (x, y, z) => new THREE.Vector3(x, y, z), R = .46, bot = [], top = [];
@@ -619,6 +649,7 @@ const cuarzo = (() => {
 cuarzo.mesh.rotation.order = 'ZYX';
 /* 08 · Gema turbia (v3, conv. 1024) — gema encontrada en el suelo: icosaedro irregular y gastado, cuarzo turbio amarillento.
    Una sola pasada: el rayo entra refractado, se calcula por dónde sale (20 planos) y se recorre el volumen con niebla y velos lechosos. */
+await ceder();
 const gema = (() => {
   let sd = 1024; const rnd = () => { sd |= 0; sd = sd + 0x6D2B79F5 | 0; let x = Math.imul(sd ^ sd >>> 15, 1 | sd); x = x + Math.imul(x ^ x >>> 7, 61 | x) ^ x; return ((x ^ x >>> 14) >>> 0) / 4294967296; };
   const base = new THREE.IcosahedronGeometry(1, 0).attributes.position.array, pos = new Float32Array(base.length), jit = new Map();
@@ -685,10 +716,12 @@ const gema = (() => {
 })();
 
 objetos.push(solare, chicle, glaseado, niebla, aceite, prisma, cuarzo, gema);
+await ceder();
 objetos.forEach((o, i) => { o.aparece = i === modo ? (STILL || EMBED ? 1 : 0) : 0; o.mesh.visible = false; scene.add(o.mesh); });
 solare.mesh.rotation.set(.2, 0, .44); chicle.mesh.rotation.set(.2, 0, .3); glaseado.mesh.rotation.set(.3, 0, .2); niebla.mesh.rotation.set(.1, 0, .3); aceite.mesh.rotation.set(.2, 0, .1); prisma.mesh.rotation.set(.35, .4, .2); cuarzo.mesh.rotation.set(.12, .3, .5); gema.mesh.rotation.set(.35, .4, .2);
 
 /* ---------- postproceso: bloom suave + AgX + grano fino ---------- */
+await ceder();
 const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, {type: THREE.HalfFloatType, samples: 4}));
 composer.addPass(new RenderPass(scene, camera));
 const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), .2, .35, 1.0); composer.addPass(bloom);
@@ -1012,6 +1045,13 @@ function frame(now){
   if (PAUSA) return;                                               // v4: fuera de pantalla (móvil) no se pinta nada
   if (!STILL) requestAnimationFrame(frame); else window.__listo = true;
 }
+await ceder();
+try { // compila en segundo plano los shaders de la piel que se ve (con KHR_parallel_shader_compile no bloquea)
+  const vis = objetos.map(o => o.mesh.visible); objetos.forEach((o, i) => { o.mesh.visible = i === modo; });
+  if (renderer.compileAsync) await renderer.compileAsync(scene, camera);
+  objetos.forEach((o, i) => { o.mesh.visible = vis[i]; });
+} catch (e) {}
+last = performance.now();
 requestAnimationFrame(frame);
 window.__elegir = elegir; window.__dbg = {chicle, aceite, niebla};
 </script>

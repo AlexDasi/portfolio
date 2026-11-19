@@ -37,6 +37,7 @@
     delete fijo.BACK_COLOR; delete fijo.EFFECT_OPACITY; delete fijo.EFFECT_COLOR;
     var desde = { fondo: antes.BACK_COLOR, op: antes.EFFECT_OPACITY, col: antes.EFFECT_COLOR || ajuste.EFFECT_COLOR };
     api.applySettings(fijo);
+    if (root.classList.contains('esfera-abierta') && window.__fluidLigero) window.__fluidLigero(true); // v8: sigue ligero
     var t0 = performance.now();
     cancelAnimationFrame(anim);
     (function paso(now) {

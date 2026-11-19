@@ -101,7 +101,7 @@
     if (col.d && dia()) col = col.d;
     return col.r + ',' + col.g + ',' + col.b;
   }
-  function src(extra, p) { return 'esfera/esfera-pieles.html?embed&piel=' + (p || piel) + '&acento=' + acento() + (dia() ? '&dia' : '') + (extra || ''); }
+  function src(extra, p) { return 'esfera/esfera-pieles.html?embed&piel=' + (p || piel) + '&acento=' + acento() + (dia() ? '&dia' : '') + (/^[ab]$/.test(q.get('niebla') || '') ? '&niebla=' + q.get('niebla') : '') + (extra || ''); } // v8 (feedback 157): ?niebla=a|b
 
   // ---------- «Hablamos» (Sobre mí): la esfera con la ÚLTIMA piel que se ha visto (feedback 106, 119) ----------
   // La bola plana del acento se queda de marcador hasta que la esfera está lista. three.js solo baja al llegar a esa pantalla.
@@ -309,7 +309,19 @@
     meta.x = meta.y = off.x = off.y = 0;
     punto.style.setProperty('--mx', '0px'); punto.style.setProperty('--my', '0px');
     // v6 (feedback 120): el fluido de fondo NO se congela; sigue vivo alrededor de la esfera
+    fluidoLigero(true);
   }
+
+  /* v8 (feedback 151): con la esfera abierta el fluido de fondo NO se congela (Alex) pero trabaja a menos resolución
+     (simulación 128 → 64, tinte 512 → 256, presión ≤ 20 iteraciones): queda detrás de la bola y no se nota; al cerrar, vuelve. */
+  function fluidoLigero(si) {
+    var api = window.__fluidBackgroundAPI, base = window.__FLUID_PRESET || {};
+    if (!api || typeof api.applySettings !== 'function') return;
+    api.applySettings(si
+      ? { SIM_RESOLUTION: 64, DYE_RESOLUTION: 256, PRESSURE_ITERATIONS: Math.min(20, base.PRESSURE_ITERATIONS || 20) }
+      : { SIM_RESOLUTION: base.SIM_RESOLUTION || 128, DYE_RESOLUTION: base.DYE_RESOLUTION || 512, PRESSURE_ITERATIONS: base.PRESSURE_ITERATIONS || 20 });
+  }
+  window.__fluidLigero = fluidoLigero;
 
   function lista() {
     if (!capa) return;
@@ -335,6 +347,7 @@
     if (manoH) manoH.quitar();
     capa = bola = marco = manoH = null;
     abierta = false;
+    fluidoLigero(false);
     proxima = otraPiel();
     if (q.get('precarga') !== 'no') enReposo(precargar, 1500); // la de la próxima vez, ya en reposo
   }
