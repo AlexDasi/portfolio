@@ -1,4 +1,4 @@
-/* Ficha de proyecto (proyecto.php) · rediseño v6 (feedback 116, ATELIER conv. 1330).
+/* Ficha de proyecto (proyecto.php) · v7 (feedback 128-136; v6 = feedback 116; ATELIER conv. 1330).
    - Vídeos según el ancho: en escritorio y tablet, el de escritorio (HD) grande + el de móvil montado encima;
      en móvil solo el de móvil (el de escritorio ni se pide). Van mudos y solo corren mientras están a la vista.
    - Entrada de cada bloque al llegar (opacidad + translate; sin JS o con «reducir movimiento» todo se ve).
@@ -19,6 +19,13 @@
     if (esD && movil) return;                       // en móvil el de escritorio no se carga
     v.poster = esD ? v.getAttribute('data-poster-d') : v.getAttribute('data-poster-m');
     v.dataset.src = esD ? v.getAttribute('data-video-d') : v.getAttribute('data-video-m');
+    videos.push(v);
+  });
+  // vídeos cortos de «Momentos» (microinteracciones y pasadas): póster según el hueco, el mp4 solo al llegar
+  [].forEach.call(raiz.querySelectorAll('.fp__m video[data-video]'), function (v) {
+    var hueco = (v.parentNode.clientWidth || 300) * Math.min(window.devicePixelRatio || 1, 3);
+    v.poster = hueco > (parseFloat(v.getAttribute('data-wc')) || 720) * 1.08 ? v.getAttribute('data-poster-d') : v.getAttribute('data-poster-m');
+    v.dataset.src = v.getAttribute('data-video');
     videos.push(v);
   });
   function corre(v, si) {

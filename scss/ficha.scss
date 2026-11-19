@@ -1,5 +1,5 @@
 // ============================================================
-// Ficha de proyecto · rediseño v6 (feedback 116, rama rediseno-baraja-2026-11, ATELIER conv. 1330)
+// Ficha de proyecto · v7 (feedback 128-136: marcos de aparato, esquinas rectas, claves, caso; v6 = feedback 116; ATELIER conv. 1330)
 // Hoja PROPIA de proyecto.php: se compila aparte →  sass scss/ficha.scss css/ficha.css --no-source-map --style=compressed
 // (no entra en style.css para no pisar el trabajo de la home). Usa las variables de día/noche y de acento de
 // layout/_baraja.scss (--bkg-color, --main-color, --tinta-suave, --linea, --accent-color).
@@ -84,23 +84,66 @@ body.pagina-ficha { display: block; }
     dd span { display: block; }
   }
 
-  // ---------- portada: vídeo de escritorio + vídeo de móvil montado encima ----------
-  &__portada { position: relative; margin-top: clamp(28px, 3.4vw, 56px); padding-bottom: 7vw; }
+  // ---------- portada: la web en una ventana de navegador + el móvil en su teléfono (v7, feedback 129-130) ----------
+  &__portada { position: relative; margin-top: clamp(28px, 3.4vw, 56px); padding-bottom: 6vw; }
   &__video {
+    video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    &--d .fp__nav-pantalla { aspect-ratio: 16 / 10; }
+    &--m.fp__tel {
+      position: absolute;
+      right: 4.5vw;
+      bottom: 0;
+      --tw: clamp(132px, 14.5vw, 250px);
+      width: var(--tw);
+      .fp__tel-pantalla { aspect-ratio: 540 / 1168; }
+      &.fp__tel--corto .fp__tel-pantalla { aspect-ratio: 4 / 5; }
+    }
+  }
+
+  // Ventana de navegador: esquinas rectas (radio mínimo, como las cartas de la home), barra con tres puntos y el dominio
+  &__nav {
+    --r: 3px;
+    display: block;
+    border-radius: var(--r);
+    overflow: hidden;
+    background: var(--fp-cromo);
+    box-shadow: 0 0 0 1px var(--linea);
+  }
+  &__nav-barra {
+    display: flex; align-items: center; gap: 6px;
+    height: clamp(20px, 2vw, 30px);
+    padding: 0 clamp(8px, .9vw, 14px);
+    border-bottom: 1px solid var(--linea);
+    i { width: 7px; height: 7px; border-radius: 50%; background: var(--tinta-suave); opacity: .45; flex: none; }
+    b {
+      margin: 0 auto;
+      padding-right: 33px; // compensa los tres puntos: el dominio queda centrado
+      font-size: 11px; line-height: 1; letter-spacing: .04em; font-weight: 400;
+      color: var(--tinta-suave) !important;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+  }
+  &__nav-pantalla { display: block; background: #101011; overflow: hidden; img, video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; } }
+
+  // Teléfono: el aparato sí es redondo (es un objeto, no una tarjeta); cuerpo oscuro, botones en el canto
+  &__tel {
+    // --tw = ancho del aparato; lo pone quien lo coloca (portada o momento)
+    position: relative;
+    display: block;
+    padding: calc(var(--tw) * .035);
+    border-radius: calc(var(--tw) * .15);
+    background: #0b0b0c;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 24px 60px -28px rgba(0, 0, 0, .55);
+    &::before, &::after { content: ""; position: absolute; width: 3px; border-radius: 2px; background: #0b0b0c; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12); }
+    &::before { right: -3px; top: 24%; height: 11%; }
+    &::after { left: -3px; top: 18%; height: 7%; }
+  }
+  &__tel-pantalla {
+    display: block; position: relative;
+    border-radius: calc(var(--tw) * .115);
     overflow: hidden;
     background: #101011;
-    video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-    &--d { aspect-ratio: 16 / 10; border-radius: 6px; }
-    &--m {
-      position: absolute;
-      right: 5vw;
-      bottom: 0;
-      width: clamp(150px, 17vw, 300px);
-      aspect-ratio: 4 / 5;
-      border-radius: 10px;
-      outline: 6px solid var(--bkg-color);
-      transition: outline-color .4s ease;
-    }
+    img, video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
   }
 
   // ---------- relato ----------
@@ -134,6 +177,32 @@ body.pagina-ficha { display: block; }
       text-wrap: pretty;
     }
   }
+  &__p--ctx { margin-top: 1em !important; color: var(--tinta-suave) !important; }
+  // Claves: tres decisiones con datos reales (v7, feedback 128)
+  &__claves {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 20px 2vw;
+    margin-top: clamp(56px, 7vw, 120px);
+    padding-top: 14px;
+    border-top: 1px solid var(--linea);
+    .fp__h2 { grid-column: 1 / span 3; margin-bottom: 0 !important; }
+  }
+  &__claves-lista {
+    grid-column: 4 / span 9;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px 2vw;
+    margin: 0; padding: 0; list-style: none;
+    counter-reset: clave;
+    li { counter-increment: clave; min-width: 0; }
+    b {
+      display: block;
+      font-size: clamp(19px, 1.6vw, 26px); line-height: 1.15; letter-spacing: -.02em; font-weight: 500;
+      &::before { content: counter(clave, decimal-leading-zero); display: block; margin-bottom: 14px; font-size: 13px; letter-spacing: .1em; font-weight: 400; color: var(--tinta-suave); font-variant-numeric: tabular-nums; }
+    }
+    p { margin-top: 10px !important; max-width: 34ch; font-size: clamp(15px, 1.1vw, 17px); line-height: 1.5; font-weight: 300; }
+  }
   &__nota { margin-top: 18px !important; font-size: 14px; line-height: 1.4; font-weight: 300; color: var(--tinta-suave) !important; }
 
   // ---------- momentos: pantallas numeradas a distintas escalas (n.º 256 + n.º 240) ----------
@@ -148,34 +217,43 @@ body.pagina-ficha { display: block; }
   &__tira {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 5vw 2vw;
+    gap: 6vw 2vw;
     align-items: start;
     margin-top: clamp(28px, 3vw, 48px);
   }
+  // Un caso, no una tira: páginas internas, móvil, detalle, vídeo corto, escena en uso (rejilla de 12, a varias escalas)
   &__m {
     min-width: 0;
-    &--p1 { grid-column: 1 / span 8; margin-top: 5vw; }
-    &--p2 { grid-column: 10 / span 3; }
-    &--p3 { grid-column: 1 / span 5; margin-top: 7vw; }
-    &--p4 { grid-column: 6 / span 7; }
-    // si falta la de móvil, las tres de escritorio se reparten solas
-    &--d.fp__m--p2 { grid-column: 7 / span 6; margin-top: 12vw; }
+    &--d1 { grid-column: 1 / span 8; }
+    &--m1 { grid-column: 10 / span 2; margin-top: 7vw; --tw: 13.6vw; }
+    &--z1 { grid-column: 1 / span 5; margin-top: 4vw; }
+    &--v1 { grid-column: 6 / span 7; }
+    &--e1 { grid-column: 1 / span 12; }
+    &--e2 { grid-column: 1 / span 4; }
+    &--d2 { grid-column: 6 / span 7; margin-top: 8vw; }
+    &--v2 { grid-column: 1 / span 8; }
+    &--m2 { grid-column: 10 / span 2; margin-top: 5vw; --tw: 13.6vw; }
     figcaption {
       @include micro;
-      display: flex; gap: 10px;
+      display: flex; gap: 10px; align-items: baseline;
       margin-top: 12px;
       color: var(--tinta-suave);
-      b { color: var(--main-color); font-variant-numeric: tabular-nums; }
+      b { color: var(--tinta-suave); font-variant-numeric: tabular-nums; }
+      span { color: var(--main-color); }
+      i { margin-left: auto; padding-left: 10px; color: var(--tinta-suave); white-space: nowrap; }
     }
+    &--vid figcaption i::before { content: ""; display: inline-block; width: 0; height: 0; margin-right: 7px; border-left: 7px solid var(--accent-color); border-top: 4px solid transparent; border-bottom: 4px solid transparent; }
+    &--tel figcaption { flex-wrap: wrap; i { margin-left: 0; padding-left: 0; flex-basis: 100%; } }
   }
-  &__m-marco {
+  &__m-marco { display: block; }
+  &__m-pantalla {
+    display: block;
     overflow: hidden;
-    border-radius: 6px;
-    box-shadow: 0 0 0 1px var(--linea);
+    border-radius: 3px;
     background: #101011;
-    img { display: block; width: 100%; height: auto; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
   }
-  &__m--m .fp__m-marco { border-radius: 14px; }
+  &__m--det .fp__m-pantalla { box-shadow: 0 0 0 1px var(--linea); }
   html.fp-js &__m-marco noscript { display: none; }
 
   // ---------- la web en vivo ----------
@@ -275,7 +353,7 @@ body.pagina-ficha { display: block; }
     max-width: 460px;
     aspect-ratio: 16 / 10;
     margin-top: calc(min(25vw, 460px) * -.3125);
-    border-radius: 6px;
+    border-radius: 3px;
     overflow: hidden;
     background: #101011;
     box-shadow: 0 0 0 1px var(--linea);
@@ -306,7 +384,10 @@ html.fp-baja .pagina-ficha {
 @media (max-width: 1280px) { html.fp-baja body.pagina-ficha::before { opacity: 0; } body.pagina-ficha::before { transition: opacity .35s ease; } }
 
 // Día: los huecos de vídeo en un gris papel, no en negro
-html.tema-dia .fp__video, html.tema-dia .fp__m-marco, html.tema-dia .fp__naipe { background: #e3e0d6; }
+html.tema-dia .fp__nav-pantalla, html.tema-dia .fp__m-pantalla, html.tema-dia .fp__naipe { background: #e3e0d6; }
+.fp { --fp-cromo: #1a1a1c; }
+html.tema-dia .fp { --fp-cromo: #f4f2ea; }
+html.tema-dia .fp__tel { box-shadow: 0 0 0 1px rgba(0, 0, 0, .2), 0 24px 60px -28px rgba(0, 0, 0, .45); }
 
 // Entrada al llegar (solo con JS; sin él todo se ve)
 html.fp-js .fp [data-fp-entra] {
@@ -328,8 +409,11 @@ html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
   .fp__datos-rol { grid-column: span 2; }
   .fp__bloque:nth-child(1) { grid-column: 1 / span 12; }
   .fp__bloque:nth-child(2) { grid-column: 1 / span 9; }
-  .fp__video--m { width: 22vw; right: 4vw; }
+  .fp__video--m.fp__tel { right: 4vw; --tw: 19vw; }
   .fp__portada { padding-bottom: 9vw; }
+  .fp__claves .fp__h2, .fp__claves-lista { grid-column: 1 / span 12; }
+  .fp__m--m1, .fp__m--m2 { grid-column: 10 / span 3; --tw: 20vw; }
+  .fp__m--d1, .fp__m--v2 { grid-column: 1 / span 8; }
   .fp__visita .fp__h2 { grid-column: 1 / span 12; }
   .fp__host, .fp__boton { grid-column: 1 / span 12; }
   .fp__boton { min-height: 48px; }
@@ -351,10 +435,10 @@ html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
   .fp__datos-rol { grid-column: 1 / -1; }
   .fp__datos-rol dd { display: flex; flex-wrap: wrap; gap: 0 14px; }
 
-  // portada: el vídeo de móvil, entero; el de escritorio no se carga
-  .fp__portada { margin-top: 28px; padding-bottom: 0; }
+  // portada: el teléfono, centrado; el vídeo de escritorio no se carga
+  .fp__portada { margin-top: 32px; padding-bottom: 0; }
   .fp__video--d { display: none; }
-  .fp__video--m { position: static; width: 100%; border-radius: 8px; outline: 0; }
+  .fp__video--m.fp__tel { position: relative; right: auto; margin: 0 auto; --tw: 50vw; }
 
   .fp__relato { display: block; margin-top: 52px; }
   .fp__bloque + .fp__bloque { margin-top: 44px; }
@@ -362,26 +446,20 @@ html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
   .fp__p { font-size: 17px; }
   .fp__p--grande { font-size: clamp(26px, 7.4vw, 36px); line-height: 1.14; max-width: none; }
 
-  // momentos: fila con imán, la siguiente asomando (como la baraja de la home en móvil)
+  .fp__claves { display: block; margin-top: 56px; }
+  .fp__claves-lista { display: block; margin-top: 22px; li + li { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--linea); } p { max-width: none; font-size: 16px; } }
+
+  // momentos en móvil: columna, con los dos teléfonos en pareja (diseño propio, no la rejilla encogida)
   .fp__momentos { margin-top: 64px; }
-  .fp__tira {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin: 22px -6vw 0;
-    padding: 0 6vw 6px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding: 0 6vw;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    &::-webkit-scrollbar { display: none; }
-  }
-  .fp__m, .fp__m--d.fp__m--p2 { flex: 0 0 80vw; margin-top: 0; scroll-snap-align: start; }
-  .fp__m--m { flex-basis: 40vw; }
-  // la de móvil, recortada a la altura de las de escritorio (80vw × 10/16 = 50vw) para que la fila no deje hueco
-  .fp__m--m .fp__m-marco { height: 50vw; border-radius: 10px; }
-  .fp__m--m .fp__m-marco img { height: 100%; object-fit: cover; object-position: top center; }
+  .fp__tira { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 4vw; margin-top: 22px; }
+  .fp__m { grid-column: 1 / -1 !important; margin-top: 0 !important; }
+  .fp__m--d1 { order: 1; }
+  .fp__m--m1 { order: 2; grid-column: 1 / span 1 !important; --tw: 42vw; }
+  .fp__m--m2 { order: 3; grid-column: 2 / span 1 !important; --tw: 42vw; }
+  .fp__m--z1 { order: 4; } .fp__m--v1 { order: 5; } .fp__m--e1 { order: 6; } .fp__m--e2 { order: 7; } .fp__m--d2 { order: 8; } .fp__m--v2 { order: 9; }
+  .fp__m figcaption b { display: none; } // en móvil el orden cambia: sin número
+  .fp__m figcaption { flex-wrap: wrap; gap: 4px 10px; }
+
   html.fp-js .fp .fp__tira [data-fp-entra] { opacity: 1; translate: none; }
 
   .fp__visita { display: block; margin-top: 64px; }

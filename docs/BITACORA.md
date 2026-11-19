@@ -550,3 +550,41 @@ La esfera se tiñe de cualquiera (giro de tono desde el lima en el último pase,
 - **143 · La esfera carga mucho antes:** (1) **precarga en reposo**: con la home cargada (`load` + 600 ms + `requestIdleCallback`) se monta invisible la esfera de la piel que va a salir, baja three.js, construye la pieza, compila sus shaders, pinta 2 fotogramas y se PAUSA (sin trabajo después); al clic vuela la bola plana del punto y la esfera de verdad toma el relevo a los 380 ms. Al cerrar, se precarga en reposo la piel de la próxima vez. `?precarga=no` la apaga. (2) La esfera avisa «lista» con 2 fotogramas pintados (antes, 0,25 s de animación). **Medido aquí (WebGL por software, sin GPU, así que los absolutos son exagerados):** clic → esfera visible **15.300-18.900 ms → 590-625 ms** con precarga; sin precarga (clic antes de que termine), 14.000 ms. Coste: la home baja three.js (~200 KB gzip de jsDelivr) y crea un contexto WebGL en reposo, ya no solo al hacer clic; rAF en reposo sigue en 0 porque la esfera precargada está en pausa.
 
 **QA v7 (exportación servida en local, con la Elsa de 6b908fb):** vivo.mjs 0 rojos en home, Hablamos y las fichas de Casa Albar y Elsa Moreno (iPhone 13, SE, Android 360, desktop) · medir.mjs 0 rojos (5 avisos de siempre: bloques del About y cabecera de la ficha en móvil). Rendimiento home escritorio: 1,16 MB / 43 peticiones (v6 0,85 / 30: la diferencia es la precarga de la esfera, three.js 222 KB de jsDelivr + su página), LCP 156 ms, **rAF en reposo 0 y 0,3 ms/s de trabajo en la intro** (la esfera precargada está en pausa), baraja 2,4 ms de JS por frame; móvil 1,21 MB / 37 (sin precarga: en móvil la esfera ya cargaba en reposo). Comprobado con Playwright: pisos sin moverse (0 px) y con los colores de arriba; el punto sin sombra ni borde en día y noche; con la esfera abierta, el punto a la vista fuera de la bola y sobre la flecha, y dentro el cursor de la esfera; HUD del cuarzo de día en tinta (rgb 20,20,21), el prisma de noche igual que antes; una sola línea en accesos, «Ver proyecto» y botones; el volver de la ficha, sin ninguna.
+
+## 2026-11-19 — v7 · fichas de proyecto como un caso (feedback 128-131, 135-136 y 144, ATELIER conv. 1330, agente Fichas v2)
+
+El layout de la v6 se queda (feedback 127: «esto tiene otra pinta ya»); cambia lo que hay dentro.
+
+- **144 · Elsa Moreno publicada** con su nombre (antes carta neutra «Próximamente»): carta normal en el puesto 3, con vídeo, sector «Poesía · web de autora», enlace `https://elsa-moreno.alexdasi.com` y ficha completa. Vídeos de `clientes/alexdasi/seleccion/media/` de ATELIER con sus variantes (hd, 840, pósters webp). Datos de `sites/elsa-moreno/resumen.md`, `briefs/elsa-moreno.brief.md` y `proyectos.json`. La baraja pasa a 12 cartas con ficha.
+- **129 · Fuera la tarjeta redondeada:** las pantallas de escritorio van en una ventana de navegador de esquinas rectas (radio 3 px, la mitad que las cartas de la home), con barra de tres puntos y el dominio. El móvil va en un teléfono (cuerpo oscuro, botones en el canto): es un aparato, no una tarjeta. Detalles, escenas y la carta siguiente, a 3 px.
+- **130 · Se entiende qué es escritorio y qué es móvil:** la portada lleva el vídeo de escritorio en su ventana y un vídeo de móvil NUEVO a pantalla entera (390×844, `<slug>_caso-pm.mp4`) dentro del teléfono; antes era un recorte 4:5 sin marco. Cada momento dice debajo qué es (Escritorio · Móvil · Detalle · Vídeo · En uso).
+- **131 y 135 · Momentos como un caso de Behance** (9 por proyecto, 108 en total; antes 4, casi todos de la home): 2 páginas internas de escritorio, 2 de móvil (una con el menú o índice desplegado donde lo hay), 1 zoom de detalle a 2×, 1 vídeo corto de microinteracción (menú que se abre, modo oscuro, cambio de número, selector de turno, desplegable de géneros…), 1 vídeo de pasada por una página interna o un tramo con scroll, y 2 escenas en uso. Grabados el 19/11 de cada web en vivo con `clientes/alexdasi/seleccion/grabar/2026-11-19_grabar-caso.mjs` de ATELIER (plan por proyecto en `guiones/casos/<slug>.json`). Antes de capturar se espera a que carguen las imágenes a la vista; los vídeos de pasada recorren la página una vez antes de grabar (el hueco de «Novedades» del Imperio ya no sale).
+- **136 · Mockups libres** (tabla abajo): 3 fotos de portátil y 3 de móvil de Unsplash con la pantalla en blanco o apagada; la captura se mete con transformación de perspectiva sobre la pantalla detectada y conserva la luz de la foto (`2026-11-19_mockup-componer.py` y `2026-11-19_mockup-escenas.py`). Cada ficha lleva una de portátil y una de móvil, rotando, para que dos fichas seguidas no repitan escena.
+- **128 · Más copy, solo con datos de ATELIER:** un párrafo de contexto del negocio bajo «Qué hice» y un bloque «Claves» con tres decisiones (qué se decidió y qué tiene la web), sacadas de `sites/<slug>/ATELIER.md`. Nada de cifras de resultado, citas ni premios. Pies de foto reales en cada momento. Todo en ES y EN.
+- **Datos** (`content/baraja.json`): campos `contexto`, `claves` y `caso` (id, marco `nav | tel | det | escena-p | escena-t`, medio `img | vid`, pie ES/EN, medidas). `proyecto.php` pinta los que existan en disco. Fuera los 88 `_momento-*` de la v6.
+- **Móvil = diseño propio:** teléfono de portada centrado, momentos en columna con los dos teléfonos en pareja, sin numeración (el orden cambia).
+- **Peso:** todo perezoso (los vídeos de momentos solo piden el mp4 al entrar en pantalla). Primera carga con caché vacía, 6 s: escritorio 1,5-2,9 MB (la más pesada, Mas Vesprada: su vídeo de portada se recodificó de 2,9 a 1,5 MB), móvil 0,9-1,7 MB. Ninguna pasa de 3 MB. Medios nuevos: 29 MB entre las 12 fichas.
+
+### Mockups (Unsplash License: uso libre, también comercial, sin atribución obligatoria; ninguna es Unsplash+)
+| Archivo de trabajo | Foto | Autor | Uso |
+|---|---|---|---|
+| portatil-escritorio-madera | https://unsplash.com/photos/OOHsoUNRxt8 | Sincerely Media | escena de portátil |
+| portatil-plantas | https://unsplash.com/photos/3NgBIwltqVA | Alisa Bright | escena de portátil |
+| portatil-blanco | https://unsplash.com/photos/AsZoi-Ar2CI | 2H Media | escena de portátil |
+| movil-escalera | https://unsplash.com/photos/aBnYmYVTXgM | Jakub Żerdzicki | escena de móvil |
+| movil-jardin | https://unsplash.com/photos/jSQCLQA99Og | Jakub Żerdzicki | escena de móvil |
+| movil-chimenea | https://unsplash.com/photos/DxBUFxwUWJ8 | Jakub Żerdzicki | escena de móvil |
+
+Descargadas por el conector de Unsplash (queda registrada la descarga). Descartadas: las dos de Nextiva (el autor pide enlace de crédito) y una de móvil sobre pared blanca (el pulgar pisa la pantalla y la captura quedaba mal encajada). Qué escena lleva cada ficha: campo `mockup` de `caso` en `baraja.json`.
+
+**QA (servido en local con `php -S`):** vivo.mjs 0 rojos en Casa Albar, El Imperio y Elsa Moreno (iPhone 13, SE, Android 360, desktop) · medir.mjs 0 rojos (iPhone 13, SE, iPad, desktop; aviso: en móvil la cabecera con el teléfono de portada ocupa 1,5-1,9 pantallas) · nitidez 0 rojos (naranja de siempre: el vídeo HD de portada a 1440).
+
+**Preguntas de datos para Alex (lo que falta se ha dejado fuera, no inventado):**
+1. Elsa Moreno: su ficha de ATELIER decía «permiso: pedir el 30/11». Se publica por tu decisión (feedback 144). ¿El enlace se queda en `elsa-moreno.alexdasi.com` o pasa a su dominio? El zoom de detalle enseña su línea de bio «València, 1999» (está en su web): ¿lo dejo?
+2. El Imperio: ¿hay permiso de Mauro para enseñarla? Las capturas llevan la franja «web nueva en revisión» de la demo.
+3. Berto Sánchez Studio: ¿se puede enseñar ya y nombrar MUT Design en el texto? (lo dice su propia bio)
+4. Mas Vesprada: sigue sin subdominio público (las capturas salen del taller). ¿Creo `mas-vesprada.alexdasi.com` para que la ficha tenga botón?
+5. ¿Quieres duración de cada proyecto y herramientas (Astro, GSAP, three.js…) en la ficha técnica? No hay horas apuntadas por proyecto en lo que he leído.
+6. ¿Hay alguna frase de cliente (Berto, Mauro, Elsa) o resultado medido que se pueda citar? No hay ninguno escrito, así que no sale nada.
+7. Créditos de fotografía en las fichas de cliente (p. ej. Ismael Nasrollah en Facetas 02): ¿se nombran?
+

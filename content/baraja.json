@@ -1,414 +1,2368 @@
 {
- "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: publicada con su nombre desde el 19/11 (feedback 144; puesto 3). Brot: visible desde la v2 (feedback 76-77). Vapor: entra en la v2 para llegar a 9 cartas (vídeos grabados el 19/11 con el script de la selección). v3 (feedback 94): 12 cartas, cada una con ficha propia (proyecto.php?p=<slug>, campo que_hice) y enlace a su web si la tiene. v6 (feedback 116): fichas rediseñadas; campo rol (lista ES/EN) y textos revisados contra las fichas de ATELIER (sites/<slug>/ATELIER.md); momentos = content/baraja/<slug>_momento-*.webp.",
- "actualizado": "2026-11-19",
- "proyectos": [
-  {
-   "slug": "berto-sanchez",
-   "nombre": "Berto Sánchez",
-   "tipo": "cliente",
-   "sector": {
-    "es": "Diseño industrial · web de autor",
-    "en": "Industrial design · artist website"
-   },
-   "lugar": "València",
-   "anio": 2026,
-   "url": "https://bertosanchez.com",
-   "problema": {
-    "es": "Un diseñador industrial necesitaba que sus piezas hablaran solas: fotos a pantalla completa, casi sin interfaz, y un panel para subir proyectos sin depender de nadie.",
-    "en": "An industrial designer needed his pieces to speak for themselves: full-screen photos, almost no interface, and a panel to publish new work on his own."
-   },
-   "neutra": false,
-   "oculta": false,
-   "que_hice": {
-    "es": "Diseño y desarrollo de su web de autor, con un panel sencillo para que suba y ordene sus proyectos él mismo.",
-    "en": "Design and build of his artist website, with a simple panel so he can upload and order his projects himself."
-   },
-   "rol": {
-    "es": [
-     "Diseño",
-     "Desarrollo",
-     "Panel de contenidos"
-    ],
-    "en": [
-     "Design",
-     "Development",
-     "Content panel"
-    ]
-   }
-  },
-  {
-   "slug": "imperio",
-   "nombre": "Librería El Imperio",
-   "tipo": "cliente",
-   "sector": {
-    "es": "Librería · espacio cultural",
-    "en": "Bookshop · cultural space"
-   },
-   "lugar": "Ruzafa, València",
-   "anio": 2026,
-   "url": "https://imperio.alexdasi.com",
-   "problema": {
-    "es": "Una librería de barrio con clubes de lectura, presentaciones y la tienda online en otra plataforma: una sola web que ordena la agenda y lleva cada libro recomendado a su compra.",
-    "en": "A neighbourhood bookshop with reading clubs, book launches and its online shop on another platform: one site that organises the calendar and takes every recommended book straight to checkout."
-   },
-   "neutra": false,
-   "oculta": false,
-   "que_hice": {
-    "es": "Diseño y desarrollo de la web nueva de la librería: agenda de clubes y presentaciones, y recomendaciones que llevan cada libro a su compra en la tienda online que ya tenían.",
-    "en": "Design and build of the bookshop's new website: club and launch calendar, and recommendations that take each book to checkout in the online shop they already had."
-   },
-   "rol": {
-    "es": [
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Design",
-     "Development"
-    ]
-   }
-  },
-  {
-   "slug": "elsa-moreno",
-   "nombre": "Elsa Moreno",
-   "tipo": "cliente",
-   "sector": {
-    "es": "Poesía · web de autora",
-    "en": "Poetry · author website"
-   },
-   "lugar": "València",
-   "anio": 2026,
-   "url": "https://elsa-moreno.alexdasi.com",
-   "problema": {
-    "es": "Una poeta con una web de plantilla, la agenda vacía y los poemas escondidos: una web nueva donde los poemas se leen y ella misma pone al día la agenda desde un panel.",
-    "en": "A poet with a template site, an empty calendar and hidden poems: a new site where the poems are actually read and she keeps her own calendar up to date from a simple panel."
-   },
-   "neutra": false,
-   "oculta": false,
-   "que_hice": {
-    "es": "Web nueva desde cero que recuerda a la suya de siempre: papel, fotos y composición libre. Diseño, desarrollo y un panel para que ella ponga al día agenda, talleres y libros.",
-    "en": "A new site from scratch that still feels like hers: paper, photos and free composition. Design, build and a panel so she keeps events, workshops and books up to date."
-   },
-   "rol": {
-    "es": [
-     "Diseño",
-     "Desarrollo",
-     "Panel de contenidos"
-    ],
-    "en": [
-     "Design",
-     "Development",
-     "Content panel"
-    ]
-   }
-  },
-  {
-   "slug": "casa-albar",
-   "nombre": "Casa Albar",
-   "tipo": "concepto",
-   "sector": {
-    "es": "Hotel pequeño",
-    "en": "Small hotel"
-   },
-   "lugar": "Cabo de Gata (inventado)",
-   "anio": 2026,
-   "url": "https://casa-albar.alexdasi.com",
-   "problema": {
-    "es": "Cómo vender calma sin decir «calma»: un hotel de nueve habitaciones donde la página pasa del mediodía a la noche mientras bajas, hasta la cena.",
-    "en": "How to sell calm without saying 'calm': a nine-room hotel whose page turns from noon to night as you scroll, all the way to dinner."
-   },
-   "neutra": false,
-   "oculta": false,
-   "que_hice": {
-    "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código. La página cambia de luz con el scroll.",
-    "en": "Own concept: fictional brand, art direction, design and front-end build. The page changes its light as you scroll."
-   },
-   "rol": {
-    "es": [
-     "Dirección de arte",
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Art direction",
-     "Design",
-     "Development"
-    ]
-   }
-  },
-  {
-   "slug": "mas-vesprada",
-   "nombre": "Mas Vesprada",
-   "tipo": "concepto",
-   "sector": {
-    "es": "Finca de bodas",
-    "en": "Wedding venue"
-   },
-   "lugar": "Interior de València (inventado)",
-   "anio": 2026,
-   "url": null,
-   "problema": {
-    "es": "Una finca no se entiende con fotos sueltas: el plano se dibuja con el scroll y recorre cada espacio de la boda hasta que cae la noche sobre la maqueta.",
-    "en": "A venue is hard to grasp from loose photos: the site plan draws itself as you scroll, walking through every space of the day until night falls over the model."
-   },
-   "neutra": false,
-   "oculta": false,
-   "nota_url": "Sin subdominio propio todavía: la carta no enlaza hasta que exista mas-vesprada.alexdasi.com (ok de Alex).",
-   "que_hice": {
-    "es": "Concepto propio: finca inventada, plano en 3D que se recorre con el scroll, dirección de arte, diseño y desarrollo en código.",
-    "en": "Own concept: an invented venue, a 3D site plan you walk through as you scroll, art direction, design and front-end build."
-   },
-   "rol": {
-    "es": [
-     "Dirección de arte",
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Art direction",
-     "Design",
-     "Development"
-    ]
-   }
-  },
-  {
-   "slug": "reissue",
-   "nombre": "REISSUE",
-   "tipo": "concepto",
-   "sector": {
-    "es": "Tienda vintage",
-    "en": "Vintage store"
-   },
-   "lugar": "València (inventado)",
-   "anio": 2026,
-   "url": "https://reissue.alexdasi.com",
-   "problema": {
-    "es": "Una tienda vintage llevada como una revista: un número nuevo cada semana, piezas únicas con medidas reales y estado honesto.",
-    "en": "A vintage store run like a magazine: a new issue every week, one-off pieces with real measurements and honest condition."
-   },
-   "que_hice": {
-    "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código.",
-    "en": "Own concept: fictional brand, art direction, design and front-end build."
-   },
-   "neutra": false,
-   "oculta": false,
-   "rol": {
-    "es": [
-     "Dirección de arte",
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Art direction",
-     "Design",
-     "Development"
-    ]
-   }
-  },
-  {
-   "slug": "solvera",
-   "nombre": "Solvera",
-   "tipo": "concepto",
-   "sector": {
-    "es": "Bodega",
-    "en": "Winery"
-   },
-   "lugar": "Montaña (inventado)",
-   "anio": 2026,
-   "url": "https://solvera.alexdasi.com",
-   "problema": {
-    "es": "Una bodega con un solo vino y 36 meses de espera: una web que se mueve mucho pero nunca deprisa, para que la paciencia se note.",
-    "en": "A winery with a single wine and 36 months of waiting: a site that moves a lot but never fast, so patience is something you feel."
-   },
-   "neutra": false,
-   "oculta": false,
-   "que_hice": {
-    "es": "Concepto propio: marca ficticia de una bodega, dirección de arte, motion y desarrollo en código.",
-    "en": "Own concept: fictional winery brand, art direction, motion and front-end build."
-   },
-   "rol": {
-    "es": [
-     "Dirección de arte",
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Art direction",
-     "Design",
-     "Development"
-    ]
-   }
-  },
-  {
-   "slug": "coccio",
-   "nombre": "Cocció",
-   "tipo": "concepto",
-   "sector": {
-    "es": "Taller de cerámica",
-    "en": "Ceramics studio"
-   },
-   "lugar": "Benimaclet, València (inventado)",
-   "anio": 2026,
-   "url": "https://coccio.alexdasi.com",
-   "problema": {
-    "es": "Explicar qué pasa en un taller sin un texto largo: el scroll es el horno y la página va del barro crudo al esmalte a 1260 °C.",
-    "en": "Explaining what happens in a studio without a wall of text: the scroll is the kiln, and the page goes from raw clay to glaze at 1260 °C."
-   },
-   "neutra": false,
-   "oculta": false,
-   "que_hice": {
-    "es": "Concepto propio: el recorrido de una pieza de cerámica contado con el scroll; diseño y desarrollo en código.",
-    "en": "Own concept: a ceramic piece's journey told through scroll; design and front-end build."
-   },
-   "rol": {
-    "es": [
-     "Dirección de arte",
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Art direction",
-     "Design",
-     "Development"
-    ]
-   }
-  },
-  {
-   "slug": "berto-sanchez-studio",
-   "nombre": "Berto Sánchez Studio",
-   "tipo": "cliente",
-   "sector": {
-    "es": "Diseño industrial · web de estudio",
-    "en": "Industrial design · studio website"
-   },
-   "lugar": "València",
-   "anio": 2026,
-   "url": "https://berto-sanchez-studio.alexdasi.com",
-   "problema": {
-    "es": "La cara de estudio de Berto: la misma web en blanco, ordenada por proyectos.",
-    "en": "Berto's studio side: the same site in white, organised by project."
-   },
-   "que_hice": {
-    "es": "Diseño y desarrollo de la web de estudio, a partir de su web de autor y con el mismo panel.",
-    "en": "Design and build of the studio website, based on his artist site and sharing its panel."
-   },
-   "neutra": false,
-   "oculta": false,
-   "rol": {
-    "es": [
-     "Diseño",
-     "Desarrollo",
-     "Panel de contenidos"
-    ],
-    "en": [
-     "Design",
-     "Development",
-     "Content panel"
-    ]
-   },
-   "cliente": "Berto Sánchez"
-  },
-  {
-   "slug": "brot",
-   "nombre": "Brot",
-   "tipo": "concepto",
-   "sector": {
-    "es": "Floristería",
-    "en": "Florist"
-   },
-   "lugar": "Ruzafa, València (inventado)",
-   "anio": 2026,
-   "url": "https://brot.alexdasi.com",
-   "problema": {
-    "es": "Que la web de una floristería no se quede vieja: cambia sola cada mes, con la paleta, el ramo y las flores del mes en que la abres.",
-    "en": "Keeping a florist's website from going stale: it changes by itself every month, with the palette, bouquet and flowers of the month you open it."
-   },
-   "neutra": false,
-   "oculta": false,
-   "que_hice": {
-    "es": "Concepto propio: una floristería cuya web cambia sola cada mes (paleta, ramo y flores); diseño y desarrollo en código.",
-    "en": "Own concept: a florist whose site changes by itself every month (palette, bouquet and flowers); design and front-end build."
-   },
-   "rol": {
-    "es": [
-     "Dirección de arte",
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Art direction",
-     "Design",
-     "Development"
-    ]
-   }
-  },
-  {
-   "slug": "vapor",
-   "nombre": "Vapor",
-   "tipo": "concepto",
-   "sector": {
-    "es": "Casa de baños · sauna",
-    "en": "Bathhouse · sauna"
-   },
-   "lugar": "El Cabanyal, València (inventado)",
-   "anio": 2026,
-   "url": "https://vapor.alexdasi.com",
-   "problema": {
-    "es": "Una casa de baños que se vende por la temperatura: la página baja del vapor al agua fría y los grados guían el recorrido.",
-    "en": "A bathhouse sold on temperature: the page drops from steam to cold water, with the degrees leading the way."
-   },
-   "neutra": false,
-   "oculta": false,
-   "que_hice": {
-    "es": "Concepto propio: marca ficticia de una casa de baños contada por temperaturas; dirección de arte, diseño y desarrollo en código.",
-    "en": "Own concept: fictional bathhouse brand told through temperatures; art direction, design and front-end build."
-   },
-   "rol": {
-    "es": [
-     "Dirección de arte",
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Art direction",
-     "Design",
-     "Development"
-    ]
-   }
-  },
-  {
-   "slug": "nomada",
-   "nombre": "Nómada",
-   "tipo": "concepto",
-   "sector": {
-    "es": "Tostador de café",
-    "en": "Coffee roaster"
-   },
-   "lugar": "Ruzafa, València (inventado)",
-   "anio": 2026,
-   "url": "https://nomada.alexdasi.com",
-   "problema": {
-    "es": "Un tostador pequeño que trata el café como fruta de temporada: una tienda online contada sin prisa.",
-    "en": "A small roaster that treats coffee like seasonal fruit: an online shop told without hurry."
-   },
-   "que_hice": {
-    "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código de la tienda (compra simulada).",
-    "en": "Own concept: fictional brand, art direction, design and front-end build of the shop (simulated checkout)."
-   },
-   "neutra": false,
-   "oculta": false,
-   "rol": {
-    "es": [
-     "Dirección de arte",
-     "Diseño",
-     "Desarrollo"
-    ],
-    "en": [
-     "Art direction",
-     "Design",
-     "Development"
-    ]
-   }
-  }
- ]
+  "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: publicada con su nombre desde el 19/11 (feedback 144; puesto 3). Brot: visible desde la v2 (feedback 76-77). Vapor: entra en la v2 para llegar a 9 cartas (vídeos grabados el 19/11 con el script de la selección). v3 (feedback 94): 12 cartas, cada una con ficha propia (proyecto.php?p=<slug>, campo que_hice) y enlace a su web si la tiene. v6 (feedback 116): fichas rediseñadas; campo rol (lista ES/EN) y textos revisados contra las fichas de ATELIER (sites/<slug>/ATELIER.md); momentos = content/baraja/<slug>_momento-*.webp. v7 (feedback 128-136 y 144): Elsa publicada en el puesto 3; campos contexto, claves (3 decisiones con datos de ATELIER) y caso (momentos de la ficha: content/baraja/<slug>_caso-<id>*; marco = nav | tel | det | escena-p | escena-t; medio = img | vid); la portada de móvil de la ficha es <slug>_caso-pm.mp4. v7 (feedback 128-136 y 144): Elsa publicada en el puesto 3; campos contexto, claves (3 decisiones con datos de ATELIER) y caso (momentos de la ficha: content/baraja/<slug>_caso-<id>*; marco = nav | tel | det | escena-p | escena-t; medio = img | vid); la portada de móvil de la ficha es <slug>_caso-pm.mp4. v7 (feedback 128-136 y 144): Elsa publicada en el puesto 3; campos contexto, claves (3 decisiones con datos de ATELIER) y caso (momentos de la ficha: content/baraja/<slug>_caso-<id>*; marco = nav | tel | det | escena-p | escena-t; medio = img | vid); la portada de móvil de la ficha es <slug>_caso-pm.mp4.",
+  "actualizado": "2026-11-19",
+  "proyectos": [
+    {
+      "slug": "berto-sanchez",
+      "nombre": "Berto Sánchez",
+      "tipo": "cliente",
+      "sector": {
+        "es": "Diseño industrial · web de autor",
+        "en": "Industrial design · artist website"
+      },
+      "lugar": "València",
+      "anio": 2026,
+      "url": "https://bertosanchez.com",
+      "problema": {
+        "es": "Un diseñador industrial necesitaba que sus piezas hablaran solas: fotos a pantalla completa, casi sin interfaz, y un panel para subir proyectos sin depender de nadie.",
+        "en": "An industrial designer needed his pieces to speak for themselves: full-screen photos, almost no interface, and a panel to publish new work on his own."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Diseño y desarrollo de su web de autor, con un panel sencillo para que suba y ordene sus proyectos él mismo.",
+        "en": "Design and build of his artist website, with a simple panel so he can upload and order his projects himself."
+      },
+      "rol": {
+        "es": [
+          "Diseño",
+          "Desarrollo",
+          "Panel de contenidos"
+        ],
+        "en": [
+          "Design",
+          "Development",
+          "Content panel"
+        ]
+      },
+      "contexto": {
+        "es": "Berto Sánchez es diseñador industrial y trabaja entre València y Lisboa. Su web de artista enseña las colecciones Facetas 01 y Facetas 02 y las piezas por encargo.",
+        "en": "Berto Sánchez is an industrial designer working between Valencia and Lisbon. His artist website shows the Facetas 01 and Facetas 02 collections and his made-to-order pieces."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "Fotos a sangre",
+            "en": "Full-bleed photos"
+          },
+          "d": {
+            "es": "En escritorio las fotos van a sangre y a alto fijo; la información de cada pieza sale de una franja inferior.",
+            "en": "On desktop the photos run full-bleed at a fixed height; each piece's details slide out of a bottom strip."
+          }
+        },
+        {
+          "t": {
+            "es": "Menú con cortina",
+            "en": "Curtain menu"
+          },
+          "d": {
+            "es": "Menú grande con cortina y texto que sube, con el mismo botón en escritorio y en móvil.",
+            "en": "A large curtain menu with rising text, behind the same button on desktop and mobile."
+          }
+        },
+        {
+          "t": {
+            "es": "La mantiene él",
+            "en": "He runs it himself"
+          },
+          "d": {
+            "es": "Astro y Pages CMS en un repositorio propio: sube proyectos, fichas técnicas y press kit desde el panel.",
+            "en": "Astro and Pages CMS in his own repository: he uploads projects, technical sheets and the press kit from the panel."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Proyecto Facetas 02",
+            "en": "Facetas 02 project"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Facetas 01 en móvil",
+            "en": "Facetas 01 on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Tipografía de la bio",
+            "en": "Bio typography"
+          },
+          "w": 1280,
+          "h": 680,
+          "anchos": [
+            1280,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "El índice responde al ratón",
+            "en": "The index reacts to the pointer"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "Bio",
+            "en": "Bio"
+          },
+          "w": 1600,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-escritorio-madera"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "Contacto",
+            "en": "Contact"
+          },
+          "w": 900,
+          "h": 1145,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-jardin"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Proyecto Made to order",
+            "en": "Made to order project"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Facetas 01, foto a foto",
+            "en": "Facetas 01, photo by photo"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Menú desplegado",
+            "en": "Menu open"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "imperio",
+      "nombre": "Librería El Imperio",
+      "tipo": "cliente",
+      "sector": {
+        "es": "Librería · espacio cultural",
+        "en": "Bookshop · cultural space"
+      },
+      "lugar": "Ruzafa, València",
+      "anio": 2026,
+      "url": "https://imperio.alexdasi.com",
+      "problema": {
+        "es": "Una librería de barrio con clubes de lectura, presentaciones y la tienda online en otra plataforma: una sola web que ordena la agenda y lleva cada libro recomendado a su compra.",
+        "en": "A neighbourhood bookshop with reading clubs, book launches and its online shop on another platform: one site that organises the calendar and takes every recommended book straight to checkout."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Diseño y desarrollo de la web nueva de la librería: agenda de clubes y presentaciones, y recomendaciones que llevan cada libro a su compra en la tienda online que ya tenían.",
+        "en": "Design and build of the bookshop's new website: club and launch calendar, and recommendations that take each book to checkout in the online shop they already had."
+      },
+      "rol": {
+        "es": [
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "El Imperio es una librería y espacio cultural de Ruzafa, con seis clubes de lectura y una agenda de presentaciones y firmas.",
+        "en": "El Imperio is a bookshop and cultural space in Ruzafa, with six book clubs and a calendar of launches and signings."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "Dirección «Cartelera»",
+            "en": "'Cartelera' direction"
+          },
+          "d": {
+            "es": "Papel, tinta y un bermellón reservado para lo próximo y las pegatinas de precio.",
+            "en": "Paper, ink and a vermilion kept for what is coming next and for price stickers."
+          }
+        },
+        {
+          "t": {
+            "es": "Rejilla de imprenta",
+            "en": "Print grid"
+          },
+          "d": {
+            "es": "Instrument Sans para titulares y fechas, IBM Plex Mono para los datos; filetes finos y libros que se levantan al pasar.",
+            "en": "Instrument Sans for headlines and dates, IBM Plex Mono for data; fine rules and books that lift on hover."
+          }
+        },
+        {
+          "t": {
+            "es": "La tienda no se toca",
+            "en": "The shop stays put"
+          },
+          "d": {
+            "es": "Cada libro enlaza a su compra en la tienda online que ya tenían y el buscador consulta ese mismo catálogo.",
+            "en": "Every book links to its purchase in the online shop they already had, and search queries that same catalogue."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Agenda",
+            "en": "Events"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Clubes de lectura",
+            "en": "Book clubs"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Listas de la librería",
+            "en": "Bookshop lists"
+          },
+          "w": 2053,
+          "h": 1921,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Géneros desplegados",
+            "en": "Genres dropdown"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "Listas",
+            "en": "Lists"
+          },
+          "w": 1600,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-plantas"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de libro",
+            "en": "Book page"
+          },
+          "w": 900,
+          "h": 1072,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-chimenea"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de libro",
+            "en": "Book page"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "De las listas a la agenda",
+            "en": "From lists to events"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Menú desplegado",
+            "en": "Menu open"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "elsa-moreno",
+      "nombre": "Elsa Moreno",
+      "tipo": "cliente",
+      "sector": {
+        "es": "Poesía · web de autora",
+        "en": "Poetry · author website"
+      },
+      "lugar": "València",
+      "anio": 2026,
+      "url": "https://elsa-moreno.alexdasi.com",
+      "problema": {
+        "es": "Una poeta con una web de plantilla, la agenda vacía y los poemas escondidos: una web nueva donde los poemas se leen y ella misma pone al día la agenda desde un panel.",
+        "en": "A poet with a template site, an empty calendar and hidden poems: a new site where the poems are actually read and she keeps her own calendar up to date from a simple panel."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Web nueva desde cero que recuerda a la suya de siempre: papel, fotos y composición libre. Diseño, desarrollo y un panel para que ella ponga al día agenda, talleres y libros.",
+        "en": "A new site from scratch that still feels like hers: paper, photos and free composition. Design, build and a panel so she keeps events, workshops and books up to date."
+      },
+      "rol": {
+        "es": [
+          "Diseño",
+          "Desarrollo",
+          "Panel de contenidos"
+        ],
+        "en": [
+          "Design",
+          "Development",
+          "Content panel"
+        ]
+      },
+      "contexto": {
+        "es": "Elsa Moreno es poeta y creadora escénica en València. La web reúne sus libros, sus proyectos de escena, los talleres y la agenda.",
+        "en": "Elsa Moreno is a poet and stage artist in Valencia. The site brings together her books, stage projects, workshops and calendar."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "La hora blanca",
+            "en": "The white hour"
+          },
+          "d": {
+            "es": "La luz de la web cambia: papel para la poesía, los libros y los talleres; negro de escena para las obras, con un fundido lento entre los dos.",
+            "en": "The site changes its light: paper for poetry, books and workshops; stage black for the performances, with a slow fade between them."
+          }
+        },
+        {
+          "t": {
+            "es": "Sin color de acento",
+            "en": "No accent colour"
+          },
+          "d": {
+            "es": "Newsreader para títulos y poemas, Inter para los datos.",
+            "en": "Newsreader for titles and poems, Inter for data."
+          }
+        },
+        {
+          "t": {
+            "es": "El poema se lee",
+            "en": "Poems you can read"
+          },
+          "d": {
+            "es": "Cada libro tiene su ficha en modo lectura. Todo el contenido es el suyo.",
+            "en": "Each book has its own page in reading mode. All the content is hers."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Poesía: los libros",
+            "en": "Poetry: the books"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Agenda en móvil",
+            "en": "Calendar on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Newsreader en la bio",
+            "en": "Newsreader in the bio"
+          },
+          "w": 2000,
+          "h": 840,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "El índice se abre",
+            "en": "The index opens"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "La Hora Blanca, en negro de escena",
+            "en": "La Hora Blanca, in stage black"
+          },
+          "w": 1600,
+          "h": 950,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-blanco"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de libro",
+            "en": "Book page"
+          },
+          "w": 900,
+          "h": 1200,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-escalera"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "El libro, en modo lectura",
+            "en": "The book, in reading mode"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Proyectos",
+            "en": "Projects"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Índice desplegado",
+            "en": "Index open"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "casa-albar",
+      "nombre": "Casa Albar",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Hotel pequeño",
+        "en": "Small hotel"
+      },
+      "lugar": "Cabo de Gata (inventado)",
+      "anio": 2026,
+      "url": "https://casa-albar.alexdasi.com",
+      "problema": {
+        "es": "Cómo vender calma sin decir «calma»: un hotel de nueve habitaciones donde la página pasa del mediodía a la noche mientras bajas, hasta la cena.",
+        "en": "How to sell calm without saying 'calm': a nine-room hotel whose page turns from noon to night as you scroll, all the way to dinner."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código. La página cambia de luz con el scroll.",
+        "en": "Own concept: fictional brand, art direction, design and front-end build. The page changes its light as you scroll."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "Casa Albar es un hotel ficticio de nueve habitaciones en una casa encalada de 1927, sobre un acantilado del Cabo de Gata.",
+        "en": "Casa Albar is a fictional nine-room hotel in a whitewashed 1927 house on a cliff in Cabo de Gata."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "El scroll son las horas",
+            "en": "Scrolling is time"
+          },
+          "d": {
+            "es": "La página empieza con la luz del mediodía y se apaga hasta la noche: fondo, texto y acento cambian al bajar.",
+            "en": "The page opens in midday light and dims into night: background, text and accent shift as you scroll."
+          }
+        },
+        {
+          "t": {
+            "es": "Una voz tipográfica",
+            "en": "One typographic voice"
+          },
+          "d": {
+            "es": "Cormorant Garamond con cursivas intercaladas para titulares y Geist para texto y etiquetas.",
+            "en": "Cormorant Garamond with interleaved italics for headlines, Geist for text and labels."
+          }
+        },
+        {
+          "t": {
+            "es": "Nueve habitaciones",
+            "en": "Nine rooms"
+          },
+          "d": {
+            "es": "Un recorrido horizontal fijado en escritorio; en móvil, un carril con imán. Menú de cortina desde arriba.",
+            "en": "A pinned horizontal walk on desktop; a snapping rail on mobile. A curtain menu from the top."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Las nueve habitaciones",
+            "en": "The nine rooms"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de habitación",
+            "en": "Room page"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Titular en Cormorant",
+            "en": "Cormorant headline"
+          },
+          "w": 2279,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Menú que se abre",
+            "en": "Menu opening"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "La mesa",
+            "en": "The table"
+          },
+          "w": 1600,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-escritorio-madera"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "Reserva",
+            "en": "Booking"
+          },
+          "w": 900,
+          "h": 1145,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-jardin"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de habitación",
+            "en": "Room page"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "La casa",
+            "en": "The house"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Menú desplegado",
+            "en": "Menu open"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "mas-vesprada",
+      "nombre": "Mas Vesprada",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Finca de bodas",
+        "en": "Wedding venue"
+      },
+      "lugar": "Interior de València (inventado)",
+      "anio": 2026,
+      "url": null,
+      "problema": {
+        "es": "Una finca no se entiende con fotos sueltas: el plano se dibuja con el scroll y recorre cada espacio de la boda hasta que cae la noche sobre la maqueta.",
+        "en": "A venue is hard to grasp from loose photos: the site plan draws itself as you scroll, walking through every space of the day until night falls over the model."
+      },
+      "neutra": false,
+      "oculta": false,
+      "nota_url": "Sin subdominio propio todavía: la carta no enlaza hasta que exista mas-vesprada.alexdasi.com (ok de Alex).",
+      "que_hice": {
+        "es": "Concepto propio: finca inventada, plano en 3D que se recorre con el scroll, dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: an invented venue, a 3D site plan you walk through as you scroll, art direction, design and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "Mas Vesprada es una finca de bodas inventada en el interior de València: una masía con patio, invernadero, era y olivar.",
+        "en": "Mas Vesprada is an invented wedding estate inland from Valencia: a farmhouse with a courtyard, a glasshouse, a threshing floor and an olive grove."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "El plano es la web",
+            "en": "The plan is the site"
+          },
+          "d": {
+            "es": "Un croquis en 3D que se dibuja y se recorre con el scroll, espacio a espacio.",
+            "en": "A 3D sketch that draws itself and is walked through on scroll, space by space."
+          }
+        },
+        {
+          "t": {
+            "es": "Hasta la noche",
+            "en": "Into the night"
+          },
+          "d": {
+            "es": "El recorrido termina con la maqueta de noche: estrellas, luna y ventanas encendidas.",
+            "en": "The walk ends with the model at night: stars, moon and lit windows."
+          }
+        },
+        {
+          "t": {
+            "es": "Lo práctico, a la vista",
+            "en": "The practical side"
+          },
+          "d": {
+            "es": "El día de la boda paso a paso y los menús con su precio por invitado.",
+            "en": "The wedding day step by step, and the menus with their price per guest."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "El plano se dibuja",
+            "en": "The plan draws itself"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Menús en móvil",
+            "en": "Menus on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Menús por temporada",
+            "en": "Seasonal menus"
+          },
+          "w": 3200,
+          "h": 1920,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Cambiar de menú",
+            "en": "Switching menus"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "El día",
+            "en": "The day"
+          },
+          "w": 1600,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-plantas"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "El día, en móvil",
+            "en": "The day on mobile"
+          },
+          "w": 900,
+          "h": 1072,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-chimenea"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Los espacios de la finca",
+            "en": "The spaces of the estate"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Del plano a la noche",
+            "en": "From the plan to the night"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Pedir visita",
+            "en": "Book a visit"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "reissue",
+      "nombre": "REISSUE",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Tienda vintage",
+        "en": "Vintage store"
+      },
+      "lugar": "València (inventado)",
+      "anio": 2026,
+      "url": "https://reissue.alexdasi.com",
+      "problema": {
+        "es": "Una tienda vintage llevada como una revista: un número nuevo cada semana, piezas únicas con medidas reales y estado honesto.",
+        "en": "A vintage store run like a magazine: a new issue every week, one-off pieces with real measurements and honest condition."
+      },
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: fictional brand, art direction, design and front-end build."
+      },
+      "neutra": false,
+      "oculta": false,
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "REISSUE es una tienda vintage ficticia de València contada como una revista: cada número tiene su portada y sus piezas.",
+        "en": "REISSUE is a fictional Valencia vintage shop told as a magazine: each issue has its cover and its pieces."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "Un número, una portada",
+            "en": "One issue, one cover"
+          },
+          "d": {
+            "es": "Selector de números con fundido, flechas y teclado.",
+            "en": "An issue switcher with crossfade, arrows and keyboard."
+          }
+        },
+        {
+          "t": {
+            "es": "Catálogo con filtros",
+            "en": "Filtered catalogue"
+          },
+          "d": {
+            "es": "Por categoría, talla y solo disponibles; doce fichas de pieza.",
+            "en": "By category, size and availability; twelve piece pages."
+          }
+        },
+        {
+          "t": {
+            "es": "Papel, tinta y un azul",
+            "en": "Paper, ink and one blue"
+          },
+          "d": {
+            "es": "Anton y Libre Franklin; el azul solo para botones, números de página y «reservada».",
+            "en": "Anton and Libre Franklin; blue only for buttons, page numbers and 'reserved'."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Catálogo de piezas",
+            "en": "Catalogue"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Catálogo en móvil",
+            "en": "Catalogue on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Datos de la pieza",
+            "en": "Piece details"
+          },
+          "w": 1200,
+          "h": 1120,
+          "anchos": [
+            1200,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Cambio de número",
+            "en": "Switching issue"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "La tienda",
+            "en": "The shop"
+          },
+          "w": 1600,
+          "h": 950,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-blanco"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de pieza",
+            "en": "Piece page"
+          },
+          "w": 900,
+          "h": 1200,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-escalera"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de pieza",
+            "en": "Piece page"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "El número, de portada a piezas",
+            "en": "The issue, cover to pieces"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Menú desplegado",
+            "en": "Menu open"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "solvera",
+      "nombre": "Solvera",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Bodega",
+        "en": "Winery"
+      },
+      "lugar": "Montaña (inventado)",
+      "anio": 2026,
+      "url": "https://solvera.alexdasi.com",
+      "problema": {
+        "es": "Una bodega con un solo vino y 36 meses de espera: una web que se mueve mucho pero nunca deprisa, para que la paciencia se note.",
+        "en": "A winery with a single wine and 36 months of waiting: a site that moves a lot but never fast, so patience is something you feel."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia de una bodega, dirección de arte, motion y desarrollo en código.",
+        "en": "Own concept: fictional winery brand, art direction, motion and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "Solvera es una bodega de montaña ficticia, fundada en 1931, con un solo vino: un Brut Nature de método tradicional con 36 meses sobre lías.",
+        "en": "Solvera is a fictional mountain winery, founded in 1931, with a single wine: a traditional-method Brut Nature aged 36 months on its lees."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "Lento es una técnica",
+            "en": "Slow is a technique"
+          },
+          "d": {
+            "es": "Todo el movimiento es lento y con inercia, como el vino.",
+            "en": "Every movement is slow and weighted, like the wine."
+          }
+        },
+        {
+          "t": {
+            "es": "Un solo producto",
+            "en": "A single product"
+          },
+          "d": {
+            "es": "La ficha del vino se lee como un ritual: notas, tiempo y temperatura.",
+            "en": "The wine page reads like a ritual: notes, time and temperature."
+          }
+        },
+        {
+          "t": {
+            "es": "Puerta de edad propia",
+            "en": "Its own age gate"
+          },
+          "d": {
+            "es": "Una cortina tipográfica en lugar del aviso de siempre, y una botella en 3D en la portada.",
+            "en": "A typographic curtain instead of the usual notice, and a 3D bottle on the home page."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Los vinos",
+            "en": "The wines"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha del vino",
+            "en": "Wine page"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Titular del diario",
+            "en": "Journal headline"
+          },
+          "w": 2976,
+          "h": 621,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Ficha del vino en movimiento",
+            "en": "Wine page in motion"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "La finca",
+            "en": "The estate"
+          },
+          "w": 1600,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-escritorio-madera"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "Visitas",
+            "en": "Visits"
+          },
+          "w": 900,
+          "h": 1145,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-jardin"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha del vino",
+            "en": "Wine page"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "La finca, de arriba abajo",
+            "en": "The estate, top to bottom"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Menú desplegado",
+            "en": "Menu open"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "coccio",
+      "nombre": "Cocció",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Taller de cerámica",
+        "en": "Ceramics studio"
+      },
+      "lugar": "Benimaclet, València (inventado)",
+      "anio": 2026,
+      "url": "https://coccio.alexdasi.com",
+      "problema": {
+        "es": "Explicar qué pasa en un taller sin un texto largo: el scroll es el horno y la página va del barro crudo al esmalte a 1260 °C.",
+        "en": "Explaining what happens in a studio without a wall of text: the scroll is the kiln, and the page goes from raw clay to glaze at 1260 °C."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: el recorrido de una pieza de cerámica contado con el scroll; diseño y desarrollo en código.",
+        "en": "Own concept: a ceramic piece's journey told through scroll; design and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "Cocció es un taller de cerámica ficticio en Benimaclet.",
+        "en": "Cocció is a fictional ceramics workshop in Benimaclet."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "El scroll es el horno",
+            "en": "Scrolling is the kiln"
+          },
+          "d": {
+            "es": "La página empieza en barro crudo y gris y termina esmaltada; un termómetro lateral sube de 20 a 1260 °C.",
+            "en": "The page starts as raw grey clay and ends glazed; a side thermometer climbs from 20 to 1260 °C."
+          }
+        },
+        {
+          "t": {
+            "es": "«Entran grises. Salen así.»",
+            "en": "'In grey. Out like this.'"
+          },
+          "d": {
+            "es": "Al bajar, el esmalte gotea desde arriba y cubre las botellas de verde y azul.",
+            "en": "As you scroll, glaze drips from the top and coats the bottles in green and blue."
+          }
+        },
+        {
+          "t": {
+            "es": "También sirve",
+            "en": "Useful too"
+          },
+          "d": {
+            "es": "Talleres del mes en un carril arrastrable y tienda de la última hornada.",
+            "en": "The month's workshops on a draggable rail and a shop from the latest firing."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "El proceso",
+            "en": "The process"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Talleres en móvil",
+            "en": "Workshops on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Titular de portada",
+            "en": "Hero headline"
+          },
+          "w": 2260,
+          "h": 544,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Reservar un taller",
+            "en": "Booking a workshop"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "La hornada",
+            "en": "The firing"
+          },
+          "w": 1600,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-plantas"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "El proceso",
+            "en": "The process"
+          },
+          "w": 900,
+          "h": 1072,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-chimenea"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Talleres",
+            "en": "Workshops"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "El esmalte cambia con el scroll",
+            "en": "The glaze changes on scroll"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "La hornada en móvil",
+            "en": "The firing on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "berto-sanchez-studio",
+      "nombre": "Berto Sánchez Studio",
+      "tipo": "cliente",
+      "sector": {
+        "es": "Diseño industrial · web de estudio",
+        "en": "Industrial design · studio website"
+      },
+      "lugar": "València",
+      "anio": 2026,
+      "url": "https://berto-sanchez-studio.alexdasi.com",
+      "problema": {
+        "es": "La cara de estudio de Berto: la misma web en blanco, ordenada por proyectos.",
+        "en": "Berto's studio side: the same site in white, organised by project."
+      },
+      "que_hice": {
+        "es": "Diseño y desarrollo de la web de estudio, a partir de su web de autor y con el mismo panel.",
+        "en": "Design and build of the studio website, based on his artist site and sharing its panel."
+      },
+      "neutra": false,
+      "oculta": false,
+      "rol": {
+        "es": [
+          "Diseño",
+          "Desarrollo",
+          "Panel de contenidos"
+        ],
+        "en": [
+          "Design",
+          "Development",
+          "Content panel"
+        ]
+      },
+      "cliente": "Berto Sánchez",
+      "contexto": {
+        "es": "Es la web de estudio de Berto Sánchez: la misma estructura que la de artista, en blanco, con Hidden Secret y nueve proyectos de MUT Design.",
+        "en": "The studio website of Berto Sánchez: same structure as his artist site, in white, with Hidden Secret and nine MUT Design projects."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "Índice en rejilla",
+            "en": "Grid index"
+          },
+          "d": {
+            "es": "Aquí el índice es una rejilla de proyectos; es lo único que cambia respecto a la de artista.",
+            "en": "Here the index is a grid of projects; it is the one thing that differs from the artist site."
+          }
+        },
+        {
+          "t": {
+            "es": "Foto a foto",
+            "en": "Photo by photo"
+          },
+          "d": {
+            "es": "Cada proyecto se recorre en horizontal y lleva su ficha con texto, marca y materiales.",
+            "en": "Each project is browsed horizontally and carries its own sheet with text, brand and materials."
+          }
+        },
+        {
+          "t": {
+            "es": "Panel propio",
+            "en": "Its own panel"
+          },
+          "d": {
+            "es": "Repositorio y panel propios, con publicación automática.",
+            "en": "Its own repository and panel, with automatic publishing."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Proyecto Roll",
+            "en": "Roll project"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Nautica en móvil",
+            "en": "Nautica on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Tipografía de la bio",
+            "en": "Bio typography"
+          },
+          "w": 1280,
+          "h": 680,
+          "anchos": [
+            1280,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "El índice responde al ratón",
+            "en": "The index reacts to the pointer"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "Bio",
+            "en": "Bio"
+          },
+          "w": 1600,
+          "h": 950,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-blanco"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "Contacto",
+            "en": "Contact"
+          },
+          "w": 900,
+          "h": 1200,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-escalera"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Proyecto Hidden Secret",
+            "en": "Hidden Secret project"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Lens, foto a foto",
+            "en": "Lens, photo by photo"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Menú desplegado",
+            "en": "Menu open"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "brot",
+      "nombre": "Brot",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Floristería",
+        "en": "Florist"
+      },
+      "lugar": "Ruzafa, València (inventado)",
+      "anio": 2026,
+      "url": "https://brot.alexdasi.com",
+      "problema": {
+        "es": "Que la web de una floristería no se quede vieja: cambia sola cada mes, con la paleta, el ramo y las flores del mes en que la abres.",
+        "en": "Keeping a florist's website from going stale: it changes by itself every month, with the palette, bouquet and flowers of the month you open it."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: una floristería cuya web cambia sola cada mes (paleta, ramo y flores); diseño y desarrollo en código.",
+        "en": "Own concept: a florist whose site changes by itself every month (palette, bouquet and flowers); design and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "Brot es una floristería de temporada ficticia en Ruzafa.",
+        "en": "Brot is a fictional seasonal florist in Ruzafa."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "El año en flor",
+            "en": "The year in bloom"
+          },
+          "d": {
+            "es": "Una rueda con los doce meses que gira al bajar, empezando por el actual; se puede tocar un mes para ir directo.",
+            "en": "A wheel of twelve months that turns as you scroll, starting at the current one; tap a month to jump to it."
+          }
+        },
+        {
+          "t": {
+            "es": "Doce paletas",
+            "en": "Twelve palettes"
+          },
+          "d": {
+            "es": "Una por mes; Bodoni Moda en cursiva y Work Sans.",
+            "en": "One per month; Bodoni Moda italic and Work Sans."
+          }
+        },
+        {
+          "t": {
+            "es": "Un ramo cada viernes",
+            "en": "A bouquet every Friday"
+          },
+          "d": {
+            "es": "Suscripción con tamaño, frecuencia, precio en vivo y fecha del primer ramo.",
+            "en": "A subscription with size, frequency, live price and first-delivery date."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "El año en flor",
+            "en": "The year in bloom"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Ramo de la semana",
+            "en": "Bouquet of the week"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Titular de portada",
+            "en": "Hero headline"
+          },
+          "w": 2124,
+          "h": 618,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Elegir tamaño y frecuencia",
+            "en": "Picking size and frequency"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "La tienda",
+            "en": "The shop"
+          },
+          "w": 1600,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-escritorio-madera"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "El año en flor, en móvil",
+            "en": "The year in bloom on mobile"
+          },
+          "w": 900,
+          "h": 1145,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-jardin"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Ramo de la semana",
+            "en": "Bouquet of the week"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Doce meses con el scroll",
+            "en": "Twelve months on scroll"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "La tienda en móvil",
+            "en": "The shop on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "vapor",
+      "nombre": "Vapor",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Casa de baños · sauna",
+        "en": "Bathhouse · sauna"
+      },
+      "lugar": "El Cabanyal, València (inventado)",
+      "anio": 2026,
+      "url": "https://vapor.alexdasi.com",
+      "problema": {
+        "es": "Una casa de baños que se vende por la temperatura: la página baja del vapor al agua fría y los grados guían el recorrido.",
+        "en": "A bathhouse sold on temperature: the page drops from steam to cold water, with the degrees leading the way."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia de una casa de baños contada por temperaturas; dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: fictional bathhouse brand told through temperatures; art direction, design and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "Vapor es una casa de baños y sauna ficticia en el Cabanyal.",
+        "en": "Vapor is a fictional bathhouse and sauna in El Cabanyal."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "El cristal empañado",
+            "en": "Steamed glass"
+          },
+          "d": {
+            "es": "La portada está empañada y se limpia con el ratón o con el dedo.",
+            "en": "The home screen is fogged up and wipes clean with the pointer or a finger."
+          }
+        },
+        {
+          "t": {
+            "es": "El circuito",
+            "en": "The circuit"
+          },
+          "d": {
+            "es": "Scroll horizontal por cuatro estaciones (sauna a 85°, agua fría a 14°, baño templado a 36° y reposo) con la temperatura en grande.",
+            "en": "A horizontal scroll through four stations (85° sauna, 14° cold water, 36° warm bath and rest) with the temperature writ large."
+          }
+        },
+        {
+          "t": {
+            "es": "Turnos de hoy",
+            "en": "Today's slots"
+          },
+          "d": {
+            "es": "Con aforo de catorce personas y precio en vivo.",
+            "en": "With a capacity of fourteen and a live price."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "El circuito",
+            "en": "The circuit"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Turnos en móvil",
+            "en": "Slots on mobile"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Selector de turno",
+            "en": "Slot picker"
+          },
+          "w": 673,
+          "h": 493,
+          "anchos": [
+            673
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Elegir turno y plazas",
+            "en": "Picking a slot and guests"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "El circuito, más adentro",
+            "en": "Deeper into the circuit"
+          },
+          "w": 1600,
+          "h": 1067,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-plantas"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "El circuito en móvil",
+            "en": "The circuit on mobile"
+          },
+          "w": 900,
+          "h": 1072,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-chimenea"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Turnos",
+            "en": "Slots"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "El circuito, con el scroll",
+            "en": "The circuit on scroll"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "El mar hoy",
+            "en": "The sea today"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "nomada",
+      "nombre": "Nómada",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Tostador de café",
+        "en": "Coffee roaster"
+      },
+      "lugar": "Ruzafa, València (inventado)",
+      "anio": 2026,
+      "url": "https://nomada.alexdasi.com",
+      "problema": {
+        "es": "Un tostador pequeño que trata el café como fruta de temporada: una tienda online contada sin prisa.",
+        "en": "A small roaster that treats coffee like seasonal fruit: an online shop told without hurry."
+      },
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código de la tienda (compra simulada).",
+        "en": "Own concept: fictional brand, art direction, design and front-end build of the shop (simulated checkout)."
+      },
+      "neutra": false,
+      "oculta": false,
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      },
+      "contexto": {
+        "es": "Nómada es un tostador de café de especialidad ficticio en Ruzafa.",
+        "en": "Nómada is a fictional specialty coffee roaster in Ruzafa."
+      },
+      "claves": [
+        {
+          "t": {
+            "es": "Una tienda entera",
+            "en": "A whole shop"
+          },
+          "d": {
+            "es": "Ocho cafés, ficha de producto y compra simulada.",
+            "en": "Eight coffees, product pages and a simulated checkout."
+          }
+        },
+        {
+          "t": {
+            "es": "El paquete manda",
+            "en": "The bag leads"
+          },
+          "d": {
+            "es": "El paquete es la única imagen de la tienda: nada de fotos de tazas.",
+            "en": "The bag is the shop's only image: no photos of cups."
+          }
+        },
+        {
+          "t": {
+            "es": "Con modo oscuro",
+            "en": "With dark mode"
+          },
+          "d": {
+            "es": "Además de newsletter, mapa y preguntas frecuentes.",
+            "en": "Plus newsletter, map and FAQ."
+          }
+        }
+      ],
+      "caso": [
+        {
+          "id": "d1",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Tienda",
+            "en": "Shop"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "m1",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Cafés destacados",
+            "en": "Featured coffees"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        },
+        {
+          "id": "z1",
+          "marco": "det",
+          "medio": "img",
+          "pie": {
+            "es": "Tarjeta de producto",
+            "en": "Product card"
+          },
+          "w": 721,
+          "h": 757,
+          "anchos": [
+            721
+          ]
+        },
+        {
+          "id": "v1",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Modo oscuro",
+            "en": "Dark mode"
+          }
+        },
+        {
+          "id": "e1",
+          "marco": "escena-p",
+          "medio": "img",
+          "pie": {
+            "es": "Origen",
+            "en": "Origin"
+          },
+          "w": 1600,
+          "h": 950,
+          "anchos": [
+            1600,
+            900
+          ],
+          "mockup": "portatil-blanco"
+        },
+        {
+          "id": "e2",
+          "marco": "escena-t",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de producto",
+            "en": "Product page"
+          },
+          "w": 900,
+          "h": 1200,
+          "anchos": [
+            900,
+            520
+          ],
+          "mockup": "movil-escalera"
+        },
+        {
+          "id": "d2",
+          "marco": "nav",
+          "medio": "img",
+          "pie": {
+            "es": "Ficha de producto",
+            "en": "Product page"
+          },
+          "w": 1600,
+          "h": 1000,
+          "anchos": [
+            1600,
+            900
+          ]
+        },
+        {
+          "id": "v2",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "Página About",
+            "en": "About page"
+          }
+        },
+        {
+          "id": "m2",
+          "marco": "tel",
+          "medio": "img",
+          "pie": {
+            "es": "Menú desplegado",
+            "en": "Menu open"
+          },
+          "w": 780,
+          "h": 1688,
+          "anchos": [
+            780,
+            480
+          ]
+        }
+      ]
+    }
+  ]
 }

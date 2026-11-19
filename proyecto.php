@@ -1,5 +1,8 @@
 <?php
-/* Ficha de proyecto · rediseño v6 (feedback 116, rama rediseno-baraja-2026-11, ATELIER conv. 1330).
+/* Ficha de proyecto · v7 (feedback 128-136 y 144; v6 = feedback 116; rama rediseno-baraja-2026-11, ATELIER conv. 1330).
+   v7: marcos que se leen como aparato (ventana de navegador y teléfono, esquinas rectas en todo lo demás), más copy (contexto + 3 claves),
+   y «Momentos» como un caso: páginas internas, menús, detalle, vídeos cortos y dos escenas con mockup libre (Unsplash; fuentes en docs/BITACORA.md).
+   Datos: content/baraja.json › contexto, claves, caso. Medios: content/baraja/<slug>_caso-<id>* (img: -<ancho>.webp · vid: .mp4 + _poster-<ancho>.webp).
    Plantilla común de todas las cartas de la baraja. Datos en content/baraja.json; ?p=<slug>.
    Orden: barra (volver + nº/total) → cabecera con ficha técnica en columnas → portada (vídeo de escritorio grande + vídeo
    de móvil montado encima) → el problema / qué hice → momentos numerados a distintas escalas → la web en vivo →
@@ -26,8 +29,8 @@ $es = $lang === 'es';
 $L = $es ? 'es' : 'en';
 $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); };
 $T = $es
-    ? ['volver' => 'Proyectos', 'problema' => 'El problema', 'hice' => 'Qué hice', 'visitar' => 'Visitar la web', 'sig' => 'Siguiente proyecto', 'concepto' => 'Concepto', 'cliente' => 'Cliente', 'sinweb' => 'Sin web pública todavía', 'lugar' => 'Lugar', 'anio' => 'Año', 'tipo' => 'Tipo', 'sector' => 'Sector', 'rol' => 'Rol', 'momentos' => 'Momentos', 'vivo' => 'En vivo', 'escritorio' => 'Escritorio', 'movil' => 'Móvil', 'nota_concepto' => 'Marca inventada: proyecto propio, sin cliente.', 'captura' => 'Captura de', 'ver' => 'Ver', 'propio' => 'Concepto propio']
-    : ['volver' => 'Projects', 'problema' => 'The problem', 'hice' => 'What I did', 'visitar' => 'Visit the site', 'sig' => 'Next project', 'concepto' => 'Concept', 'cliente' => 'Client', 'sinweb' => 'No public site yet', 'lugar' => 'Place', 'anio' => 'Year', 'tipo' => 'Type', 'sector' => 'Sector', 'rol' => 'Role', 'momentos' => 'Moments', 'vivo' => 'Live', 'escritorio' => 'Desktop', 'movil' => 'Mobile', 'nota_concepto' => 'Invented brand: a self-initiated project, no client.', 'captura' => 'Screenshot of', 'ver' => 'View', 'propio' => 'Self-initiated concept'];
+    ? ['volver' => 'Proyectos', 'problema' => 'El problema', 'hice' => 'Qué hice', 'visitar' => 'Visitar la web', 'sig' => 'Siguiente proyecto', 'concepto' => 'Concepto', 'cliente' => 'Cliente', 'sinweb' => 'Sin web pública todavía', 'lugar' => 'Lugar', 'anio' => 'Año', 'tipo' => 'Tipo', 'sector' => 'Sector', 'rol' => 'Rol', 'momentos' => 'Momentos', 'vivo' => 'En vivo', 'escritorio' => 'Escritorio', 'movil' => 'Móvil', 'nota_concepto' => 'Marca inventada: proyecto propio, sin cliente.', 'captura' => 'Captura de', 'ver' => 'Ver', 'propio' => 'Concepto propio', 'claves' => 'Claves', 'detalle' => 'Detalle', 'video' => 'Vídeo', 'enuso' => 'En uso', 'foto' => 'Foto de mockup']
+    : ['volver' => 'Projects', 'problema' => 'The problem', 'hice' => 'What I did', 'visitar' => 'Visit the site', 'sig' => 'Next project', 'concepto' => 'Concept', 'cliente' => 'Client', 'sinweb' => 'No public site yet', 'lugar' => 'Place', 'anio' => 'Year', 'tipo' => 'Type', 'sector' => 'Sector', 'rol' => 'Role', 'momentos' => 'Moments', 'vivo' => 'Live', 'escritorio' => 'Desktop', 'movil' => 'Mobile', 'nota_concepto' => 'Invented brand: a self-initiated project, no client.', 'captura' => 'Screenshot of', 'ver' => 'View', 'propio' => 'Self-initiated concept', 'claves' => 'Key decisions', 'detalle' => 'Detail', 'video' => 'Video', 'enuso' => 'In use', 'foto' => 'Mockup photo'];
 $base = 'content/baraja/' . $P['slug'];
 $media = $base . '_scroll-';
 $navActual = 'home';
@@ -36,17 +39,32 @@ $num = static function ($n) { return str_pad((string) $n, 2, '0', STR_PAD_LEFT);
 $host = !empty($P['url']) ? preg_replace('~^https?://(www\.)?~', '', rtrim((string) $P['url'], '/')) : '';
 $rol = $P['rol'][$L] ?? [];
 
-/* Momentos: los que existan en disco, en este orden de composición */
+/* Momentos del caso (content/baraja.json › caso): se pintan los que existan en disco, en el orden del json */
 $momentos = [];
-foreach ([['d1', 'd', 1600, 1000], ['m1', 'm', 780, 1688], ['d2', 'd', 1600, 1000], ['d3', 'd', 1600, 1000]] as $m) {
-    $grande = $m[1] === 'd' ? 1600 : 780;
-    $chica = $m[1] === 'd' ? 900 : 480;
-    if (is_file(__DIR__ . '/' . $base . '_momento-' . $m[0] . '-' . $grande . '.webp')) {
-        $momentos[] = ['id' => $m[0], 'tipo' => $m[1], 'w' => $m[2], 'h' => $m[3],
-            'grande' => $base . '_momento-' . $m[0] . '-' . $grande . '.webp', 'wg' => $grande,
-            'chica' => $base . '_momento-' . $m[0] . '-' . $chica . '.webp', 'wc' => $chica];
+foreach (($P['caso'] ?? []) as $m) {
+    $b = $base . '_caso-' . $m['id'];
+    $vid = ($m['medio'] ?? 'img') === 'vid';
+    if ($vid) {
+        $tel = $m['marco'] === 'tel';
+        $m['src'] = $b . '.mp4';
+        $m['grande'] = $b . ($tel ? '_poster-540.webp' : '_poster-1280.webp');
+        $m['chica'] = $b . ($tel ? '_poster-540.webp' : '_poster-720.webp');
+        $m['wc'] = $tel ? 540 : 720; $m['w'] = $tel ? 540 : 1280; $m['h'] = $tel ? 1168 : 800;
+        if (!is_file(__DIR__ . '/' . $m['src'])) { continue; }
+    } else {
+        $m['grande'] = $b . '-' . $m['anchos'][0] . '.webp';
+        $m['chica'] = $b . '-' . ($m['anchos'][1] ?? $m['anchos'][0]) . '.webp';
+        $m['wc'] = $m['anchos'][1] ?? $m['anchos'][0];
+        if (!is_file(__DIR__ . '/' . $m['grande'])) { continue; }
     }
+    $momentos[] = $m;
 }
+$pmMovil = is_file(__DIR__ . '/' . $base . '_caso-pm.mp4');
+$etiqueta = static function (array $m) use ($T): string {
+    if ($m['medio'] === 'vid') { return $T['video']; }
+    switch ($m['marco']) { case 'tel': return $T['movil']; case 'det': return $T['detalle']; case 'escena-p': case 'escena-t': return $T['enuso']; default: return $T['escritorio']; }
+};
+$barraNav = '<span class="fp__nav-barra" aria-hidden="true"><i></i><i></i><i></i><b>' . ($host !== '' ? $e($host) : $e($P['nombre'])) . '</b></span>';
 $fl = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
 $fd = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6h8M7 3l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
 $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; return is_file($f) ? (string) filemtime($f) : '1'; };
@@ -80,13 +98,19 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
     </header>
 
     <section class="fp__portada" aria-label="<?php echo $e($P['nombre']); ?>">
-        <figure class="fp__video fp__video--d">
-            <video muted loop playsinline preload="none" disablepictureinpicture
-                data-video-d="<?php echo $e($media . 'desktop-hd.mp4'); ?>" data-poster-d="<?php echo $e($media . 'desktop-hd_poster.jpg'); ?>"></video>
+        <figure class="fp__video fp__video--d fp__nav">
+            <?php echo $barraNav; ?>
+            <div class="fp__nav-pantalla">
+                <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $e($P['nombre'] . ' · ' . $T['escritorio']); ?>"
+                    data-video-d="<?php echo $e($media . 'desktop-hd.mp4'); ?>" data-poster-d="<?php echo $e($media . 'desktop-hd_poster.jpg'); ?>"></video>
+            </div>
         </figure>
-        <figure class="fp__video fp__video--m">
-            <video muted loop playsinline preload="none" disablepictureinpicture
-                data-video-m="<?php echo $e($media . 'movil.mp4'); ?>" data-poster-m="<?php echo $e($media . 'movil_poster.jpg'); ?>"></video>
+        <figure class="fp__video fp__video--m fp__tel<?php echo $pmMovil ? '' : ' fp__tel--corto'; ?>">
+            <div class="fp__tel-pantalla">
+                <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $e($P['nombre'] . ' · ' . $T['movil']); ?>"
+                    <?php if ($pmMovil): ?>data-video-m="<?php echo $e($base . '_caso-pm.mp4'); ?>" data-poster-m="<?php echo $e($base . '_caso-pm_poster-540.webp'); ?>"
+                    <?php else: ?>data-video-m="<?php echo $e($media . 'movil.mp4'); ?>" data-poster-m="<?php echo $e($media . 'movil_poster.jpg'); ?>"<?php endif; ?>></video>
+            </div>
         </figure>
     </section>
 
@@ -98,27 +122,52 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
         <div class="fp__bloque" data-fp-entra>
             <h2 class="fp__h2"><span>02</span><?php echo $e($T['hice']); ?></h2>
             <p class="fp__p"><?php echo $e($P['que_hice'][$L] ?? ''); ?></p>
+            <?php if (!empty($P['contexto'][$L])): ?><p class="fp__p fp__p--ctx"><?php echo $e($P['contexto'][$L]); ?></p><?php endif; ?>
             <?php if ($esConcepto): ?><p class="fp__nota"><?php echo $e($T['nota_concepto']); ?></p><?php endif; ?>
         </div>
     </section>
 
+    <?php $claves = $P['claves'] ?? []; $n = 3; if ($claves): ?>
+    <section class="fp__claves" data-fp-entra aria-label="<?php echo $e($T['claves']); ?>">
+        <h2 class="fp__h2"><span><?php echo $num($n++); ?></span><?php echo $e($T['claves']); ?></h2>
+        <ol class="fp__claves-lista">
+            <?php foreach ($claves as $k => $c): ?>
+            <li><b><?php echo $e($c['t'][$L]); ?></b><p><?php echo $e($c['d'][$L]); ?></p></li>
+            <?php endforeach; ?>
+        </ol>
+    </section>
+    <?php endif; ?>
+
     <?php if ($momentos): ?>
     <section class="fp__momentos" aria-label="<?php echo $e($T['momentos']); ?>">
         <div class="fp__momentos-cab">
-            <h2 class="fp__h2"><span>03</span><?php echo $e($T['momentos']); ?></h2>
+            <h2 class="fp__h2"><span><?php echo $num($n++); ?></span><?php echo $e($T['momentos']); ?></h2>
             <p class="fp__momentos-n"><?php echo $num(1); ?> — <?php echo $num(count($momentos)); ?></p>
         </div>
         <div class="fp__tira" data-fp-tira>
-            <?php foreach ($momentos as $i => $m): ?>
-            <figure class="fp__m fp__m--<?php echo $m['tipo']; ?> fp__m--p<?php echo $i + 1; ?>" data-fp-entra<?php echo $m['tipo'] === 'm' ? ' data-fp-par="-0.06"' : ($i === 2 ? ' data-fp-par="0.04"' : ''); ?>>
-                <div class="fp__m-marco">
-                    <?php $alt = $e($T['captura'] . ' ' . $P['nombre'] . ' · ' . ($m['tipo'] === 'd' ? $T['escritorio'] : $T['movil']) . ' ' . ($i + 1)); ?>
-                    <?php /* dos versiones por captura; js/ficha.js pide la que toca según el hueco y la pantalla (así naturalWidth son píxeles reales) */ ?>
-                    <img data-poster-m="<?php echo $e($m['chica']); ?>" data-poster-d="<?php echo $e($m['grande']); ?>" data-wc="<?php echo $m['wc']; ?>"
-                        width="<?php echo $m['w']; ?>" height="<?php echo $m['h']; ?>" decoding="async" alt="<?php echo $alt; ?>">
-                    <noscript><img src="<?php echo $e($m['grande']); ?>" width="<?php echo $m['w']; ?>" height="<?php echo $m['h']; ?>" alt="<?php echo $alt; ?>"></noscript>
+            <?php foreach ($momentos as $i => $m):
+                $vid = $m['medio'] === 'vid';
+                $alt = $e($P['nombre'] . ' · ' . $m['pie'][$L] . ' (' . $etiqueta($m) . ')');
+                $cls = 'fp__m fp__m--' . $m['marco'] . ' fp__m--' . $m['id'] . ($vid ? ' fp__m--vid' : '');
+                $par = $m['id'] === 'm1' ? ' data-fp-par="-0.05"' : ($m['id'] === 'd2' ? ' data-fp-par="0.035"' : '');
+                $marcoCls = $m['marco'] === 'nav' ? ' fp__nav' : ($m['marco'] === 'tel' ? ' fp__tel' : '');
+                $pantalla = $m['marco'] === 'nav' ? 'fp__nav-pantalla' : ($m['marco'] === 'tel' ? 'fp__tel-pantalla' : 'fp__m-pantalla');
+            ?>
+            <figure class="<?php echo $cls; ?>" data-fp-entra<?php echo $par; ?>>
+                <div class="fp__m-marco<?php echo $marcoCls; ?>">
+                    <?php if ($m['marco'] === 'nav') { echo $barraNav; } ?>
+                    <div class="<?php echo $pantalla; ?>" style="aspect-ratio: <?php echo (int) $m['w']; ?> / <?php echo (int) $m['h']; ?>">
+                    <?php if ($vid): ?>
+                        <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $alt; ?>"
+                            data-video="<?php echo $e($m['src']); ?>" data-poster-m="<?php echo $e($m['chica']); ?>" data-poster-d="<?php echo $e($m['grande']); ?>" data-wc="<?php echo (int) $m['wc']; ?>"></video>
+                    <?php else: /* dos versiones por captura; js/ficha.js pide la que toca según el hueco y la pantalla */ ?>
+                        <img data-poster-m="<?php echo $e($m['chica']); ?>" data-poster-d="<?php echo $e($m['grande']); ?>" data-wc="<?php echo (int) $m['wc']; ?>"
+                            width="<?php echo (int) $m['w']; ?>" height="<?php echo (int) $m['h']; ?>" decoding="async" alt="<?php echo $alt; ?>">
+                        <noscript><img src="<?php echo $e($m['grande']); ?>" width="<?php echo (int) $m['w']; ?>" height="<?php echo (int) $m['h']; ?>" alt="<?php echo $alt; ?>"></noscript>
+                    <?php endif; ?>
+                    </div>
                 </div>
-                <figcaption><b><?php echo $num($i + 1); ?></b><?php echo $e($m['tipo'] === 'd' ? $T['escritorio'] : $T['movil']); ?></figcaption>
+                <figcaption><b><?php echo $num($i + 1); ?></b><span><?php echo $e($m['pie'][$L]); ?></span><i><?php echo $e($etiqueta($m)); ?></i></figcaption>
             </figure>
             <?php endforeach; ?>
         </div>
@@ -126,7 +175,7 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
     <?php endif; ?>
 
     <section class="fp__visita" data-fp-entra>
-        <p class="fp__h2"><span><?php echo $momentos ? '04' : '03'; ?></span><?php echo $e($T['vivo']); ?></p>
+        <p class="fp__h2"><span><?php echo $num($n++); ?></span><?php echo $e($T['vivo']); ?></p>
         <?php if (!empty($P['url'])): ?>
         <p class="fp__host"><?php echo str_replace(['-', '.'], ['&#8209;', '.<wbr>'], $e($host)); /* corta solo en los puntos */ ?></p>
         <a class="sm__boton sm__boton--lleno fp__boton" href="<?php echo $e($P['url']); ?>" target="_blank" rel="noopener"><?php echo $e($T['visitar']); ?>&nbsp;<?php echo $fl; ?></a>
