@@ -1,5 +1,5 @@
 {
-  "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: el 30/11, neutra: false (y copiar sus vídeos a content/baraja/). Brot: visible desde la v2 (feedback 76-77). Vapor: entra en la v2 para llegar a 9 cartas (vídeos grabados el 19/11 con el script de la selección).",
+  "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: el 30/11, neutra: false (y copiar sus vídeos a content/baraja/). Brot: visible desde la v2 (feedback 76-77). Vapor: entra en la v2 para llegar a 9 cartas (vídeos grabados el 19/11 con el script de la selección). v3 (feedback 94): 12 cartas, cada una con ficha propia (proyecto.php?p=<slug>, campo que_hice) y enlace a su web si la tiene.",
   "actualizado": "2026-11-19",
   "proyectos": [
     {
@@ -18,7 +18,11 @@
         "en": "An industrial designer needed his pieces to speak for themselves: full-screen photos, almost no interface, and a panel to publish new work on his own."
       },
       "neutra": false,
-      "oculta": false
+      "oculta": false,
+      "que_hice": {
+        "es": "Diseño y desarrollo de su web de autor y de un panel propio para que suba y ordene sus proyectos sin depender de nadie.",
+        "en": "Design and build of his artist website, plus his own panel to upload and order projects without depending on anyone."
+      }
     },
     {
       "slug": "imperio",
@@ -36,13 +40,11 @@
         "en": "A neighbourhood bookshop with reading clubs, book launches and its online shop on another platform: one site that organises the calendar and takes every recommended book straight to checkout."
       },
       "neutra": false,
-      "oculta": false
-    },
-    {
-      "slug": "elsa-moreno",
-      "neutra": true,
       "oculta": false,
-      "nota": "Datos reales en el repo ATELIER (proyectos.json). Aquí no se guardan para no destripar la sorpresa del 30/11."
+      "que_hice": {
+        "es": "Web nueva de la librería: agenda de clubes y presentaciones, recomendaciones que llevan a la compra y panel para que el equipo la mantenga.",
+        "en": "New website for the bookshop: club and launch calendar, recommendations that lead to checkout, and a panel so the team keeps it up to date."
+      }
     },
     {
       "slug": "casa-albar",
@@ -60,7 +62,17 @@
         "en": "How to sell calm without saying 'calm': a nine-room hotel whose page turns from noon to night as you scroll, all the way to dinner."
       },
       "neutra": false,
-      "oculta": false
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código. La página cambia de luz con el scroll.",
+        "en": "Own concept: fictional brand, art direction, design and front-end build. The page changes its light as you scroll."
+      }
+    },
+    {
+      "slug": "elsa-moreno",
+      "neutra": true,
+      "oculta": false,
+      "nota": "Datos reales en el repo ATELIER (proyectos.json). Aquí no se guardan para no destripar la sorpresa del 30/11."
     },
     {
       "slug": "mas-vesprada",
@@ -79,7 +91,33 @@
       },
       "neutra": false,
       "oculta": false,
-      "nota_url": "Sin subdominio propio todavía: la carta no enlaza hasta que exista mas-vesprada.alexdasi.com (ok de Alex)."
+      "nota_url": "Sin subdominio propio todavía: la carta no enlaza hasta que exista mas-vesprada.alexdasi.com (ok de Alex).",
+      "que_hice": {
+        "es": "Concepto propio: plano dibujado que se recorre con el scroll, dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: a site plan that draws itself as you scroll, art direction, design and front-end build."
+      }
+    },
+    {
+      "slug": "reissue",
+      "nombre": "REISSUE",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Tienda vintage",
+        "en": "Vintage store"
+      },
+      "lugar": "València (inventado)",
+      "anio": 2026,
+      "url": "https://reissue.alexdasi.com",
+      "problema": {
+        "es": "Una tienda vintage llevada como una revista: un número nuevo cada semana, piezas únicas con medidas reales y estado honesto.",
+        "en": "A vintage store run like a magazine: a new issue every week, one-off pieces with real measurements and honest condition."
+      },
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: fictional brand, art direction, design and front-end build."
+      },
+      "neutra": false,
+      "oculta": false
     },
     {
       "slug": "solvera",
@@ -97,7 +135,11 @@
         "en": "A winery with a single wine and 36 months of waiting: a site that moves a lot but never fast, so patience is something you feel."
       },
       "neutra": false,
-      "oculta": false
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia de una bodega, dirección de arte, motion y desarrollo en código.",
+        "en": "Own concept: fictional winery brand, art direction, motion and front-end build."
+      }
     },
     {
       "slug": "coccio",
@@ -113,6 +155,32 @@
       "problema": {
         "es": "Explicar qué pasa en un taller sin un texto largo: el scroll es el horno y la página va del barro crudo al esmalte a 1260 °C.",
         "en": "Explaining what happens in a studio without a wall of text: the scroll is the kiln, and the page goes from raw clay to glaze at 1260 °C."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: el recorrido de una pieza de cerámica contado con el scroll; diseño y desarrollo en código.",
+        "en": "Own concept: a ceramic piece's journey told through scroll; design and front-end build."
+      }
+    },
+    {
+      "slug": "berto-sanchez-studio",
+      "nombre": "Berto Sánchez Studio",
+      "tipo": "cliente",
+      "sector": {
+        "es": "Diseño industrial · web de estudio",
+        "en": "Industrial design · studio website"
+      },
+      "lugar": "València",
+      "anio": 2026,
+      "url": "https://berto-sanchez-studio.alexdasi.com",
+      "problema": {
+        "es": "La cara de estudio de Berto: blanca y ordenada por proyectos, para clientes que buscan encargar una pieza.",
+        "en": "Berto's studio side: white and organised by project, for clients looking to commission a piece."
+      },
+      "que_hice": {
+        "es": "Diseño y desarrollo de la web de estudio, con el mismo panel que su web de autor.",
+        "en": "Design and build of the studio website, sharing the panel of his artist site."
       },
       "neutra": false,
       "oculta": false
@@ -133,7 +201,11 @@
         "en": "Keeping a florist's website from going stale: it changes by itself every month, with the palette, bouquet and flowers of the month you open it."
       },
       "neutra": false,
-      "oculta": false
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: una floristería cuya web cambia sola cada mes (paleta, ramo y flores); diseño y desarrollo en código.",
+        "en": "Own concept: a florist whose site changes by itself every month (palette, bouquet and flowers); design and front-end build."
+      }
     },
     {
       "slug": "vapor",
@@ -149,6 +221,32 @@
       "problema": {
         "es": "Una casa de baños que se vende por la temperatura: la página baja del vapor al agua fría y los grados guían el recorrido.",
         "en": "A bathhouse sold on temperature: the page drops from steam to cold water, with the degrees leading the way."
+      },
+      "neutra": false,
+      "oculta": false,
+      "que_hice": {
+        "es": "Concepto propio: casa de baños contada por temperaturas; dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: a bathhouse told through temperatures; art direction, design and front-end build."
+      }
+    },
+    {
+      "slug": "nomada",
+      "nombre": "Nómada",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Tostador de café",
+        "en": "Coffee roaster"
+      },
+      "lugar": "Ruzafa, València (inventado)",
+      "anio": 2026,
+      "url": "https://nomada.alexdasi.com",
+      "problema": {
+        "es": "Un tostador pequeño que vende café de temporada: origen, tueste y suscripción, contados sin prisa.",
+        "en": "A small roaster selling seasonal coffee: origin, roast and subscription, told without hurry."
+      },
+      "que_hice": {
+        "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: fictional brand, art direction, design and front-end build."
       },
       "neutra": false,
       "oculta": false

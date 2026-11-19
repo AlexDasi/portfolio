@@ -34,7 +34,7 @@ if (!defined('ALEX_I18N')) {
     {
         $dir = dirname(__DIR__) . '/lang/es/';
         $slug = pathinfo(basename($_SERVER['SCRIPT_NAME'] ?? 'index.php'), PATHINFO_FILENAME);
-        $files = [$dir . 'common.json', $dir . (in_array($slug, ['index', 'about'], true) ? 'home.json' : 'projects/' . $slug . '.json')];
+        $files = [$dir . 'common.json', $dir . (in_array($slug, ['index', 'about', 'proyecto'], true) ? 'home.json' : 'projects/' . $slug . '.json')];
         $map = [];
         foreach ($files as $file) {
             if (!is_file($file)) {

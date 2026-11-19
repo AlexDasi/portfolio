@@ -21,6 +21,8 @@ $assetVersion = static function (string $relativePath): string {
 		}
 		var fluidScript = document.createElement('script');
 		var useDesktopFluid = hasFinePointer && window.innerWidth > 1280;
+		/* Móvil y tablet: sin fluido (feedback 95); ahí manda la esfera */
+		if (!useDesktopFluid) { document.documentElement.classList.add('no-fluid-mobile'); return; }
 		fluidScript.src = useDesktopFluid
 			? '/js/fluid.js?v=<?php echo $assetVersion('js/fluid.js'); ?>'
 			: '/js/fluidMobile.js?v=<?php echo $assetVersion('js/fluidMobile.js'); ?>';
@@ -39,3 +41,4 @@ $assetVersion = static function (string $relativePath): string {
 <script src="/js/cursor-color.js?v=<?php echo $assetVersion('js/cursor-color.js'); ?>"></script>
 <script src="/js/intro.js?v=<?php echo $assetVersion('js/intro.js'); ?>"></script>
 <script src="/js/baraja.js?v=<?php echo $assetVersion('js/baraja.js'); ?>"></script>
+<script src="/js/esfera.js?v=<?php echo $assetVersion('js/esfera.js'); ?>"></script>

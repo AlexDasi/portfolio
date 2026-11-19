@@ -24,7 +24,11 @@
     salidaX: -0.9,    // la que se va sale hacia la izquierda (× ancho)
     perspectiva: 1300
   };
-  var UNA = { pasoX: 14, escala: 0.05, giroZ: -3, visibles: 2.2 };
+  // v3 móvil (feedback 96): nada de cartas amontonadas; fila horizontal con imán y la siguiente asomando
+  // (como el móvil de The Lookback). hueco = separación entre cartas en px.
+  var UNA = { hueco: 14 };
+  // v3 movimiento (feedback 90-91): las cartas reaccionan a la velocidad del scroll y flotan en reposo.
+  var VIVO = { giroVel: 10, maxGiro: 24, abreVel: 0.05, flota: 5, flotaGiro: 1.2 };
   var RIGIDEZ = 15;        // velocidad del muelle (más = más rápido); ~180 ms en asentarse
   var RUEDA = 1 / 260;     // trackpad: px de rueda → cartas
   var ARRASTRE_MESA = 1 / 420;
@@ -34,6 +38,7 @@
     this.mesa = root.querySelector('[data-baraja-mesa]');
     this.cartas = Array.prototype.slice.call(root.querySelectorAll('[data-carta]'));
     this.fichas = Array.prototype.slice.call(root.querySelectorAll('[data-ficha]'));
+    this.ticks = Array.prototype.slice.call(root.querySelectorAll('[data-tick]'));
     this.pista = root.querySelector('.baraja__pista');
     this.n = this.cartas.length;
     this.pos = 0;
@@ -111,11 +116,13 @@
       if (!self.root.closest('.MainSwiper')) return;
       self.enPantalla = e.detail.index === 1;
       self.entra();
+      self.pedir();
     });
     if (!this.root.closest('.MainSwiper') && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (entradas) {
         self.enPantalla = entradas[0].isIntersecting;
         self.entra();
+        self.pedir();
       }, { threshold: 0.35 }).observe(this.root);
     }
 
@@ -170,6 +177,9 @@
   Baraja.prototype.pinta = function (forzar) {
     var m = this.medidas;
     var mesa = this.modo === 'mesa';
+    var v = this.vel || 0;
+    var velGiro = Math.max(-VIVO.maxGiro, Math.min(VIVO.maxGiro, -v * VIVO.giroVel));
+    var velAbre = Math.max(-0.12, Math.min(0.12, v * VIVO.abreVel));
     for (var i = 0; i < this.n; i++) {
       var d = this.dist(i, this.pos);
       var tr, op, z;
@@ -179,9 +189,13 @@
           var k = Math.min(d, 1);                      // 0 delante → 1 ya de canto
           var giro = MESA.giroFrente + (MESA.giroDetras - MESA.giroFrente) * k;
           giro += (MESA.giroHover - giro) * hv * (d >= 0.5 ? 1 : 0);
+          // velocidad: al pasar rápido se abren y se tumban un poco (como The Lookback); en reposo, flotan
+          giro += velGiro * (0.4 + 0.6 * k) + Math.sin(this.tiempo * 0.7 + i * 1.3) * VIVO.flotaGiro * k;
           var x = d <= 1 ? d * MESA.hueco : MESA.hueco + (d - 1) * MESA.paso;
+          x += Math.abs(velAbre) * d;
           var sc = 1 - d * MESA.escala + hv * 0.03;
-          tr = 'perspective(' + MESA.perspectiva + 'px) translate3d(' + (x * m.w).toFixed(1) + 'px,' + (d * MESA.subida * m.h - hv * 10).toFixed(1) + 'px,0)' +
+          var flota = Math.sin(this.tiempo * 0.9 + i * 0.8) * VIVO.flota;
+          tr = 'perspective(' + MESA.perspectiva + 'px) translate3d(' + (x * m.w).toFixed(1) + 'px,' + (d * MESA.subida * m.h - hv * 10 + flota).toFixed(1) + 'px,0)' +
             ' rotateY(' + giro.toFixed(2) + 'deg) scale(' + sc.toFixed(4) + ')';
           op = Math.max(0, Math.min(1, this.n - 1.5 - d));
         } else {
@@ -191,17 +205,13 @@
           op = Math.max(0, 1 - t * 1.7);
         }
       } else {
-        if (d >= 0) {
-          var s2 = 1 - d * UNA.escala;
-          tr = 'translate3d(' + (d * UNA.pasoX).toFixed(1) + 'px,' + (-d * UNA.pasoX * 0.6).toFixed(1) + 'px,0) rotate(' + (UNA.giroZ * Math.min(d, 1) + d * 1.2).toFixed(2) + 'deg) scale(' + s2.toFixed(4) + ')';
-          op = d > UNA.visibles ? 0 : Math.min(1, (UNA.visibles + 0.4 - d) / 1);
-        } else {
-          var t2 = -d;
-          tr = 'translate3d(' + (-t2 * (m.w + 60)).toFixed(1) + 'px,' + (t2 * 18).toFixed(1) + 'px,0) rotate(' + (-t2 * 10).toFixed(2) + 'deg)';
-          op = Math.max(0, 1 - t2 * 1.2);
-        }
+        // fila: la de delante a la izquierda, la siguiente asomando a la derecha; las anteriores salen por la izquierda
+        var paso = m.w + UNA.hueco;
+        var lean = Math.max(-14, Math.min(14, -v * 6));
+        tr = 'perspective(900px) translate3d(' + (d * paso).toFixed(1) + 'px,0,0) rotateY(' + lean.toFixed(2) + 'deg) scale(' + (1 - Math.min(Math.abs(d), 1) * 0.05).toFixed(4) + ')';
+        op = d < -1.2 || d > 2.2 ? 0 : 1;
       }
-      z = 100 - Math.round((d < 0 ? -d * 0.5 : d) * 10) + (this.hv[i] > 0.5 && d > 0.5 ? 0 : 0);
+      z = 100 - Math.round((d < 0 ? -d * 0.5 : d) * 10);
       var c = this.cartas[i];
       c.style.transform = tr;
       op = Math.round(op * 1000) / 1000;
@@ -222,6 +232,7 @@
       c.tabIndex = es ? 0 : -1;
       c.setAttribute('aria-hidden', es ? 'false' : 'true');
     });
+    this.ticks.forEach(function (t, i) { t.classList.toggle('is-activa', i === f); });
     this.fichas.forEach(function (fi, i) {
       if (i === f) { fi.hidden = false; fi.classList.remove('is-entra'); void fi.offsetWidth; fi.classList.add('is-entra'); }
       else fi.hidden = true;
@@ -291,6 +302,7 @@
     this.raf = 0;
     var dt = Math.min(0.05, Math.max(0.001, (ahora - this.t) / 1000));
     this.t = ahora;
+    var antes = this.pos;
     if (!this.arrastre) {
       // fin de la rueda: encaja en una carta, en el sentido del gesto
       if (this.ruedaFin && ahora > this.ruedaFin) {
@@ -311,9 +323,16 @@
       if (Math.abs(meta - actual) > 0.002) { this.hv[h] = actual + (meta - actual) * kh; hvMueve = true; }
       else this.hv[h] = meta;
     }
+    // velocidad (cartas/s), suavizada: mueve las cartas mientras pasas
+    this.vel = (this.vel || 0) + ((this.pos - antes) / dt - (this.vel || 0)) * (1 - Math.exp(-dt * 10));
+    if (Math.abs(this.vel) < 0.002) this.vel = 0;
+    this.tiempo = (this.tiempo || 0) + dt;
     this.pinta(false);
-    if (this.pos !== this.obj || this.arrastre || this.ruedaFin || hvMueve) this.raf = requestAnimationFrame(this.paso);
-    else this.normaliza();
+    var quieta = this.pos === this.obj && !this.arrastre && !this.ruedaFin;
+    if (quieta) this.normaliza();
+    // en reposo siguen flotando mientras la baraja esté en pantalla (solo escritorio y sin «reducir movimiento»)
+    var flotar = this.enPantalla && this.modo === 'mesa' && !reduce && !document.hidden;
+    if (!quieta || hvMueve || this.vel || flotar) this.raf = requestAnimationFrame(this.paso);
   };
 
   // mantiene pos/obj en [0, n) cuando está quieta (bucle infinito sin números enormes)

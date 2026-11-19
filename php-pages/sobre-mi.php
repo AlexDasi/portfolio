@@ -11,7 +11,7 @@ $cv = $es ? 'content/downloadables/alex-dasi_cv_2026-11.pdf' : 'content/download
 
 $T = $es ? [
     'hola_t1' => 'Soy Alex.',
-    'hola_t2' => 'Diseño webs para negocios de Valencia.',
+    'hola_t2' => ['a' => 'Diseño webs para negocios con algo que contar.', 'b' => 'Diseño webs, marca y producto digital.', 'c' => 'Diseño webs que se parecen a tu negocio.'],
     'hola_p' => 'Llevo más de [N] años diseñando: marcas, webs y, los últimos años, producto digital. Hoy junto todo eso en algo muy concreto: webs que se parecen a tu negocio, que se entienden a la primera y que van bien en el móvil.',
     'que' => [
         ['Webs para negocios y profesionales', 'Tiendas, restaurantes, estudios, librerías: gente con algo bueno que enseñar.'],
@@ -60,7 +60,7 @@ $T = $es ? [
     'wa' => 'Escríbeme por WhatsApp',
 ] : [
     'hola_t1' => "I'm Alex.",
-    'hola_t2' => 'I design websites for local businesses in Valencia.',
+    'hola_t2' => ['a' => 'I design websites for businesses with something to say.', 'b' => 'I design websites, brands and digital products.', 'c' => 'I design websites that look like your business.'],
     'hola_p' => "I've been designing for over [N] years: brands, websites and, in recent years, digital products. Today I bring all of that into something very concrete: websites that look like your business, make sense at first glance and work well on a phone.",
     'que' => [
         ['Websites for businesses and independents', 'Shops, restaurants, studios, bookshops: people with something good to show.'],
@@ -114,7 +114,7 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
     switch ($k) {
         case 'hola': ?>
 <section class="sm sm--hola">
-    <h1 class="sm__titulo"><span class="sm__fino"><?php echo $e($T['hola_t1']); ?></span> <span class="sm__grueso"><?php echo $e($T['hola_t2']); ?></span></h1>
+    <h1 class="sm__titulo"><span class="sm__fino"><?php echo $e($T['hola_t1']); ?></span> <span class="sm__grueso"><?php foreach ($T['hola_t2'] as $ck => $ct): ?><span class="claim claim--<?php echo $ck; ?>"><?php echo $e($ct); ?></span><?php endforeach; ?></span></h1>
     <p class="sm__entrada"><?php echo $e($T['hola_p']); ?></p>
     <ul class="sm__rejilla sm__rejilla--4">
         <?php foreach ($T['que'] as $q): ?>

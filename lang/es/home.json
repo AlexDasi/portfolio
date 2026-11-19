@@ -88,7 +88,11 @@
     "About": "Sobre mí",
     "Contact": "Contacto",
     "Websites for local businesses in Valencia": "Webs para negocios de Valencia",
-    "Press space for another colour": "Pulsa espacio para otro color"
+    "Press space for another colour": "Pulsa espacio para otro color",
+    "Websites for businesses with something to say": "Webs para negocios con algo que contar",
+    "Websites, brand and digital product": "Webs, marca y producto digital",
+    "Websites that look like your business, not like a template": "Webs que se parecen a tu negocio, no a una plantilla",
+    "PRESS SPACE": "PRESS SPACE"
   },
   "attr": {
     "Alex Dasi Portfolio": "",
@@ -98,6 +102,7 @@
     "Next project": "Proyecto siguiente",
     "ATELIER: three directions proposed for one site": "ATELIER: tres direcciones propuestas para una web",
     "Day / night": "Día / noche",
-    "More": "Más"
+    "More": "Más",
+    "Open the sphere": "Abrir la esfera"
   }
 }

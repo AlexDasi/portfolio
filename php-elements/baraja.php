@@ -14,7 +14,9 @@ $barajaTxt = [
     'concept' => $barajaLang === 'es' ? 'Concepto' : 'Concept',
     'soon' => $barajaLang === 'es' ? 'Próximamente' : 'Coming soon',
     'soonSub' => $barajaLang === 'es' ? 'Web en marcha' : 'Work in progress',
-    'visit' => $barajaLang === 'es' ? 'Ver la web' : 'Visit site',
+    'visit' => $barajaLang === 'es' ? 'Visitar web' : 'Visit site',
+    'ficha' => $barajaLang === 'es' ? 'Ver proyecto' : 'View project',
+    'client' => $barajaLang === 'es' ? 'Cliente' : 'Client',
     'label' => $barajaLang === 'es' ? 'Proyectos' : 'Projects',
     'hint' => $barajaLang === 'es' ? 'Usa la rueda o arrastra' : 'Scroll or drag',
     'hintTouch' => $barajaLang === 'es' ? 'Desliza' : 'Swipe',
@@ -27,12 +29,12 @@ $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UT
             $neutra = !empty($p['neutra']);
             $slug = $p['slug'];
             $nombre = $neutra ? $barajaTxt['soon'] : $p['nombre'];
-            $url = $neutra ? null : ($p['url'] ?? null);
+            $url = $neutra ? null : 'proyecto.php?p=' . $slug; // la carta abre su ficha (feedback 94)
             $tag = $url ? 'a' : 'div';
             $media = 'content/baraja/' . $slug . '_scroll-';
         ?>
         <<?php echo $tag; ?> class="carta<?php echo $neutra ? ' carta--neutra' : ''; ?>" data-carta="<?php echo $i; ?>"
-            <?php if ($url): ?>href="<?php echo $e($url); ?>" target="_blank" rel="noopener"<?php endif; ?>
+            <?php if ($url): ?>href="<?php echo $e($url); ?>"<?php endif; ?>
             aria-label="<?php echo $e($nombre); ?>" tabindex="-1">
             <div class="carta__cara">
                 <?php if (!$neutra): ?>
@@ -54,25 +56,33 @@ $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UT
     </div>
 
     <div class="baraja__pie" aria-live="polite">
-        <?php foreach ($barajaCartas as $i => $p):
+        <?php $barajaN = count($barajaCartas); foreach ($barajaCartas as $i => $p):
             $neutra = !empty($p['neutra']);
-            $url = $neutra ? null : ($p['url'] ?? null);
+            $web = $neutra ? null : ($p['url'] ?? null);
+            $num = str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) . ' / ' . str_pad((string) $barajaN, 2, '0', STR_PAD_LEFT);
         ?>
         <div class="ficha" data-ficha="<?php echo $i; ?>"<?php echo $i === 0 ? '' : ' hidden'; ?>>
+            <div class="ficha__cab">
+                <span class="ficha__num"><?php echo $num; ?></span>
+                <?php if (!$neutra): ?><span class="ficha__tipo"><?php echo $e(($p['tipo'] ?? '') === 'concepto' ? $barajaTxt['concept'] : $barajaTxt['client']); ?></span><?php endif; ?>
+            </div>
             <?php if ($neutra): ?>
             <p class="ficha__nombre"><?php echo $e($barajaTxt['soon']); ?></p>
             <p class="ficha__meta"><?php echo $e($barajaTxt['soonSub']); ?></p>
             <?php else: ?>
-            <p class="ficha__nombre"><?php echo $e($p['nombre']); ?><?php if (($p['tipo'] ?? '') === 'concepto'): ?> <span class="ficha__tag"><?php echo $e($barajaTxt['concept']); ?></span><?php endif; ?></p>
+            <p class="ficha__nombre"><?php echo $e($p['nombre']); ?></p>
             <p class="ficha__meta"><?php echo $e($p['sector'][$barajaLang]); ?> <span aria-hidden="true">·</span> <?php echo $e($p['anio']); ?></p>
             <p class="ficha__texto"><?php echo $e($p['problema'][$barajaLang]); ?></p>
-            <?php if ($url): ?>
-            <a class="ficha__link" href="<?php echo $e($url); ?>" target="_blank" rel="noopener"><?php echo $e($barajaTxt['visit']); ?><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
-            <?php endif; ?>
+            <div class="ficha__acciones">
+                <a class="ficha__link" href="proyecto.php?p=<?php echo $e($p['slug']); ?>"><?php echo $e($barajaTxt['ficha']); ?><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6h8M7 3l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+                <?php if ($web): ?><a class="ficha__link ficha__link--fuera" href="<?php echo $e($web); ?>" target="_blank" rel="noopener"><?php echo $e($barajaTxt['visit']); ?><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1"/></svg></a><?php endif; ?>
+            </div>
             <?php endif; ?>
         </div>
         <?php endforeach; ?>
     </div>
+
+    <div class="baraja__regla" aria-hidden="true"><?php foreach ($barajaCartas as $i => $p): ?><i data-tick="<?php echo $i; ?>"></i><?php endforeach; ?></div>
 
     <p class="baraja__pista" aria-hidden="true"><span class="baraja__pista-mesa"><?php echo $e($barajaTxt['hint']); ?></span><span class="baraja__pista-una"><?php echo $e($barajaTxt['hintTouch']); ?></span></p>
 </section>

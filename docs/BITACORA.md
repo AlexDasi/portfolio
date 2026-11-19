@@ -411,3 +411,16 @@
 - Cabecera táctil ≥ 44 px en móvil; en ≤ 400 px se oculta «alex dasi» del centro (no cabía con los accesos).
 
 **QA (exportación servida en local):** vivo.mjs 0 rojos en home ES, home EN y About (iPhone 13, SE, Android 360, desktop) · medir.mjs 0 rojos · nitidez 0. Fluidez: `pinta()` p95 1,7 ms/frame escritorio, 1,5 ms móvil (2,5 ms con CPU ×4); layout solo al cambiar de carta (28 en 2,3 s, 6 ms en total).
+
+---
+
+## 2026-11-19 — v3 de la rama `rediseno-baraja-2026-11` (feedback 82-96, ATELIER conv. 1330)
+
+- **A · Estética:** noche por defecto (clave `alexdasi-tema-v3`); el acento elegido (al azar al abrir, espacio = siguiente, `?cursor=fijo` = lima) tiñe toda la web vía `--cursor-color → --accent-color`. Fluido de noche con la config del panel FX de Alex (density 0,35 · velocity 1,0 · curl 0 · pressure 50 · radius 0,19 · force 12000 · opacity 0,5 · shading); de día, plano. «PRESS SPACE» en inglés arriba a la izquierda (solo con ratón). Interfaz en mayúsculas. Claim sin «Valencia» con `?claim=a|b|c` (por defecto c: «Webs que se parecen a tu negocio, no a una plantilla»), también en el titular del About.
+- **B · Baraja escritorio:** resaltado al pasar por cualquier carta; las cartas se tumban y se abren según la velocidad del scroll (`VIVO` en `js/baraja.js`); flotan en reposo; ficha nueva (filete, nº/total, tipo con punto de acento, nombre, sector, texto, «Ver proyecto» + «Visitar web»).
+- **C · Proyectos:** 12 cartas (+ Berto Sánchez Studio, REISSUE y Nómada; vídeos de REISSUE y Nómada grabados el 19/11). Cada carta abre su ficha `proyecto.php?p=<slug>` (vídeo HD, problema, qué hice, datos, visitar web, siguiente). Mas Vesprada sin botón externo (sin URL pública). Elsa sigue neutra y sin ficha.
+- **D · La esfera:** el punto de «Alex Dasi» ya no lleva borde ni imán; al hacer clic vuela al centro y crece hasta la esfera, portada tal cual de la demo aprobada v9 (`esfera/esfera-pieles.html`, modo `?embed`). `?piel=solare|chicle|glaseado|gota|prisma` (por defecto solare). Arrastrar = gira con inercia y vuelve a su giro (de la demo). Clic fuera o Esc la devuelven al punto. `js/esfera.js`.
+- **E · Móvil:** sin fluido; la esfera flota en el centro de la intro con spin con el dedo; baraja en fila horizontal con imán, la siguiente asomando y una regla de marcas (como el móvil de The Lookback).
+- Medios de la baraja a 1000 px (las fichas usan `*-hd`).
+
+**QA:** vivo.mjs 0 rojos (home ES/EN, About, fichas) · medir.mjs 0 rojos. Fluidez: móvil 60 fps en el swipe (p95 16,7 ms; con CPU ×4 58,9 fps); escritorio `pinta()` p95 ≈ 5 ms, sin layout por frame; los fps de escritorio de este contenedor (sin GPU) no son representativos (el fluido de noche con su config baja la página a ~10 fps en render por software).

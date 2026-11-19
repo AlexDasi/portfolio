@@ -35,6 +35,8 @@ for _ in range(50):
         time.sleep(0.1)
 
 SECCIONES = ['about', 'uxui', 'process', 'contact']
+import json as _json
+FICHAS = [x['slug'] for x in _json.load(open(os.path.join(ROOT, 'content/baraja.json')))['proyectos'] if not x.get('oculta') and not x.get('neutra')]
 slugs = sorted(f[:-4] for f in os.listdir(os.path.join(ROOT, 'php-pages/projects')) if f.endswith('.php'))
 assets = set()
 
@@ -61,6 +63,9 @@ def convierte(html, en_projects):
         base = os.path.basename(path)
         if path in ('/', '') or base == 'index.php':
             return f'{up}{nombre("index", es)}{frag}'
+        if base == 'proyecto.php':
+            ps = q.get('p', [''])[0]
+            return f'{up}proyecto-{ps}' + ('-en' if es else '') + f'.html{frag}'
         if base == 'about.php':
             s = q.get('s', ['about'])[0]
             return f'{up}{nombre_about(s if s in SECCIONES else "about", es)}{frag}'
@@ -110,6 +115,9 @@ try:
         for s in SECCIONES:
             url = f'/about.php?s={s}' + ('&' + lq if es else '')
             open(os.path.join(OUT, nombre_about(s, es)), 'w').write(convierte(baja(url), False)); paginas += 1
+        for ps in FICHAS:
+            url = f'/proyecto.php?p={ps}' + ('&' + lq if es else '')
+            open(os.path.join(OUT, f'proyecto-{ps}' + ('-en' if es else '') + '.html'), 'w').write(convierte(baja(url), False)); paginas += 1
         for slug in (slugs if CON_PROYECTOS else []):
             url = f'/php-pages/projects/{slug}.php' + ('?' + lq if es else '')
             open(os.path.join(OUT, 'projects', nombre(slug, es)), 'w').write(convierte(baja(url), True)); paginas += 1
@@ -119,6 +127,8 @@ try:
             assets.add('js/' + f)
     for f in os.listdir(os.path.join(ROOT, 'content/baraja')):
         assets.add('content/baraja/' + f)
+    for f in os.listdir(os.path.join(ROOT, 'esfera')):
+        assets.add('esfera/' + f)
     faltan = []
     for a in sorted(assets):
         src = os.path.join(ROOT, a)

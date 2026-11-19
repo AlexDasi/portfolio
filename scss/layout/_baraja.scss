@@ -13,7 +13,7 @@ $papel: #f5f3ec;
 html.tema-dia body.sitio-baraja {
   --bkg-color: #{$papel};
   --main-color: #{$tinta};
-  --accent-color: #{$lima};
+  --accent-color: var(--cursor-color, #{$lima});
   --tinta-suave: #5d5d58;
   --linea: rgba(20, 20, 21, .16);
 }
@@ -21,7 +21,8 @@ html.tema-dia body.sitio-baraja {
 html.tema-noche body.sitio-baraja {
   --bkg-color: #000;
   --main-color: hsla(54, 18%, 97%, 1);
-  --accent-color: #{$lima};
+  // el acento elegido (al azar al abrir, espacio = siguiente) tiñe toda la web (feedback 92)
+  --accent-color: var(--cursor-color, #{$lima});
   --tinta-suave: #a9a8a1;
   --linea: rgba(247, 247, 245, .18);
 }
@@ -100,8 +101,9 @@ html.tema-dia.pisos-b .sitio-baraja .MainSwiper {
   &__item {
     font-size: 13px;
     line-height: 1;
-    font-weight: 300;
-    letter-spacing: .02em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    text-transform: uppercase; // interfaz en mayúsculas (feedback 87)
     color: var(--main-color);
     text-decoration: none;
     opacity: .6;
@@ -182,15 +184,20 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
   }
   // La bola, solo como gesto: el punto final, lima, con el imán del cursor.
   &__punto {
+    appearance: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
     display: inline-block;
     width: .2em;
     height: .2em;
     margin-left: .06em;
     border-radius: 50%;
-    background: var(--cursor-color, #{$lima});
-    box-shadow: inset 0 0 0 1px rgba(20, 20, 21, .12);
+    background: var(--accent-color);
     pointer-events: auto;
-    transition: background-color .3s ease;
+    cursor: none;
+    transition: background-color .3s ease, transform .3s cubic-bezier(.22, 1, .36, 1);
+    &:hover { transform: scale(1.35); }
     vertical-align: baseline;
   }
   &__pista {
@@ -300,7 +307,8 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
     pointer-events: none;
   }
   &.is-frente:hover &__cara, &.is-frente:focus-visible &__cara { transform: translateY(-6px); }
-  &.is-frente:hover &__cara::after, &.is-frente:focus-visible &__cara::after { opacity: 1; }
+  // resaltado en CUALQUIER carta al pasar el ratón (feedback 89)
+  &:hover &__cara::after, &:focus-visible &__cara::after { opacity: 1; }
 
   &__poster, &__video {
     position: absolute;
@@ -341,65 +349,83 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
     margin-bottom: auto;
   }
 }
-html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(247, 247, 245, .08), 0 24px 48px -28px rgba(0, 0, 0, .9); }
+html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(247, 247, 245, .08); }
 
 .ficha {
+  // v3 (feedback 93): minimal pero con sistema: filete, número y tipo arriba; nombre; sector; texto; dos acciones
   &.is-entra { animation: ficha-entra .42s cubic-bezier(.22, 1, .36, 1) both; }
-  &__nombre {
-    font-size: clamp(20px, 1.7vw, 26px);
-    font-weight: 600;
-    letter-spacing: -.015em;
-    line-height: 1.1;
-    color: var(--main-color);
-  }
-  &__tag {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 8px;
-    padding: 3px 8px 2px;
+  &__cab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--linea);
     font-size: 13px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
     font-weight: 400;
-    letter-spacing: .02em;
-    line-height: 1.2;
+    color: var(--tinta-suave);
+  }
+  &__num { font-variant-numeric: tabular-nums; }
+  &__tipo {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    &::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-color); }
+  }
+  &__nombre {
+    margin-top: 18px;
+    font-size: clamp(24px, 2.1vw, 34px);
+    font-weight: 600;
+    letter-spacing: -.025em;
+    line-height: 1.02;
     color: var(--main-color);
-    border: 1px solid var(--linea);
-    border-radius: 99px;
-    position: relative;
-    top: -2px;
   }
   &__meta {
     margin-top: 8px;
     font-size: 13px;
-    letter-spacing: .06em;
+    letter-spacing: .1em;
     text-transform: uppercase;
     font-weight: 300;
     color: var(--tinta-suave);
   }
   &__texto {
-    margin-top: 14px;
+    margin-top: 16px;
+    max-width: 40ch;
     font-size: 15px;
-    line-height: 1.5;
+    line-height: 1.55;
     font-weight: 300;
     color: var(--main-color);
+    opacity: .82;
+  }
+  &__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+    margin-top: 14px;
   }
   &__link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 16px;
-    padding: 8px 0;
-    font-size: 14px;
+    gap: 8px;
+    min-height: 44px;
+    font-size: 13px;
     font-weight: 400;
+    letter-spacing: .1em;
+    text-transform: uppercase;
     color: var(--main-color);
     text-decoration: none;
     pointer-events: auto;
     background-image: linear-gradient(var(--accent-color), var(--accent-color));
-    background-size: 100% 0;
-    background-position: 0 85%;
+    background-size: 0 1px;
+    background-position: 0 calc(50% + 11px);
     background-repeat: no-repeat;
-    transition: background-size .3s cubic-bezier(.22, 1, .36, 1);
-    svg { width: 11px; height: 11px; }
-    &:hover, &:focus-visible { background-size: 100% 40%; }
+    transition: background-size .35s cubic-bezier(.22, 1, .36, 1), color .2s ease;
+    svg { width: 11px; height: 11px; transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
+    &:hover, &:focus-visible { background-size: 100% 1px; }
+    &:hover svg, &:focus-visible svg { transform: translateX(3px); }
+    &--fuera { color: var(--tinta-suave); }
+    &--fuera:hover svg { transform: translate(2px, -2px); }
   }
 }
 @keyframes ficha-entra {
@@ -433,34 +459,37 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
     position: relative;
     inset: auto;
     width: 100%;
-    height: calc(min(76vw, 52svh * .8) * 1.25 + 40px);
+    height: calc(min(72vw, 52svh * .8) * 1.25 + 40px);
+    overflow: visible;
     perspective: none;
   }
+  // v3 (feedback 96): fila horizontal, la siguiente asoma por la derecha
   .carta {
-    left: 50%;
+    left: 7vw;
     top: 20px;
-    width: min(76vw, 52svh * .8);
+    width: min(72vw, 52svh * .8);
     aspect-ratio: 4 / 5;
-    margin-left: calc(min(76vw, 52svh * .8) / -2);
+    margin-left: 0;
     margin-top: 0;
-    transform-origin: 50% 100%;
+    transform-origin: 0 50%;
   }
   .carta__neutra p { font-size: 24px; }
   .baraja__pie {
     position: relative;
     left: auto;
+    top: auto;
     bottom: auto;
-    width: min(76vw, 52svh * .8);
-    margin: 8px auto 0;
+    width: auto;
+    margin: 4px 7vw 0;
   }
+  .baraja__regla { display: flex; }
   .ficha__texto { font-size: 15px; }
   .ficha__link { padding: 12px 0; }
   .baraja__pista {
     position: relative;
     right: auto;
     bottom: auto;
-    width: min(76vw, 52svh * .8);
-    margin: 20px auto 0;
+    margin: 16px 7vw 0;
   }
 }
 
@@ -477,9 +506,6 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
 // About sin botón de día/noche: el último enlace no se pega al borde
 .pagina-about .nav-sutil { right: 16px; }
 
-// Pista del espacio: solo con ratón, y se va en cuanto se usa
-html.cursor-cambiado .intro__pista { opacity: 0; }
-@media (hover: none), (pointer: coarse), (max-width: 1280px) { .intro__pista { display: none; } }
 
 // ============================================================
 // About v2 (feedback 79): blanco roto, Inter fina, contención. Una pantalla por bloque.
@@ -697,3 +723,219 @@ html.cursor-cambiado .intro__pista { opacity: 0; }
 @media (max-width: 400px) {
   .sitio-baraja .nav--top { display: none; }
 }
+
+// ---------- v3: interfaz en mayúsculas (feedback 87) ----------
+.sitio-baraja {
+  .lang-switch__item { letter-spacing: .08em; }
+  .baraja__pista { text-transform: uppercase; }
+}
+
+// PRESS SPACE: en inglés, en una esquina (arriba a la izquierda, bajo el idioma), solo con ratón (feedback 86)
+.press-space {
+  position: fixed;
+  left: 26px;
+  top: 64px;
+  z-index: $z-top;
+  margin: 0;
+  font-family: $main-font;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--main-color);
+  opacity: .45;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  &::before {
+    content: "";
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent-color);
+    transition: background-color .3s ease;
+  }
+}
+@media (hover: none), (pointer: coarse), (max-width: 1280px) { .press-space { display: none; } }
+
+// Claim: tres opciones a la vista con ?claim=a|b|c (feedback 88)
+.claim { display: none; }
+html.claim-a .claim--a, html.claim-b .claim--b, html.claim-c .claim--c { display: inline; }
+html.cursor-fijo .press-space { display: none; }
+
+// ============================================================
+// v3 · La esfera (feedback 83-85, 95)
+// ============================================================
+.intro__esfera { display: none; }
+html.esfera-abierta .follow { opacity: 0 !important; }
+
+.esfera-capa {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: rgba(0, 0, 0, 0);
+  transition: background-color .7s cubic-bezier(.22, 1, .36, 1);
+  &.is-abierta { background: #000; }
+  &.is-cerrando { background: rgba(0, 0, 0, 0); transition-duration: .6s; }
+}
+.esfera-bola {
+  position: absolute;
+  left: 0; top: 0;
+  border-radius: 50%;
+  background: var(--accent-color);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  transition: transform .72s cubic-bezier(.65, 0, .2, 1), opacity .45s ease;
+  pointer-events: none;
+}
+.esfera-marco {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  opacity: 0;
+  transition: opacity .5s ease .1s;
+}
+.esfera-capa.is-lista {
+  .esfera-marco { opacity: 1; }
+  .esfera-bola { opacity: 0; }
+}
+.esfera-capa.is-cerrando .esfera-marco { opacity: 0; transition-delay: 0s; transition-duration: .2s; }
+
+// Móvil y tablet: la esfera flota en el centro de la intro desde el principio
+@media (max-width: 1280px) {
+  html.esfera-movil {
+    .pantalla--intro { min-height: 100svh; }
+    .pantalla--intro .intro { justify-content: flex-start; padding-bottom: 24px; }
+    .pantalla--intro .intro__punto { display: none; }
+    .pantalla--intro .intro__esfera {
+      display: block;
+      position: relative;
+      width: min(100vw, 62svh);
+      aspect-ratio: 1;
+      margin: 2svh 0 0;
+      align-self: center;
+      pointer-events: auto;
+      // el borde negro del lienzo se funde con el fondo (en día queda un halo oscuro suave)
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 70%);
+      mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 70%);
+      opacity: 0;
+      transition: opacity .8s ease;
+      &.is-lista { opacity: 1; }
+      iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    }
+    .pantalla--intro .intro__sub { margin-top: 0; }
+  }
+}
+
+// Regla de marcas (solo móvil): una marca por proyecto, la activa más alta (como The Lookback)
+.baraja__regla {
+  display: none;
+  gap: 6px;
+  align-items: flex-end;
+  height: 18px;
+  margin: 18px 7vw 0;
+  i { display: block; width: 1px; height: 8px; background: var(--main-color); opacity: .3; transition: height .3s ease, opacity .3s ease; }
+  i.is-activa { height: 18px; opacity: 1; }
+}
+.baraja, .pf, .sm, .ficha { font-family: $main-font; }
+
+// ============================================================
+// v3 · Ficha de proyecto (feedback 94): vídeo, problema, qué hice, enlace. Página que se recorre con scroll normal.
+// ============================================================
+body.pagina-proyecto { display: block; }
+.pf {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 104px 6vw 80px;
+  color: var(--main-color);
+  p, a, dd, dt, h1, h2 { color: var(--main-color); }
+
+  &__volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    font-size: 13px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: .7;
+    svg { width: 12px; height: 12px; transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
+    &:hover { opacity: 1; svg { transform: translateX(-3px); } }
+  }
+  &__cab { margin-top: 28px; }
+  &__tipo {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave) !important;
+    &::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-color); }
+  }
+  &__titulo {
+    margin: 14px 0 0;
+    font-size: clamp(44px, 7vw, 112px);
+    line-height: .95;
+    letter-spacing: -.04em;
+    font-weight: 600;
+    text-transform: none;
+  }
+  &__punto { display: inline-block; width: .16em; height: .16em; margin-left: .05em; border-radius: 50%; background: var(--accent-color); }
+  &__sector { margin-top: 14px; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; font-weight: 300; color: var(--tinta-suave) !important; }
+
+  &__video {
+    margin: 48px 0 0;
+    border-radius: 6px;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: #111;
+    video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    &.is-movil { aspect-ratio: 4 / 5; }
+  }
+
+  &__cuerpo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 40px 6vw;
+    margin-top: 56px;
+  }
+  &__datos {
+    margin: 0;
+    div { padding: 12px 0; border-top: 1px solid var(--linea); display: flex; justify-content: space-between; gap: 16px; }
+    div:last-child { border-bottom: 1px solid var(--linea); }
+    dt { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave) !important; }
+    dd { margin: 0; font-size: 15px; font-weight: 300; text-align: right; }
+  }
+  &__textos section + section { margin-top: 36px; }
+  &__h2 {
+    margin: 0 0 12px;
+    font-size: 13px; letter-spacing: .1em; text-transform: uppercase; font-weight: 400;
+    color: var(--tinta-suave) !important;
+  }
+  &__p { max-width: 54ch; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.45; font-weight: 300; }
+  &__acciones { margin-top: 36px; svg { width: 11px; height: 11px; } }
+  &__sinweb { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave) !important; }
+
+  &__sig {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-top: 88px;
+    padding: 28px 0;
+    border-top: 1px solid var(--linea);
+    text-decoration: none;
+    svg { width: 18px; height: 18px; align-self: center; margin-left: auto; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+    &:hover svg { transform: translateX(6px); }
+    &:hover .pf__sig-n { color: var(--accent-color) !important; }
+  }
+  &__sig-k { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave) !important; }
+  &__sig-n { font-size: clamp(28px, 3.4vw, 52px); font-weight: 600; letter-spacing: -.03em; transition: color .25s ease; }
+}
+@media (max-width: 760px) {
+  .pf { padding: 84px 6vw 56px; }
+  .pf__cuerpo { grid-template-columns: 1fr; margin-top: 36px; }
+  .pf__video { margin-top: 32px; }
+  .pf__sig { margin-top: 56px; }
+}
+.pagina-proyecto .arrow-container { display: none; }
+html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }

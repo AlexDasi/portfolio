@@ -1,0 +1,828 @@
+<!doctype html>
+<!-- Esfera del portfolio PORTADA TAL CUAL de la demo aprobada (ATELIER sites/propuestas/public/lab/2026-11-05_esfera-demo-cursor/…_v9.html,
+     conv. 1048-1050). Rama rediseno-baraja-2026-11 (feedback 83-85, 95; L-1330c: portar, no rehacer).
+     Solo se añade el modo ?embed (sin cabecera, menú ni pista; avisa a la página con postMessage) y ?piel=solare|chicle|glaseado|gota|prisma. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Esfera · tres pieles, tres cursores</title>
+<style>
+  :root{--lima:#ECF98E;--gris:#8d8d86}
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%;background:#000;overflow:hidden;color:#cfcfc8;font:13px/1.45 ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  canvas#c{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+  header{position:fixed;left:20px;top:18px;right:20px;pointer-events:none}
+  header b{display:block;color:#eee;font-weight:500}
+  header span{color:var(--gris)}
+  header em{font-style:normal}
+  nav{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:2px;z-index:3}
+  nav button{all:unset;cursor:pointer;padding:12px 14px;min-height:44px;box-sizing:border-box;color:var(--gris);font:inherit;white-space:nowrap;transition:color .25s}
+  nav button i{font-style:normal;opacity:.55;margin-right:6px}
+  nav button:hover{color:#ddd}
+  nav button[aria-pressed="true"]{color:var(--lima)}
+  nav .grupo{color:#5f5f59;padding:12px 4px 12px 14px;white-space:nowrap}
+  nav .grupo:first-child{padding-left:0}
+  nav button:focus-visible{outline:1px solid var(--lima);outline-offset:-4px}
+  #hint{position:fixed;left:20px;right:20px;bottom:calc(max(18px,env(safe-area-inset-bottom)) + 50px);text-align:center;color:#b9b9b2;pointer-events:none;transition:opacity .35s}
+  /* HUD del prisma */
+  #hud{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;z-index:2}
+  #hud svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  #hud line{stroke:var(--lima);stroke-width:1}
+  #hud circle{fill:none;stroke:var(--lima);stroke-width:1}
+  #hud .tag{position:absolute;left:0;top:0;color:var(--lima);line-height:1.5;white-space:nowrap}
+  #hud .tag em{font-style:normal;color:#e9e9e2}
+  /* cursor propio en toda la página: nunca la flecha del sistema (Alex, conv. 1020) */
+  @media (pointer:fine){html,body,*{cursor:none!important}}
+  #cur{position:fixed;left:0;top:0;pointer-events:none;z-index:4;opacity:0;transition:opacity .2s}
+  #cur i{position:absolute;left:0;top:0;display:block;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s,background .25s,transform .2s}
+  #cur.m0 i,#cur.m2 i,#cur.m3 i,#cur.m4 i{width:10px;height:10px;border-radius:50%;background:var(--lima);box-shadow:0 0 14px 4px rgba(236,249,142,.45)}
+  #cur.m1 i{width:24px;height:24px;border-radius:50%;border:1px solid var(--lima)}
+  #cur.down i{transform:translate(-50%,-50%) scale(1.7);opacity:.6}
+  #cur.m5 i{width:22px;height:22px;background:linear-gradient(var(--lima),var(--lima)) center/1px 100% no-repeat,linear-gradient(var(--lima),var(--lima)) center/100% 1px no-repeat}
+  body.tactil #cur{display:none}
+  /* embebida en alexdasi.com: solo la bola */
+  body.embed header, body.embed nav, body.embed #hint{display:none}
+  body.embed.tactil canvas#c, body.embed.movil canvas#c{touch-action:pan-y}
+  @media (max-width:560px){
+    header{left:16px;right:16px;top:14px}
+    nav{width:100%;justify-content:center;gap:0}
+    nav button{padding:12px 9px}
+    nav button .n,nav .grupo{display:none}
+    nav button i{margin:0;opacity:1}
+    nav button{padding:12px 11px}
+    nav button[data-m="5"]{margin-left:8px;box-shadow:inset 1px 0 #333}
+    header .teclas{display:none}
+    #hint{left:16px;right:16px}
+  }
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<canvas id="c" tabindex="0" aria-label="Esfera interactiva"></canvas>
+<header class="mono"><b>Esfera · pieles y cursores</b><span>conv. 1048 · v8 · pasa el cursor · arrastra para girar<em class="teclas"> · teclas 1–6 y ← →</em></span></header>
+<p id="hint" class="mono"></p>
+<nav class="mono" aria-label="Textura">
+  <span class="grupo">Orgánica</span>
+  <button data-m="0"><i>01</i><span class="n">Solare</span></button>
+  <button data-m="1"><i>02</i><span class="n">Chicle</span></button>
+  <button data-m="2"><i>03</i><span class="n">Glaseado</span></button>
+  <button data-m="3"><i>04</i><span class="n">Niebla</span></button>
+  <button data-m="4"><i>05</i><span class="n">Gota</span></button>
+  <span class="grupo">Tech</span>
+  <button data-m="5"><i>06</i><span class="n">Prisma</span></button>
+</nav>
+<div id="hud"><svg><line id="hl"/><circle id="hc" r="4"/></svg><div class="tag mono" id="ht"></div></div>
+<div id="cur" class="m0"><i></i></div>
+<script type="module">
+import * as THREE from 'three';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
+import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
+import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
+
+/* ?m=1|2|3 textura · ?still&t=s fotograma fijo · ?auto cursor fantasma (pruebas) */
+const Q = new URLSearchParams(location.search), STILL = Q.has('still'), AUTO = Q.has('auto'), T0 = +(Q.get('t') || 0);
+let modo = Math.min(5, Math.max(0, (+Q.get('m') || 1) - 1));
+/* alexdasi.com (rama rediseno-baraja-2026-11): ?embed y ?piel= */
+const EMBED = Q.has('embed');
+if (EMBED) { document.body.classList.add('embed'); if (Q.has('movil')) document.body.classList.add('movil'); }
+const PIELES = {solare: 0, chicle: 1, glaseado: 2, niebla: 3, gota: 4, prisma: 5};
+if (Q.has('piel') && Q.get('piel') in PIELES) modo = PIELES[Q.get('piel')];
+const avisar = (msg) => { if (EMBED && parent !== window) parent.postMessage({esfera: msg}, '*'); };
+let pulsado = null;
+const HINTS = [
+  'Solare · pásale el cursor como un palo por el agua: se abre y vuelve con peso',
+  'Chicle · pásale el cursor y se hunde; agárralo (clic y arrastra): se pega, te sigue girando y al soltar sigue rodando',
+  'Glaseado · ráyalo: quitas la escarcha, se ve brillante por dentro y se vuelve a helar',
+  'Niebla · mete la mano: el humo se mueve con ella y vuelve a su sitio',
+  'Gota · pásale el dedo: la arrastras y gira; si le das fuerte, salpica como un cubo de agua y las gotas vuelven a caer',
+  'Prisma · la cara bajo el cursor se enciende y te da su medida'
+];
+const LIMA = new THREE.Color('#ECF98E');
+
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({canvas, antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: STILL});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+renderer.toneMapping = THREE.AgXToneMapping;
+renderer.toneMappingExposure = 1.05;
+
+/* ---------- ruido (simplex 3D, Ashima) ---------- */
+const NOISE = /* glsl */`
+vec3 m289(vec3 x){return x-floor(x*(1./289.))*289.;}
+vec4 m289(vec4 x){return x-floor(x*(1./289.))*289.;}
+vec4 perm(vec4 x){return m289(((x*34.)+1.)*x);}
+vec4 tis(vec4 r){return 1.79284291400159-.85373472095314*r;}
+float snoise(vec3 v){
+  const vec2 C=vec2(1./6.,1./3.);const vec4 D=vec4(0.,.5,1.,2.);
+  vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);
+  vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.-g;vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);
+  vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;
+  i=m289(i);
+  vec4 p=perm(perm(perm(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));
+  float n_=.142857142857;vec3 ns=n_*D.wyz-D.xzx;
+  vec4 j=p-49.*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.*x_);
+  vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.-abs(x)-abs(y);
+  vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);
+  vec4 s0=floor(b0)*2.+1.;vec4 s1=floor(b1)*2.+1.;vec4 sh=-step(h,vec4(0.));
+  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+  vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);
+  vec4 nm=tis(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=nm.x;p1*=nm.y;p2*=nm.z;p3*=nm.w;
+  vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);m=m*m;
+  return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+}
+float fbm3(vec3 p){return .55*snoise(p)+.3*snoise(p*2.03+7.1)+.15*snoise(p*4.1-3.7);}
+float fbm4(vec3 p){return .5*snoise(p)+.27*snoise(p*2.03+7.1)+.15*snoise(p*4.1-3.7)+.08*snoise(p*8.3+1.9);}
+`;
+
+/* ---------- entorno: el mismo «mundo» del script de Blender (cálido a la izquierda, frío a la derecha, tira arriba, 3 discos de luz) ---------- */
+function entorno(tech){
+  const s = new THREE.Scene();
+  const m = new THREE.ShaderMaterial({
+    side: THREE.BackSide, depthWrite: false,
+    uniforms: {
+      uWarm: {value: tech ? new THREE.Vector3(.75, .75, .8) : new THREE.Vector3(1, .45, .16)},
+      uCold: {value: tech ? new THREE.Vector3(.35, .55, 1) : new THREE.Vector3(.18, .55, 1)},
+      uKey: {value: tech ? new THREE.Vector3(1, .97, .92).multiplyScalar(3.2) : new THREE.Vector3(1, .6, .3).multiplyScalar(4)},
+      uKeyDir: {value: tech ? new THREE.Vector3(-3, 2.2, 2.2) : new THREE.Vector3(-3, 1.6, 2)},
+      uRim: {value: tech ? new THREE.Vector3(.4, .6, 1).multiplyScalar(4.5) : new THREE.Vector3(.3, .6, 1).multiplyScalar(5.5)},
+      uTop: {value: tech ? 2.2 : 1.8}
+    },
+    vertexShader: `varying vec3 vD;void main(){vD=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader: `varying vec3 vD;uniform vec3 uWarm,uCold,uKey,uKeyDir,uRim;uniform float uTop;
+      vec3 disco(vec3 d,vec3 c,float r,vec3 col){return col*smoothstep(cos(r),cos(r*.55),dot(d,normalize(c)));}
+      void main(){
+        vec3 d=normalize(vD);float f=d.x*.5+.5;
+        vec3 c=mix(uWarm,vec3(.08,.03,.01),smoothstep(0.,.3,f));
+        c=mix(c,vec3(0.),smoothstep(.3,.5,f));
+        c=mix(c,vec3(.01,.03,.08),smoothstep(.5,.7,f));
+        c=mix(c,uCold,smoothstep(.7,1.,f));
+        c+=vec3(smoothstep(.55,.9,d.y)*1.4);
+        c+=disco(d,uKeyDir,.42,uKey);
+        c+=disco(d,vec3(3.2,.4,-.3),.5,uRim);
+        c+=disco(d,vec3(0.,3.4,1.),.22,vec3(uTop));
+        gl_FragColor=vec4(c,1.);
+      }`
+  });
+  s.add(new THREE.Mesh(new THREE.SphereGeometry(50, 64, 32), m));
+  const pm = new THREE.PMREMGenerator(renderer);
+  const pmrem = pm.fromScene(s, 0).texture; pm.dispose();
+  const crt = new THREE.WebGLCubeRenderTarget(256, {type: THREE.HalfFloatType, generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter});
+  new THREE.CubeCamera(.1, 100, crt).update(renderer, s);
+  return {pmrem, cube: crt.texture};
+}
+const ENV_ORG = entorno(false), ENV_TECH = entorno(true);
+
+/* ---------- fluido de alexdasi.com (WebGL Fluid de P. Dobryakov) pero PEGADO A LA BOLA: la simulación corre en el mapa
+   equirectangular de la esfera (256×128, tinta 1024×512, costura en longitud), así el rastro sigue la curvatura y gira con ella.
+   Configuración = la del panel FX que pasó Alex (conv. 1035): densidad 0,35 (el rastro dura), velocidad 1,05, vorticidad 0,
+   presión 50 iteraciones, radio 0,19 (aquí 0,12 para que no sea tan grande sobre la bola), fuerza 12000, sombreado sí. */
+const fluido = (() => {
+  const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), esc = new THREE.Scene(), quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2)); esc.add(quad);
+  const RT = (w, h) => new THREE.WebGLRenderTarget(w, h, {type: THREE.HalfFloatType, depthBuffer: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.RepeatWrapping});
+  const doble = (w, h) => { let a = RT(w, h), b = RT(w, h); return {get read(){return a}, get write(){return b}, swap(){[a, b] = [b, a]}}; };
+  const vel = doble(256, 128), pres = doble(256, 128), dye = doble(1024, 512), div = RT(256, 128), curl = RT(256, 128);
+  const texel = new THREE.Vector2(1 / 256, 1 / 128), dyeTexel = new THREE.Vector2(1 / 1024, 1 / 512);
+  const VS = `varying vec2 vUv,vL,vR,vT,vB;uniform vec2 texel;void main(){vUv=uv;vL=uv-vec2(texel.x,0.);vR=uv+vec2(texel.x,0.);vT=uv+vec2(0.,texel.y);vB=uv-vec2(0.,texel.y);gl_Position=vec4(position.xy,0.,1.);}`;
+  const M = (fs, u) => new THREE.ShaderMaterial({vertexShader: VS, fragmentShader: 'varying vec2 vUv,vL,vR,vT,vB;uniform vec2 texel;' + fs, uniforms: Object.assign({texel: {value: texel}}, u), depthTest: false, depthWrite: false});
+  const splat = M(`uniform sampler2D uT;uniform float radius;uniform vec3 color;uniform vec2 point;
+    void main(){vec2 p=vUv-point;p.x=fract(p.x+.5)-.5;p.x*=2.*cos((vUv.y-.5)*3.14159);gl_FragColor=vec4(texture2D(uT,vUv).xyz+exp(-dot(p,p)/radius)*color,1.);}`,
+    {uT: {value: null}, radius: {value: .0012}, color: {value: new THREE.Vector3()}, point: {value: new THREE.Vector2()}});
+  const curlM = M(`uniform sampler2D uV;void main(){float L=texture2D(uV,vL).y,R=texture2D(uV,vR).y,T=texture2D(uV,vT).x,B=texture2D(uV,vB).x;gl_FragColor=vec4(.5*(R-L-T+B),0.,0.,1.);}`, {uV: {value: null}});
+  const vort = M(`uniform sampler2D uV,uC;uniform float curl,dt;void main(){
+    float L=texture2D(uC,vL).x,R=texture2D(uC,vR).x,T=texture2D(uC,vT).x,B=texture2D(uC,vB).x,C=texture2D(uC,vUv).x;
+    vec2 f=.5*vec2(abs(T)-abs(B),abs(R)-abs(L));f/=length(f)+1e-4;f*=curl*C;f.y*=-1.;
+    gl_FragColor=vec4(clamp(texture2D(uV,vUv).xy+f*dt,-1000.,1000.),0.,1.);}`, {uV: {value: null}, uC: {value: null}, curl: {value: 0}, dt: {value: .016}});
+  const divM = M(`uniform sampler2D uV;void main(){
+    float L=texture2D(uV,vL).x,R=texture2D(uV,vR).x,T=texture2D(uV,vT).y,B=texture2D(uV,vB).y;vec2 C=texture2D(uV,vUv).xy;
+    if(vT.y>1.)T=-C.y;if(vB.y<0.)B=-C.y;gl_FragColor=vec4(.5*(R-L+T-B),0.,0.,1.);}`, {uV: {value: null}});
+  const clr = M(`uniform sampler2D uT;uniform float k;void main(){gl_FragColor=k*texture2D(uT,vUv);}`, {uT: {value: null}, k: {value: 0}});
+  const presM = M(`uniform sampler2D uP,uD;void main(){float L=texture2D(uP,vL).x,R=texture2D(uP,vR).x,T=texture2D(uP,vT).x,B=texture2D(uP,vB).x;
+    gl_FragColor=vec4((L+R+B+T-texture2D(uD,vUv).x)*.25,0.,0.,1.);}`, {uP: {value: null}, uD: {value: null}});
+  const grad = M(`uniform sampler2D uP,uV;void main(){float L=texture2D(uP,vL).x,R=texture2D(uP,vR).x,T=texture2D(uP,vT).x,B=texture2D(uP,vB).x;
+    gl_FragColor=vec4(texture2D(uV,vUv).xy-vec2(R-L,T-B),0.,1.);}`, {uP: {value: null}, uV: {value: null}});
+  const adv = M(`uniform sampler2D uV,uS;uniform float dt,dis;void main(){vec2 c=vUv-dt*texture2D(uV,vUv).xy*texel;gl_FragColor=texture2D(uS,c)/(1.+dis*dt);}`,
+    {uV: {value: null}, uS: {value: null}, dt: {value: .016}, dis: {value: 1}});
+  const run = (m, t) => { quad.material = m; renderer.setRenderTarget(t); renderer.render(esc, cam); };
+  const prev0 = renderer.getRenderTarget(); for (const d of [vel, pres, dye]) for (const r of [d.read, d.write]) { renderer.setRenderTarget(r); renderer.clear(); } renderer.setRenderTarget(prev0);
+  const cola = [];
+  return {
+    vel, dye, texel, dyeTexel,
+    toque(u, v, du, dv){ cola.push([u, v, du, dv]); },
+    paso(dt){
+      const prev = renderer.getRenderTarget();
+      for (const [u, v, du, dv] of cola.splice(0)) {
+        splat.uniforms.point.value.set(u, v);
+        splat.uniforms.uT.value = vel.read.texture; splat.uniforms.color.value.set(du * 12000, dv * 12000, 0); run(splat, vel.write); vel.swap();
+        splat.uniforms.uT.value = dye.read.texture; splat.uniforms.color.value.set(.35, .35, .35); run(splat, dye.write); dye.swap();
+      }
+      curlM.uniforms.uV.value = vel.read.texture; run(curlM, curl);
+      vort.uniforms.uV.value = vel.read.texture; vort.uniforms.uC.value = curl.texture; vort.uniforms.dt.value = dt; run(vort, vel.write); vel.swap();
+      divM.uniforms.uV.value = vel.read.texture; run(divM, div);
+      clr.uniforms.uT.value = pres.read.texture; run(clr, pres.write); pres.swap();
+      presM.uniforms.uD.value = div.texture;
+      for (let i = 0; i < 50; i++) { presM.uniforms.uP.value = pres.read.texture; run(presM, pres.write); pres.swap(); }
+      grad.uniforms.uP.value = pres.read.texture; grad.uniforms.uV.value = vel.read.texture; run(grad, vel.write); vel.swap();
+      adv.uniforms.dt.value = dt; adv.uniforms.uV.value = vel.read.texture; adv.uniforms.uS.value = vel.read.texture; adv.uniforms.dis.value = 1.05; run(adv, vel.write); vel.swap();
+      adv.uniforms.uV.value = vel.read.texture; adv.uniforms.uS.value = dye.read.texture; adv.uniforms.dis.value = .35; run(adv, dye.write); dye.swap();
+      renderer.setRenderTarget(prev);
+    }
+  };
+})();
+const UV_GLSL = `vec2 uvEsf(vec3 p){vec3 q=normalize(p);return vec2(atan(q.z,q.x)/6.2831853+.5,asin(clamp(q.y,-1.,1.))/3.14159265+.5);}`;
+
+/* uniforms compartidos */
+const U = {
+  uTime: {value: 0}, uRes: {value: new THREE.Vector2(1, 1)}, uVel: {value: null}, uDye: {value: null}, uDyeTexel: {value: fluido.dyeTexel}, uTexel: {value: fluido.texel}, uVelK: {value: .16}
+};
+
+/* ---------- escena ---------- */
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0);
+const camera = new THREE.PerspectiveCamera(30, 1, .1, 100);
+const objetos = [];
+
+/* 01 · Solare lima — mate y luminosa desde dentro. El cursor es un palo en el agua: el fluido de alexdasi.com abre el gas en un
+   surco fino que se ensancha (presión), con peso, y vuelve a cerrarse en ~1 s. */
+const solare = (() => {
+  const m = new THREE.ShaderMaterial({
+    uniforms: Object.assign({uCamObj: {value: new THREE.Vector3()}, uViewToObj: {value: new THREE.Matrix3()}, uEnv: {value: ENV_ORG.cube}}, U),
+    vertexShader: `varying vec3 vPos,vN,vW;void main(){vPos=position;vN=normalize(mat3(modelMatrix)*normal);vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`,
+    fragmentShader: NOISE + UV_GLSL + `
+      varying vec3 vPos,vN,vW;
+      uniform float uTime,uVelK;uniform vec2 uRes,uDyeTexel,uTexel;uniform vec3 uCamObj;uniform mat3 uViewToObj;uniform samplerCube uEnv;uniform sampler2D uVel,uDye;
+      void main(){
+        vec2 suv=uvEsf(vPos);                                                   // el fluido vive en la piel de la bola
+        vec2 vu=texture2D(uVel,suv).xy*uTexel*uVelK;
+        vec3 sq=normalize(vPos);float lon=atan(sq.z,sq.x),lat=asin(clamp(sq.y,-1.,1.));
+        vec3 este=vec3(-sin(lon),0.,cos(lon)),norte=vec3(-sin(lat)*cos(lon),cos(lat),-sin(lat)*sin(lon));
+        vec3 warp=este*vu.x*6.2832*cos(lat)+norte*vu.y*3.1416;                  // el agua se aparta con el palo
+        float tinta=clamp(texture2D(uDye,suv).r,0.,1.2);
+        vec2 e2=uDyeTexel*2.;
+        vec2 gr=.6*vec2(texture2D(uDye,suv+vec2(e2.x,0.)).r-texture2D(uDye,suv-vec2(e2.x,0.)).r,texture2D(uDye,suv+vec2(0.,e2.y)).r-texture2D(uDye,suv-vec2(0.,e2.y)).r);
+        vec3 N=normalize(vN),V=normalize(cameraPosition-vW);float ndv=clamp(dot(N,V),0.,1.);
+        vec3 rd=normalize(vPos-uCamObj);rd=normalize(mix(rd,-normalize(vPos),.3));
+        float chord=max(-2.*dot(rd,vPos),.05);
+        float t=uTime*.055;
+        vec3 dw=vec3(snoise(vPos*.9+vec3(t,0.,0.)),snoise(vPos*.9+vec3(5.2,-t,1.3)),0.)*.45;
+        float acc=0.,ws=0.;
+        for(int i=0;i<6;i++){
+          float s=float(i)/5.;vec3 p=vPos+rd*s*chord*.7;
+          float w=exp(-s*3.6);
+          // la capa de fuera es la más densa y la que se lleva el dedo; las de dentro, menos (paralaje)
+          float n=fbm4((p-warp*mix(1.,.4,s))*2.1+dw+vec3(t,-t*.7,t*.45));
+          acc+=n*w*(i==0?1.6:1.);ws+=w*(i==0?1.6:1.);
+        }
+        float g=acc/ws*.74+.52;
+        g+=.045*snoise((vPos-warp)*7.5+vec3(0.,t*2.,0.));
+        g=clamp(g,0.,1.);
+        vec3 lo=vec3(.50,.66,.06),mi=vec3(.62,.80,.09),hi=vec3(.86,.98,.40);
+        vec3 gas=mix(lo,mi,smoothstep(.25,.5,g));gas=mix(gas,hi,smoothstep(.5,.82,g));
+        float em=mix(.62,1.3,smoothstep(.35,.75,g));
+        vec3 Lw=normalize(vec3(-.75,.45,.5)),Lc=normalize(vec3(.95,.05,-.1));
+        float dW=max(dot(N,Lw)*.6+.4,0.),dC=pow(max(dot(N,Lc),0.),1.5);
+        vec3 col=gas*em*(.62+.38*dW)*.92;
+        col+=vec3(1.,.55,.25)*dW*.08;
+        col+=vec3(.3,.6,1.)*dC*.42*(.35+.65*(1.-ndv));
+        col*=mix(.5,1.,pow(ndv,.55));
+        col+=textureLod(uEnv,reflect(-V,N),6.).rgb*.05*(.25+.75*pow(1.-ndv,3.));
+        col*=1.-min(tinta,1.)*.32;                                              // el surco abierto, más hondo
+        float borde=clamp(length(gr)*4.,0.,1.);
+        col+=vec3(.9,1.,.5)*borde*.32*(.6+.4*dot(normalize(gr+1e-5),vec2(-.7,.7)));   // sus bordes cogen luz (como el sombreado de tu web)
+        gl_FragColor=vec4(col,1.);
+      }`
+  });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 160, 120), m);
+  return {mesh, m, radio: 1, prev: null};
+})();
+
+/* 02 · Chicle — cuerpo blando: el dedo lo hunde, el borde se levanta, rebota y tiembla (muelle) */
+const chicle = (() => {
+  const m = new THREE.MeshPhysicalMaterial({
+    color: '#C8E83A', roughness: .4, clearcoat: .45, clearcoatRoughness: .28,
+    sheen: .35, sheenColor: new THREE.Color('#F4FFC0'), sheenRoughness: .5,
+    emissive: new THREE.Color('#9cbf1a'), emissiveIntensity: .3,
+    envMap: ENV_ORG.pmrem, envMapIntensity: .8
+  });
+  const huellas = Array.from({length: 24}, () => new THREE.Vector4(0, 0, 1, 0));
+  const pell = [0, 1].map(() => ({a: new THREE.Vector3(0, 0, 1), d: new THREE.Vector3(), v: new THREE.Vector3(), obj: new THREE.Vector3(), activo: false}));
+  const u = {uHit: {value: new THREE.Vector3(0, 0, 1)}, uDent: {value: 0}, uWob: {value: 0}, uSig: {value: .46}, uH: {value: huellas}, uPA: {value: pell.map(p => p.a)}, uPD: {value: pell.map(p => p.d)}};
+  m.onBeforeCompile = sh => {
+    Object.assign(sh.uniforms, u, U);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>
+      uniform float uTime,uDent,uWob,uSig;uniform vec3 uHit;uniform vec4 uH[24];uniform vec3 uPA[2],uPD[2];
+      ${NOISE}
+      vec3 dispP(vec3 p){
+        float d=.12*snoise(p*1.0+vec3(0.,0.,uTime*.07))+.018*snoise(p*2.2-vec3(uTime*.05));
+        float r=distance(p,uHit);
+        float hu=uDent*exp(-pow(r/uSig,2.2)),ro=uDent*.12*exp(-pow((r-uSig*1.25)/.16,2.));   // marca del hover (yema de dedo)
+        for(int i=0;i<24;i++){vec4 h=uH[i];if(h.w<.001)continue;float rr=distance(p,h.xyz);   // huellas fijas: se quedan y giran con él
+          hu+=h.w*exp(-pow(rr/uSig,3.));ro+=h.w*.2*exp(-pow((rr-uSig*1.3)/.13,2.));}
+        float hond=.3*(1.-exp(-hu/.3));                 // suma suave: un surco no se hace más hondo que un dedo, y sin aristas
+        d+=ro*exp(-hu*9.)-hond;                          // el rodete solo fuera del hueco
+        d+=uWob*sin(r*9.-uTime*16.)*exp(-r*2.);
+        vec3 q=p*(1.+d);
+        for(int i=0;i<2;i++){float rp=distance(p,uPA[i]);q+=uPD[i]*exp(-pow(rp/.36,2.));}   // pellizcos: la masa se estira con el dedo
+        return q;
+      }`)
+      .replace('#include <beginnormal_vertex>', `
+        vec3 pp=normalize(position);vec3 up=abs(pp.y)<.99?vec3(0.,1.,0.):vec3(1.,0.,0.);
+        vec3 t1=normalize(cross(pp,up)),t2=cross(pp,t1);float ee=.01;
+        vec3 P0=dispP(pp),P1=dispP(normalize(pp+t1*ee)),P2=dispP(normalize(pp+t2*ee));
+        vec3 objectNormal=normalize(cross(P1-P0,P2-P0));if(dot(objectNormal,pp)<0.)objectNormal=-objectNormal;`)
+      .replace('#include <begin_vertex>', 'vec3 transformed=P0;');
+  };
+  const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 56), m);
+  const sp = {dent: 0, v: 0, wob: 0, hit: new THREE.Vector3(0, 0, 1), ultima: null, n: 0};
+  const hv = huellas.map(() => ({obj: 0, v: 0}));
+  return {mesh, m, u, sp, huellas, hv, pell, radio: 1.08, pi: 0, agarre: null, w: new THREE.Vector3()};
+})();
+
+/* Pincel: mapa equirectangular pegado a la bola; el cursor pinta (0..1) y se va curando solo. Lo usan glaseado, niebla y aceite. */
+function pincel(cura, radio = .28){
+  const RT = () => new THREE.WebGLRenderTarget(256, 128, {type: THREE.HalfFloatType, depthBuffer: false, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.RepeatWrapping});
+  let a = RT(), b = RT();
+  const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), esc = new THREE.Scene();
+  const m = new THREE.ShaderMaterial({
+    uniforms: {uT: {value: null}, uHit: {value: new THREE.Vector3(0, 0, 1)}, uAmt: {value: 0}, uRad: {value: radio}, uCura: {value: 1}},
+    vertexShader: `varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+    fragmentShader: `varying vec2 vUv;uniform sampler2D uT;uniform vec3 uHit;uniform float uAmt,uRad,uCura;const float PI=3.14159265;
+      void main(){float lo=(vUv.x-.5)*2.*PI,la=(vUv.y-.5)*PI;vec3 q=vec3(cos(la)*cos(lo),sin(la),cos(la)*sin(lo));
+        float o=texture2D(uT,vUv).r*uCura+uAmt*exp(-pow(distance(q,uHit)/uRad,2.));gl_FragColor=vec4(min(o,1.),0.,0.,1.);}`
+  });
+  esc.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), m));
+  const pv0 = renderer.getRenderTarget(); for (const r of [a, b]) { renderer.setRenderTarget(r); renderer.clear(); } renderer.setRenderTarget(pv0);
+  return {
+    get tex(){ return a.texture; },
+    pintar(hit, amt){ m.uniforms.uHit.value.copy(hit); m.uniforms.uAmt.value = amt; },
+    paso(dt){ m.uniforms.uT.value = a.texture; m.uniforms.uCura.value = Math.exp(-dt * cura);
+      const pv = renderer.getRenderTarget(); renderer.setRenderTarget(b); renderer.render(esc, cam); renderer.setRenderTarget(pv); [a, b] = [b, a]; m.uniforms.uAmt.value = 0; }
+  };
+}
+const PIN_GLSL = `float pin(sampler2D t,vec3 p){vec3 q=normalize(p);return texture2D(t,vec2(atan(q.z,q.x)/6.2831853+.5,asin(clamp(q.y,-1.,1.))/3.14159265+.5)).r;}`;
+
+/* 03 · Glaseado — escarcha lima con cristalitos; el cursor la raja (un trazo fino, solo si mueves): debajo, cristal brillante con un
+   caramelo lima que brilla dentro. La escarcha vuelve a crecer desde los bordes en unos segundos. */
+const glaseado = (() => {
+  const pin = pincel(.28, .14);
+  const m = new THREE.ShaderMaterial({
+    uniforms: Object.assign({uCamObj: {value: new THREE.Vector3()}, uM3: {value: new THREE.Matrix3()}, uEnv: {value: ENV_ORG.cube}, uPin: {value: null}}, U),
+    vertexShader: `varying vec3 vPos,vN,vW;void main(){vPos=position;vN=normalize(mat3(modelMatrix)*normal);vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`,
+    fragmentShader: NOISE + PIN_GLSL + `varying vec3 vPos,vN,vW;
+      uniform float uTime;uniform vec3 uCamObj;uniform mat3 uM3;uniform samplerCube uEnv;uniform sampler2D uPin;
+      void main(){
+        vec3 N=normalize(vN),V=normalize(cameraPosition-vW);float ndv=clamp(dot(N,V),0.,1.);
+        vec3 pw=uM3*vPos;
+        float luz=mix(1.15,.75,smoothstep(-.9,.9,pw.x))*(.55+.45*max(dot(N,normalize(vec3(-.6,.5,.6))),0.));
+        // escarcha: grano de cristalitos + destellos que cambian con la mirada
+        float cr=abs(snoise(vPos*16.))*.6+abs(snoise(vPos*41.))*.4;
+        float brillo=pow(max(snoise(vPos*70.+V*3.),0.),14.)*1.6;
+        vec3 escarcha=mix(vec3(.66,.8,.24),vec3(.88,.95,.6),smoothstep(.1,.9,cr))*luz+vec3(1.,1.,.85)*brillo*.6;
+        escarcha+=vec3(.3,.6,1.)*pow(1.-ndv,2.5)*.25*smoothstep(-.2,.9,pw.x);
+        // la raja: cristal limpio con el caramelo lima brillando dentro
+        float raja=pin(uPin,vPos);
+        float hielo=smoothstep(.18,.5,raja+.22*(cr-.5));                       // los bordes de la raja, cristalinos
+        vec3 rd=normalize(vPos-uCamObj),acc=vec3(0.);
+        float chord=max(-2.*dot(rd,vPos),.05);
+        for(int k=0;k<6;k++){vec3 p=vPos+rd*(float(k)+.5)*chord/6.;float r=length(p);
+          float banda=.5+.5*sin(r*16.+fbm3(p*2.)*3.+uTime*.2);acc+=vec3(.7,.9,.15)*(.35+.65*banda)*exp(-r*1.2)*chord/6.*1.6;}
+        float F=.04+.96*pow(1.-ndv,5.);
+        vec3 limpio=acc+textureLod(uEnv,reflect(-V,N),.6).rgb*(F*.9+.04);
+        gl_FragColor=vec4(mix(escarcha,limpio,hielo),1.);
+      }`
+  });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), m);
+  return {mesh, m, pin, radio: 1, prev: null};
+})();
+
+/* 04 · Niebla — bola de humo densa y esférica. El cursor es una mano metida dentro: arrastra el humo con ella (estela de 8 puntos
+   con su velocidad) y lo aparta; al irse, cada punto se apaga y el humo vuelve a su sitio. */
+const niebla = (() => {
+  const mano = Array.from({length: 8}, () => new THREE.Vector4(0, 0, 0, 0)), manoV = Array.from({length: 8}, () => new THREE.Vector3());
+  const m = new THREE.ShaderMaterial({
+    uniforms: Object.assign({uCamObj: {value: new THREE.Vector3()}, uM3: {value: new THREE.Matrix3()}, uMano: {value: mano}, uManoV: {value: manoV}}, U),
+    vertexShader: `varying vec3 vPos;void main(){vPos=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader: NOISE + `varying vec3 vPos;
+      uniform float uTime;uniform vec3 uCamObj;uniform mat3 uM3;uniform vec4 uMano[8];uniform vec3 uManoV[8];
+      vec3 remueve(vec3 p){vec3 d=vec3(0.);for(int i=0;i<8;i++){vec4 h=uMano[i];if(h.w<.01)continue;vec3 r=p-h.xyz;float g=h.w*exp(-dot(r,r)/.07);
+        float g2=h.w*exp(-dot(r,r)/.16);d+=g2*uManoV[i]*.34+g*normalize(r+1e-4)*.16;}return d;}
+      void main(){
+        vec3 rd=normalize(vPos-uCamObj),ro=vPos;
+        float chord=max(-2.*dot(rd,ro),.05),ds=chord/22.,t=uTime*.07;
+        float jit=fract(sin(dot(gl_FragCoord.xy,vec2(12.9898,78.233)))*43758.5453);
+        vec3 T=vec3(1.),acc=vec3(0.);
+        for(int k=0;k<22;k++){
+          vec3 p=ro+rd*(float(k)+jit)*ds,q=p-remueve(p);
+          float lq=length(q);if(lq>1.34)continue;                                    // aire vacío: no se calcula
+          float bola=smoothstep(1.,.74,lq+.1*fbm3(q*1.6+vec3(t,0.,-t)));            // esférica, borde de humo fino
+          float hal=lq>.86?smoothstep(1.32,.96,lq+.22*fbm3(q*2.7-vec3(t*1.3,0.,t)))*.3:0.;   // jirones que se escapan (sin máscara)
+          float d=max(bola*(.75+.9*smoothstep(-.35,.6,fbm3(q*2.3+vec3(-t,t*.7,t*.4)))),hal);
+          if(d<.002)continue;
+          vec3 pw=uM3*p;
+          vec3 L=mix(vec3(1.,.82,.55)*1.1,vec3(.5,.7,1.)*.85,smoothstep(-.9,.9,pw.x))*(.5+.5*clamp(pw.y*.6+.5,0.,1.))+vec3(.4,.5,.08);
+          acc+=T*d*vec3(.9,.98,.62)*L*ds*1.25;
+          T*=exp(-d*3.4*ds);
+        }
+        gl_FragColor=vec4(acc,1.);
+      }`
+  });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(1.5, 96, 72), m);   // v8: proxy grande, la niebla ya no choca con una esfera invisible
+  return {mesh, m, mano, manoV, edad: mano.map(() => 9), n: 0, prev: null, radio: 1};
+})();
+
+/* 05 · Gota — gota de aceite oliva flotando. v8 (conv. 1048): vetas de aceite en la propia gota (se ve que gira), el dedo la
+   arrastra y la hace girar, el surco aparta el aceite y lo amontona a los lados; con un trazo fuerte salpica como un cubo de agua:
+   un abanico de gotas de tamaños distintos que vuela en la dirección del dedo, cae por gravedad y al volver abre ondas en la superficie. */
+const MAT_GOTA = {color: '#7f9418', metalness: .85, roughness: .27, clearcoat: .6, clearcoatRoughness: .1,
+  iridescence: .5, iridescenceIOR: 1.4, iridescenceThicknessRange: [240, 420], envMap: ENV_ORG.pmrem, envMapIntensity: 1.25};
+const N_GOTITAS = 18, N_ONDAS = 8;
+const aceite = (() => {
+  const surcos = Array.from({length: 10}, () => new THREE.Vector4(0, 0, 1, 0));
+  const ondas = Array.from({length: N_ONDAS}, () => new THREE.Vector4(0, 0, 1, 9)), ondaA = new Float32Array(N_ONDAS);
+  const u = {uS: {value: surcos}, uOn: {value: ondas}, uOnA: {value: ondaA}};
+  const m = new THREE.MeshPhysicalMaterial(MAT_GOTA);
+  m.onBeforeCompile = sh => {
+    Object.assign(sh.uniforms, u); sh.uniforms.uTime = U.uTime;
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>\nvarying vec3 vObj;uniform float uTime;uniform vec4 uS[10],uOn[${N_ONDAS}];uniform float uOnA[${N_ONDAS}];\n` + NOISE + `
+      vec3 dispA(vec3 p){
+        float d=.035*snoise(p*.9+vec3(0.,uTime*.12,0.))+.012*snoise(p*2.2-vec3(uTime*.1));
+        for(int i=0;i<10;i++){vec4 s=uS[i];if(abs(s.w)<.001)continue;float r=distance(p,s.xyz);
+          d-=s.w*exp(-r*r/.03);d+=s.w*.4*exp(-pow((r-.23)/.07,2.));}            // surco + labio: el aceite apartado se amontona al lado
+        for(int i=0;i<${N_ONDAS};i++){vec4 o=uOn[i];if(o.w>2.2)continue;float fr=distance(p,o.xyz)-.62*o.w;   // onda que corre
+          d+=uOnA[i]*exp(-o.w*2.4)*cos(fr*26.)*exp(-fr*fr*110.);}
+        return p*(1.+d);}`)
+      .replace('#include <beginnormal_vertex>', `vec3 pp=normalize(position);vObj=pp;vec3 up=abs(pp.y)<.99?vec3(0.,1.,0.):vec3(1.,0.,0.);
+        vec3 t1=normalize(cross(pp,up)),t2=cross(pp,t1);vec3 P0=dispA(pp),P1=dispA(normalize(pp+t1*.01)),P2=dispA(normalize(pp+t2*.01));
+        vec3 objectNormal=normalize(cross(P1-P0,P2-P0));if(dot(objectNormal,pp)<0.)objectNormal=-objectNormal;`)
+      .replace('#include <begin_vertex>', 'vec3 transformed=P0;');
+    // vetas del aceite pegadas a la gota: más oscuras y más mates en unas zonas → se lee el giro
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vObj;uniform float uTime;\n' + NOISE)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+        float veta=fbm3(vObj*vec3(1.6,4.2,1.6)+vec3(snoise(vObj*1.3+uTime*.03)*.8,0.,0.));
+        diffuseColor.rgb*=mix(.74,1.12,smoothstep(-.35,.45,veta));`)
+      .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
+        roughnessFactor*=mix(1.5,.75,smoothstep(-.35,.45,veta));`);
+  };
+  const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 56), m);
+  const mg = new THREE.MeshPhysicalMaterial(MAT_GOTA), gotitas = [], geoG = new THREE.SphereGeometry(1, 20, 14);
+  for (let i = 0; i < N_GOTITAS; i++) { const g = new THREE.Mesh(geoG, mg); g.visible = false; scene.add(g); gotitas.push({mesh: g, v: new THREE.Vector3(), r: 0, vivo: false, t: 0}); }
+  return {mesh, m, u, surcos, ondas, ondaA, on: 0, edades: surcos.map(() => 9), n: 0, gotitas, prev: null, ultSalpica: -9, radio: 1, vel: 0, pico: 0, ultimo: null, pxPrev: null, dir: null,
+    w: new THREE.Vector3(), rocio: 0};
+})();
+function ondaGota(A, pW, amp){ const k = A.on++ % N_ONDAS; A.ondas[k].copy(new THREE.Vector4(...A.mesh.worldToLocal(pW.clone()).normalize().toArray(), 0)); A.ondaA[k] = amp; }
+function salpica(A, pW, dirW, f, cuantas){   // abanico: hacia donde iba el dedo + hacia fuera + algo de lado; muchas pequeñas y alguna gorda
+  const nW = pW.clone().sub(A.mesh.position).normalize(), tg = dirW.clone().addScaledVector(nW, -dirW.dot(nW)).normalize(), lado = nW.clone().cross(tg).normalize();
+  for (const gt of A.gotitas.filter(x => !x.vivo).slice(0, cuantas)) {
+    const z = Math.random(); gt.vivo = true; gt.t = 0; gt.r = .012 + .05 * Math.pow(z, 2.6);
+    const sp = (1 - z * .5) * f;                                                         // las pequeñas salen más rápido
+    gt.mesh.position.copy(pW).addScaledVector(nW, .03 + gt.r);
+    gt.v.copy(tg).multiplyScalar((.8 + Math.random() * .6) * sp).addScaledVector(nW, (.9 + Math.random() * .7) * sp).addScaledVector(lado, (Math.random() - .5) * .55 * sp);
+  }
+}
+/* 06 · Prisma lima (tech) — icosaedro liso de metacrilato lima, en dos pasadas; la cara bajo el cursor se enciende y da su medida */
+function cristal({pos, mask, face, caras, bev, cuarzo}){
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.computeVertexNormals();
+  const n = pos.length / 3, bary = new Float32Array(n * 3), glow = new Float32Array(n);
+  for (let i = 0; i < n; i++) bary[i * 3 + (i % 3)] = 1;
+  geo.setAttribute('aBary', new THREE.BufferAttribute(bary, 3));
+  geo.setAttribute('aMask', new THREE.BufferAttribute(mask, 3));
+  geo.setAttribute('aGlow', new THREE.BufferAttribute(glow, 1));
+  const FS = NOISE + `varying vec3 vB,vM,vN,vW,vS,vO;varying float vG;
+      uniform samplerCube uEnv;uniform vec3 uLima;uniform float uBack,uQ,uBev;
+      void main(){
+        vec3 Nf=normalize(vN);
+        vec3 bb=vB+(1.-vM);float e=min(min(bb.x,bb.y),bb.z);
+        float linea=1.-smoothstep(0.,.012,e);
+        float bev=1.-smoothstep(0.,.03,e);
+        vec3 V=normalize(cameraPosition-vW);
+        vec3 ab=mix(vec3(.84,.95,.27),vec3(.9,.97,.55),uQ);
+        float velo=0.;
+        if(uQ>.5)velo=smoothstep(.05,.6,fbm3(vO*2.4+3.1));   // velos lechosos del cuarzo
+        if(uBack>.5){
+          vec3 N=-Nf;float ndv=clamp(dot(N,V),0.,1.);
+          vec3 r=refract(-V,-N,1.54);if(dot(r,r)<.01)r=reflect(-V,N);
+          vec3 tr=textureLod(uEnv,r,3.6).rgb;
+          vec3 col=tr*ab*ab*.55+uLima*ab*.09*(.6+.4*ndv);
+          col+=vec3(.86,.95,.72)*velo*.14;
+          col+=uLima*linea*.22;
+          col+=uLima*vG*.22+uLima*linea*vG*1.2;
+          gl_FragColor=vec4(col,1.);
+          return;
+        }
+        vec3 N=normalize(mix(Nf,normalize(vS),bev*uBev));
+        float ndv=clamp(dot(N,V),0.,1.);
+        float F=.045+.955*pow(1.-ndv,5.);
+        vec3 refl=textureLod(uEnv,reflect(-V,N),2.4).rgb;
+        vec3 tint=uLima*ab*.12*(.5+.5*ndv)+vec3(.9,1.,.8)*(.03+velo*.05)*uQ;
+        vec3 col=tint+refl*F*1.1;
+        col+=uLima*linea*.4;
+        col+=uLima*vG*(.4+.6*pow(1.-ndv,.5));
+        col+=uLima*linea*vG*3.;
+        float al=clamp(.28+uQ*(.06+velo*.12)+F*.9+linea*.5+vG*.45,0.,1.);
+        gl_FragColor=vec4(col,al);
+      }`;
+  const VS = `attribute vec3 aBary,aMask;attribute float aGlow;varying vec3 vB,vM,vN,vW,vS,vO;varying float vG;
+      void main(){vB=aBary;vM=aMask;vG=aGlow;vO=position;vN=normalize(mat3(modelMatrix)*normal);vS=normalize(mat3(modelMatrix)*position);
+      vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`;
+  const uni = k => Object.assign({uEnv: {value: ENV_TECH.cube}, uLima: {value: new THREE.Vector3(LIMA.r, LIMA.g, LIMA.b)}, uBack: {value: k}, uQ: {value: cuarzo ? 1 : 0}, uBev: {value: bev}}, U);
+  const m = new THREE.ShaderMaterial({uniforms: uni(0), vertexShader: VS, fragmentShader: FS, transparent: true, depthWrite: false});
+  const mb = new THREE.ShaderMaterial({uniforms: uni(1), vertexShader: VS, fragmentShader: FS, side: THREE.BackSide});
+  const mesh = new THREE.Mesh(geo, m), dentro = new THREE.Mesh(geo, mb);
+  mesh.renderOrder = 2; dentro.renderOrder = 1; dentro.raycast = () => {}; mesh.add(dentro);
+  const tris = Array.from({length: caras}, () => []); face.forEach((f, t) => tris[f].push(t));
+  return {mesh, m, geo, glow, face, tris, caras, gl: new Float32Array(caras), radio: 1};
+}
+const prisma = (() => {
+  const pos = new THREE.IcosahedronGeometry(1, 0).attributes.position.array.slice(); // 20 caras, liso y geométrico
+  const nt = pos.length / 9;
+  return cristal({pos, mask: new Float32Array(nt * 9).fill(1), face: Array.from({length: nt}, (_, t) => t), caras: nt, bev: .6, cuarzo: false});
+})();
+
+objetos.push(solare, chicle, glaseado, niebla, aceite, prisma);
+objetos.forEach((o, i) => { o.aparece = i === modo ? (STILL || EMBED ? 1 : 0) : 0; o.mesh.visible = false; scene.add(o.mesh); });
+solare.mesh.rotation.set(.2, 0, .44); chicle.mesh.rotation.set(.2, 0, .3); glaseado.mesh.rotation.set(.3, 0, .2); niebla.mesh.rotation.set(.1, 0, .3); aceite.mesh.rotation.set(.2, 0, .1); prisma.mesh.rotation.set(.35, .4, .2);
+
+/* ---------- postproceso: bloom suave + AgX + grano fino ---------- */
+const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, {type: THREE.HalfFloatType, samples: 4}));
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), .2, .35, 1.0); composer.addPass(bloom);
+composer.addPass(new OutputPass());
+const grano = new ShaderPass({
+  uniforms: {tDiffuse: {value: null}, uTime: {value: 0}, uRes: U.uRes},
+  vertexShader: `varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+  fragmentShader: `uniform sampler2D tDiffuse;uniform float uTime;uniform vec2 uRes;varying vec2 vUv;
+    float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
+    void main(){vec3 c=texture2D(tDiffuse,vUv).rgb;
+      float l=dot(c,vec3(.2126,.7152,.0722));c=mix(vec3(l),c,1.14);
+      c+=(h(vUv*uRes+fract(uTime)*91.)-.5)*.035*(1.-l*.6);
+      gl_FragColor=vec4(max(c,0.),1.);}`
+});
+composer.addPass(grano);
+
+/* ---------- tamaño ---------- */
+function resize(){
+  const w = innerWidth, h = innerHeight, pr = renderer.getPixelRatio();
+  renderer.setSize(w, h, false); composer.setPixelRatio(pr); composer.setSize(w, h); bloom.setSize(w * pr, h * pr);
+  U.uRes.value.set(Math.round(w * pr), Math.round(h * pr));
+  camera.aspect = w / h;
+  // la bola ocupa ~56 % del lado corto (algo menos en móvil por el menú)
+  const f = w < 560 ? .66 : .56, frac = f * Math.min(w, h) / h;
+  camera.position.set(0, 0, 1 / (frac * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))));
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize); resize();
+
+/* ---------- puntero ---------- */
+const EJE_Z = new THREE.Vector3(0, 0, 1);
+const rayT = new THREE.Raycaster();
+const R = {drag: false, lx: 0, ly: 0, lt: 0, vx: 0, vy: 0}, EJE_Y = new THREE.Vector3(0, 1, 0), EJE_X = new THREE.Vector3(1, 0, 0);
+const P = {x: .5, y: .5, cx: 0, cy: 0, sobre: false, down: false, dentro: false, ultimo: -1, primero: true};
+const cur = document.getElementById('cur');
+function mover(cx, cy){
+  const x = cx / innerWidth, y = 1 - cy / innerHeight, asp = innerWidth / innerHeight;
+  if (modo === 0 && !R.drag && objetos.length) {                        // como en tu web: una mancha por cada movimiento, pero sobre la bola
+    rayT.setFromCamera(new THREE.Vector2(x * 2 - 1, y * 2 - 1), camera);
+    const h = rayT.intersectObject(solare.mesh, false)[0];
+    if (h) { const q = solare.mesh.worldToLocal(h.point.clone()).normalize(), u = Math.atan2(q.z, q.x) / (2 * Math.PI) + .5, v = Math.asin(THREE.MathUtils.clamp(q.y, -1, 1)) / Math.PI + .5;
+      if (P.uv) { let du = u - P.uv[0]; du -= Math.round(du); const dv = v - P.uv[1]; if (Math.abs(du) + Math.abs(dv) < .2 && (du || dv)) fluido.toque(u, v, du * Math.cos((v - .5) * Math.PI), dv); }
+      P.uv = [u, v]; } else P.uv = null; }
+  P.primero = false; P.x = x; P.y = y; P.cx = cx; P.cy = cy; P.dentro = true;
+  cur.style.transform = `translate(${cx}px,${cy}px)`;
+}
+canvas.addEventListener('pointermove', e => { if (e.pointerType === 'touch') document.body.classList.add('tactil');
+  if (R.drag) { const now = performance.now(), dx = e.clientX - R.lx, dy = e.clientY - R.ly, k = 3.2 / Math.min(innerWidth, innerHeight), ddt = Math.max((now - R.lt) / 1000, 1 / 120);
+    const o = objetos[modo].mesh; o.rotateOnWorldAxis(EJE_Y, dx * k); o.rotateOnWorldAxis(EJE_X, dy * k);
+    R.vx += (dx * k / ddt - R.vx) * .5; R.vy += (dy * k / ddt - R.vy) * .5; R.lx = e.clientX; R.ly = e.clientY; R.lt = now; }
+  mover(e.clientX, e.clientY); });
+canvas.addEventListener('pointerdown', e => { pulsado = {x: e.clientX, y: e.clientY, t: performance.now()}; if (e.pointerType === 'touch') { document.body.classList.add('tactil'); P.primero = true; } mover(e.clientX, e.clientY); P.down = true;
+  if (modo === 1) { rayT.setFromCamera(new THREE.Vector2(P.x * 2 - 1, P.y * 2 - 1), camera); const h = rayT.intersectObject(chicle.mesh, false)[0];   // chicle: clic = pellizco
+    if (h) { const k = 0, pz = chicle.pell[k]; pz.a.copy(chicle.mesh.worldToLocal(h.point.clone()).normalize()); pz.activo = true; chicle.agarre = {k, w: h.point.clone()}; cur.classList.add('down'); canvas.setPointerCapture?.(e.pointerId); return; } }
+  R.drag = true; R.lx = e.clientX; R.ly = e.clientY; R.lt = performance.now(); R.vx = R.vy = 0; cur.classList.add('down'); canvas.setPointerCapture?.(e.pointerId); });
+const soltar = e => { P.down = false; if (chicle.agarre) { chicle.pell[chicle.agarre.k].activo = false; chicle.agarre = null; } R.drag = false; if (performance.now() - R.lt > 80) R.vx = R.vy = 0; cur.classList.remove('down'); if (e.pointerType === 'touch') { P.dentro = false; P.primero = true; } };
+canvas.addEventListener('pointerup', e => {
+  // embebida: un clic (sin arrastrar) fuera de la bola la cierra
+  if (EMBED && pulsado && !Q.has('movil')) {
+    const mov = Math.hypot(e.clientX - pulsado.x, e.clientY - pulsado.y), r = (innerWidth < 560 ? .66 : .56) * Math.min(innerWidth, innerHeight) / 2;
+    const fuera = Math.hypot(e.clientX - innerWidth / 2, e.clientY - innerHeight / 2) > r * 1.08;
+    if (mov < 6 && fuera) avisar('cerrar');
+  }
+  pulsado = null;
+});
+canvas.addEventListener('pointerup', soltar); canvas.addEventListener('pointercancel', soltar);
+canvas.addEventListener('pointerleave', () => { P.dentro = false; P.primero = true; });
+addEventListener('pointermove', e => { if (e.pointerType !== 'touch') { cur.style.transform = `translate(${e.clientX}px,${e.clientY}px)`; cur.style.opacity = 1; } });
+document.documentElement.addEventListener('mouseleave', () => { cur.style.opacity = 0; });
+
+/* ---------- selector ---------- */
+const botones = [...document.querySelectorAll('nav button')], hint = document.getElementById('hint');
+function elegir(i){
+  modo = i; botones.forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+  cur.className = 'm' + i + (P.down ? ' down' : '');
+  hint.style.opacity = 0; setTimeout(() => { hint.textContent = HINTS[modo]; hint.style.opacity = 1; }, 220);
+  if (!EMBED) history.replaceState(null, '', '?m=' + (i + 1));
+  if (typeof bloom !== 'undefined') bloom.strength += .35;          // destello suave al cambiar
+}
+botones.forEach((b, i) => b.addEventListener('click', () => elegir(i)));
+addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === 'ArrowRight') elegir((modo + 1) % 6); if (e.key === 'ArrowLeft') elegir((modo + 5) % 6); if (e.key >= '1' && e.key <= '6') elegir(+e.key - 1); });
+elegir(modo);
+
+/* ---------- HUD del prisma ---------- */
+const hud = document.getElementById('hud'), hl = document.getElementById('hl'), hc = document.getElementById('hc'), ht = document.getElementById('ht');
+const hudPos = {x: 0, y: 0, ok: false};
+const fmt = (n, d) => n.toFixed(d).replace('.', ',');
+
+/* ---------- bucle ---------- */
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), tmp = new THREE.Vector3(), tmpM = new THREE.Matrix4();
+const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3(), tmp2 = new THREE.Vector3();
+function golpeEsfera(o){ // rayo contra la esfera de radio o.radio·escala (analítico)
+  const r = o.radio * o.mesh.scale.x, oc = tmp.copy(ray.ray.origin).sub(o.mesh.position);
+  const bb = oc.dot(ray.ray.direction), cc = oc.lengthSq() - r * r, h = bb * bb - cc;
+  if (h < 0) return null;
+  return ray.ray.origin.clone().addScaledVector(ray.ray.direction, -bb - Math.sqrt(h));
+}
+let t = T0, last = performance.now();
+function frame(now){
+  const dt = STILL ? 1 / 60 : Math.min((now - last) / 1000, 1 / 30); last = now; t += dt;
+  U.uTime.value = t; grano.uniforms.uTime.value = t;
+
+  if (AUTO) { // cursor fantasma para pruebas: órbita por encima de la bola
+    const cx = innerWidth / 2 + Math.cos(t * 1.3) * Math.min(innerWidth, innerHeight) * .17, cy = innerHeight / 2 + Math.sin(t * 2.1) * Math.min(innerWidth, innerHeight) * .12;
+    mover(cx, cy); P.down = Math.sin(t * .9) > .3;
+  }
+  if (solare.mesh.visible || modo === 0) fluido.paso(dt);       // el fluido solo trabaja cuando se ve Solare
+  U.uVel.value = fluido.vel.read.texture; U.uDye.value = fluido.dye.read.texture;
+
+  // aparecer / desaparecer al cambiar de piel
+  const otrasFuera = objetos.every((o, i) => i === modo || o.aparece < .05);
+  objetos.forEach((o, i) => {
+    const obj = i === modo && otrasFuera ? 1 : 0;
+    // transición: la que se va encoge girando rápido y cae; la nueva sube y entra con un rebote (easeOutBack)
+    o.aparece = obj ? Math.min(1, o.aparece + dt / .85) : Math.max(0, o.aparece - dt / .38);
+    const a = o.aparece, c1 = 1.9, sOut = obj ? 1 + (c1 + 1) * Math.pow(a - 1, 3) + c1 * Math.pow(a - 1, 2) : a * a;
+    const s = Math.max(sOut, 0);
+    o.mesh.visible = s > .002; o.mesh.scale.setScalar(Math.max(s, 1e-3));
+    o.mesh.position.y = Math.sin(t * .6 + i) * .035 + (obj ? -.35 * Math.pow(1 - a, 3) : -.25 * (1 - a));
+    if (a > 0 && a < 1) o.mesh.rotateOnWorldAxis(EJE_Y, dt * (obj ? 4.5 * Math.pow(1 - a, 2) : 7 * (1 - a)));
+    if (i === modo && !R.drag) { o.mesh.rotateOnWorldAxis(EJE_Y, R.vx * dt); o.mesh.rotateOnWorldAxis(EJE_X, R.vy * dt); }
+    if (!(i === modo && R.drag) && !(i === 1 && chicle.agarre)) o.mesh.rotateOnWorldAxis(EJE_Y, dt * (i === 5 ? .08 : .11));
+    o.mesh.updateMatrixWorld();
+  });
+
+  R.vx *= Math.exp(-dt * 2.2); R.vy *= Math.exp(-dt * 2.2);
+  const dentro = P.dentro && !R.drag;            // mientras giras, la pieza no reacciona al cursor
+  ndc.set(P.x * 2 - 1, P.y * 2 - 1); ray.setFromCamera(ndc, camera);
+  const act = objetos[modo]; let sobre = false;
+
+  // 01 Solare: el dedo arrastra el gas (el rastro se pinta en el mapa pegado a la bola)
+  tmpM.copy(solare.mesh.matrixWorld).invert();
+  solare.m.uniforms.uCamObj.value.copy(camera.position).applyMatrix4(tmpM);
+  solare.m.uniforms.uViewToObj.value.setFromMatrix4(tmpM.multiply(camera.matrixWorld));
+  if (modo === 0 && dentro) sobre = !!golpeEsfera(solare);
+
+  // 02 Chicle: al pasar se hunde un poco (yema de dedo) y vuelve con muelle
+  {
+    const sp = chicle.sp; let objetivo = 0;
+    if (modo === 1 && dentro && !chicle.agarre) { const g = golpeEsfera(chicle);
+      if (g) { sobre = true; objetivo = .1; const loc = chicle.mesh.worldToLocal(g.clone()).normalize(); sp.hit.lerp(loc, 1 - Math.exp(-dt * 32)).normalize(); } }
+    const acc = 190 * (objetivo - sp.dent) - 7.5 * sp.v; sp.v += acc * dt; sp.dent += sp.v * dt;
+    sp.wob = Math.max(sp.wob * Math.exp(-dt * 2.6), Math.min(.02, Math.abs(sp.v) * .01));
+    chicle.u.uDent.value = sp.dent; chicle.u.uWob.value = sp.wob; chicle.u.uHit.value.copy(sp.hit);
+    // v8 (Alex, conv. 1048): agarrar = se pega al ratón. El punto agarrado quiere ir bajo el cursor: eso GIRA la bola (muelle de giro
+    // con rebote); lo que el giro no alcanza se convierte en un estirón corto y blando (máx. ~0,26, saturado: nunca se deforma de más).
+    // Al soltar, el giro que llevaba sigue un poco con inercia y el estirón vuelve despacio y elástico.
+    if (chicle.agarre) { sobre = true;
+      const pz = chicle.pell[0], c0 = chicle.mesh.position, s = chicle.mesh.scale.x, aw = chicle.mesh.localToWorld(pz.a.clone());
+      const camDir = camera.getWorldDirection(new THREE.Vector3()), T = new THREE.Vector3();
+      if (ray.ray.intersectPlane(new THREE.Plane().setFromNormalAndCoplanarPoint(camDir.clone().negate(), c0), T)) {
+        const rel = T.sub(c0).divideScalar(s), r = rel.length();
+        const dirT = r < .999 ? rel.clone().addScaledVector(camDir, -Math.sqrt(1 - r * r)).normalize() : rel.clone().normalize();
+        const dirA = aw.clone().sub(c0).normalize(), eje = dirA.clone().cross(dirT), sn = eje.length();
+        if (sn > 1e-5) eje.multiplyScalar(Math.atan2(sn, dirA.dot(dirT)) / sn);
+        chicle.w.addScaledVector(eje.multiplyScalar(58).addScaledVector(chicle.w, -8.5), dt).clampLength(0, 9);
+      }
+      const T2 = new THREE.Vector3();
+      if (ray.ray.intersectPlane(new THREE.Plane().setFromNormalAndCoplanarPoint(camDir.clone().negate(), aw), T2)) {
+        const d = T2.sub(aw), L = d.length(); if (L > 1e-5) d.setLength(.26 * Math.tanh(L / .26));
+        pz.obj.copy(chicle.mesh.worldToLocal(aw.clone().add(d))).sub(pz.a);
+      } }
+    else chicle.w.multiplyScalar(Math.exp(-dt * 1.3));                       // suelto: sigue rodando un poco y se para
+    { const wl = chicle.w.length(); if (wl > 1e-4) { chicle.mesh.rotateOnWorldAxis(chicle.w.clone().divideScalar(wl), wl * dt); chicle.mesh.updateMatrixWorld(); } }
+    chicle.pell.forEach(pz => { if (!pz.activo) pz.obj.set(0, 0, 0);
+      const k = pz.activo ? 40 : 9, c = pz.activo ? 4.2 : 1.3;               // agarrado: sigue con rebote · suelto: vuelve lento y elástico
+      pz.v.addScaledVector(pz.obj.clone().sub(pz.d).multiplyScalar(k).addScaledVector(pz.v, -c), dt); pz.d.addScaledVector(pz.v, dt); });
+  }
+
+  // 03 Glaseado: la raja solo sale si mueves (cuánto mueves, no cuánto tiempo)
+  {
+    if (modo === 2 && dentro) { const g = golpeEsfera(glaseado);
+      if (g) { sobre = true; const loc = glaseado.mesh.worldToLocal(g.clone()).normalize();
+        if (glaseado.prev) { const mv = loc.distanceTo(glaseado.prev); if (mv > 1e-4 && mv < .4) glaseado.pin.pintar(loc, Math.min(.9, mv * 14)); }
+        glaseado.prev = loc; } else glaseado.prev = null; } else glaseado.prev = null;
+    glaseado.pin.paso(dt); glaseado.m.uniforms.uPin.value = glaseado.pin.tex;
+    glaseado.m.uniforms.uCamObj.value.copy(camera.position).applyMatrix4(tmpM.copy(glaseado.mesh.matrixWorld).invert());
+    glaseado.m.uniforms.uM3.value.setFromMatrix4(glaseado.mesh.matrixWorld);
+  }
+  // 04 Niebla: la mano dentro del humo
+  {
+    const Nb = niebla; Nb.m.uniforms.uCamObj.value.copy(camera.position).applyMatrix4(tmpM.copy(Nb.mesh.matrixWorld).invert());
+    Nb.m.uniforms.uM3.value.setFromMatrix4(Nb.mesh.matrixWorld);
+    if (modo === 3 && dentro) { const g = golpeEsfera(Nb);
+      if (g) { sobre = true; const camL = Nb.m.uniforms.uCamObj.value, loc = Nb.mesh.worldToLocal(g.clone()), h = loc.clone().addScaledVector(loc.clone().sub(camL).normalize(), .4);  // la mano, un poco dentro
+        if (!Nb.prev || h.distanceTo(Nb.prev) > .05) { const k = Nb.n++ % 8, v = Nb.prev ? h.clone().sub(Nb.prev).divideScalar(Math.max(dt, .016)).clampLength(0, 2.2) : new THREE.Vector3();
+          Nb.mano[k].set(h.x, h.y, h.z, 1); Nb.manoV[k].copy(v.clampLength(0, 2.6)); Nb.edad[k] = 0; Nb.prev = h; } } else Nb.prev = null; } else Nb.prev = null;
+    Nb.mano.forEach((hm, k) => { const e = Nb.edad[k] += dt; hm.w = e < .25 ? 1 : Math.exp(-(e - .25) * 1.4); });   // se apaga y el humo vuelve
+  }
+  // 05 Gota (v8): el dedo arrastra y la hace girar; surco con labio; salpicadura de cubo de agua al final de un trazo fuerte
+  {
+    const A = aceite; let g = null;
+    if (modo === 4 && dentro) g = golpeEsfera(A);
+    const px = new THREE.Vector2(P.cx, P.cy);
+    if (g) { sobre = true; const loc = A.mesh.worldToLocal(g.clone()).normalize();
+      if (A.pxPrev) { const vel = px.distanceTo(A.pxPrev) / Math.max(dt, 1e-3); A.vel += (vel - A.vel) * .35; A.pico = Math.max(A.pico, A.vel); }
+      if (!A.prev) ondaGota(A, g, .012);                                                    // el dedo entra: una onda pequeña
+      if (!A.prev || loc.angleTo(A.prev) > .05) { if (A.prev && A.gPrev) { const k = A.n++ % 10, gw = A.gPrev;
+          A.surcos[k].set(loc.x, loc.y, loc.z, 0); A.edades[k] = 0; const nd = g.clone().sub(gw).normalize(); A.dir = A.dir ? A.dir.lerp(nd, .5).normalize() : nd;   // suavizada: un temblón no le da la vuelta
+          // arrastre: el dedo hace girar la gota (como empujar una bola que flota), proporcional a lo rápido del trazo
+          A.w.addScaledVector(g.clone().sub(A.mesh.position).normalize().cross(A.dir), Math.min(A.vel / 1400, 1.6) * .9);
+          // rocío fino durante un trazo muy fuerte
+          if (A.vel > 1700) { A.rocio += dt * (A.vel - 1700) / 120; if (A.rocio >= 1) { A.rocio = 0; salpica(A, g, A.dir, .9, 1); } } }
+        A.prev = loc; A.gPrev = g.clone(); }
+      A.ultimo = g.clone(); A.pxPrev = px.clone(); }
+    const fin = (!g && A.ultimo) || (g && A.pico > 0 && A.vel < A.pico * .25);   // el trazo acaba: sales de la gota o frenas
+    if (fin) { if (A.pico > 1000 && A.ultimo && A.dir && t - A.ultSalpica > .35) { A.ultSalpica = t;
+        const f = Math.min(A.pico / 1000, 2.4);
+        salpica(A, A.ultimo, A.dir, .75 + .3 * f, Math.round(5 + 4 * f));             // 7-15 gotas según la fuerza
+        ondaGota(A, A.ultimo, .018 + .008 * f); }                                        // y la superficie rebota donde sale el dedo
+      A.pico = 0; A.vel = 0; if (!g) { A.ultimo = null; A.prev = null; A.gPrev = null; A.pxPrev = null; A.dir = null; } }
+    A.surcos.forEach((s_, k) => { const e = A.edades[k] += dt; s_.w = e > 1.4 ? 0 : .07 * (1 - Math.exp(-e * 12)) * Math.exp(-e * 2.8); });
+    A.ondas.forEach(o => { o.w += dt; });
+    A.w.clampLength(0, 3.2).multiplyScalar(Math.exp(-dt * 1.1));
+    { const wl = A.w.length(); if (wl > 1e-4) { A.mesh.rotateOnWorldAxis(A.w.clone().divideScalar(wl), wl * dt); A.mesh.updateMatrixWorld(); } }
+    for (const gt of A.gotitas) {
+      if (!gt.vivo) { gt.mesh.visible = false; continue; }
+      gt.t += dt; const rel = gt.mesh.position.clone().sub(A.mesh.position), d = rel.length();
+      gt.v.addScaledVector(rel, -7.5 * dt / Math.max(d, .3)).multiplyScalar(Math.exp(-dt * .35)); gt.mesh.position.addScaledVector(gt.v, dt);  // gravedad constante hacia la gota: arcos de verdad
+      if (gt.t > .12 && d < (1 + gt.r * .5) * A.mesh.scale.x && gt.v.dot(rel) < 0) {                                 // cae y abre su onda
+        gt.vivo = false; ondaGota(A, gt.mesh.position, Math.min(.016, .18 * gt.r + .003)); continue; }
+      if (gt.t > 4 || modo !== 4) { gt.vivo = false; continue; }
+      const sp = Math.min(1, gt.v.length() / 2.4), dirV = gt.v.clone().normalize();
+      gt.mesh.visible = true; gt.mesh.quaternion.setFromUnitVectors(EJE_Z, dirV);
+      gt.mesh.scale.set(gt.r * (1 - sp * .18), gt.r * (1 - sp * .18), gt.r * (1 + sp * .7));
+    }
+  }
+
+  // 06 Prisma: cara bajo el cursor
+  let caraHud = -1, cr = prisma;
+  for (const [k, X] of [[5, prisma]]) {
+    let cara = -1;
+    if (modo === k && dentro && X.aparece > .5) { const r = ray.intersectObject(X.mesh, false)[0]; if (r) { cara = X.face[r.faceIndex]; sobre = true; } }
+    if (modo === k) caraHud = cara;
+    const k1 = 1 - Math.exp(-dt * 14), k2 = Math.exp(-dt * 2.6);
+    for (let f = 0; f < X.caras; f++) X.gl[f] = f === cara ? X.gl[f] + (1 - X.gl[f]) * k1 : X.gl[f] * k2;
+    X.face.forEach((f, t) => { X.glow[t * 3] = X.glow[t * 3 + 1] = X.glow[t * 3 + 2] = X.gl[f]; });
+    X.geo.attributes.aGlow.needsUpdate = true;
+  }
+  {
+    const cara = caraHud;
+    if (cara >= 0) {
+      const pos = cr.geo.attributes.position, mw = cr.mesh.matrixWorld;
+      const cen = new THREE.Vector3(), nrm = new THREE.Vector3(); let area = 0;
+      for (const t of cr.tris[cara]) {
+        a.fromBufferAttribute(pos, t * 3).applyMatrix4(mw); b.fromBufferAttribute(pos, t * 3 + 1).applyMatrix4(mw); c.fromBufferAttribute(pos, t * 3 + 2).applyMatrix4(mw);
+        const cr_ = b.clone().sub(a).cross(c.clone().sub(a)), ar = cr_.length() / 2;
+        area += ar; cen.addScaledVector(a.clone().add(b).add(c).divideScalar(3), ar); nrm.add(cr_);
+      }
+      cen.divideScalar(area); nrm.normalize();
+      const ang = THREE.MathUtils.radToDeg(Math.acos(Math.min(1, Math.abs(nrm.dot(camera.position.clone().sub(cen).normalize())))));
+      const sc = cen.clone().project(camera), sx = (sc.x * .5 + .5) * innerWidth, sy = (-sc.y * .5 + .5) * innerHeight;
+      if (!hudPos.ok) { hudPos.x = sx; hudPos.y = sy; hudPos.ok = true; }
+      hudPos.x += (sx - hudPos.x) * (1 - Math.exp(-dt * 18)); hudPos.y += (sy - hudPos.y) * (1 - Math.exp(-dt * 18));
+      const lado = hudPos.x > innerWidth / 2 ? 1 : -1, largo = Math.min(120, innerWidth * .16), estrecho = innerWidth < 560;
+      let ex = hudPos.x + lado * largo, ey = hudPos.y - largo * .45;
+      if (estrecho) { // en móvil la etiqueta va encima del cristal, nunca tapándolo
+        const top = tmp.set(0, 1.12 * cr.mesh.scale.x, 0).add(cr.mesh.position).project(camera);
+        ex = hudPos.x; ey = (-top.y * .5 + .5) * innerHeight - 14; }
+      hc.setAttribute('cx', hudPos.x); hc.setAttribute('cy', hudPos.y);
+      hl.setAttribute('x1', hudPos.x); hl.setAttribute('y1', hudPos.y); hl.setAttribute('x2', ex); hl.setAttribute('y2', ey);
+      ht.innerHTML = `<em>Cara ${String(cara + 1).padStart(2, '0')}/${cr.caras}</em><br>Área ${fmt(area, 2)} u²<br>Ángulo ${fmt(ang, 1)}°`;
+      const tw = ht.offsetWidth;
+      let lx = estrecho ? ex - tw / 2 : (lado > 0 ? ex + 8 : ex - 8 - tw); lx = Math.max(8, Math.min(innerWidth - tw - 8, lx));
+      ht.style.transform = `translate(${lx}px,${estrecho ? ey - ht.offsetHeight - 4 : ey - 30}px)`;
+      hud.style.opacity = 1;
+    } else { hud.style.opacity = 0; hudPos.ok = false; }
+  }
+
+  bloom.strength += ([.1, .06, .06, .14, .1, .26][modo] - bloom.strength) * (1 - Math.exp(-dt * 6));
+  if (sobre !== P.sobre) { P.sobre = sobre; document.body.classList.toggle('sobre', sobre); }
+  composer.render(dt);
+  if (EMBED && !window.__avisada && t - T0 > .25) { window.__avisada = true; avisar('lista'); }
+  if (!STILL) requestAnimationFrame(frame); else window.__listo = true;
+}
+requestAnimationFrame(frame);
+window.__elegir = elegir; window.__dbg = {chicle, aceite, niebla};
+</script>
+</body>
+</html>

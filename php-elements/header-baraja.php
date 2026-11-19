@@ -67,20 +67,20 @@ $assetVersion = static function (string $relativePath): string {
 
     <script>
         /* Rama rediseno-baraja-2026-11: todo se decide antes de pintar para que no parpadee.
-           - Día / noche: día = blanco roto + tinta (lima solo de acento); noche = negro + lima. Se recuerda.
-           - ?pisos=a|b: dos maneras de pintar «los pisos» en día (feedback 78).
-           - Cursor: color al azar de una paleta corta al abrir; la tecla espacio pasa al siguiente (feedback 80).
-             ?cursor=fijo = solo lima. */
+           - Día / noche: NOCHE por defecto (feedback 92). Se recuerda (clave nueva en la v3).
+           - Acento: un color al azar de una paleta corta al abrir; la tecla espacio pasa al siguiente.
+             Tiñe TODA la web (--cursor-color → --accent-color) y el fluido (feedback 80, 92). ?cursor=fijo = lima.
+           - ?pisos=a|b (feedback 78) · ?claim=a|b|c (feedback 88).
+           - Fluido: noche = la config del panel FX de Alex (feedback 82); día = plano. */
         (function () {
             var html = document.documentElement;
             var q = new URLSearchParams(location.search);
-            var tema = 'dia';
-            try { tema = localStorage.getItem('alexdasi-tema') || 'dia'; } catch (e) {}
+            var tema = 'noche';
+            try { tema = localStorage.getItem('alexdasi-tema-v3') || 'noche'; } catch (e) {}
             <?php if (!empty($temaForzado)): ?>tema = '<?php echo $temaForzado === 'noche' ? 'noche' : 'dia'; ?>';<?php endif; ?>
             html.classList.add(tema === 'noche' ? 'tema-noche' : 'tema-dia');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
-            var fondo = tema === 'noche' ? { r: 0, g: 0, b: 0 } : { r: 245, g: 243, b: 236 };
-            /* Paleta del cursor: tonos que se leen sobre blanco roto y sobre negro (el lima incluido). */
+            var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));
             var paleta = [
                 { r: 236, g: 249, b: 142 },  /* lima */
                 { r: 255, g: 168, b: 140 },  /* coral */
@@ -89,17 +89,23 @@ $assetVersion = static function (string $relativePath): string {
                 { r: 140, g: 230, b: 185 },  /* menta */
                 { r: 255, g: 212, b: 110 }   /* albaricoque */
             ];
-            var fijo = q.get('cursor') === 'fijo';
+            var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
             var i = fijo ? 0 : Math.floor(Math.random() * paleta.length);
+            var c = paleta[i];
+            html.style.setProperty('--cursor-color', 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')');
             window.__CURSOR = { paleta: paleta, i: i, fijo: fijo };
-            /* El fluido de siempre como cursor, pero plano; sin manchas al cargar. */
-            window.__FLUID_PRESET = {
-                FLAT: true, SHADING: false, BLOOM: false, SUNRAYS: false, COLORFUL: false,
-                NO_INTRO_SPLATS: true, BACK_COLOR: fondo, EFFECT_COLOR: paleta[i],
-                EFFECT_OPACITY: 0.9, DENSITY_DISSIPATION: 1.1, CURL: 2, PRESSURE_ITERATIONS: 20,
-                SPLAT_RADIUS: 0.3, DYE_RESOLUTION: 512,
-                DITHER_URL: 'images/vectors/arrow.svg' /* relativa: vale en vivo y en la exportación estática */
-            };
+            var comun = { BLOOM: false, SUNRAYS: false, COLORFUL: false, NO_INTRO_SPLATS: true,
+                DITHER_URL: 'images/vectors/arrow.svg' /* relativa: vale en vivo y en la exportación estática */ };
+            /* Noche: su panel FX (captura del 19/11): density al mínimo, velocity ~35 %, vorticity 0,
+               pressure iter al máximo, splat radius ~35 %, splat force al máximo, opacity ~50 %, shading sí, bloom no. */
+            window.__FLUID_NOCHE = { FLAT: false, SHADING: true, BACK_COLOR: { r: 0, g: 0, b: 0 },
+                DENSITY_DISSIPATION: 0.35, VELOCITY_DISSIPATION: 1.0, CURL: 0, PRESSURE_ITERATIONS: 50,
+                SPLAT_RADIUS: 0.19, SPLAT_FORCE: 12000, EFFECT_OPACITY: 0.5, DYE_RESOLUTION: 1024 };
+            window.__FLUID_DIA = { FLAT: true, SHADING: false, BACK_COLOR: { r: 245, g: 243, b: 236 },
+                DENSITY_DISSIPATION: 1.1, VELOCITY_DISSIPATION: 0.9, CURL: 2, PRESSURE_ITERATIONS: 20,
+                SPLAT_RADIUS: 0.3, SPLAT_FORCE: 6000, EFFECT_OPACITY: 0.9, DYE_RESOLUTION: 512 };
+            var base = tema === 'noche' ? window.__FLUID_NOCHE : window.__FLUID_DIA;
+            window.__FLUID_PRESET = Object.assign({}, comun, base, { EFFECT_COLOR: c });
         })();
     </script>
 
