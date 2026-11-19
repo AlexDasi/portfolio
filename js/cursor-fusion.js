@@ -15,7 +15,13 @@
      arriba. La flecha y los pisos se quedan con su imán/absorción de siempre (nada de Frankenstein).
    - Paralaje acotado a ±3 px (en filas de 1.500 px y en pastillas con borde el 12 % del kit se veía como un desfase).
    - El bucle se para cuando la mancha llega (cero trabajo en reposo).
-   Solo con ratón fino, ventana > 1280 px y sin «reducir movimiento». ?fusion=no la apaga. */
+   Solo con ratón fino, ventana > 1280 px y sin «reducir movimiento». ?fusion=no la apaga.
+   v7 (feedback 134): la mancha NUNCA excede el elemento. Antes el objetivo era el rect + 2 px con un paralaje de ±3 px y,
+   según de dónde entraras, asomaba hasta 5 px fuera del botón. Ahora la mancha va dentro de un marco con la forma exacta
+   del elemento (su rect y su radio, overflow hidden): entra, crece y al salir se encoge hacia el punto recortada por el
+   botón; el punto vuelve en cuanto la mancha se ha ido. Sin pad ni paralaje en las cajas (con el recorte no se verían).
+   v7 (feedback 132): el «volver a Proyectos» de las fichas queda fuera (salían dos líneas del acento: la del CSS y la de
+   la mancha); en los demás enlaces de texto el subrayado lo pone solo la mancha (el del CSS se apaga con html.cursor-fusion). */
 (function () {
   'use strict';
   if (!window.matchMedia) return;
@@ -24,40 +30,47 @@
   if (window.innerWidth <= 1280) return;
   if (new URLSearchParams(location.search).get('fusion') === 'no') return;
 
-  var SEL = '.sm__casos a, .sm__boton, .ficha__link, .nav-sutil__item, .nav--top .single > a';
+  var SEL = '.sm__casos a, .sm__boton, .ficha__link:not(.fp__volver), .nav-sutil__item, .nav--top .single > a';
   var LINK = '.ficha__link, .nav-sutil__item, .nav--top .single > a';
-  var K = { size: 10, lerp: 0.4, lerpHot: 0.28, pad: 2, parallax: 0.12, parallaxMax: 3, underline: 3 };
+  var K = { size: 10, lerp: 0.4, lerpHot: 0.28, underline: 3 };
 
   var html = document.documentElement;
-  var blob = document.createElement('div');
-  blob.className = 'fusion';
-  blob.setAttribute('aria-hidden', 'true');
-  document.body.insertBefore(blob, document.body.firstChild);
+  // marco = la forma exacta del elemento (recorta); blob = la mancha que se estira dentro
+  var marco = document.createElement('div');
+  marco.className = 'fusion';
+  marco.setAttribute('aria-hidden', 'true');
+  var blob = document.createElement('i');
+  blob.className = 'fusion__mancha';
+  marco.appendChild(blob);
+  document.body.insertBefore(marco, document.body.firstChild);
   html.classList.add('cursor-fusion');
 
   var mx = -100, my = -100, hot = null, kind = null, visible = false, raf = 0, last = 0;
   var cur = { x: mx, y: my, w: K.size, h: K.size, r: K.size / 2 };
 
-  function rectOf(el, p) {
+  function rectOf(el) {
     var r = el.getBoundingClientRect();
     var rad = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
-    return { x: r.left - p, y: r.top - p, w: r.width + p * 2, h: r.height + p * 2, r: Math.min(rad, r.height / 2) + p };
+    return { x: r.left, y: r.top, w: r.width, h: r.height, r: Math.min(rad, r.height / 2, r.width / 2) };
   }
   function libre() { return { x: mx - K.size / 2, y: my - K.size / 2, w: K.size, h: K.size, r: K.size / 2 }; }
+  var recorte = null; // el elemento que recorta la mancha (el de ahora o, mientras vuelve al punto, el último)
   function objetivo() {
     if (!hot || !hot.isConnected) return libre();
     if (kind === 'link') {
       var rl = hot.getBoundingClientRect();
       return { x: rl.left, y: rl.bottom - K.underline, w: rl.width, h: K.underline, r: K.underline / 2 }; // el subrayado engorda
     }
-    var t = rectOf(hot, hot.matches('.sm__casos a') ? 0 : K.pad); // las filas, a sangre (como su fondo de antes)
-    var px = (mx - (t.x + t.w / 2)) * K.parallax, py = (my - (t.y + t.h / 2)) * K.parallax;
-    t.x += Math.max(-K.parallaxMax, Math.min(K.parallaxMax, px));
-    t.y += Math.max(-K.parallaxMax, Math.min(K.parallaxMax, py));
-    return t;
+    return rectOf(hot); // a sangre: el fondo del elemento, ni un píxel más
   }
   function pinta() {
-    blob.style.transform = 'translate3d(' + cur.x.toFixed(2) + 'px,' + cur.y.toFixed(2) + 'px,0)';
+    var c = recorte && recorte.isConnected ? rectOf(recorte) : null;
+    if (!c) { c = { x: cur.x, y: cur.y, w: cur.w, h: cur.h, r: 0 }; }
+    marco.style.transform = 'translate3d(' + c.x.toFixed(2) + 'px,' + c.y.toFixed(2) + 'px,0)';
+    marco.style.width = c.w.toFixed(2) + 'px';
+    marco.style.height = c.h.toFixed(2) + 'px';
+    marco.style.borderRadius = c.r.toFixed(2) + 'px';
+    blob.style.transform = 'translate3d(' + (cur.x - c.x).toFixed(2) + 'px,' + (cur.y - c.y).toFixed(2) + 'px,0)';
     blob.style.width = cur.w.toFixed(2) + 'px';
     blob.style.height = cur.h.toFixed(2) + 'px';
     blob.style.borderRadius = cur.r.toFixed(2) + 'px';
@@ -65,8 +78,8 @@
   function mostrar(si) {
     if (si === visible) return;
     visible = si;
-    blob.classList.toggle('is-visible', si);
-    html.classList.toggle('fusion-activa', si); // el punto (.follow) se apaga mientras la mancha es el cursor
+    if (!si) recorte = null;
+    marco.classList.toggle('is-visible', si);
   }
   function tick(now) {
     raf = 0;
@@ -93,18 +106,22 @@
     hot = el;
     kind = el ? (el.matches(LINK) ? 'link' : 'box') : null;
     if (el) {
+      recorte = el;
       el.classList.add('is-fusion');
       if (!visible) { cur = libre(); pinta(); mostrar(true); } // nace exactamente donde está el punto
       var c = getComputedStyle(el).getPropertyValue('--fusion-color').trim();
       blob.style.background = c || '';
     }
+    // el punto (.follow) se apaga mientras la mancha es el cursor; al salir vuelve YA (la mancha se retira recortada)
+    html.classList.toggle('fusion-activa', !!el);
     pedir();
   }
 
   window.addEventListener('pointermove', function (e) {
     if (e.pointerType && e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
     mx = e.clientX; my = e.clientY;
-    if (html.classList.contains('esfera-abierta')) { cambia(null); return; }
+    // v7 (feedback 125): con la esfera abierta, fuera de la bola todo es igual que con ella cerrada (dentro, el marco se
+    // queda el ratón y aquí no llega nada)
     var bajo = document.elementFromPoint(mx, my);
     cambia(bajo && bajo.closest ? bajo.closest(SEL) : null);
     if (!visible) { cur = libre(); return; } // libre e invisible: va pegado, sin bucle

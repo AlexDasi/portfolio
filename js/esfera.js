@@ -44,13 +44,24 @@
       if (!dentro) return;
       dentro = false;
       marco.style.pointerEvents = 'none';
-      html.classList.remove('cursor-en-esfera');
+      // v7 (feedback 125): el punto de la página vuelve en el primer movimiento que le llega (si se quitara ya, saldría un
+      // instante donde se quedó al entrar en la bola)
+      window.addEventListener('mousemove', function vuelve() {
+        window.removeEventListener('mousemove', vuelve);
+        if (!dentro) html.classList.remove('cursor-en-esfera');
+      }, { passive: true });
       window.__fluidSinSalto = true;
       window.dispatchEvent(new CustomEvent('esfera:mano', { detail: false }));
     }
     function mira(e) {
-      if (dentro || !marco.isConnected) return;
+      if (!marco.isConnected) return;
       var d = disco(); if (!d) return;
+      if (dentro) {
+        // v7 (feedback 142): si a la página le llega un movimiento lejos de la bola, el ratón ya no está en el marco (salida
+        // de golpe: el marco a veces no se entera). Se suelta aquí mismo y el punto vuelve ya, sin esperar al marco.
+        if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > d.r * 1.12) { soltar(); html.classList.remove('cursor-en-esfera'); }
+        return;
+      }
       if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < d.r * 0.96) {
         dentro = true;
         marco.style.pointerEvents = 'auto';
@@ -184,6 +195,35 @@
   function diametro() { return 0.56 * Math.min(window.innerWidth, window.innerHeight); }
   function caja0() { return cont.getBoundingClientRect(); }
 
+  /* v7 (feedback 143): PRECARGA. Con la home ya cargada y el navegador en reposo se monta, invisible y debajo de todo, la
+     esfera de la piel que va a salir: baja three.js, construye la pieza, compila sus shaders, pinta 2 fotogramas y se PAUSA
+     (cero trabajo después: el bucle de la esfera se para). Al hacer clic la capa ya está hecha: solo vuela la bola plana del
+     punto y la esfera aparece cuando llega. Al cerrar, se precarga en reposo la piel de la próxima vez. */
+  var pre = null, proxima = piel;
+  function precargar() {
+    if (pre || abierta || !cont.isConnected) return;
+    var c = document.createElement('div');
+    c.className = 'esfera-capa is-precarga';
+    var m = document.createElement('iframe');
+    m.className = 'esfera-marco';
+    m.title = 'Sphere';
+    m.setAttribute('allowtransparency', 'true');
+    m.setAttribute('tabindex', '-1');
+    m.setAttribute('aria-hidden', 'true');
+    m.style.pointerEvents = 'none';
+    m.src = src('&mano', proxima);
+    c.appendChild(m);
+    cont.insertBefore(c, cont.firstChild);
+    pre = { capa: c, marco: m, piel: proxima, lista: false };
+  }
+  function enReposo(fn, ms) {
+    setTimeout(function () { (window.requestIdleCallback || function (f) { setTimeout(f, 50); })(fn, { timeout: 2500 }); }, ms || 0);
+  }
+  if (q.get('precarga') !== 'no') {
+    if (document.readyState === 'complete') enReposo(precargar, 600);
+    else window.addEventListener('load', function () { enReposo(precargar, 600); });
+  }
+
   function abrir() {
     if (abierta) return;
     abierta = true;
@@ -192,25 +232,38 @@
     var b = caja0();
     var r = punto.getBoundingClientRect();
     origen = { x: r.left + r.width / 2 - b.left, y: r.top + r.height / 2 - b.top, d: r.width };
-    capa = document.createElement('div');
-    capa.className = 'esfera-capa';
+    piel = proxima; // v6 (feedback 119): cada vez que se vuelve a abrir, otra piel (se decide al cerrar: proxima)
+    vecesAbierta++;
+    apuntar(piel);
+    var listaYa = false;
+    if (pre && pre.piel === piel && pre.capa.isConnected) {
+      capa = pre.capa; marco = pre.marco; listaYa = pre.lista;
+      capa.classList.remove('is-precarga');
+      marco.removeAttribute('aria-hidden');
+      // sigue en pausa (enseña el fotograma ya pintado) hasta que toma el relevo: la bola vuela sin competir con WebGL
+      if (!listaYa) try { marco.contentWindow.postMessage({ esferaPausa: false }, '*'); } catch (e) {}
+      try { marco.contentWindow.postMessage({ esferaAcento: acento().split(',') }, '*'); marco.contentWindow.postMessage({ esferaTema: dia() ? 'dia' : 'noche' }, '*'); } catch (e) {}
+    } else {
+      if (pre && pre.capa.parentNode) pre.capa.parentNode.removeChild(pre.capa);
+      capa = document.createElement('div');
+      capa.className = 'esfera-capa';
+      marco = document.createElement('iframe');
+      marco.className = 'esfera-marco';
+      marco.title = 'Sphere';
+      marco.setAttribute('allowtransparency', 'true');
+      marco.src = src('&mano'); // import dinámico de verdad: three.js solo baja ahora, al hacer clic
+      capa.appendChild(marco);
+      cont.insertBefore(capa, cont.firstChild);
+    }
+    pre = null;
     bola = document.createElement('div');
     bola.className = 'esfera-bola';
-    marco = document.createElement('iframe');
-    marco.className = 'esfera-marco';
-    marco.title = 'Sphere';
-    marco.setAttribute('allowtransparency', 'true');
-    if (vecesAbierta++ > 0) piel = otraPiel(); // v6 (feedback 119): cada vez que se vuelve a abrir, otra piel
-    apuntar(piel);
-    marco.src = src('&mano'); // import dinámico de verdad: three.js solo baja ahora, al hacer clic
-    capa.appendChild(marco);
     manoH = mano(marco, function () {
       if (!capa || !capa.classList.contains('is-lista')) return null;
       var b2 = caja0();
       return { x: b2.left + b2.width / 2, y: b2.top + b2.height / 2, r: diametro() / 2 };
     });
     capa.appendChild(bola);
-    cont.insertBefore(capa, cont.firstChild);
     // la bola sale del punto…
     var D = diametro();
     bola.style.width = bola.style.height = D + 'px';
@@ -221,6 +274,15 @@
       capa.classList.add('is-abierta');
       bola.style.transform = 'translate3d(' + (b.width / 2 - D / 2) + 'px,' + (b.height / 2 - D / 2) + 'px,0) scale(1)';
     });
+    // precargada: la esfera de verdad toma el relevo de la bola plana cuando esta casi ha llegado
+    if (listaYa) {
+      var c0 = capa, m0 = marco;
+      setTimeout(function () {
+        if (capa !== c0) return;
+        lista();
+        try { m0.contentWindow.postMessage({ esferaPausa: false }, '*'); } catch (e) {}
+      }, reduce ? 0 : 380);
+    }
     punto.style.visibility = 'hidden';
     meta.x = meta.y = off.x = off.y = 0;
     punto.style.setProperty('--mx', '0px'); punto.style.setProperty('--my', '0px');
@@ -250,12 +312,18 @@
     if (manoH) manoH.quitar();
     capa = bola = marco = manoH = null;
     abierta = false;
+    proxima = otraPiel();
+    if (q.get('precarga') !== 'no') enReposo(precargar, 1500); // la de la próxima vez, ya en reposo
   }
 
   punto.addEventListener('click', function (e) { e.preventDefault(); abrir(); });
   window.addEventListener('message', function (e) {
     var m = e.data && e.data.esfera;
-    if (m === 'lista') lista();
+    if (pre && e.source === pre.marco.contentWindow) { // la precargada: lista y a dormir hasta el clic
+      if (m === 'lista') { pre.lista = true; try { pre.marco.contentWindow.postMessage({ esferaPausa: true }, '*'); } catch (er) {} }
+      return;
+    }
+    if (m === 'lista' && marco && e.source === marco.contentWindow) lista();
     if (m === 'cerrar') cerrar();
     if (m === 'espacio' && window.__acentoSiguiente) window.__acentoSiguiente(); // espacio con el foco en la esfera: igual que fuera
   });

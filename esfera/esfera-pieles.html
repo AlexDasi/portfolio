@@ -36,6 +36,9 @@
   #hud circle{fill:none;stroke:var(--lima);stroke-width:1}
   #hud .tag{position:absolute;left:0;top:0;color:var(--lima);line-height:1.5;white-space:nowrap}
   #hud .tag em{font-style:normal;color:#e9e9e2}
+  /* v7 (feedback 126): de día (embebida sobre el papel) el texto del HUD de prisma, cuarzo y gema va en tinta: el blanco y el
+     acento claro no se leían. De noche se queda como estaba (acento + blanco). */
+  html.dia #hud .tag, html.dia #hud .tag em{color:#141415}
   /* cursor propio en toda la página: nunca la flecha del sistema (Alex, conv. 1020) */
   @media (pointer:fine){html,body,*{cursor:none!important}}
   #cur{position:fixed;left:0;top:0;pointer-events:none;z-index:4;opacity:0;transition:opacity .2s}
@@ -113,9 +116,11 @@ let PAUSA = false;
    (la página lo decide) y lo devuelve ({esfera:'fuera'}) en cuanto sale de ella sin estar arrastrando. Así el fluido de la
    web sigue vivo alrededor y no pinta encima de la bola. */
 let DIA = Q.has('dia');
+const ponerDia = () => document.documentElement.classList.toggle('dia', DIA);   // v7 (feedback 126): el HUD en tinta de día
+ponerDia();
 const MANO = Q.has('mano');
 addEventListener('message', e => { const d = e.data || {};
-  if (d.esferaTema) DIA = d.esferaTema === 'dia';
+  if (d.esferaTema) { DIA = d.esferaTema === 'dia'; ponerDia(); }
   if (d.esferaAcento) ponerAcento(d.esferaAcento);
   if ('esferaPausa' in d) { const antes = PAUSA; PAUSA = !!d.esferaPausa; if (antes && !PAUSA) { last = performance.now(); requestAnimationFrame(frame); } } });
 const PIELES = {solare: 0, chicle: 1, glaseado: 2, niebla: 3, gota: 4, prisma: 5, cuarzo: 6, gema: 7};
@@ -988,7 +993,9 @@ function frame(now){
   bloom.strength += ([.1, .06, .06, .14, .1, .26, .22, .12][modo] - bloom.strength) * (1 - Math.exp(-dt * 6));
   if (sobre !== P.sobre) { P.sobre = sobre; document.body.classList.toggle('sobre', sobre); }
   composer.render(dt);
-  if (EMBED && !window.__avisada && t - T0 > .25) { window.__avisada = true; avisar('lista'); }
+  // v7 (feedback 143): avisa en cuanto hay DOS fotogramas pintados (el primero compila los shaders); antes esperaba 0,25 s de
+  // animación (8-15 fotogramas) y la bola plana se quedaba de más
+  if (EMBED && !window.__avisada && (window.__pintados = (window.__pintados || 0) + 1) >= 2) { window.__avisada = true; avisar('lista'); }
   if (PAUSA) return;                                               // v4: fuera de pantalla (móvil) no se pinta nada
   if (!STILL) requestAnimationFrame(frame); else window.__listo = true;
 }

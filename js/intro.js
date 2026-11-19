@@ -25,7 +25,12 @@
     q.push({ x: raton.x, y: raton.y, dx: (Math.random() - 0.5) * 300, dy: -dy * 2600, k: 2.5 });
     pendiente = 0;
   }
+  // v7 (feedback 133): solo en la página que TIENE intro (la home). En las fichas y en el Sobre mí la rueda es scroll o
+  // cambio de pantalla y no debe empujar el fluido (en la ficha cada vuelta de rueda soltaba una ola hacia abajo: «el
+  // chorro baja muchísimo»). El lienzo ya es fijo al viewport (canvas position: fixed).
+  var hayIntro = !!document.querySelector('.pantalla--intro');
   window.addEventListener('wheel', function (e) {
+    if (!hayIntro) return;
     var esIntro = enIntro && (!e.target.closest || !e.target.closest('[data-baraja]'));
     if (!esIntro) return;
     pendiente += e.deltaY;
