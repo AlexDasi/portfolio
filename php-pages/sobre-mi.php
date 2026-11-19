@@ -185,7 +185,7 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
     </div>
     <ul class="sm__casos">
         <?php foreach ($T['casos'] as $ci => $c): ?>
-        <li><a href="php-pages/projects/<?php echo $e($c[0]); ?>.php">
+        <li><a href="caso.php?c=<?php echo $e($c[0]); ?>"><?php /* casos UX/UI en la plantilla nueva (feedback 150) */ ?>
             <span class="sm__caso-n"><span class="sm__caso-i"><?php echo str_pad((string) ($ci + 1), 2, '0', STR_PAD_LEFT); ?></span><?php echo $e($c[1]); ?></span>
             <span class="sm__caso-p"><?php echo $e($c[2]); ?></span>
             <span class="sm__caso-a"><?php echo $e($c[3]); ?></span>

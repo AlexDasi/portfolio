@@ -367,6 +367,58 @@ body.pagina-ficha { display: block; }
   }
 }
 
+// ---------- Caso UX/UI (caso.php, feedback 150): la misma ficha con el contenido real de los casos de producto ----------
+.fp--caso {
+  .fp__sub { max-width: 30ch; margin-top: clamp(16px, 1.6vw, 28px) !important; font-size: clamp(20px, 2.2vw, 36px); line-height: 1.15; letter-spacing: -.02em; font-weight: 400; color: var(--tinta-suave) !important; text-wrap: balance; }
+  .fp__datos--caso { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .fp__portada--caso { padding-bottom: 0; }
+  .fp__portada--caso .fp__m-pantalla { margin: 0; aspect-ratio: 16 / 9 !important; img { object-position: center; } }
+  .fp__intro { align-items: start; }
+  .fp__p a, .fp__sub a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent-color); text-decoration-thickness: 2px; text-underline-offset: .18em; }
+  .fp__intro .fp__intro-txt { grid-column: 4 / span 9; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 2vw; }
+  .fp__intro .fp__p { max-width: 46ch; }
+  .fp__caso { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 5vw 2vw; align-items: start; margin-top: clamp(28px, 3vw, 48px); }
+  .fp__c { min-width: 0; grid-column: 1 / -1; margin: 0; }
+  .fp__c--a1 { grid-column: 1 / span 12; }
+  .fp__c--a2 { grid-column: 1 / span 9; }
+  .fp__c--a0 { grid-column: 4 / span 9; }
+  .fp__c--vert { grid-column: 5 / span 4; }
+  .fp__c--cita { grid-column: 1 / span 10; max-width: 30ch; }
+  .fp__c--texto { grid-column: 4 / span 7; .fp__p + .fp__p { margin-top: 1em !important; } }
+  .fp__c--galeria { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2vw; figure { margin: 0; } .fp__m-pantalla { aspect-ratio: 4 / 3; } }
+  .fp__c--conceptos { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2vw; }
+  .fp__concepto { display: block; text-decoration: none; min-width: 0;
+    b { display: block; margin-top: 12px; font-size: 17px; font-weight: 500; letter-spacing: -.01em; }
+    .fp__concepto-l { display: block; margin-top: 4px; font-size: 14px; line-height: 1.35; font-weight: 300; color: var(--tinta-suave); }
+    .fp__m-pantalla { transition: opacity .3s ease; } &:hover .fp__m-pantalla { opacity: .82; }
+  }
+  .fp__m-pantalla video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .fp__resultado { .fp__h2 { grid-column: 1 / span 3; } .fp__p--grande { grid-column: 4 / span 9; max-width: 28ch; } }
+  .fp__sig-s { max-width: 44ch; }
+  .fp__naipe--1 img { object-position: center; }
+}
+@media (max-width: 1100px) and (min-width: #{$movil + 1}) {
+  .fp--caso .fp__intro .fp__intro-txt, .fp--caso .fp__resultado .fp__h2, .fp--caso .fp__resultado .fp__p--grande { grid-column: 1 / span 12; }
+  .fp--caso .fp__c--texto { grid-column: 3 / span 9; }
+  .fp--caso .fp__c--conceptos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .fp--caso .fp__c--galeria { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: $movil) {
+  .fp--caso {
+    .fp__sub { font-size: 21px; max-width: none; }
+    .fp__datos--caso { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fp__intro .fp__intro-txt { display: block; margin-top: 18px; .fp__p + .fp__p { margin-top: 1em !important; } }
+    .fp__caso { display: block; margin-top: 22px; }
+    .fp__c { margin-top: 36px; &:first-child { margin-top: 0; } }
+    .fp__c--vert { width: 70%; }
+    // galería en móvil: carril con imán y la siguiente asomando (no once fotos apiladas)
+    .fp__c--galeria { display: flex; gap: 10px; margin-left: -6vw; margin-right: -6vw; padding: 0 6vw; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 6vw; scrollbar-width: none; &::-webkit-scrollbar { display: none; } figure { flex: 0 0 72vw; scroll-snap-align: start; } }
+    .fp__c--conceptos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 4vw; }
+    .fp__resultado .fp__p--grande { margin-top: 14px !important; }
+    html.fp-js & .fp__caso [data-fp-entra] { opacity: 1; translate: none; }
+  }
+}
+
 // la carta de delante flota un poco (como en la baraja de la home)
 @media (prefers-reduced-motion: no-preference) {
   .fp__mazo { animation: fp-flota 6s ease-in-out infinite; }

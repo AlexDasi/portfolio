@@ -8,6 +8,7 @@ Uso:  python3 tools/export_preview.py <carpeta_salida> [--con-proyectos]
 Páginas que genera (castellano por defecto; inglés con -en):
   index.html · index-en.html                      (home: intro + baraja)
   about.html · about-<uxui|process|contact>.html  (+ -en)  (lo que salió de la home)
+  proyecto-<slug>.html · caso-<slug>.html (+ -en)  fichas de la baraja y casos UX/UI (plantilla nueva)
   projects/<slug>.html (+ -en)                    solo con --con-proyectos (~90 MB de medios);
                                                   sin él, los casos enlazan a alexdasi.com en vivo
 Copia solo los recursos que se usan (más content/baraja/ entero y los js/ que se cargan por código).
@@ -37,6 +38,7 @@ for _ in range(50):
 SECCIONES = ['about', 'uxui', 'process', 'contact']
 import json as _json
 FICHAS = [x['slug'] for x in _json.load(open(os.path.join(ROOT, 'content/baraja.json')))['proyectos'] if not x.get('oculta') and not x.get('neutra')]
+CASOS = [x['slug'] for x in _json.load(open(os.path.join(ROOT, 'content/casos.json')))['casos']] if os.path.isfile(os.path.join(ROOT, 'content/casos.json')) else []
 slugs = sorted(f[:-4] for f in os.listdir(os.path.join(ROOT, 'php-pages/projects')) if f.endswith('.php'))
 assets = set()
 
@@ -66,6 +68,9 @@ def convierte(html, en_projects):
         if base == 'proyecto.php':
             ps = q.get('p', [''])[0]
             return f'{up}proyecto-{ps}' + ('-en' if es else '') + f'.html{frag}'
+        if base == 'caso.php':
+            cs = q.get('c', [''])[0]
+            return f'{up}caso-{cs}' + ('-en' if es else '') + f'.html{frag}'
         if base == 'about.php':
             s = q.get('s', ['about'])[0]
             return f'{up}{nombre_about(s if s in SECCIONES else "about", es)}{frag}'
@@ -118,6 +123,9 @@ try:
         for ps in FICHAS:
             url = f'/proyecto.php?p={ps}' + ('&' + lq if es else '')
             open(os.path.join(OUT, f'proyecto-{ps}' + ('-en' if es else '') + '.html'), 'w').write(convierte(baja(url), False)); paginas += 1
+        for cs in CASOS:  # casos UX/UI en la plantilla nueva (caso.php, feedback 150)
+            url = f'/caso.php?c={cs}' + ('&' + lq if es else '')
+            open(os.path.join(OUT, f'caso-{cs}' + ('-en' if es else '') + '.html'), 'w').write(convierte(baja(url), False)); paginas += 1
         for slug in (slugs if CON_PROYECTOS else []):
             url = f'/php-pages/projects/{slug}.php' + ('?' + lq if es else '')
             open(os.path.join(OUT, 'projects', nombre(slug, es)), 'w').write(convierte(baja(url), True)); paginas += 1
@@ -127,6 +135,9 @@ try:
             assets.add('js/' + f)
     for f in os.listdir(os.path.join(ROOT, 'content/baraja')):
         assets.add('content/baraja/' + f)
+    if CASOS:
+        for f in os.listdir(os.path.join(ROOT, 'content/casos')):
+            assets.add('content/casos/' + f)
     for f in os.listdir(os.path.join(ROOT, 'content/fuentes')):
         assets.add('content/fuentes/' + f)
     for f in os.listdir(os.path.join(ROOT, 'esfera')):

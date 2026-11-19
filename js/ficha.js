@@ -22,7 +22,7 @@
     videos.push(v);
   });
   // vídeos cortos de «Momentos» (microinteracciones y pasadas): póster según el hueco, el mp4 solo al llegar
-  [].forEach.call(raiz.querySelectorAll('.fp__m video[data-video]'), function (v) {
+  [].forEach.call(raiz.querySelectorAll('video[data-video]'), function (v) {
     var hueco = (v.parentNode.clientWidth || 300) * Math.min(window.devicePixelRatio || 1, 3);
     v.poster = hueco > (parseFloat(v.getAttribute('data-wc')) || 720) * 1.08 ? v.getAttribute('data-poster-d') : v.getAttribute('data-poster-m');
     v.dataset.src = v.getAttribute('data-video');
@@ -48,7 +48,7 @@
   });
 
   /* ---- capturas de «Momentos»: la versión que toca según el hueco y la densidad de la pantalla ---- */
-  var fotos = [].slice.call(raiz.querySelectorAll('.fp__m-marco img[data-poster-d]'));
+  var fotos = [].slice.call(raiz.querySelectorAll('img[data-poster-d]'));
   function carga(img) {
     if (img.getAttribute('src')) return;
     var hueco = (img.parentNode.clientWidth || img.clientWidth || 300) * Math.min(window.devicePixelRatio || 1, 3);

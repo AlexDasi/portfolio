@@ -1,0 +1,1423 @@
+{
+  "_que": "Casos UX/UI de la plantilla nueva (caso.php?c=<slug>). Contenido sacado tal cual de php-pages/projects/<slug>.php (EN) y lang/es/projects/<slug>.json (ES) con tools/extrae_casos.py; no se edita a mano sin tocar también la fuente. Feedback 150, ATELIER conv. 1330.",
+  "casos": [
+    {
+      "slug": "tulong",
+      "nombre": "Tulong",
+      "anios": "2025-2026",
+      "subtitulo": {
+        "es": "Logística humanitaria, con claridad operativa",
+        "en": "Humanitarian Logistics, Operationally Clear"
+      },
+      "intro": {
+        "es": [
+          "Tulong es un sistema de control logístico humanitario para la distribución de ayuda en la última milla. Nacido de operaciones reales sobre el terreno en Valencia (DANA) y Filipinas, se desarrolló en 2025–2026 como prototipo funcional para mejorar la claridad de la planificación, la coordinación de la flota y la visibilidad de las entregas."
+        ],
+        "en": [
+          "Tulong is a humanitarian logistics control system for last-mile aid distribution. Shaped by real field operations in Valencia (DANA) and the Philippines, it was developed in 2025–2026 as a working prototype aimed at improving planning clarity, fleet coordination, and delivery visibility."
+        ]
+      },
+      "columnas": [
+        {
+          "t": {
+            "es": "proyecto",
+            "en": "project"
+          },
+          "d": {
+            "es": [
+              "Tulong",
+              "2025 - 2026"
+            ],
+            "en": [
+              "Tulong",
+              "2025 - 2026"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "alcance",
+            "en": "scope"
+          },
+          "d": {
+            "es": [
+              "Diseño UX/UI",
+              "Diseño de sistemas",
+              "Lógica operativa",
+              "Visualización de datos"
+            ],
+            "en": [
+              "UX/UI Design",
+              "System Design",
+              "Operational Logic",
+              "Data Visualization"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "contexto",
+            "en": "context"
+          },
+          "d": {
+            "es": [
+              "Valencia (DANA) + Filipinas",
+              "Despliegues probados sobre el terreno",
+              "Diseñado para las operaciones de emergencia de World Central Kitchen"
+            ],
+            "en": [
+              "Valencia (DANA) + Philippines",
+              "Field-tested deployments",
+              "Designed for World Central Kitchen emergency operations"
+            ]
+          }
+        }
+      ],
+      "resumen": [
+        {
+          "t": {
+            "es": "El reto",
+            "en": "The challenge"
+          },
+          "d": {
+            "es": "Los equipos de emergencia planifican con datos fragmentados y herramientas en paralelo. Rutas, prioridades y flota son difíciles de cuadrar en tiempo real.",
+            "en": "Emergency teams plan with fragmented data and parallel tools. Routes, priorities and fleet use are hard to align in real time."
+          }
+        },
+        {
+          "t": {
+            "es": "Mi papel",
+            "en": "My role"
+          },
+          "d": {
+            "es": "Lo lideré de principio a fin: concepto del sistema, arquitectura UX, lógica de interacción y diseño de interfaz.",
+            "en": "I led it end to end: system concept, UX architecture, interaction logic and interface design."
+          }
+        },
+        {
+          "t": {
+            "es": "El resultado",
+            "en": "The outcome"
+          },
+          "d": {
+            "es": "Un prototipo funcional probado con escenarios reales: ciclos de planificación más claros, despachos mejor coordinados y una visión compartida entre equipos.",
+            "en": "A working prototype tested against real scenarios: clearer planning cycles, faster dispatch alignment and shared awareness across teams."
+          }
+        }
+      ],
+      "bloques": [
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/mockups/tulong-mockup-03.jpg",
+          "alt": {
+            "es": "Vista operativa de Tulong en tres pantallas",
+            "en": "Tulong three-screen operational view"
+          },
+          "w": 1536,
+          "h": 1024,
+          "kb": 212,
+          "grande": "content/casos/tulong_01-1536.webp",
+          "wg": 1536,
+          "chica": "content/casos/tulong_01-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Las operaciones de emergencia suelen funcionar con datos fragmentados y equipos en paralelo. Sin una visión operativa compartida, cuesta mucho más alinear en tiempo real las rutas, la prioridad de los destinos y el uso de la flota."
+            ],
+            "en": [
+              "Emergency operations often run with fragmented data and parallel teams. Without a shared operational view, routing decisions, destination prioritization, and fleet usage become harder to align in real time."
+            ]
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/screenshots/tulong-dashboard-screenshot-01.png",
+          "alt": {
+            "es": "Dashboard de Tulong con el contexto logístico fragmentado",
+            "en": "Tulong dashboard showing fragmented logistics context"
+          },
+          "w": 2400,
+          "h": 1315,
+          "kb": 566,
+          "grande": "content/casos/tulong_02-1800.webp",
+          "wg": 1800,
+          "chica": "content/casos/tulong_02-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "cita",
+          "txt": {
+            "es": "Tulong organiza la planificación de la respuesta en tres capas conectadas: kits, bloques de destino y asignación de flota.",
+            "en": "Tulong organizes response planning through three linked layers: kits, destination blocks, and fleet assignment."
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/mockups/tulong-mockup-04.jpg",
+          "alt": {
+            "es": "Calendario de planificación y programación logística de Tulong",
+            "en": "Tulong planning calendar and logistics scheduling view"
+          },
+          "w": 1536,
+          "h": 1024,
+          "kb": 255,
+          "grande": "content/casos/tulong_03-1536.webp",
+          "wg": 1536,
+          "chica": "content/casos/tulong_03-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/screenshots/tulong-dashboard-screenshot-02.png",
+          "alt": {
+            "es": "Planificación por bloques de destino en Tulong",
+            "en": "Tulong destination block planning"
+          },
+          "w": 2400,
+          "h": 1315,
+          "kb": 512,
+          "grande": "content/casos/tulong_04-1800.webp",
+          "wg": 1800,
+          "chica": "content/casos/tulong_04-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/screenshots/tulong-dashboard-screenshot-03.png",
+          "alt": {
+            "es": "Vista de asignación de flota de Tulong",
+            "en": "Tulong fleet assignment view"
+          },
+          "w": 2400,
+          "h": 1315,
+          "kb": 518,
+          "grande": "content/casos/tulong_05-1800.webp",
+          "wg": 1800,
+          "chica": "content/casos/tulong_05-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "La matriz de distribución es la única superficie de decisión para los coordinadores durante las operaciones activas: conecta asignación de rutas, carga de cada viaje y horarios de destino de un vistazo."
+            ],
+            "en": [
+              "The distribution matrix acts as the single decision surface for coordinators during active operations, connecting route assignment, trip load, and destination timing in one glance."
+            ]
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/screenshots/tulong-dashboard-screenshot-04.png",
+          "alt": {
+            "es": "Matriz de distribución de Tulong con rutas y estado de salida",
+            "en": "Tulong distribution matrix with routes and dispatch status"
+          },
+          "w": 2400,
+          "h": 1315,
+          "kb": 681,
+          "grande": "content/casos/tulong_06-1800.webp",
+          "wg": 1800,
+          "chica": "content/casos/tulong_06-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/mockups/tulong-mockup-06.jpg",
+          "alt": {
+            "es": "Mockup general de la plataforma Tulong",
+            "en": "Tulong platform overview mockup"
+          },
+          "w": 1536,
+          "h": 1024,
+          "kb": 195,
+          "grande": "content/casos/tulong_07-1536.webp",
+          "wg": 1536,
+          "chica": "content/casos/tulong_07-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "La planificación diaria y la optimización de fin de jornada se diseñaron como un único ciclo continuo: crear planes viables, poner a prueba la flota y reequilibrar la distribución antes de que lleguen los plazos de salida."
+            ],
+            "en": [
+              "Daily planning and end-of-day optimization are designed as one continuous cycle: build feasible plans, test fleet strain, and rebalance distribution before dispatch deadlines are reached."
+            ]
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/mockups/tulong-mockup-05.jpg",
+          "alt": {
+            "es": "Dashboard operativo de Tulong en un portátil con poca luz",
+            "en": "Tulong operational dashboard on laptop in low-light context"
+          },
+          "w": 1024,
+          "h": 1536,
+          "kb": 270,
+          "grande": "content/casos/tulong_08-1024.webp",
+          "wg": 1024,
+          "chica": "content/casos/tulong_08-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Probado con escenarios operativos reales, el prototipo apuntó a ciclos de planificación más claros, una coordinación de salidas más rápida y una visión compartida más sólida entre equipos, con traspasos más fluidos entre planificación, carga y ejecución de rutas bajo restricciones reales."
+            ],
+            "en": [
+              "Tested against real operational scenarios, the prototype pointed to clearer planning cycles, faster dispatch alignment, and stronger shared awareness across teams, with smoother handoffs between planning, loading, and route execution under real constraints."
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Lideré el proyecto de principio a fin: concepto del sistema, arquitectura UX, lógica de interacción y diseño de interfaz. Tulong se plantea como una propuesta operativa para escenarios de respuesta de emergencia de World Central Kitchen."
+            ],
+            "en": [
+              "I led the project end-to-end: system concept, UX architecture, interaction logic, and interface design. Tulong is positioned as an operational proposal for World Central Kitchen emergency response scenarios."
+            ]
+          }
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Las siguientes escenas sobre el terreno anclan la propuesta en condiciones reales de despliegue y en la realidad de la distribución en la última milla."
+            ],
+            "en": [
+              "The following field scenes ground the proposal in real deployment conditions and last-mile distribution realities."
+            ]
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-01.jpg",
+          "alt": {
+            "es": "Equipo de campo y colaboradores de Tulong",
+            "en": "Tulong field team and partners"
+          },
+          "w": 2048,
+          "h": 1571,
+          "kb": 499,
+          "grande": "content/casos/tulong_09-1800.webp",
+          "wg": 1800,
+          "chica": "content/casos/tulong_09-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-02.jpg",
+          "alt": {
+            "es": "Punto de reparto de ayuda abierto a la comunidad",
+            "en": "Community-facing aid activation point"
+          },
+          "w": 1600,
+          "h": 900,
+          "kb": 364,
+          "grande": "content/casos/tulong_10-1600.webp",
+          "wg": 1600,
+          "chica": "content/casos/tulong_10-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-03.jpg",
+          "alt": {
+            "es": "Momento de coordinación sobre el terreno durante el reparto de ayuda",
+            "en": "Field coordination moment during aid distribution"
+          },
+          "w": 1600,
+          "h": 1200,
+          "kb": 434,
+          "grande": "content/casos/tulong_11-1600.webp",
+          "wg": 1600,
+          "chica": "content/casos/tulong_11-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-04.jpg",
+          "alt": {
+            "es": "Equipo de ayuda descargando kits organizados",
+            "en": "Relief team unloading organized field kits"
+          },
+          "w": 1600,
+          "h": 899,
+          "kb": 470,
+          "grande": "content/casos/tulong_12-1600.webp",
+          "wg": 1600,
+          "chica": "content/casos/tulong_12-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-05.jpg",
+          "alt": {
+            "es": "Voluntarios cruzando un río con cajas de ayuda",
+            "en": "Volunteers crossing a river carrying aid boxes"
+          },
+          "w": 1600,
+          "h": 900,
+          "kb": 376,
+          "grande": "content/casos/tulong_13-1600.webp",
+          "wg": 1600,
+          "chica": "content/casos/tulong_13-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-06.jpg",
+          "alt": {
+            "es": "Foto de campo de Tulong 06",
+            "en": "Tulong field photo 06"
+          },
+          "w": 768,
+          "h": 1024,
+          "kb": 175,
+          "grande": "content/casos/tulong_14-768.webp",
+          "wg": 768,
+          "chica": "content/casos/tulong_14-768.webp",
+          "wc": 768
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-07.jpg",
+          "alt": {
+            "es": "Foto de campo de Tulong 07",
+            "en": "Tulong field photo 07"
+          },
+          "w": 576,
+          "h": 1024,
+          "kb": 122,
+          "grande": "content/casos/tulong_15-576.webp",
+          "wg": 576,
+          "chica": "content/casos/tulong_15-576.webp",
+          "wc": 576
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-08.jpg",
+          "alt": {
+            "es": "Foto de campo de Tulong 08",
+            "en": "Tulong field photo 08"
+          },
+          "w": 1280,
+          "h": 960,
+          "kb": 254,
+          "grande": "content/casos/tulong_16-1280.webp",
+          "wg": 1280,
+          "chica": "content/casos/tulong_16-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-09.jpg",
+          "alt": {
+            "es": "Foto de campo de Tulong 09",
+            "en": "Tulong field photo 09"
+          },
+          "w": 1200,
+          "h": 1600,
+          "kb": 441,
+          "grande": "content/casos/tulong_17-1200.webp",
+          "wg": 1200,
+          "chica": "content/casos/tulong_17-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-10.jpg",
+          "alt": {
+            "es": "Foto de campo de Tulong 10",
+            "en": "Tulong field photo 10"
+          },
+          "w": 1280,
+          "h": 963,
+          "kb": 328,
+          "grande": "content/casos/tulong_18-1280.webp",
+          "wg": 1280,
+          "chica": "content/casos/tulong_18-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/tulong/real-photos/tulong-field-photo-11.jpg",
+          "alt": {
+            "es": "Foto de campo de Tulong 11",
+            "en": "Tulong field photo 11"
+          },
+          "w": 1600,
+          "h": 1200,
+          "kb": 344,
+          "grande": "content/casos/tulong_19-1600.webp",
+          "wg": 1600,
+          "chica": "content/casos/tulong_19-900.webp",
+          "wc": 900
+        }
+      ],
+      "portada": {
+        "src": "content/pictures/thumbnails/tulong.jpg",
+        "alt": {
+          "es": "Voluntarios cruzando un río con cajas de ayuda",
+          "en": "Volunteers crossing a river carrying aid boxes"
+        },
+        "w": 1536,
+        "h": 1024,
+        "kb": 452,
+        "grande": "content/casos/tulong_portada-1536.webp",
+        "wg": 1536,
+        "chica": "content/casos/tulong_portada-900.webp",
+        "wc": 900
+      }
+    },
+    {
+      "slug": "idrica-wastewater",
+      "nombre": "Idrica Wastewater",
+      "anios": "2022-2024",
+      "subtitulo": {
+        "es": "UX/UI para operar, monitorizar y tomar decisiones en aguas residuales",
+        "en": "UX/UI for wastewater operations, monitoring, and decision-making"
+      },
+      "intro": {
+        "es": [
+          "Trabajando en <a href=\"https://www.idrica.com/en/\" rel=\"noopener noreferrer\" target=\"_blank\">Idrica</a>, participé en el diseño UX/UI de una plataforma de escritorio para operar depuradoras de aguas residuales. El producto reúne monitorización, alarmas, jerarquías de infraestructura, mapas y datos operativos en un único entorno coherente para equipos técnicos.",
+          "El reto principal era estructural: convertir flujos de trabajo industriales complejos en una interfaz legible, eficiente y fiable. El sistema de diseño se centró en la claridad, la jerarquía y patrones de interacción tranquilos para que los usuarios se movieran entre dashboards, mapas y alertas con menos fricción y sin perder de vista lo que pasa."
+        ],
+        "en": [
+          "While working at <a href=\"https://www.idrica.com/en/\" rel=\"noopener noreferrer\" target=\"_blank\">Idrica</a>, I contributed to the UX/UI design of a desktop platform for wastewater treatment plant operations. The product brings monitoring, alarms, infrastructure hierarchies, maps, and operational data into one coherent environment for technical teams.",
+          "The core challenge was structural: turning complex industrial workflows into an interface that feels legible, efficient, and dependable. The design system focused on clarity, hierarchy, and calm interaction patterns so users could move across dashboards, maps, and alerts with less friction and stronger situational awareness."
+        ]
+      },
+      "columnas": [
+        {
+          "t": {
+            "es": "cliente",
+            "en": "client"
+          },
+          "d": {
+            "es": [
+              "Idrica",
+              "2023"
+            ],
+            "en": [
+              "Idrica",
+              "2023"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "servicios",
+            "en": "services"
+          },
+          "d": {
+            "es": [
+              "Diseño UX/UI"
+            ],
+            "en": [
+              "UX/UI Design"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "créditos",
+            "en": "credits"
+          },
+          "d": {
+            "es": [
+              "Alex Dasi, Idrica"
+            ],
+            "en": [
+              "Alex Dasi, Idrica"
+            ]
+          }
+        }
+      ],
+      "resumen": [
+        {
+          "t": {
+            "es": "El reto",
+            "en": "The challenge"
+          },
+          "d": {
+            "es": "Los operadores de planta manejan monitorización, alarmas, mapas y datos técnicos densos. La interfaz tiene que seguir siendo legible bajo presión.",
+            "en": "Plant operators juggle monitoring, alarms, maps and dense technical data. The interface has to stay legible under pressure."
+          }
+        },
+        {
+          "t": {
+            "es": "Mi papel",
+            "en": "My role"
+          },
+          "d": {
+            "es": "Participé en el UX/UI de la plataforma dentro del equipo de Idrica: flujos, patrones de interfaz y el sistema de diseño que los sostiene.",
+            "en": "I contributed to the UX/UI of the platform as part of the Idrica team: flows, interface patterns and the design system behind them."
+          }
+        },
+        {
+          "t": {
+            "es": "El resultado",
+            "en": "The outcome"
+          },
+          "d": {
+            "es": "Un entorno de escritorio coherente, con patrones claros y tranquilos, pensado para leer rápido paneles, mapas y alertas.",
+            "en": "One coherent desktop environment with calm, clear patterns, built for fast visual parsing across dashboards, maps and alerts."
+          }
+        }
+      ],
+      "bloques": [
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/idrica-wastewater/idrica-wastewater-control-room.jpg",
+          "alt": {
+            "es": "Interfaz de Idrica Wastewater en una sala de control",
+            "en": "Idrica Wastewater interface in control room context"
+          },
+          "w": 1536,
+          "h": 1024,
+          "kb": 240,
+          "grande": "content/casos/idrica-wastewater_01-1536.webp",
+          "wg": 1536,
+          "chica": "content/casos/idrica-wastewater_01-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "cita",
+          "txt": {
+            "es": "Diseñar software industrial es convertir la complejidad operativa en claridad visual.",
+            "en": "Designing for industrial software means turning operational complexity into visual clarity."
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/idrica-wastewater/idrica-wastewater-dashboard.jpg",
+          "alt": {
+            "es": "Dashboard de monitorización y alertas de Idrica Wastewater",
+            "en": "Idrica Wastewater monitoring and alerts dashboard"
+          },
+          "w": 1536,
+          "h": 1024,
+          "kb": 177,
+          "grande": "content/casos/idrica-wastewater_02-1536.webp",
+          "wg": 1536,
+          "chica": "content/casos/idrica-wastewater_02-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/idrica-wastewater/idrica-wastewater-operations.jpg",
+          "alt": {
+            "es": "Interfaz de datos operativos de Idrica Wastewater",
+            "en": "Idrica Wastewater operational data interface"
+          },
+          "w": 1536,
+          "h": 1024,
+          "kb": 198,
+          "grande": "content/casos/idrica-wastewater_03-1536.webp",
+          "wg": 1536,
+          "chica": "content/casos/idrica-wastewater_03-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "El sistema de interfaz se pensó para contextos operativos reales: información densa, varias capas de decisión y la necesidad de leer rápido dashboards, tablas y vistas geográficas."
+            ],
+            "en": [
+              "The interface system was shaped for real operational contexts: dense information, multiple decision layers, and the need for fast visual parsing across dashboards, tables, and geographical views."
+            ]
+          }
+        }
+      ],
+      "portada": {
+        "src": "content/pictures/projects/idrica-wastewater/idrica-wastewater-dashboard.jpg",
+        "alt": {
+          "es": "Dashboard de la plataforma Idrica Wastewater",
+          "en": "Idrica Wastewater platform dashboard"
+        },
+        "w": 1536,
+        "h": 1024,
+        "kb": 177,
+        "grande": "content/casos/idrica-wastewater_portada-1536.webp",
+        "wg": 1536,
+        "chica": "content/casos/idrica-wastewater_portada-900.webp",
+        "wc": 900
+      }
+    },
+    {
+      "slug": "atelier",
+      "nombre": "Atelier",
+      "anios": "2026",
+      "subtitulo": {
+        "es": "Mi proceso de diseño, convertido en sistema",
+        "en": "My Design Process, Turned Into a System"
+      },
+      "intro": {
+        "es": [
+          "ATELIER es mi forma de diseñar webs, escrita como un sistema. Sigue las tendencias de diseño web, mantiene un moodboard ordenado, propone tres direcciones para cada web, aprende de mi feedback y construye la web final.",
+          "La velocidad importa, pero el gusto va primero. Yo marco la dirección, tomo las decisiones y elijo qué se tira."
+        ],
+        "en": [
+          "ATELIER is how I design websites, written down as a system. It follows web design trends, keeps a structured moodboard, proposes three directions for every site, learns from my feedback and builds the final website.",
+          "Speed matters, but taste comes first. I set the direction, make the calls and decide what gets thrown away."
+        ]
+      },
+      "columnas": [
+        {
+          "t": {
+            "es": "proyecto",
+            "en": "project"
+          },
+          "d": {
+            "es": [
+              "Proyecto propio",
+              "2026, en curso"
+            ],
+            "en": [
+              "Own work",
+              "2026, ongoing"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "alcance",
+            "en": "scope"
+          },
+          "d": {
+            "es": [
+              "Diseño de sistemas",
+              "Dirección de arte",
+              "Design Ops",
+              "Desarrollo web"
+            ],
+            "en": [
+              "System Design",
+              "Art Direction",
+              "Design Ops",
+              "Web Development"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "stack",
+            "en": "stack"
+          },
+          "d": {
+            "es": [
+              "Figma, Astro, Tailwind",
+              "Claude, GitHub",
+              "Cloudflare Pages"
+            ],
+            "en": [
+              "Figma, Astro, Tailwind",
+              "Claude, GitHub",
+              "Cloudflare Pages"
+            ]
+          }
+        }
+      ],
+      "resumen": [
+        {
+          "t": {
+            "es": "El reto",
+            "en": "The challenge"
+          },
+          "d": {
+            "es": "Las webs rápidas suelen parecerse a todo lo demás. Yo quería velocidad sin perder un punto de vista.",
+            "en": "Fast websites tend to look like everything else. I wanted speed without losing a point of view."
+          }
+        },
+        {
+          "t": {
+            "es": "Mi papel",
+            "en": "My role"
+          },
+          "d": {
+            "es": "Diseñé el sistema de principio a fin: flujo de trabajo, reglas de decisión, modelo de gusto, herramientas de revisión y la dirección de arte de cada web.",
+            "en": "I designed the system end to end: workflow, decision rules, taste model, review tools and the art direction of every site."
+          }
+        },
+        {
+          "t": {
+            "es": "El resultado",
+            "en": "The outcome"
+          },
+          "d": {
+            "es": "En sus primeras semanas: más de 20 decisiones de diseño registradas y diez webs construidas. Tres hicieron el recorrido completo, de las direcciones a la web final.",
+            "en": "In its first weeks: 20+ design decisions logged and ten sites built. Three went all the way, from directions to final site."
+          }
+        }
+      ],
+      "bloques": [
+        {
+          "tipo": "concepto",
+          "src": "content/pictures/projects/casa-albar/casa-albar-home-hero.jpg",
+          "alt": {
+            "es": "Portada de Casa Albar",
+            "en": "Casa Albar homepage"
+          },
+          "nombre": "Casa Albar",
+          "linea": {
+            "es": "Un hotel cuya web pasa del día a la noche",
+            "en": "A hotel website that goes from day to night"
+          },
+          "href": "casa-albar.php?lang=en",
+          "w": 1440,
+          "h": 900,
+          "kb": 161,
+          "grande": "content/casos/atelier_01-1440.webp",
+          "wg": 1440,
+          "chica": "content/casos/atelier_01-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "concepto",
+          "src": "content/pictures/projects/ale/ale-home-hero.jpg",
+          "alt": {
+            "es": "Portada de alè",
+            "en": "alè homepage"
+          },
+          "nombre": "alè",
+          "linea": {
+            "es": "Un estudio de yoga cuya web respira contigo",
+            "en": "A yoga studio website that breathes with you"
+          },
+          "href": "ale.php?lang=en",
+          "w": 1440,
+          "h": 900,
+          "kb": 76,
+          "grande": "content/casos/atelier_02-1440.webp",
+          "wg": 1440,
+          "chica": "content/casos/atelier_02-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "concepto",
+          "src": "content/pictures/projects/otra-vez/otra-vez-home-hero.jpg",
+          "alt": {
+            "es": "Portada de Otra Vez",
+            "en": "Otra Vez homepage"
+          },
+          "nombre": "Otra Vez",
+          "linea": {
+            "es": "Una tienda vintage llevada como un archivo",
+            "en": "A vintage store run like an archive"
+          },
+          "href": "otra-vez.php?lang=en",
+          "w": 1440,
+          "h": 900,
+          "kb": 152,
+          "grande": "content/casos/atelier_03-1440.webp",
+          "wg": 1440,
+          "chica": "content/casos/atelier_03-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "concepto",
+          "src": "content/pictures/projects/pati/pati-home-hero.jpg",
+          "alt": {
+            "es": "Portada de Pati",
+            "en": "Pati homepage"
+          },
+          "nombre": "Pati",
+          "linea": {
+            "es": "Una cafetería de brunch construida alrededor de su patio",
+            "en": "A brunch café built around its courtyard"
+          },
+          "href": "pati.php?lang=en",
+          "w": 1440,
+          "h": 900,
+          "kb": 142,
+          "grande": "content/casos/atelier_04-1440.webp",
+          "wg": 1440,
+          "chica": "content/casos/atelier_04-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "concepto",
+          "src": "content/pictures/projects/lenta/lenta-home-hero.jpg",
+          "alt": {
+            "es": "Portada de Lenta",
+            "en": "Lenta homepage"
+          },
+          "nombre": "Lenta",
+          "linea": {
+            "es": "Un estudio de tatuaje donde el flash se vende como producto",
+            "en": "A tattoo studio where flash is sold like product"
+          },
+          "href": "lenta.php?lang=en",
+          "w": 1440,
+          "h": 900,
+          "kb": 99,
+          "grande": "content/casos/atelier_05-1440.webp",
+          "wg": 1440,
+          "chica": "content/casos/atelier_05-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "cita",
+          "txt": {
+            "es": "Una web se puede hacer en una tarde. Ese es el problema: se parece a todo lo demás.",
+            "en": "A website can be made in an afternoon. That is the problem: it looks like everything else."
+          }
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Yo quería lo contrario: un proceso en el que la velocidad esté al servicio del gusto y cada web tenga personalidad propia. ATELIER funciona como un único ciclo. Las tendencias y las referencias guardadas se convierten en un moodboard etiquetado por paleta, tipografía, layout y movimiento. Cada brief recibe tres direcciones. Yo elijo. La dirección elegida se convierte en una web real en Astro, con revisión automática de enlaces, accesibilidad y responsive. Mi feedback vuelve al sistema."
+            ],
+            "en": [
+              "I wanted the opposite: a process where speed serves taste and every site has a personality of its own. ATELIER runs as one loop. Trends and saved references become a moodboard tagged by palette, type, layout and motion. Every brief gets three directions. I choose. The chosen direction becomes a real site in Astro, checked automatically for links, accessibility and responsive layouts. My feedback goes back into the system."
+            ]
+          }
+        },
+        {
+          "tipo": "cita",
+          "txt": {
+            "es": "Direcciones antes que webs.",
+            "en": "Directions before builds."
+          }
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Cada dirección define paleta, tipografía, layout y una pieza estrella, y se enseña en escritorio y móvil con una demo ligera. Tirarla cuesta poco, así que tiro muchas."
+            ],
+            "en": [
+              "Each direction defines palette, typography, layout and one signature piece, shown on desktop and mobile with a light demo. It costs little to throw away, so I throw away a lot."
+            ]
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/atelier/atelier-three-directions-otra-vez.jpg",
+          "alt": {
+            "es": "Tres direcciones visuales propuestas para Otra Vez: Archivo, Mosaico y Ocre",
+            "en": "Three visual directions proposed for Otra Vez: Archivo, Mosaico and Ocre"
+          },
+          "w": 1440,
+          "h": 453,
+          "kb": 129,
+          "grande": "content/casos/atelier_06-1440.webp",
+          "wg": 1440,
+          "chica": "content/casos/atelier_06-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Otra Vez necesitó cuatro rondas. Las primeras se descartaron: demasiado parecidas entre sí, demasiado editoriales, demasiado color. La cuarta ronda dio con Archivo, con las fotos de tienda tomadas de Mosaico. Pati y Lenta necesitaron dos rondas cada una, mezclando lo mejor de varias direcciones."
+            ],
+            "en": [
+              "Otra Vez took four rounds. The first ones were rejected: too similar to each other, too editorial, too much colour. The fourth round landed on Archivo, with the shop photos borrowed from Mosaico. Pati and Lenta each needed two rounds, mixing the best parts of several directions."
+            ]
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/atelier/atelier-proposals-pati.jpg",
+          "alt": {
+            "es": "Segunda ronda de direcciones para Pati",
+            "en": "Second round of directions for Pati"
+          },
+          "w": 1440,
+          "h": 1350,
+          "kb": 213,
+          "grande": "content/casos/atelier_07-1440.webp",
+          "wg": 1440,
+          "chica": "content/casos/atelier_07-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/atelier/atelier-proposals-lenta.jpg",
+          "alt": {
+            "es": "Segunda ronda de direcciones para Lenta",
+            "en": "Second round of directions for Lenta"
+          },
+          "w": 1440,
+          "h": 1210,
+          "kb": 200,
+          "grande": "content/casos/atelier_08-1440.webp",
+          "wg": 1440,
+          "chica": "content/casos/atelier_08-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "cita",
+          "txt": {
+            "es": "Vacío y plano no es minimalista. La complejidad tiene que ganarse su sitio.",
+            "en": "Empty and flat is not minimal. Complexity has to earn its place."
+          }
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Son dos de las reglas del perfil de gusto que el sistema guarda por escrito. Cada comentario empieza como sugerencia y se convierte en regla cuando se repite o cuando lo generalizo. Otras: nada de tiendas de plantillas, un único sistema de marcos por web y, si un detalle de marca necesita explicación, sobra.",
+              "Un panel de control privado lo une todo: el radar de tendencias, cada ronda de direcciones con mis notas, las webs y un modo revisión en el que clavo comentarios directamente sobre los elementos en vivo. Esos pines se convierten en la lista de tareas de la siguiente iteración.",
+              "En sus primeras semanas, ATELIER registró más de 20 decisiones de diseño y construyó diez webs. Tres pasaron por el proceso completo, de las direcciones a la web final, y son las que ves arriba."
+            ],
+            "en": [
+              "Those are two of the rules in the taste profile the system keeps in writing. Every comment starts as a suggestion and becomes a rule once it repeats or I generalise it. Others: no template stores, one frame system per site, and if a brand detail needs explaining, it should not be there.",
+              "A private control panel ties it together: the trend radar, every round of directions with my notes, the sites, and a review mode where I pin comments straight onto live elements. Those pins become the next iteration's to-do list.",
+              "In its first weeks ATELIER logged more than 20 design decisions and built ten sites. Three went through the full process, from directions to final site, and are shown above."
+            ]
+          }
+        },
+        {
+          "tipo": "cita",
+          "txt": {
+            "es": "Las marcas son ficticias. El proceso es real.",
+            "en": "The brands are fictional. The process is real."
+          }
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "Diseñé el sistema de principio a fin: el flujo de trabajo, las reglas de decisión, el modelo de gusto, las herramientas de revisión y la dirección de arte de cada web. Las herramientas, IA incluida, se encargan de la investigación, la producción y las revisiones dentro de esas reglas. Nunca eligen la dirección."
+            ],
+            "en": [
+              "I designed the system end to end: the workflow, the decision rules, the taste model, the review tools and the art direction of every site. Tools, AI included, handle research, production and checks inside those rules. They never pick the direction."
+            ]
+          }
+        }
+      ],
+      "portada": {
+        "src": "content/pictures/projects/atelier/atelier-header-three-concepts.jpg",
+        "alt": {
+          "es": "Tres webs creadas con ATELIER: Otra Vez, Pati y Lenta",
+          "en": "Three websites built with ATELIER: Otra Vez, Pati and Lenta"
+        },
+        "w": 1920,
+        "h": 1280,
+        "kb": 367,
+        "grande": "content/casos/atelier_portada-1800.webp",
+        "wg": 1800,
+        "chica": "content/casos/atelier_portada-900.webp",
+        "wc": 900
+      }
+    },
+    {
+      "slug": "clustag",
+      "nombre": "Clustag",
+      "anios": "",
+      "subtitulo": {
+        "es": "Soluciones RFID inteligentes con elegancia industrial",
+        "en": "Smart RFID Solutions with Industrial Elegance"
+      },
+      "intro": {
+        "es": [
+          "Clustag es una empresa tecnológica global especializada en soluciones RFID de intralogística para almacenes y cadenas de suministro. Desde túneles RFID y validación de palés hasta el seguimiento de prendas, sus sistemas automatizan la identificación y el flujo de producto para mejorar la trazabilidad, la velocidad y la precisión operativa."
+        ],
+        "en": [
+          "Clustag is a global technology company specialized in RFID intralogistics solutions for warehouses and supply chains. From RFID tunnels and pallet validation to garment tracking, its systems automate identification and product flow to improve traceability, speed, and operational accuracy."
+        ]
+      },
+      "columnas": [
+        {
+          "t": {
+            "es": "cliente",
+            "en": "client"
+          },
+          "d": {
+            "es": [
+              "Clustag",
+              "2025"
+            ],
+            "en": [
+              "Clustag",
+              "2025"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "servicios",
+            "en": "services"
+          },
+          "d": {
+            "es": [
+              "Diseño UX/UI"
+            ],
+            "en": [
+              "UX/UI Design"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "créditos",
+            "en": "credits"
+          },
+          "d": {
+            "es": [
+              "Alex Dasi y FreshUp"
+            ],
+            "en": [
+              "Alex Dasi &amp; FreshUp"
+            ]
+          }
+        }
+      ],
+      "resumen": [
+        {
+          "t": {
+            "es": "El reto",
+            "en": "The challenge"
+          },
+          "d": {
+            "es": "La intralogística RFID es técnica y difícil de explicar. La web tenía que hacerla clara y fiable.",
+            "en": "RFID intralogistics is technical and hard to explain. The website had to make it feel clear and trustworthy."
+          }
+        },
+        {
+          "t": {
+            "es": "Mi papel",
+            "en": "My role"
+          },
+          "d": {
+            "es": "Diseño UX/UI de la web, junto a FreshUp.",
+            "en": "UX/UI design of the website, together with FreshUp."
+          }
+        },
+        {
+          "t": {
+            "es": "El resultado",
+            "en": "The outcome"
+          },
+          "d": {
+            "es": "Una web modular y limpia, con una identidad industrial pero elegante, visualización de datos útil y navegación sencilla.",
+            "en": "A clean modular site with an industrial yet elegant identity, useful data visualization and simple navigation."
+          }
+        }
+      ],
+      "bloques": [
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/clustag/clustag-iphones.jpg",
+          "alt": {
+            "es": "Interfaz de la plataforma Clustag",
+            "en": "Clustag Platform Interface"
+          },
+          "w": 1536,
+          "h": 1024,
+          "kb": 147,
+          "grande": "content/casos/clustag_01-1536.webp",
+          "wg": 1536,
+          "chica": "content/casos/clustag_01-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/videos-gifs/clustag/clustag video 1.gif",
+          "alt": {
+            "es": "Animación de la plataforma Clustag",
+            "en": "Clustag Platform Animation"
+          },
+          "w": 800,
+          "h": 446,
+          "kb": 11819,
+          "video": "content/casos/clustag_02.mp4",
+          "poster": "content/casos/clustag_02_poster.webp"
+        },
+        {
+          "tipo": "cita",
+          "txt": {
+            "es": "<a href=\"https://clustag.com/\">La web</a> traslada esa precisión técnica a un layout modular y limpio, con una identidad visual industrial pero elegante.",
+            "en": "<a href=\"https://clustag.com/\">The website</a> translates that technical precision into a clean modular layout and an industrial yet elegant visual identity."
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/clustag/clustag-iphone.jpg",
+          "alt": {
+            "es": "Interfaz móvil de Clustag",
+            "en": "Clustag Mobile Interface"
+          },
+          "w": 1024,
+          "h": 1536,
+          "kb": 1763,
+          "grande": "content/casos/clustag_03-1024.webp",
+          "wg": 1024,
+          "chica": "content/casos/clustag_03-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/clustag/clustag-warehouse.jpg",
+          "alt": {
+            "es": "Clustag en su entorno real",
+            "en": "Clustag Environmental Context"
+          },
+          "w": 1536,
+          "h": 1024,
+          "kb": 1203,
+          "grande": "content/casos/clustag_04-1536.webp",
+          "wg": 1536,
+          "chica": "content/casos/clustag_04-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "La interfaz prioriza la claridad, una visualización de datos útil y una navegación intuitiva. Tonos neutros, estructura geométrica y movimiento controlado transmiten fiabilidad y una mentalidad de ingeniería que mira al futuro."
+            ],
+            "en": [
+              "The interface prioritizes clarity, useful data visualization, and intuitive navigation. Neutral tones, geometric structure, and controlled motion help communicate reliability and a forward-thinking engineering mindset."
+            ]
+          }
+        }
+      ],
+      "portada": {
+        "src": "content/pictures/projects/clustag/clustag.jpg",
+        "alt": {
+          "es": "Proyecto Clustag",
+          "en": "Clustag Project"
+        },
+        "w": 1536,
+        "h": 1024,
+        "kb": 172,
+        "grande": "content/casos/clustag_portada-1536.webp",
+        "wg": 1536,
+        "chica": "content/casos/clustag_portada-900.webp",
+        "wc": 900
+      }
+    },
+    {
+      "slug": "knowadays",
+      "nombre": "Knowadays",
+      "anios": "2021-2025",
+      "subtitulo": {
+        "es": "Despliegue digital para una marca global de formación",
+        "en": "Digital Rollout for a Global Learning Brand"
+      },
+      "intro": {
+        "es": [
+          "Diseño y aplicaciones digitales para <a href=\"https://knowadays.com/\" target=\"_blank\">Knowadays</a>, una plataforma educativa centrada en cursos de corrección, edición y redacción acreditados por CPD. En tres años de colaboración, ayudé a evolucionar la marca en la web y en las piezas de campaña, manteniendo la coherencia visual y adaptando cada entrega a objetivos de rendimiento, usabilidad y contenido."
+        ],
+        "en": [
+          "Design and digital application work for <a href=\"https://knowadays.com/\" target=\"_blank\">Knowadays</a>, an education platform focused on CPD-accredited proofreading, editing, and writing courses. Over a three-year collaboration, I helped evolve the brand across web touchpoints and campaign assets, ensuring visual consistency while adapting outputs to performance, usability, and content goals."
+        ]
+      },
+      "columnas": [
+        {
+          "t": {
+            "es": "cliente",
+            "en": "client"
+          },
+          "d": {
+            "es": [
+              "Knowadays",
+              "2021 - 2024"
+            ],
+            "en": [
+              "Knowadays",
+              "2021 - 2024"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "servicios",
+            "en": "services"
+          },
+          "d": {
+            "es": [
+              "Diseño UX/UI",
+              "Diseño para redes sociales",
+              "Diseño editorial",
+              "Diseño gráfico",
+              "Emailing y piezas de campaña"
+            ],
+            "en": [
+              "UX/UI Design",
+              "Social Media Design",
+              "Editorial Design",
+              "Graphic Design",
+              "Emailing &amp; Campaign Assets"
+            ]
+          }
+        },
+        {
+          "t": {
+            "es": "créditos",
+            "en": "credits"
+          },
+          "d": {
+            "es": [
+              "Colaboración de diseño in-house con el equipo de Knowadays"
+            ],
+            "en": [
+              "In-house design collaboration for Knowadays Team"
+            ]
+          }
+        }
+      ],
+      "resumen": [
+        {
+          "t": {
+            "es": "El reto",
+            "en": "The challenge"
+          },
+          "d": {
+            "es": "Una marca de formación en crecimiento tenía que mantenerse coherente en web, landings, email y redes, sin dejar de convertir.",
+            "en": "A growing learning brand had to stay consistent across web, landing pages, email and social, while still converting."
+          }
+        },
+        {
+          "t": {
+            "es": "Mi papel",
+            "en": "My role"
+          },
+          "d": {
+            "es": "Tres años como su diseñador de confianza: UX/UI, landings, emailing, redes y diseño editorial.",
+            "en": "Three years as their design partner: UX/UI, landing pages, emailing, social and editorial design."
+          }
+        },
+        {
+          "t": {
+            "es": "El resultado",
+            "en": "The outcome"
+          },
+          "d": {
+            "es": "Rediseños iterativos y piezas listas para producción que mantuvieron la marca coherente en todos los canales y en un mercado internacional.",
+            "en": "Iterative redesigns and production-ready assets that kept the brand cohesive across channels in an international market."
+          }
+        }
+      ],
+      "bloques": [
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/knowadays/desktop/knowadays-desktop-01.jpg",
+          "alt": {
+            "es": "Página de Knowadays en escritorio",
+            "en": "Knowadays desktop page"
+          },
+          "w": 2800,
+          "h": 1867,
+          "kb": 842,
+          "grande": "content/casos/knowadays_01-1800.webp",
+          "wg": 1800,
+          "chica": "content/casos/knowadays_01-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/knowadays/mobile/knowadays-mobile-01.jpg",
+          "alt": {
+            "es": "Vista móvil de Knowadays",
+            "en": "Knowadays mobile view"
+          },
+          "w": 1024,
+          "h": 1536,
+          "kb": 252,
+          "grande": "content/casos/knowadays_02-1024.webp",
+          "wg": 1024,
+          "chica": "content/casos/knowadays_02-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "El foco era mantener una interfaz clara, editorial y orientada a conversión en varios canales: desde actualizaciones de la web y landing pages hasta el diseño de mailings y la comunicación en redes. Puedes ver el proyecto en la <a href=\"https://knowadays.com/\" target=\"_blank\">web de Knowadays</a> y seguir su contenido en <a href=\"https://www.instagram.com/knowadayslearning/\" target=\"_blank\">Instagram</a>."
+            ],
+            "en": [
+              "The focus was to keep the interface clear, editorial, and conversion-oriented across multiple channels: from website updates and landing pages to mailing design and social media communication. You can explore the project on the <a href=\"https://knowadays.com/\" target=\"_blank\">Knowadays website</a>, and follow their ongoing content on <a href=\"https://www.instagram.com/knowadayslearning/\" target=\"_blank\">Instagram</a>."
+            ]
+          }
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/knowadays/tablet/knowadays-tablet-01.jpg",
+          "alt": {
+            "es": "Mockup de Knowadays en tablet",
+            "en": "Knowadays tablet mockup"
+          },
+          "w": 2800,
+          "h": 3843,
+          "kb": 1646,
+          "grande": "content/casos/knowadays_03-1800.webp",
+          "wg": 1800,
+          "chica": "content/casos/knowadays_03-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/knowadays/desktop/knowadays-desktop-02.jpg",
+          "alt": {
+            "es": "Detalles del rediseño web de Knowadays",
+            "en": "Knowadays web redesign details"
+          },
+          "w": 2800,
+          "h": 1867,
+          "kb": 746,
+          "grande": "content/casos/knowadays_04-1800.webp",
+          "wg": 1800,
+          "chica": "content/casos/knowadays_04-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "img",
+          "src": "content/pictures/projects/knowadays/mobile/knowadays-mobile-02.jpg",
+          "alt": {
+            "es": "Pantallas móviles de Knowadays",
+            "en": "Knowadays mobile screens"
+          },
+          "w": 1024,
+          "h": 1536,
+          "kb": 166,
+          "grande": "content/casos/knowadays_05-1024.webp",
+          "wg": 1024,
+          "chica": "content/casos/knowadays_05-900.webp",
+          "wc": 900
+        },
+        {
+          "tipo": "texto",
+          "p": {
+            "es": [
+              "El trabajo incluyó rediseños iterativos y aplicaciones de diseño listas para producción que impulsaron el crecimiento, la confianza y una experiencia de usuario más cohesionada en un contexto de formación internacional."
+            ],
+            "en": [
+              "Work included iterative redesigns and production-ready design applications that supported growth, trust, and a more cohesive user experience in an international learning context."
+            ]
+          }
+        }
+      ],
+      "portada": {
+        "src": "content/pictures/projects/knowadays/knowadays-hero.jpg",
+        "alt": {
+          "es": "Proyecto Knowadays",
+          "en": "Knowadays Project"
+        },
+        "w": 1800,
+        "h": 1200,
+        "kb": 562,
+        "grande": "content/casos/knowadays_portada-1800.webp",
+        "wg": 1800,
+        "chica": "content/casos/knowadays_portada-900.webp",
+        "wc": 900
+      }
+    }
+  ]
+}

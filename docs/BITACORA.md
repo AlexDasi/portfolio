@@ -588,3 +588,11 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 6. ¿Hay alguna frase de cliente (Berto, Mauro, Elsa) o resultado medido que se pueda citar? No hay ninguno escrito, así que no sale nada.
 7. Créditos de fotografía en las fichas de cliente (p. ej. Ismael Nasrollah en Facetas 02): ¿se nombran?
 
+## 2026-11-19 — v7 · casos UX/UI en la plantilla nueva (feedback 150, ATELIER conv. 1330, agente Fichas v2)
+
+- **`caso.php?c=<slug>`**: Tulong, Idrica, ATELIER, Clustag y Knowadays pasan a la ficha nueva, adaptada a caso de producto: titular + subtítulo + datos (los tres de la página antigua) → portada → 01 El reto / 02 Mi papel → 03 El proyecto → 04 Decisiones y pantallas (imágenes, citas y textos en su orden original; 4 o más fotos seguidas = galería; los conceptos de ATELIER en fila) → 05 El resultado → siguiente caso. Mismos estilos que las fichas (`css/ficha.css`, bloque «caso»), día/noche y acento.
+- **Contenido: ni una frase nueva.** `tools/extrae_casos.py` lee cada página antigua ya renderizada en EN y en ES (`php-pages/projects/<slug>.php` + `lang/es/projects/<slug>.json`) y lo deja en `content/casos.json`. Si se cambia el texto de un caso, se cambia en la fuente y se vuelve a extraer.
+- **Medios** en `content/casos/`: cada imagen a 1800 y 900 px en webp (9,4 MB entre los cinco casos; antes había JPG de hasta 1,7 MB) y el GIF de Clustag de 11,8 MB pasa a MP4 de 0,6 MB. Todo perezoso menos la portada.
+- **Enlaces:** la lista de UX/UI de «Sobre mí» (`php-pages/sobre-mi.php`) apunta a `caso.php?c=…`. Las páginas antiguas siguen en su sitio (no se borran; el resto de `php-pages/projects/*` no se ha tocado). `tools/export_preview.py` exporta también `caso-<slug>.html`.
+- **QA (local):** vivo.mjs 0 rojos en Tulong y Knowadays (iPhone 13, SE, Android 360, desktop) · peso de primera carga 0,7-0,9 MB · nitidez 0 rojos · **medir.mjs marca en rojo el bloque «Decisiones y pantallas» en móvil** (3,3 pantallas en Knowadays, 6,6-6,8 en Tulong, sin «ver todo»): es la secuencia de pantallas del caso; la galería de fotos de campo ya va en carril. Queda a decisión de Alex si se pliega.
+
