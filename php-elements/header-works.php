@@ -48,7 +48,7 @@ $assetVersion = static function (string $relativePath): string {
     <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>
     <link rel="alternate" hreflang="en" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="alternate" hreflang="es" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>">
-    <link rel="alternate" hreflang="x-default" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="alternate" hreflang="x-default" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="icon" type="image/svg+xml" href="/images/vectors/arrow.svg">
         
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -1239,7 +1239,7 @@ function registerFluidRuntimeAPI () {
             pointers.forEach((pointer) => {
                 pointer.color = generateColor();
             });
-            multipleSplats(2);
+            if (!config.FLAT) multipleSplats(2);
         }
     }
 
@@ -1641,9 +1641,10 @@ window.addEventListener('touchend', e => {
 window.addEventListener('keydown', e => {
     if (e.code === 'KeyP')
         config.PAUSED = !config.PAUSED;
-    if (e.key === ' ') {
+    // En modo plano la tecla espacio la lleva js/cursor-color.js (cambia de color, sin manchas)
+    if (e.key === ' ' && !config.FLAT) {
         e.preventDefault();
-        multipleSplats(parseInt(Math.random() * 20) + 16, !config.FLAT);
+        multipleSplats(parseInt(Math.random() * 20) + 16, true);
     }
 });
 

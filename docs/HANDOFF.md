@@ -3,7 +3,7 @@
 > Estado vivo de "por dónde retomar". Se sobreescribe cada cierre de bloque; el histórico queda en [BITACORA.md](BITACORA.md).
 
 ## Rama `rediseno-baraja-2026-11` (2026-11-18, ATELIER conv. 1330) — SIN publicar
-- Home = intro + baraja; About/UX-UI/Process/Contact en `about.php`. Detalle en BITACORA (última entrada).
+- v2 (19/11): home = intro + baraja de 9 cartas en dominó; About nuevo en blanco (`about.php` + `php-pages/sobre-mi.php`); ES por defecto (`?lang=en`); `?pisos=a|b`, `?cursor=fijo`. Detalle en BITACORA (últimas entradas).
 - Preview estática: `python3 tools/export_preview.py <carpeta>` → https://atelier-demo-propuestas.pages.dev/2026-11-19_alexdasi-baraja-sobre-su-web/
 - NO mergear a `main` sin el sí de Alex (main despliega en vivo).
 

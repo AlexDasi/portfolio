@@ -26,7 +26,8 @@ html.tema-noche body.sitio-baraja {
   --linea: rgba(247, 247, 245, .18);
 }
 
-html.tema-dia, html.tema-noche { background: var(--bkg-color); }
+html.tema-dia { background: #{$papel}; }
+html.tema-noche { background: #000; }
 body.sitio-baraja {
   background-color: var(--bkg-color);
   transition: background-color .4s ease;
@@ -50,19 +51,39 @@ body.sitio-baraja {
   }
 }
 
-// ---------- Los pisos y la flecha en día ----------
-// Mismo dibujo; en blanco roto el lima solo se pierde, así que el piso apagado lleva un filo fino.
+// ---------- Día: la interfaz en tinta; el lima solo de acento (feedback 81) ----------
 html.tema-dia .sitio-baraja {
-  .MainSwiper .swiper-pagination-bullet {
-    opacity: .55;
-    box-shadow: inset 0 0 0 1px rgba(20, 20, 21, .28);
-  }
-  .MainSwiper .swiper-pagination-bullet-active {
+  .single { background: none; }
+  .single > a { color: $tinta; font-weight: 400; }
+  .lang-switch__item { color: $tinta; opacity: .45; }
+  .lang-switch__item.is-active {
+    background: none;
+    color: $tinta;
     opacity: 1;
-    box-shadow: inset 0 0 0 1px rgba(20, 20, 21, .45);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
   }
   .arrow-container .circle { border-color: $tinta; }
   .arrow, .arrow::before, .arrow::after { border-color: $tinta; }
+
+  // Los pisos (feedback 78): sin borde. Dos opciones para elegir con ?pisos=a | ?pisos=b
+  .MainSwiper .swiper-pagination-bullet {
+    box-shadow: none;
+    transition: opacity .3s ease, background-color .3s ease;
+  }
+}
+// A · todo en tinta: apagados casi transparentes, el activo en tinta casi llena
+html.tema-dia.pisos-a .sitio-baraja .MainSwiper {
+  .swiper-pagination-bullet { background: $tinta; opacity: .12; }
+  .swiper-pagination-bullet:hover { opacity: .3; box-shadow: none; }
+  .swiper-pagination-bullet-active { opacity: .86; }
+}
+// B · apagados en tinta muy suave; el activo, del color del cursor (el lima por defecto)
+html.tema-dia.pisos-b .sitio-baraja .MainSwiper {
+  .swiper-pagination-bullet { background: $tinta; opacity: .1; }
+  .swiper-pagination-bullet:hover { opacity: .24; box-shadow: none; }
+  .swiper-pagination-bullet-active { background: var(--cursor-color, #{$lima}); opacity: 1; }
 }
 
 // ---------- Accesos sutiles (arriba a la derecha) ----------
@@ -166,10 +187,22 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
     height: .2em;
     margin-left: .06em;
     border-radius: 50%;
-    background: var(--accent-color);
+    background: var(--cursor-color, #{$lima});
     box-shadow: inset 0 0 0 1px rgba(20, 20, 21, .12);
     pointer-events: auto;
+    transition: background-color .3s ease;
     vertical-align: baseline;
+  }
+  &__pista {
+    position: absolute;
+    left: 8vw;
+    bottom: 6vh;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: .02em;
+    color: var(--tinta-suave);
+    transition: opacity .6s ease;
   }
   &__sub {
     margin-top: 2.4rem;
@@ -195,17 +228,15 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
   &__mesa {
     position: absolute;
     inset: 0;
-    perspective: 1800px;
-    perspective-origin: 30% 50%;
     touch-action: pan-y;
   }
 
-  // Ficha de la carta de delante: abajo a la izquierda, fina
+  // Ficha de la carta de delante: debajo de ella, fina
   &__pie {
     position: absolute;
     left: 6vw;
-    bottom: 8vh;
-    width: min(21vw, 310px);
+    top: calc(41% + min(30vw, 46vh * 1.6) / 3.2 + 36px);
+    width: min(30vw, 46vh * 1.6, 420px);
     z-index: 200;
     pointer-events: none;
   }
@@ -232,14 +263,16 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
 
 .carta {
   position: absolute;
-  left: 54%;
-  top: 56%;
-  width: min(42vw, 62vh * 1.6);
+  // v2: la de delante a la izquierda, con su ficha debajo; las de detrás en fila hacia la derecha
+  --w: min(30vw, 46vh * 1.6);
+  left: calc(6vw + var(--w) / 2);
+  top: 41%;
+  width: var(--w);
   aspect-ratio: 16 / 10;
-  margin-left: calc(min(42vw, 62vh * 1.6) / -2);
-  margin-top: calc(min(42vw, 62vh * 1.6) / -3.2);
+  margin-left: calc(var(--w) / -2);
+  margin-top: calc(var(--w) / -3.2);
   display: block;
-  transform-origin: 50% 60%;
+  transform-origin: 50% 50%;
   will-change: transform, opacity;
   backface-visibility: hidden;
   text-decoration: none;
@@ -443,3 +476,224 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
 
 // About sin botón de día/noche: el último enlace no se pega al borde
 .pagina-about .nav-sutil { right: 16px; }
+
+// Pista del espacio: solo con ratón, y se va en cuanto se usa
+html.cursor-cambiado .intro__pista { opacity: 0; }
+@media (hover: none), (pointer: coarse), (max-width: 1280px) { .intro__pista { display: none; } }
+
+// ============================================================
+// About v2 (feedback 79): blanco roto, Inter fina, contención. Una pantalla por bloque.
+// ============================================================
+.slide-sm { height: 100vh; }
+.sm {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 120px 8vw 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--main-color);
+  font-family: $main-font;
+
+  p, a, li { color: var(--main-color); }
+
+  &__titulo {
+    margin: 0;
+    max-width: 18ch;
+    font-size: clamp(36px, 4.6vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -.03em;
+    text-transform: none;
+    color: var(--main-color);
+    font-weight: 200;
+  }
+  &__fino { font-weight: 200; }
+  &__grueso { font-weight: 600; }
+  &__punto {
+    display: inline-block;
+    width: .2em; height: .2em;
+    margin-left: .06em;
+    border-radius: 50%;
+    background: var(--cursor-color, #{$lima});
+  }
+  &__entrada {
+    margin-top: 28px;
+    max-width: 58ch;
+    font-size: clamp(16px, 1.25vw, 19px);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+  &__h2 {
+    margin: 0 0 28px;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+  &__texto {
+    max-width: 52ch;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 300;
+    & + & { margin-top: 14px; }
+    &--grande { font-size: clamp(22px, 2vw, 30px); line-height: 1.2; font-weight: 600; letter-spacing: -.015em; margin-bottom: 16px; }
+  }
+  &__item-t {
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -.005em;
+  }
+  &__item-p {
+    margin-top: 6px;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 300;
+    color: var(--tinta-suave) !important;
+  }
+  &__rejilla {
+    display: grid;
+    gap: 28px 40px;
+    margin-top: 56px;
+    li { padding-top: 16px; border-top: 1px solid var(--linea); }
+    &--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    &--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 0; }
+  }
+  &__lista li { padding: 14px 0; border-top: 1px solid var(--linea); }
+  &__lista li:last-child { border-bottom: 1px solid var(--linea); }
+
+  // dos columnas en escritorio
+  &--como, &--tray, &--uxui {
+    flex-direction: row;
+    align-items: center;
+    gap: 7vw;
+  }
+  &__col { flex: 1 1 0; min-width: 0; }
+  &__col--ancha { flex: 1.7 1 0; }
+  &__col--aparte { flex: .9 1 0; }
+
+  &__pasos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: none;
+    li { display: flex; gap: 20px; padding: 16px 0; border-top: 1px solid var(--linea); }
+    li:last-child { border-bottom: 1px solid var(--linea); }
+  }
+  &__num {
+    flex: 0 0 auto;
+    width: 28px;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--tinta-suave);
+    padding-top: 2px;
+  }
+  &__nota { margin-top: 20px; font-size: 14px; font-weight: 300; font-style: italic; color: var(--tinta-suave) !important; }
+
+  &__link, &__cv {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    margin-top: 18px;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent-color), var(--accent-color));
+    background-size: 100% 0;
+    background-position: 0 70%;
+    background-repeat: no-repeat;
+    transition: background-size .3s cubic-bezier(.22, 1, .36, 1);
+    svg { width: 11px; height: 11px; }
+    &:hover, &:focus-visible { background-size: 100% 36%; }
+  }
+  &__cv { font-size: 14px; color: var(--tinta-suave) !important; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+
+  &__casos {
+    flex: 1.3 1 0;
+    min-width: 0;
+    li { border-top: 1px solid var(--linea); }
+    li:last-child { border-bottom: 1px solid var(--linea); }
+    a {
+      display: grid;
+      grid-template-columns: 8.5em 1fr auto 14px;
+      align-items: baseline;
+      gap: 18px;
+      min-height: 56px;
+      padding: 16px 4px;
+      text-decoration: none;
+      transition: background-color .25s ease, padding .3s cubic-bezier(.22, 1, .36, 1);
+      svg { width: 11px; height: 11px; align-self: center; opacity: .5; }
+      &:hover, &:focus-visible { background: var(--accent-color); padding-left: 12px; }
+      &:hover span, &:focus-visible span { color: $tinta; }
+    }
+  }
+  &__caso-n { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+  &__caso-p { font-size: 15px; font-weight: 300; color: var(--tinta-suave); }
+  &__caso-a { font-size: 13px; font-weight: 300; color: var(--tinta-suave); white-space: nowrap; }
+
+  &__botones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  &__boton {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 99px;
+    border: 1px solid var(--main-color);
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: background-color .25s ease, color .25s ease;
+    &:hover, &:focus-visible { background: var(--accent-color); border-color: var(--accent-color); color: $tinta !important; }
+    &--lleno { background: var(--main-color); color: var(--bkg-color) !important; }
+  }
+}
+
+// Móvil y tablet: una pantalla por bloque, apiladas; nada de 3 pantallas seguidas
+@media (max-width: 1280px) {
+  .sm-movil { position: relative; z-index: 1; }
+  .pantalla--sm .sm {
+    height: auto;
+    min-height: 0;
+    padding: 88px 7vw 40px;
+    display: block;
+  }
+  .pantalla--sm:first-child .sm { padding-top: 110px; }
+  .sm__rejilla--4, .sm__rejilla--3 { grid-template-columns: 1fr 1fr; gap: 20px 24px; margin-top: 32px; }
+  .sm__rejilla--3 { margin-top: 0; }
+  .sm__col + .sm__col { margin-top: 44px; }
+  .sm__casos { margin-top: 28px; }
+  .sm__casos a { grid-template-columns: 1fr auto 14px; gap: 4px 12px; }
+  .sm__caso-p { grid-column: 1 / -1; grid-row: 2; }
+  .sm__caso-n { grid-row: 1; }
+}
+@media (max-width: 560px) {
+  .sm__rejilla--4, .sm__rejilla--3 { grid-template-columns: 1fr; gap: 0; }
+  .sm__rejilla li { padding: 12px 0; }
+  .sm__item-p { font-size: 14px; }
+  .sm__pasos li { padding: 12px 0; }
+  .sm__titulo { font-size: 34px; }
+  .sm__botones { flex-direction: column; align-items: stretch; }
+  .sm__boton { justify-content: center; }
+}
+
+// Cabecera táctil ≥ 44 px sin cambiar el dibujo (el fondo lima de noche se queda pegado al texto)
+@media (max-width: 1280px) {
+  .sitio-baraja .lang-switch { top: 9px; left: 12px; gap: 0; }
+  .sitio-baraja .lang-switch__item { padding: 9px 5px; min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; background-clip: content-box; }
+  .sitio-baraja .nav--top { padding-top: 9px; }
+  .sitio-baraja .single > a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; }
+  html.tema-noche .sitio-baraja .single { background: none; }
+  html.tema-noche .sitio-baraja .single > a { background: var(--accent-color); background-clip: content-box; padding: 11px 0; color: #141415; }
+}
+@media (max-width: 560px) {
+  .sitio-baraja .nav--top > ul { padding-left: 96px; }
+}
+// Móvil estrecho (≤ 400 px): no caben idioma + «alex dasi» + accesos; el nombre ya está en la intro y en el About
+@media (max-width: 400px) {
+  .sitio-baraja .nav--top { display: none; }
+}

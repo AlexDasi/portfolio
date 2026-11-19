@@ -1,7 +1,7 @@
 <?php
 /* Cabecera fina de la home y de «about» (rama rediseno-baraja-2026-11).
-   Igual que la de siempre (idioma a la izquierda, «alex dasi» en el centro)
-   + accesos sutiles a la derecha: UX/UI, About, Contact y día/noche. */
+   Idioma a la izquierda (ES por defecto), «alex dasi» en el centro, accesos sutiles a la derecha.
+   En día, todo en tinta; el lima solo como acento (feedback 81). */
 $isEs = isset($lang) && $lang === 'es';
 $navActual = $navActual ?? 'home';
 ?>
@@ -13,8 +13,8 @@ $navActual = $navActual ?? 'home';
     </ul>
 </nav>
 <div class="lang-switch" role="group" aria-label="Language">
-    <a class="lang-switch__item<?php echo $isEs ? '' : ' is-active'; ?>" data-i18n-keep href="<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>" hreflang="en" lang="en"<?php echo $isEs ? '' : ' aria-current="true"'; ?>>EN</a>
-    <a class="lang-switch__item<?php echo $isEs ? ' is-active' : ''; ?>" href="<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>" hreflang="es" lang="es"<?php echo $isEs ? ' aria-current="true"' : ''; ?>>ES</a>
+    <a class="lang-switch__item<?php echo $isEs ? ' is-active' : ''; ?>" data-i18n-keep href="<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>" hreflang="es" lang="es"<?php echo $isEs ? ' aria-current="true"' : ''; ?>>ES</a>
+    <a class="lang-switch__item<?php echo $isEs ? '' : ' is-active'; ?>" href="<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>" hreflang="en" lang="en"<?php echo $isEs ? '' : ' aria-current="true"'; ?>>EN</a>
 </div>
 <nav class="nav-sutil" aria-label="More">
     <a class="nav-sutil__item nav-sutil__item--uxui<?php echo $navActual === 'uxui' ? ' is-active' : ''; ?>" href="about.php?s=uxui">UX/UI</a>

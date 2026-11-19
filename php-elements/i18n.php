@@ -12,7 +12,9 @@
 if (!defined('ALEX_I18N')) {
     define('ALEX_I18N', true);
 
-    $lang = (isset($_GET['lang']) && $_GET['lang'] === 'es') ? 'es' : 'en';
+    // Castellano por defecto e inglés con ?lang=en (Alex, feedback 26; rama rediseno-baraja-2026-11).
+    // El HTML sigue escrito en inglés: en castellano se traduce con los diccionarios.
+    $lang = (isset($_GET['lang']) && $_GET['lang'] === 'en') ? 'en' : 'es';
 
     /** URL de la página actual en el idioma pedido (para el selector y hreflang). */
     function i18n_url(string $target): string
@@ -20,8 +22,8 @@ if (!defined('ALEX_I18N')) {
         $path = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
         $query = $_GET;
         unset($query['lang']);
-        if ($target === 'es') {
-            $query['lang'] = 'es';
+        if ($target === 'en') {
+            $query['lang'] = 'en';
         }
         $qs = http_build_query($query);
         return $path . ($qs !== '' ? '?' . $qs : '');
@@ -64,8 +66,8 @@ if (!defined('ALEX_I18N')) {
         return $map;
     }
 
-    /** Añade ?lang=es a los enlaces internos (.php) para no perder el idioma al navegar.
-     *  Se salta los que llevan data-i18n-keep justo antes del href (el botón EN). */
+    /** Añade ?lang=en a los enlaces internos (.php) para no perder el idioma al navegar.
+     *  Se salta los que llevan data-i18n-keep justo antes del href (el botón ES). */
     function i18n_links(string $html): string
     {
         return preg_replace_callback(
@@ -73,7 +75,7 @@ if (!defined('ALEX_I18N')) {
             static function (array $m): string {
                 $q = $m[2] ?? '';
                 if (strpos($q, 'lang=') === false) {
-                    $q = $q !== '' ? $q . '&amp;lang=es' : '?lang=es';
+                    $q = $q !== '' ? $q . '&amp;lang=en' : '?lang=en';
                 }
                 return 'href="' . $m[1] . $q . ($m[3] ?? '') . '"';
             },
@@ -81,11 +83,12 @@ if (!defined('ALEX_I18N')) {
         );
     }
 
-    if ($lang === 'es') {
-        ob_start(static function (string $html): string {
+    ob_start(static function (string $html) use ($lang): string {
+        if ($lang === 'es') {
             $html = strtr($html, i18n_dictionary());
             $html = str_replace('<html lang="en">', '<html lang="es">', $html);
-            return i18n_links($html);
-        });
-    }
+            return $html;
+        }
+        return i18n_links($html);
+    });
 }

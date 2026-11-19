@@ -396,3 +396,18 @@
 **Preview:** https://atelier-demo-propuestas.pages.dev/2026-11-19_alexdasi-baraja-sobre-su-web/
 
 **Pendiente (Alex):** ver la fluidez en su Mac y su móvil; Imperio (permiso de Mauro; el vídeo enseña la franja «web nueva en revisión»); Mas Vesprada sin enlace hasta tener subdominio; Elsa neutra hasta el 30/11 (sus datos no están en este repo a propósito).
+
+---
+
+## 2026-11-19 — v2 de la rama `rediseno-baraja-2026-11` (feedback 75-81 de Alex, ATELIER conv. 1330)
+
+- **75 · Giro, no inclinación:** cartas como fichas de dominó vistas de lado (rotateY −64° detrás, −12° la de delante, con perspectiva por carta); la de delante entera y con su ficha debajo; al pasar el ratón por una de detrás se abre hacia ti (−34°). `js/baraja.js` › `MESA`.
+- **76-77 · 7-8 a la vez:** 9 cartas (Brot visible y Vapor nuevo, vídeos grabados el 19/11 con el script de la selección). Se ven 8 a la vez en escritorio. Ningún vídeo enseñaba alexdasi.com; la única carta con «portfolio» era Berto («Diseño industrial · portfolio») → ahora «web de autor». Rango de la baraja asimétrico [−1.5, n−1.5) para que el bucle no se vea.
+- **78 · Pisos sin borde:** `?pisos=a` (todo en tinta, apagados al 12 %, activo al 86 %) · `?pisos=b` (apagados en tinta suave, activo del color del cursor).
+- **79 · About nuevo:** `about.php` + `php-pages/sobre-mi.php`, blanco roto, 5 pantallas (hola · cómo trabajo · trayectoria · UX/UI · hablamos) con el copy de `clientes/alexdasi/bio/2026-11-18_bio-about-cv.md` (años como [N]); CV en PDF discreto (`content/downloadables/alex-dasi_cv_2026-11*.pdf`); botones ≥ 44 px. Ya no se traen las pantallas oscuras antiguas (siguen en `php-pages/about.php`, `process.php`, `contact.php`, `works.php`, sin usar aquí).
+- **80 · Color del cursor:** paleta corta (lima, coral, cielo, lila, menta, albaricoque) al azar al abrir; la tecla espacio pasa al siguiente (`js/cursor-color.js`); pista mínima en la intro que se va al usarla; `?cursor=fijo` = solo lima. El punto final del saludo toma el color del cursor.
+- **81 · Día en tinta:** cabecera, idioma, pisos, flecha y textos en tinta; el lima solo de acento.
+- **Idioma:** castellano por defecto, inglés con `?lang=en` (`php-elements/i18n.php`; afecta a todo el sitio, también a las páginas de proyecto).
+- Cabecera táctil ≥ 44 px en móvil; en ≤ 400 px se oculta «alex dasi» del centro (no cabía con los accesos).
+
+**QA (exportación servida en local):** vivo.mjs 0 rojos en home ES, home EN y About (iPhone 13, SE, Android 360, desktop) · medir.mjs 0 rojos · nitidez 0. Fluidez: `pinta()` p95 1,7 ms/frame escritorio, 1,5 ms móvil (2,5 ms con CPU ×4); layout solo al cambiar de carta (28 en 2,3 s, 6 ms en total).

@@ -1,14 +1,14 @@
 {
-  "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: el 30/11, neutra: false (y copiar sus vídeos a content/baraja/). Brot: si Alex dice sí, oculta: false (y copiar sus vídeos).",
-  "actualizado": "2026-11-18",
+  "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: el 30/11, neutra: false (y copiar sus vídeos a content/baraja/). Brot: visible desde la v2 (feedback 76-77). Vapor: entra en la v2 para llegar a 9 cartas (vídeos grabados el 19/11 con el script de la selección).",
+  "actualizado": "2026-11-19",
   "proyectos": [
     {
       "slug": "berto-sanchez",
       "nombre": "Berto Sánchez",
       "tipo": "cliente",
       "sector": {
-        "es": "Diseño industrial · portfolio",
-        "en": "Industrial design · portfolio"
+        "es": "Diseño industrial · web de autor",
+        "en": "Industrial design · artist website"
       },
       "lugar": "València",
       "anio": 2026,
@@ -133,7 +133,25 @@
         "en": "Keeping a florist's website from going stale: it changes by itself every month, with the palette, bouquet and flowers of the month you open it."
       },
       "neutra": false,
-      "oculta": true
+      "oculta": false
+    },
+    {
+      "slug": "vapor",
+      "nombre": "Vapor",
+      "tipo": "concepto",
+      "sector": {
+        "es": "Casa de baños · sauna",
+        "en": "Bathhouse · sauna"
+      },
+      "lugar": "El Cabanyal, València (inventado)",
+      "anio": 2026,
+      "url": "https://vapor.alexdasi.com",
+      "problema": {
+        "es": "Una casa de baños que se vende por la temperatura: la página baja del vapor al agua fría y los grados guían el recorrido.",
+        "en": "A bathhouse sold on temperature: the page drops from steam to cold water, with the degrees leading the way."
+      },
+      "neutra": false,
+      "oculta": false
     }
   ]
 }

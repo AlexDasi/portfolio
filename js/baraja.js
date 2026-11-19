@@ -11,16 +11,18 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Ajustes (a mano, a ojo con Alex). Distancias en px calculadas del tamaño de la carta.
+  // v2 (feedback 75-76): fichas de dominó vistas de lado. Giro en el eje vertical (rotateY), no inclinación;
+  // la de delante casi de frente y entera; detrás, 7 más en fila hacia arriba a la derecha.
   var MESA = {
-    pasoX: 0.19,      // cada carta de detrás se desplaza este % del ancho a la derecha
-    pasoY: -0.21,     // … y este % del alto hacia arriba (de esquina a esquina)
-    escala: 0.075,    // cuánto encoge cada carta de detrás
-    giroZ: -7,        // inclinación hacia la izquierda (grados)
-    giroY: -16,       // menos frontal: la carta mira a la izquierda (grados, con perspectiva)
-    abanico: -1.6,    // cada carta de detrás gira un poco más
-    visibles: 2.7,    // cartas que se ven detrás
-    salidaX: -0.95,   // la que se va sale hacia la izquierda (× ancho)
-    salidaY: 0.55     // … y hacia abajo (× alto)
+    giroFrente: -12,  // grados de la carta de delante (casi de frente, se lee entera)
+    giroDetras: -64,  // grados de las de detrás (de canto, como dominós)
+    giroHover: -34,   // al pasar el ratón por una de detrás, se abre un poco hacia ti
+    hueco: 0.66,      // de la de delante a la primera de detrás (× ancho): no la tapa
+    paso: 0.235,      // entre las de detrás (× ancho)
+    subida: -0.075,   // cada una sube un poco (× alto): de esquina a esquina
+    escala: 0.03,     // cada una encoge un poco
+    salidaX: -0.9,    // la que se va sale hacia la izquierda (× ancho)
+    perspectiva: 1300
   };
   var UNA = { pasoX: 14, escala: 0.05, giroZ: -3, visibles: 2.2 };
   var RIGIDEZ = 15;        // velocidad del muelle (más = más rápido); ~180 ms en asentarse
@@ -43,6 +45,8 @@
     this.enPantalla = false;
     this.zCache = [];
     this.opCache = [];
+    this.hv = [];
+    this.hover = -1;
     this.medidas = { w: 600, h: 375 };
     this.arrastre = null;
     this.ruedaFin = 0;
@@ -76,6 +80,12 @@
     window.addEventListener('pointerup', function (e) { self.suelta(e); });
     window.addEventListener('pointercancel', function (e) { self.suelta(e, true); });
     this.mesa.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+    // Ratón por encima de una de detrás: se abre un poco hacia ti (solo escritorio)
+    this.cartas.forEach(function (c, i) {
+      c.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { self.hover = i; self.pedir(); } });
+      c.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse' && self.hover === i) { self.hover = -1; self.pedir(); } });
+    });
 
     // Clic: la de delante abre su web; una de detrás pasa delante
     this.cartas.forEach(function (c, i) {
@@ -149,11 +159,11 @@
   };
 
   // distancia con signo de la carta i a la posición p, envuelta en [-n/2, n/2)
+  // distancia de la carta i a la posición p: 0 = delante, > 0 detrás, < 0 saliendo. Rango [-1.5, n-1.5).
   Baraja.prototype.dist = function (i, p) {
     var n = this.n;
-    var d = (i - p) % n;
-    if (d < -n / 2) d += n;
-    if (d >= n / 2) d -= n;
+    var d = (((i - p) % n) + n) % n;
+    if (d >= n - 1.5) d -= n;
     return d;
   };
 
@@ -164,16 +174,21 @@
       var d = this.dist(i, this.pos);
       var tr, op, z;
       if (mesa) {
+        var hv = this.hv[i] || 0;
         if (d >= 0) {
-          var s = 1 - d * MESA.escala;
-          tr = 'translate3d(' + (d * MESA.pasoX * m.w).toFixed(1) + 'px,' + (d * MESA.pasoY * m.h).toFixed(1) + 'px,0)' +
-            ' rotateY(' + MESA.giroY + 'deg) rotateZ(' + (MESA.giroZ + d * MESA.abanico).toFixed(2) + 'deg) scale(' + s.toFixed(4) + ')';
-          op = d > MESA.visibles ? 0 : Math.min(1, (MESA.visibles + 0.6 - d) / 1.2);
+          var k = Math.min(d, 1);                      // 0 delante → 1 ya de canto
+          var giro = MESA.giroFrente + (MESA.giroDetras - MESA.giroFrente) * k;
+          giro += (MESA.giroHover - giro) * hv * (d >= 0.5 ? 1 : 0);
+          var x = d <= 1 ? d * MESA.hueco : MESA.hueco + (d - 1) * MESA.paso;
+          var sc = 1 - d * MESA.escala + hv * 0.03;
+          tr = 'perspective(' + MESA.perspectiva + 'px) translate3d(' + (x * m.w).toFixed(1) + 'px,' + (d * MESA.subida * m.h - hv * 10).toFixed(1) + 'px,0)' +
+            ' rotateY(' + giro.toFixed(2) + 'deg) scale(' + sc.toFixed(4) + ')';
+          op = Math.max(0, Math.min(1, this.n - 1.5 - d));
         } else {
           var t = -d; // 0 → 1 mientras se va
-          tr = 'translate3d(' + (t * MESA.salidaX * m.w).toFixed(1) + 'px,' + (t * MESA.salidaY * m.h).toFixed(1) + 'px,0)' +
-            ' rotateY(' + MESA.giroY + 'deg) rotateZ(' + (MESA.giroZ - t * 14).toFixed(2) + 'deg) scale(' + (1 + t * 0.04).toFixed(4) + ')';
-          op = Math.max(0, 1 - t * 1.6);
+          tr = 'perspective(' + MESA.perspectiva + 'px) translate3d(' + (t * MESA.salidaX * m.w).toFixed(1) + 'px,' + (t * 0.12 * m.h).toFixed(1) + 'px,0)' +
+            ' rotateY(' + (MESA.giroFrente + t * 30).toFixed(2) + 'deg) scale(' + (1 - t * 0.04).toFixed(4) + ')';
+          op = Math.max(0, 1 - t * 1.7);
         }
       } else {
         if (d >= 0) {
@@ -186,7 +201,7 @@
           op = Math.max(0, 1 - t2 * 1.2);
         }
       }
-      z = 100 - Math.round((d < 0 ? -d * 0.5 : d) * 10);
+      z = 100 - Math.round((d < 0 ? -d * 0.5 : d) * 10) + (this.hv[i] > 0.5 && d > 0.5 ? 0 : 0);
       var c = this.cartas[i];
       c.style.transform = tr;
       op = Math.round(op * 1000) / 1000;
@@ -288,8 +303,16 @@
     } else {
       this.pos += (this.obj - this.pos) * (1 - Math.exp(-dt * 40));
     }
+    var hvMueve = false;
+    var kh = reduce ? 1 : 1 - Math.exp(-dt * 12);
+    for (var h = 0; h < this.n; h++) {
+      var meta = (h === this.hover && this.modo === 'mesa' && h !== this.frente) ? 1 : 0;
+      var actual = this.hv[h] || 0;
+      if (Math.abs(meta - actual) > 0.002) { this.hv[h] = actual + (meta - actual) * kh; hvMueve = true; }
+      else this.hv[h] = meta;
+    }
     this.pinta(false);
-    if (this.pos !== this.obj || this.arrastre || this.ruedaFin) this.raf = requestAnimationFrame(this.paso);
+    if (this.pos !== this.obj || this.arrastre || this.ruedaFin || hvMueve) this.raf = requestAnimationFrame(this.paso);
     else this.normaliza();
   };
 
