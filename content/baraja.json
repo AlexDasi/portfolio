@@ -1,5 +1,5 @@
 {
-  "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: el 30/11, neutra: false (y copiar sus vídeos a content/baraja/). Brot: visible desde la v2 (feedback 76-77). Vapor: entra en la v2 para llegar a 9 cartas (vídeos grabados el 19/11 con el script de la selección). v3 (feedback 94): 12 cartas, cada una con ficha propia (proyecto.php?p=<slug>, campo que_hice) y enlace a su web si la tiene.",
+  "_que": "Baraja de la home (rama rediseno-baraja-2026-11, ATELIER conv. 1330). Copia de clientes/alexdasi/seleccion/proyectos.json del repo ATELIER. Orden = orden en la baraja. Flags: neutra = carta «Próximamente» sin nombre, enlace ni vídeo · oculta = fuera de la baraja. Imperio: si Mauro no da permiso, neutra: true. Elsa: el 30/11, neutra: false (y copiar sus vídeos a content/baraja/). Brot: visible desde la v2 (feedback 76-77). Vapor: entra en la v2 para llegar a 9 cartas (vídeos grabados el 19/11 con el script de la selección). v3 (feedback 94): 12 cartas, cada una con ficha propia (proyecto.php?p=<slug>, campo que_hice) y enlace a su web si la tiene. v6 (feedback 116): fichas rediseñadas; campo rol (lista ES/EN) y textos revisados contra las fichas de ATELIER (sites/<slug>/ATELIER.md); momentos = content/baraja/<slug>_momento-*.webp.",
   "actualizado": "2026-11-19",
   "proyectos": [
     {
@@ -20,8 +20,20 @@
       "neutra": false,
       "oculta": false,
       "que_hice": {
-        "es": "Diseño y desarrollo de su web de autor y de un panel propio para que suba y ordene sus proyectos sin depender de nadie.",
-        "en": "Design and build of his artist website, plus his own panel to upload and order projects without depending on anyone."
+        "es": "Diseño y desarrollo de su web de autor, con un panel sencillo para que suba y ordene sus proyectos él mismo.",
+        "en": "Design and build of his artist website, with a simple panel so he can upload and order his projects himself."
+      },
+      "rol": {
+        "es": [
+          "Diseño",
+          "Desarrollo",
+          "Panel de contenidos"
+        ],
+        "en": [
+          "Design",
+          "Development",
+          "Content panel"
+        ]
       }
     },
     {
@@ -42,8 +54,18 @@
       "neutra": false,
       "oculta": false,
       "que_hice": {
-        "es": "Web nueva de la librería: agenda de clubes y presentaciones, recomendaciones que llevan a la compra y panel para que el equipo la mantenga.",
-        "en": "New website for the bookshop: club and launch calendar, recommendations that lead to checkout, and a panel so the team keeps it up to date."
+        "es": "Diseño y desarrollo de la web nueva de la librería: agenda de clubes y presentaciones, y recomendaciones que llevan cada libro a su compra en la tienda online que ya tenían.",
+        "en": "Design and build of the bookshop's new website: club and launch calendar, and recommendations that take each book to checkout in the online shop they already had."
+      },
+      "rol": {
+        "es": [
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Design",
+          "Development"
+        ]
       }
     },
     {
@@ -66,6 +88,18 @@
       "que_hice": {
         "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código. La página cambia de luz con el scroll.",
         "en": "Own concept: fictional brand, art direction, design and front-end build. The page changes its light as you scroll."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
       }
     },
     {
@@ -86,15 +120,27 @@
       "anio": 2026,
       "url": null,
       "problema": {
-        "es": "Una finca no se entiende con fotos sueltas: el plano se dibuja con el scroll y recorre cada espacio de la boda hasta la maqueta al atardecer.",
-        "en": "A venue is hard to grasp from loose photos: the site plan draws itself as you scroll, walking through every space of the day until the model at sunset."
+        "es": "Una finca no se entiende con fotos sueltas: el plano se dibuja con el scroll y recorre cada espacio de la boda hasta que cae la noche sobre la maqueta.",
+        "en": "A venue is hard to grasp from loose photos: the site plan draws itself as you scroll, walking through every space of the day until night falls over the model."
       },
       "neutra": false,
       "oculta": false,
       "nota_url": "Sin subdominio propio todavía: la carta no enlaza hasta que exista mas-vesprada.alexdasi.com (ok de Alex).",
       "que_hice": {
-        "es": "Concepto propio: plano dibujado que se recorre con el scroll, dirección de arte, diseño y desarrollo en código.",
-        "en": "Own concept: a site plan that draws itself as you scroll, art direction, design and front-end build."
+        "es": "Concepto propio: finca inventada, plano en 3D que se recorre con el scroll, dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: an invented venue, a 3D site plan you walk through as you scroll, art direction, design and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
       }
     },
     {
@@ -117,7 +163,19 @@
         "en": "Own concept: fictional brand, art direction, design and front-end build."
       },
       "neutra": false,
-      "oculta": false
+      "oculta": false,
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      }
     },
     {
       "slug": "solvera",
@@ -139,6 +197,18 @@
       "que_hice": {
         "es": "Concepto propio: marca ficticia de una bodega, dirección de arte, motion y desarrollo en código.",
         "en": "Own concept: fictional winery brand, art direction, motion and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
       }
     },
     {
@@ -161,6 +231,18 @@
       "que_hice": {
         "es": "Concepto propio: el recorrido de una pieza de cerámica contado con el scroll; diseño y desarrollo en código.",
         "en": "Own concept: a ceramic piece's journey told through scroll; design and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
       }
     },
     {
@@ -175,15 +257,28 @@
       "anio": 2026,
       "url": "https://berto-sanchez-studio.alexdasi.com",
       "problema": {
-        "es": "La cara de estudio de Berto: blanca y ordenada por proyectos, para clientes que buscan encargar una pieza.",
-        "en": "Berto's studio side: white and organised by project, for clients looking to commission a piece."
+        "es": "La cara de estudio de Berto: la misma web en blanco, ordenada por proyectos.",
+        "en": "Berto's studio side: the same site in white, organised by project."
       },
       "que_hice": {
-        "es": "Diseño y desarrollo de la web de estudio, con el mismo panel que su web de autor.",
-        "en": "Design and build of the studio website, sharing the panel of his artist site."
+        "es": "Diseño y desarrollo de la web de estudio, a partir de su web de autor y con el mismo panel.",
+        "en": "Design and build of the studio website, based on his artist site and sharing its panel."
       },
       "neutra": false,
-      "oculta": false
+      "oculta": false,
+      "rol": {
+        "es": [
+          "Diseño",
+          "Desarrollo",
+          "Panel de contenidos"
+        ],
+        "en": [
+          "Design",
+          "Development",
+          "Content panel"
+        ]
+      },
+      "cliente": "Berto Sánchez"
     },
     {
       "slug": "brot",
@@ -205,6 +300,18 @@
       "que_hice": {
         "es": "Concepto propio: una floristería cuya web cambia sola cada mes (paleta, ramo y flores); diseño y desarrollo en código.",
         "en": "Own concept: a florist whose site changes by itself every month (palette, bouquet and flowers); design and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
       }
     },
     {
@@ -225,8 +332,20 @@
       "neutra": false,
       "oculta": false,
       "que_hice": {
-        "es": "Concepto propio: casa de baños contada por temperaturas; dirección de arte, diseño y desarrollo en código.",
-        "en": "Own concept: a bathhouse told through temperatures; art direction, design and front-end build."
+        "es": "Concepto propio: marca ficticia de una casa de baños contada por temperaturas; dirección de arte, diseño y desarrollo en código.",
+        "en": "Own concept: fictional bathhouse brand told through temperatures; art direction, design and front-end build."
+      },
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
       }
     },
     {
@@ -241,15 +360,27 @@
       "anio": 2026,
       "url": "https://nomada.alexdasi.com",
       "problema": {
-        "es": "Un tostador pequeño que vende café de temporada: origen, tueste y suscripción, contados sin prisa.",
-        "en": "A small roaster selling seasonal coffee: origin, roast and subscription, told without hurry."
+        "es": "Un tostador pequeño que trata el café como fruta de temporada: una tienda online contada sin prisa.",
+        "en": "A small roaster that treats coffee like seasonal fruit: an online shop told without hurry."
       },
       "que_hice": {
-        "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código.",
-        "en": "Own concept: fictional brand, art direction, design and front-end build."
+        "es": "Concepto propio: marca ficticia, dirección de arte, diseño y desarrollo en código de la tienda (compra simulada).",
+        "en": "Own concept: fictional brand, art direction, design and front-end build of the shop (simulated checkout)."
       },
       "neutra": false,
-      "oculta": false
+      "oculta": false,
+      "rol": {
+        "es": [
+          "Dirección de arte",
+          "Diseño",
+          "Desarrollo"
+        ],
+        "en": [
+          "Art direction",
+          "Design",
+          "Development"
+        ]
+      }
     }
   ]
 }

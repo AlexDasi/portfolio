@@ -1,0 +1,400 @@
+// ============================================================
+// Ficha de proyecto · rediseño v6 (feedback 116, rama rediseno-baraja-2026-11, ATELIER conv. 1330)
+// Hoja PROPIA de proyecto.php: se compila aparte →  sass scss/ficha.scss css/ficha.css --no-source-map --style=compressed
+// (no entra en style.css para no pisar el trabajo de la home). Usa las variables de día/noche y de acento de
+// layout/_baraja.scss (--bkg-color, --main-color, --tinta-suave, --linea, --accent-color).
+// Procedencia: registro de gusto n.º 256 (Gil Huybrecht: ficha en columnas, pantallas numeradas), n.º 240 (Maria
+// Vasilyeva: pantallas reales a distintas escalas), n.º 183 + pieza jl-lookback-fila-domino (cierre que sigue la baraja).
+// El bloque .pf antiguo de _baraja.scss queda sin uso (se puede borrar cuando se recompile style.css).
+// ============================================================
+
+$fuente: 'Inter', sans-serif;
+$tinta: #141415;
+$suave: cubic-bezier(.22, 1, .36, 1);
+$movil: 759px;
+
+@mixin micro {
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+body.pagina-ficha { display: block; }
+
+.fp {
+  position: relative;
+  z-index: 1;
+  max-width: 1760px;
+  margin: 0 auto;
+  padding: 104px 4vw 0;
+  font-family: $fuente;
+  color: var(--main-color);
+  overflow: clip;
+
+  p, a, dd, dt, h1, h2, figcaption, span, b, i { color: var(--main-color); font-family: $fuente; }
+  p, h1, h2, dl, dd, figure { margin: 0; }
+  i, b { font-style: normal; font-weight: inherit; }
+
+  // ---------- barra ----------
+  &__barra { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  &__volver {
+    svg { width: 12px; height: 12px; transition: transform .3s $suave; }
+    &:hover svg { transform: translateX(-3px); }
+  }
+  &__cuenta {
+    @include micro;
+    display: inline-flex; gap: 6px; font-variant-numeric: tabular-nums;
+    color: var(--tinta-suave) !important;
+    span { color: var(--tinta-suave); }
+    b { color: var(--main-color); }
+  }
+
+  // ---------- cabecera ----------
+  &__cab { margin-top: clamp(28px, 5vh, 64px); }
+  &__tipo {
+    @include micro;
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--tinta-suave) !important;
+    &::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-color); }
+  }
+  &__titulo {
+    margin-top: 14px !important;
+    max-width: 16ch;
+    font-size: clamp(52px, 9.4vw, 168px);
+    line-height: .9;
+    letter-spacing: -.045em;
+    font-weight: 600;
+    text-transform: none;
+    text-wrap: balance;
+  }
+  &__punto { display: inline-block; width: .15em; height: .15em; margin-left: .04em; border-radius: 50%; background: var(--accent-color); }
+
+  // Ficha técnica en columnas (n.º 256)
+  &__datos {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.5fr);
+    gap: 0 2vw;
+    margin-top: clamp(28px, 4vw, 64px) !important;
+    border-top: 1px solid var(--linea);
+    > div { padding: 14px 0 0; min-width: 0; }
+    dt { @include micro; color: var(--tinta-suave) !important; }
+    dd { margin-top: 8px; font-size: 15px; line-height: 1.35; font-weight: 300; }
+    dd span { display: block; }
+  }
+
+  // ---------- portada: vídeo de escritorio + vídeo de móvil montado encima ----------
+  &__portada { position: relative; margin-top: clamp(28px, 3.4vw, 56px); padding-bottom: 7vw; }
+  &__video {
+    overflow: hidden;
+    background: #101011;
+    video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    &--d { aspect-ratio: 16 / 10; border-radius: 6px; }
+    &--m {
+      position: absolute;
+      right: 5vw;
+      bottom: 0;
+      width: clamp(150px, 17vw, 300px);
+      aspect-ratio: 4 / 5;
+      border-radius: 10px;
+      outline: 6px solid var(--bkg-color);
+      transition: outline-color .4s ease;
+    }
+  }
+
+  // ---------- relato ----------
+  &__relato {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 40px 2vw;
+    margin-top: clamp(56px, 7vw, 120px);
+  }
+  &__bloque:nth-child(1) { grid-column: 1 / span 7; }
+  &__bloque:nth-child(2) { grid-column: 9 / span 4; }
+  &__h2 {
+    @include micro;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 18px !important;
+    color: var(--tinta-suave) !important;
+    span { display: inline-flex; align-items: center; gap: 8px; color: var(--tinta-suave); font-variant-numeric: tabular-nums; }
+    span::after { content: ""; width: 18px; height: 1px; background: var(--linea); }
+  }
+  &__p {
+    max-width: 44ch;
+    font-size: clamp(17px, 1.35vw, 21px);
+    line-height: 1.5;
+    font-weight: 300;
+    &--grande {
+      max-width: 26ch;
+      font-size: clamp(26px, 2.9vw, 50px);
+      line-height: 1.12;
+      letter-spacing: -.025em;
+      font-weight: 400;
+      text-wrap: pretty;
+    }
+  }
+  &__nota { margin-top: 18px !important; font-size: 14px; line-height: 1.4; font-weight: 300; color: var(--tinta-suave) !important; }
+
+  // ---------- momentos: pantallas numeradas a distintas escalas (n.º 256 + n.º 240) ----------
+  &__momentos { margin-top: clamp(72px, 10vw, 180px); }
+  &__momentos-cab {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid var(--linea);
+    .fp__h2 { margin-bottom: 0 !important; }
+  }
+  &__momentos-n { @include micro; color: var(--tinta-suave) !important; font-variant-numeric: tabular-nums; }
+  &__tira {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 5vw 2vw;
+    align-items: start;
+    margin-top: clamp(28px, 3vw, 48px);
+  }
+  &__m {
+    min-width: 0;
+    &--p1 { grid-column: 1 / span 8; margin-top: 5vw; }
+    &--p2 { grid-column: 10 / span 3; }
+    &--p3 { grid-column: 1 / span 5; margin-top: 7vw; }
+    &--p4 { grid-column: 6 / span 7; }
+    // si falta la de móvil, las tres de escritorio se reparten solas
+    &--d.fp__m--p2 { grid-column: 7 / span 6; margin-top: 12vw; }
+    figcaption {
+      @include micro;
+      display: flex; gap: 10px;
+      margin-top: 12px;
+      color: var(--tinta-suave);
+      b { color: var(--main-color); font-variant-numeric: tabular-nums; }
+    }
+  }
+  &__m-marco {
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px var(--linea);
+    background: #101011;
+    img { display: block; width: 100%; height: auto; }
+  }
+  &__m--m .fp__m-marco { border-radius: 14px; }
+  html.fp-js &__m-marco noscript { display: none; }
+
+  // ---------- la web en vivo ----------
+  &__visita {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 20px 2vw;
+    align-items: start;
+    margin-top: clamp(72px, 10vw, 180px);
+    padding-top: 14px;
+    border-top: 1px solid var(--linea);
+    .fp__h2 { grid-column: 1 / span 3; margin-bottom: 0 !important; }
+  }
+  &__host {
+    grid-column: 4 / span 9;
+    font-size: clamp(30px, 5.6vw, 104px);
+    line-height: 1;
+    letter-spacing: -.04em;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    &--sin { font-size: clamp(22px, 2.4vw, 40px); font-weight: 400; letter-spacing: -.02em; color: var(--tinta-suave) !important; }
+  }
+  &__boton {
+    grid-column: 4 / span 9;
+    justify-self: start;
+    margin-top: 12px;
+    @include micro;
+    font-size: 13px !important;
+    gap: 4px;
+    svg { width: 11px; height: 11px; }
+  }
+
+  // ---------- siguiente: la baraja sigue (jl-lookback-fila-domino) ----------
+  &__sig {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0 2vw;
+    align-items: center;
+    margin-top: clamp(72px, 10vw, 180px);
+    border-top: 1px solid var(--linea);
+    text-decoration: none;
+    overflow: clip;
+  }
+  &__sig-texto { grid-column: 1 / span 7; display: block; padding: 6vw 0 7vw; }
+  &__sig-k {
+    @include micro;
+    display: flex; align-items: center; gap: 14px;
+    color: var(--tinta-suave) !important;
+    i { color: var(--tinta-suave); font-variant-numeric: tabular-nums; }
+  }
+  &__sig-n {
+    display: inline;
+    font-size: clamp(40px, 6.6vw, 120px);
+    line-height: .95;
+    letter-spacing: -.045em;
+    font-weight: 600;
+    background-image: linear-gradient(var(--accent-color), var(--accent-color));
+    background-repeat: no-repeat;
+    background-size: 0 .09em;
+    background-position: 0 96%;
+    transition: background-size .5s $suave;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  &__sig-texto > .fp__sig-n { display: inline; }
+  &__sig-k + .fp__sig-n { margin-top: 0; }
+  &__sig-s {
+    @include micro;
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 22px;
+    color: var(--tinta-suave) !important;
+    svg { width: 16px; height: 16px; color: var(--main-color); transition: transform .4s $suave; }
+  }
+  &__sig-k { margin-bottom: 18px; }
+  &__sig:hover, &__sig:focus-visible {
+    .fp__sig-n { background-size: 100% .09em; }
+    .fp__sig-s svg { transform: translateX(8px); }
+    .fp__naipe--1 { transform: rotateY(-10deg); }
+    .fp__naipe--2 { transform: translateX(28vw) rotateY(-66deg); }
+    .fp__naipe--3 { transform: translateX(32vw) rotateY(-68deg); }
+  }
+
+  &__mazo {
+    grid-column: 8 / span 5;
+    position: relative;
+    display: block;
+    height: 100%;
+    min-height: 24vw;
+    perspective: 1400px;
+    perspective-origin: 30% 50%;
+  }
+  &__naipe {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 25vw;
+    max-width: 460px;
+    aspect-ratio: 16 / 10;
+    margin-top: calc(min(25vw, 460px) * -.3125);
+    border-radius: 6px;
+    overflow: hidden;
+    background: #101011;
+    box-shadow: 0 0 0 1px var(--linea);
+    transform-origin: left center;
+    transition: transform .8s $suave, opacity .5s ease;
+    will-change: transform;
+    img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    &--1 { z-index: 3; transform: rotateY(-34deg); }
+    &--2 { z-index: 2; transform: translateX(22vw) rotateY(-64deg); opacity: .75; }
+    &--3 { z-index: 1; transform: translateX(26.5vw) rotateY(-64deg); opacity: .5; }
+  }
+}
+
+// la carta de delante flota un poco (como en la baraja de la home)
+@media (prefers-reduced-motion: no-preference) {
+  .fp__mazo { animation: fp-flota 6s ease-in-out infinite; }
+  @keyframes fp-flota { 0%, 100% { translate: 0 -5px; } 50% { translate: 0 5px; } }
+}
+
+// La cabecera fija se aparta al bajar y vuelve al subir (para que no pise las pantallas)
+.pagina-ficha .nav--top, .pagina-ficha .lang-switch, .pagina-ficha .nav-sutil {
+  transition: opacity .35s ease, translate .5s $suave;
+}
+html.fp-baja .pagina-ficha {
+  .nav--top, .lang-switch, .nav-sutil { opacity: 0; translate: 0 -14px; pointer-events: none; }
+}
+.pagina-ficha .press-space { display: none; }
+@media (max-width: 1280px) { html.fp-baja body.pagina-ficha::before { opacity: 0; } body.pagina-ficha::before { transition: opacity .35s ease; } }
+
+// Día: los huecos de vídeo en un gris papel, no en negro
+html.tema-dia .fp__video, html.tema-dia .fp__m-marco, html.tema-dia .fp__naipe { background: #e3e0d6; }
+
+// Entrada al llegar (solo con JS; sin él todo se ve)
+html.fp-js .fp [data-fp-entra] {
+  opacity: 0;
+  translate: 0 28px;
+  transition: opacity .8s ease, translate 1s $suave;
+}
+html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
+@media (prefers-reduced-motion: reduce) {
+  html.fp-js .fp [data-fp-entra] { opacity: 1; translate: none; transition: none; }
+  .fp__naipe, .fp__sig-n { transition: none; }
+}
+
+// ---------- Tablet (760-1100): misma composición, más aire en vertical ----------
+@media (max-width: 1100px) and (min-width: #{$movil + 1}) {
+  .fp { padding-top: 92px; }
+  .fp__datos { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 18px; }
+  .fp__datos > div:nth-child(n + 4) { border-top: 1px solid var(--linea); }
+  .fp__datos-rol { grid-column: span 2; }
+  .fp__bloque:nth-child(1) { grid-column: 1 / span 12; }
+  .fp__bloque:nth-child(2) { grid-column: 1 / span 9; }
+  .fp__video--m { width: 22vw; right: 4vw; }
+  .fp__portada { padding-bottom: 9vw; }
+  .fp__visita .fp__h2 { grid-column: 1 / span 12; }
+  .fp__host, .fp__boton { grid-column: 1 / span 12; }
+  .fp__boton { min-height: 48px; }
+}
+
+// ---------- Móvil: diseño propio ----------
+@media (max-width: $movil) {
+  .fp { padding: 84px 6vw 0; }
+  .fp__cab { margin-top: 20px; }
+  .fp__titulo { font-size: clamp(44px, 14.5vw, 96px); line-height: .92; }
+  .fp__datos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 5vw;
+    margin-top: 28px !important;
+    border-top: 0;
+    > div { padding: 12px 0 14px; border-top: 1px solid var(--linea); }
+    dd { font-size: 15px; margin-top: 6px; }
+  }
+  .fp__datos-rol { grid-column: 1 / -1; }
+  .fp__datos-rol dd { display: flex; flex-wrap: wrap; gap: 0 14px; }
+
+  // portada: el vídeo de móvil, entero; el de escritorio no se carga
+  .fp__portada { margin-top: 28px; padding-bottom: 0; }
+  .fp__video--d { display: none; }
+  .fp__video--m { position: static; width: 100%; border-radius: 8px; outline: 0; }
+
+  .fp__relato { display: block; margin-top: 52px; }
+  .fp__bloque + .fp__bloque { margin-top: 44px; }
+  .fp__h2 { margin-bottom: 14px !important; }
+  .fp__p { font-size: 17px; }
+  .fp__p--grande { font-size: clamp(26px, 7.4vw, 36px); line-height: 1.14; max-width: none; }
+
+  // momentos: fila con imán, la siguiente asomando (como la baraja de la home en móvil)
+  .fp__momentos { margin-top: 64px; }
+  .fp__tira {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 22px -6vw 0;
+    padding: 0 6vw 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 6vw;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+  }
+  .fp__m, .fp__m--d.fp__m--p2 { flex: 0 0 80vw; margin-top: 0; scroll-snap-align: start; }
+  .fp__m--m { flex-basis: 40vw; }
+  // la de móvil, recortada a la altura de las de escritorio (80vw × 10/16 = 50vw) para que la fila no deje hueco
+  .fp__m--m .fp__m-marco { height: 50vw; border-radius: 10px; }
+  .fp__m--m .fp__m-marco img { height: 100%; object-fit: cover; object-position: top center; }
+  html.fp-js .fp .fp__tira [data-fp-entra] { opacity: 1; translate: none; }
+
+  .fp__visita { display: block; margin-top: 64px; }
+  .fp__host { margin-top: 18px !important; font-size: clamp(26px, 8.4vw, 52px); line-height: 1.02; }
+  .fp__boton { display: flex !important; justify-content: center; margin-top: 22px; min-height: 52px; }
+
+  // siguiente: la carta de delante, casi de frente; las de canto no caben
+  .fp__sig { display: block; margin-top: 64px; padding-bottom: 0; }
+  .fp__sig-texto { padding: 28px 0 0; }
+  .fp__sig-n { font-size: clamp(40px, 12.5vw, 80px); }
+  .fp__mazo { height: auto; min-height: 0; margin-top: 28px; padding-bottom: 40px; perspective: 900px; perspective-origin: 50% 50%; }
+  .fp__naipe { position: relative; top: auto; width: 82vw; max-width: none; margin-top: 0; }
+  .fp__naipe--1 { transform: rotateY(-14deg); }
+  .fp__naipe--2, .fp__naipe--3 { display: none; }
+  .fp__sig:hover .fp__naipe--1, .fp__sig:focus-visible .fp__naipe--1 { transform: rotateY(-14deg); }
+}
