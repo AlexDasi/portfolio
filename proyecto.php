@@ -84,7 +84,7 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
 <main class="fp" data-ficha>
 
     <div class="fp__barra">
-        <a class="ficha__link fp__volver" href="index.php#works"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M10 6H2M5 3 2 6l3 3" fill="none" stroke="currentColor" stroke-width="1"/></svg><?php echo $e($T['volver']); ?></a>
+        <a class="ficha__link fp__volver" href="index.php?carta=<?php echo $e($P['slug']); ?>#works"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M10 6H2M5 3 2 6l3 3" fill="none" stroke="currentColor" stroke-width="1"/></svg><?php echo $e($T['volver']); ?></a>
         <p class="fp__cuenta" aria-label="<?php echo $e(($idx + 1) . ' / ' . $total); ?>"><b><?php echo $num($idx + 1); ?></b><span>/</span><?php echo $num($total); ?></p>
     </div>
 

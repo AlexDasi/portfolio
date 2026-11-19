@@ -14,7 +14,7 @@ $pisos = ($lang === 'es') ? 'INICIO|PROYECTOS' : 'HOME|WORKS';
     <?php include 'php-elements/nav-baraja.php'?>
 
 <!-- ESCRITORIO (> 1280 px): las dos pantallas en el MainSwiper de siempre -->
-<div class="hiddenMobile swiper MainSwiper" data-menu="<?php echo $pisos; ?>" data-wheel="off">
+<div class="hiddenMobile swiper MainSwiper" data-menu="<?php echo $pisos; ?>" data-wheel="off"<?php echo isset($_GET['carta']) ? ' data-initial="1"' : ''; /* v9 (QA H-02): vuelta desde una ficha */ ?>>
     <div class="swiper-wrapper">
         <div class="swiper-slide slide-index">
             <?php include 'php-pages/intro.php'?>

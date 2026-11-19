@@ -427,10 +427,67 @@
     this.ir(destino);
   };
 
+  // v9 (QA H-02): volver de una ficha te deja en la carta en la que estabas, no en la 1 ni en la intro.
+  // - «← Proyectos» de la ficha lleva a index.php?carta=<slug>#works.
+  // - El «atrás» del navegador: al abrir una ficha desde la baraja se apunta su slug (sessionStorage); si la home se carga
+  //   por atrás/adelante (sin bfcache), se vuelve a esa carta y a la pantalla de la baraja.
+  var CLAVE = 'alexdasi-baraja-v9';
+  function slugDe(a) {
+    var h = a && a.getAttribute && a.getAttribute('href');
+    var m = h && h.match(/[?&]p=([^&#]+)/);
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+  Baraja.prototype.vaA = function (slug) {
+    for (var i = 0; i < this.n; i++) {
+      if (slugDe(this.cartas[i]) === slug) {
+        this.pos = this.obj = i;
+        this.tocado = true; this.root.classList.add('is-tocada');
+        this.pinta(true);
+        return true;
+      }
+    }
+    return false;
+  };
+  function volverA() {
+    var q = new URLSearchParams(location.search).get('carta');
+    if (q) return { slug: q, url: true };
+    var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    var atras = nav ? nav.type === 'back_forward' : (performance.navigation && performance.navigation.type === 2);
+    if (!atras) return null;
+    try {
+      var r = JSON.parse(sessionStorage.getItem(CLAVE) || 'null');
+      if (r && r.slug && Date.now() - r.t < 3600000) return { slug: r.slug };
+    } catch (e) {}
+    return null;
+  }
+  function ponPantalla() {
+    if (document.querySelector('.MainSwiper') && getComputedStyle(document.querySelector('.MainSwiper')).display !== 'none') {
+      if (window.mainSwiper && window.mainSwiper.activeIndex !== 1) window.mainSwiper.slideTo(1, 0);
+      return;
+    }
+    var w = document.getElementById('works');
+    if (w) w.scrollIntoView({ block: 'start' });
+  }
+
   function arrancar() {
     var barajas = [];
     document.querySelectorAll('[data-baraja]').forEach(function (root) { barajas.push(new Baraja(root)); });
     window.__barajas = barajas;
+    // apuntar la carta al abrir su ficha (carta o «Ver proyecto»)
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('[data-baraja] a[href*="proyecto.php"]');
+      var slug = slugDe(a);
+      if (slug) { try { sessionStorage.setItem(CLAVE, JSON.stringify({ slug: slug, t: Date.now() })); } catch (err) {} }
+    }, true);
+    var v = volverA();
+    if (v) {
+      barajas.forEach(function (b) { b.vaA(v.slug); });
+      ponPantalla();
+      var otra = function () { ponPantalla(); };
+      if (document.readyState === 'complete') setTimeout(otra, 60);
+      else window.addEventListener('load', function () { setTimeout(otra, 60); });
+      if (v.url && history.replaceState) history.replaceState(null, '', location.pathname + location.search.replace(/([?&])carta=[^&]*&?/, '$1').replace(/[?&]$/, '') + '#works');
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
   else arrancar();
