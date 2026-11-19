@@ -1,7 +1,9 @@
 <?php
 /* About v2 (feedback 79, rama rediseno-baraja-2026-11): rediseñado en blanco roto con el lenguaje de la home.
-   Copy: ATELIER clientes/alexdasi/bio/2026-11-18_bio-about-cv.md (los años de experiencia van como [N]
-   hasta que Alex diga la cifra). Cinco pantallas: hola · cómo trabajo · trayectoria · UX/UI · hablamos.
+   Copy: ATELIER clientes/alexdasi/bio/2026-11-18_bio-about-cv.md. Años: 15 (Alex, feedback 103); los de Edimburgo,
+   5 (2016-2021, como en el CV). Cinco pantallas: hola · cómo trabajo · trayectoria · UX/UI · hablamos.
+   v4 (feedback 102): más diseñado con el acento contenido: la cifra dentro de la bola, pasos con número en punto
+   del acento, ATELIER en bloque de acento, hitos con su punto, títulos grandes y la bola que te sigue en «Hablamos».
    Se escribe en los dos idiomas aquí mismo (no pasa por los diccionarios). */
 $es = !isset($lang) || $lang === 'es';
 $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); };
@@ -12,7 +14,9 @@ $cv = $es ? 'content/downloadables/alex-dasi_cv_2026-11.pdf' : 'content/download
 $T = $es ? [
     'hola_t1' => 'Soy Alex.',
     'hola_t2' => ['a' => 'Diseño webs para negocios con algo que contar.', 'b' => 'Diseño webs, marca y producto digital.', 'c' => 'Diseño webs que se parecen a tu negocio.'],
-    'hola_p' => 'Llevo más de [N] años diseñando: marcas, webs y, los últimos años, producto digital. Hoy junto todo eso en algo muy concreto: webs que se parecen a tu negocio, que se entienden a la primera y que van bien en el móvil.',
+    'hola_p' => 'Llevo 15 años diseñando: marcas, webs y, los últimos años, producto digital. Hoy junto todo eso en algo muy concreto: webs que se parecen a tu negocio, que se entienden a la primera y que van bien en el móvil.',
+    'cifra_k' => 'años diseñando',
+    'cifra_s' => 'marca · web · producto',
     'que' => [
         ['Webs para negocios y profesionales', 'Tiendas, restaurantes, estudios, librerías: gente con algo bueno que enseñar.'],
         ['Marca, si hace falta', 'Si tu negocio no tiene logo o se te ha quedado corto, empezamos por ahí.'],
@@ -33,7 +37,7 @@ $T = $es ? [
     'tray_t' => 'De dónde vengo',
     'tray' => [
         ['Valencia', 'Estudié Diseño de Producto y Gráfico en el CEU San Pablo.'],
-        ['Edimburgo · 2016-2021', '[N] años como diseñador en Registers of Scotland y Scottish Enterprise: marca, campañas, informes, web e intranet.'],
+        ['Edimburgo · 2016-2021', 'Cinco años como diseñador en Registers of Scotland y Scottish Enterprise: marca, campañas, informes, web e intranet.'],
         ['En remoto para Londres · 2021-2025', 'Diseño digital para Knowadays, una plataforma de formación online: web, email, redes y editorial.'],
         ['El salto a UX/UI · 2022-2024', 'Posgrado en diseño y desarrollo web (ID3, ESAT) e Idrica: el UX/UI de una plataforma para depuradoras, con alarmas, mapas y muchos datos.'],
         ['Sobre el terreno · 2024-2025', 'Logística con World Central Kitchen en la DANA de Valencia y en Filipinas. De ahí salió Tulong.'],
@@ -61,7 +65,9 @@ $T = $es ? [
 ] : [
     'hola_t1' => "I'm Alex.",
     'hola_t2' => ['a' => 'I design websites for businesses with something to say.', 'b' => 'I design websites, brands and digital products.', 'c' => 'I design websites that look like your business.'],
-    'hola_p' => "I've been designing for over [N] years: brands, websites and, in recent years, digital products. Today I bring all of that into something very concrete: websites that look like your business, make sense at first glance and work well on a phone.",
+    'hola_p' => "I've been designing for 15 years: brands, websites and, in recent years, digital products. Today I bring all of that into something very concrete: websites that look like your business, make sense at first glance and work well on a phone.",
+    'cifra_k' => 'years designing',
+    'cifra_s' => 'brand · web · product',
     'que' => [
         ['Websites for businesses and independents', 'Shops, restaurants, studios, bookshops: people with something good to show.'],
         ['Brand, if it’s needed', 'If your business has no logo, or has outgrown it, we start there.'],
@@ -82,7 +88,7 @@ $T = $es ? [
     'tray_t' => 'Where I come from',
     'tray' => [
         ['Valencia', 'I studied Product and Graphic Design at CEU San Pablo.'],
-        ['Edinburgh · 2016-2021', '[N] years as a designer at Registers of Scotland and Scottish Enterprise: brand, campaigns, reports, web and intranet.'],
+        ['Edinburgh · 2016-2021', 'Five years as a designer at Registers of Scotland and Scottish Enterprise: brand, campaigns, reports, web and intranet.'],
         ['Remote for London · 2021-2025', 'Digital design for Knowadays, an online learning platform: web, email, social and editorial.'],
         ['The move into UX/UI · 2022-2024', 'A postgraduate in web design and development (ID3, ESAT) and Idrica: UX/UI for a platform that runs wastewater plants.'],
         ['In the field · 2024-2025', 'Logistics with World Central Kitchen during the Valencia floods and in the Philippines. That’s where Tulong came from.'],
@@ -114,11 +120,19 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
     switch ($k) {
         case 'hola': ?>
 <section class="sm sm--hola">
-    <h1 class="sm__titulo"><span class="sm__fino"><?php echo $e($T['hola_t1']); ?></span> <span class="sm__grueso"><?php foreach ($T['hola_t2'] as $ck => $ct): ?><span class="claim claim--<?php echo $ck; ?>"><?php echo $e($ct); ?></span><?php endforeach; ?></span></h1>
-    <p class="sm__entrada"><?php echo $e($T['hola_p']); ?></p>
+    <div class="sm__cabeza">
+        <div class="sm__cabeza-texto">
+            <h1 class="sm__titulo"><span class="sm__fino"><?php echo $e($T['hola_t1']); ?></span> <span class="sm__grueso"><?php foreach ($T['hola_t2'] as $ck => $ct): ?><span class="claim claim--<?php echo $ck; ?>"><?php echo $e($ct); ?></span><?php endforeach; ?></span></h1>
+            <p class="sm__entrada"><?php echo $e($T['hola_p']); ?></p>
+        </div>
+        <div class="sm__cifra" data-sigue>
+            <span class="sm__cifra-bola" aria-hidden="true"><span class="sm__cifra-n" data-cuenta="15">15</span></span>
+            <p class="sm__cifra-k"><span class="sm__cifra-titulo"><?php echo $e($T['cifra_k']); ?></span><span class="sm__cifra-sub"><?php echo $e($T['cifra_s']); ?></span></p>
+        </div>
+    </div>
     <ul class="sm__rejilla sm__rejilla--4">
-        <?php foreach ($T['que'] as $q): ?>
-        <li><p class="sm__item-t"><?php echo $e($q[0]); ?></p><p class="sm__item-p"><?php echo $e($q[1]); ?></p></li>
+        <?php foreach ($T['que'] as $i => $q): ?>
+        <li><span class="sm__mini"><?php echo str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT); ?></span><p class="sm__item-t"><?php echo $e($q[0]); ?></p><p class="sm__item-p"><?php echo $e($q[1]); ?></p></li>
         <?php endforeach; ?>
     </ul>
 </section>
@@ -134,7 +148,7 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
         </ol>
         <p class="sm__nota"><?php echo $e($T['fotos']); ?></p>
     </div>
-    <div class="sm__col sm__col--aparte">
+    <div class="sm__col sm__col--aparte sm__bloque">
         <h2 class="sm__h2"><?php echo $e($T['atelier_t']); ?></h2>
         <p class="sm__texto"><?php echo $e($T['atelier_p']); ?></p>
         <a class="sm__link" href="php-pages/projects/atelier.php"><?php echo $e($T['atelier_a']); ?><?php echo $flecha; ?></a>
@@ -145,15 +159,15 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
 <section class="sm sm--tray">
     <div class="sm__col sm__col--ancha">
         <h2 class="sm__h2"><?php echo $e($T['tray_t']); ?></h2>
-        <ul class="sm__rejilla sm__rejilla--3">
+        <ol class="sm__rejilla sm__rejilla--3 sm__hitos">
             <?php foreach ($T['tray'] as $t): ?>
-            <li><p class="sm__item-t"><?php echo $e($t[0]); ?></p><p class="sm__item-p"><?php echo $e($t[1]); ?></p></li>
+            <li><span class="sm__hito" aria-hidden="true"></span><p class="sm__item-t"><?php echo $e($t[0]); ?></p><p class="sm__item-p"><?php echo $e($t[1]); ?></p></li>
             <?php endforeach; ?>
-        </ul>
+        </ol>
     </div>
     <div class="sm__col sm__col--aparte">
         <h2 class="sm__h2"><?php echo $e($T['llevo_t']); ?></h2>
-        <ul class="sm__lista">
+        <ul class="sm__lista sm__lista--subraya">
             <?php foreach ($T['llevo'] as $t): ?>
             <li><p class="sm__item-t"><?php echo $e($t[0]); ?></p><p class="sm__item-p"><?php echo $e($t[1]); ?></p></li>
             <?php endforeach; ?>
@@ -164,15 +178,15 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
         case 'uxui': ?>
 <section class="sm sm--uxui">
     <div class="sm__col">
-        <h2 class="sm__h2">UX/UI</h2>
+        <h2 class="sm__titulo sm__titulo--seccion"><span class="sm__grueso">UX/UI</span><span class="sm__punto" aria-hidden="true"></span></h2>
         <p class="sm__texto sm__texto--grande"><?php echo $e($T['ux_t']); ?></p>
         <p class="sm__texto"><?php echo $e($T['ux_p']); ?></p>
         <a class="sm__cv" href="<?php echo $e($cv); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv']); ?></a>
     </div>
     <ul class="sm__casos">
-        <?php foreach ($T['casos'] as $c): ?>
+        <?php foreach ($T['casos'] as $ci => $c): ?>
         <li><a href="php-pages/projects/<?php echo $e($c[0]); ?>.php">
-            <span class="sm__caso-n"><?php echo $e($c[1]); ?></span>
+            <span class="sm__caso-n"><span class="sm__caso-i"><?php echo str_pad((string) ($ci + 1), 2, '0', STR_PAD_LEFT); ?></span><?php echo $e($c[1]); ?></span>
             <span class="sm__caso-p"><?php echo $e($c[2]); ?></span>
             <span class="sm__caso-a"><?php echo $e($c[3]); ?></span>
             <?php echo $flecha; ?>
@@ -183,7 +197,8 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
 <?php break;
         case 'habla': ?>
 <section class="sm sm--habla">
-    <h2 class="sm__titulo"><span class="sm__grueso"><?php echo $e($T['habla_t']); ?></span><span class="sm__punto" aria-hidden="true"></span></h2>
+    <span class="sm__habla-bola" data-sigue aria-hidden="true"></span>
+    <h2 class="sm__titulo sm__titulo--enorme"><span class="sm__grueso"><?php echo $e($T['habla_t']); ?></span><span class="sm__punto" aria-hidden="true"></span></h2>
     <p class="sm__entrada"><?php echo $e($T['habla_p']); ?></p>
     <div class="sm__botones">
         <a class="sm__boton sm__boton--lleno" href="<?php echo $e($wa); ?>" target="_blank" rel="noopener"><?php echo $e($T['wa']); ?></a>

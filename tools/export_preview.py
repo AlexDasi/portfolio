@@ -127,6 +127,8 @@ try:
             assets.add('js/' + f)
     for f in os.listdir(os.path.join(ROOT, 'content/baraja')):
         assets.add('content/baraja/' + f)
+    for f in os.listdir(os.path.join(ROOT, 'content/fuentes')):
+        assets.add('content/fuentes/' + f)
     for f in os.listdir(os.path.join(ROOT, 'esfera')):
         assets.add('esfera/' + f)
     faltan = []

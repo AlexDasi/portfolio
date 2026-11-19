@@ -16,7 +16,7 @@ $navActual = $navActual ?? 'home';
     <a class="lang-switch__item<?php echo $isEs ? ' is-active' : ''; ?>" data-i18n-keep href="<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>" hreflang="es" lang="es"<?php echo $isEs ? ' aria-current="true"' : ''; ?>>ES</a>
     <a class="lang-switch__item<?php echo $isEs ? '' : ' is-active'; ?>" href="<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>" hreflang="en" lang="en"<?php echo $isEs ? '' : ' aria-current="true"'; ?>>EN</a>
 </div>
-<p class="press-space" aria-hidden="true">PRESS SPACE</p>
+<p class="press-space" aria-hidden="true">PRESS SPACE<span class="press-space__cara">:)</span></p>
 <nav class="nav-sutil" aria-label="More">
     <a class="nav-sutil__item nav-sutil__item--uxui<?php echo $navActual === 'uxui' ? ' is-active' : ''; ?>" href="about.php?s=uxui">UX/UI</a>
     <a class="nav-sutil__item<?php echo $navActual === 'about' ? ' is-active' : ''; ?>" href="about.php?s=about">About</a>

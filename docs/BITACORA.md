@@ -424,3 +424,38 @@
 - Medios de la baraja a 1000 px (las fichas usan `*-hd`).
 
 **QA:** vivo.mjs 0 rojos (home ES/EN, About, fichas) · medir.mjs 0 rojos. Fluidez: móvil 60 fps en el swipe (p95 16,7 ms; con CPU ×4 58,9 fps); escritorio `pinta()` p95 ≈ 5 ms, sin layout por frame; los fps de escritorio de este contenedor (sin GPU) no son representativos (el fluido de noche con su config baja la página a ~10 fps en render por software).
+
+---
+
+## 2026-11-19 — v4 de la rama `rediseno-baraja-2026-11` (feedback 98-105, ATELIER conv. 1330)
+
+- **98 · Esfera:** el punto anuncia el clic (te sigue hasta 18 px y se imanta en un radio de 120 px, crece ×1,9, halo y aro fino del acento que late; el cursor propio se aparta). Al hacer clic la bola crece DETRÁS del saludo: la capa vive dentro de la pantalla de la intro (z 0, el texto z 1); de noche el saludo se invierte sobre la bola (`mix-blend-mode: difference`), de día ya es tinta sobre acento. Ni el fondo ni la bola cambian de color: la capa no tiene fondo, el iframe es transparente (alfa = silueta de la bola; el brillo no toca el alfa) y la piel se tiñe del lima al acento activo (giro de tono en el último pase, `?acento=r,g,b` + mensaje `esferaAcento` si pulsas espacio con ella abierta). Espacio con el foco dentro de la esfera hace lo mismo que fuera.
+- **99 · Fluido de día:** opacidad 0,9 → 0,65. Noche sigue con su config.
+- **101 · Acento en todo:** glow de la flecha, pisos, panel FX y restos (`rgba(236,249,142,…)` y `#ecf98e`) → `color-mix(in srgb, var(--accent-color) N%, transparent)`. `theme-color` según día/noche. Solo quedan los `$lima` de respaldo dentro de `var(--cursor-color, …)`.
+- **102 · About:** la cifra 15 en tinta dentro de una bola del acento (te sigue un poco y cuenta hasta 15 al llegar), «qué hago» numerado con filete del acento al pasar, pasos con número en punto del acento, ATELIER en bloque de acento, hitos con su punto en el filete (el de «Hoy» late), «lo que me llevo» con subrayado grueso del acento, UX/UI en titular grande con su punto y casos numerados, «Hablamos.» enorme con la bola del acento detrás que te sigue y WhatsApp en acento. Entrada escalonada por pantalla (solo transform/opacity; sin JS todo visible; respeta «reducir movimiento»). Móvil con composición propia (cifra pequeña al lado, «qué hago» en 2 columnas, bola de «Hablamos» arriba a la derecha).
+- **103 · 15 años:** About ES/EN («Llevo 15 años diseñando» / «I've been designing for 15 years»); Edimburgo «Cinco años» (2016-2021, como en el CV, que ya decía «5 años en Edimburgo»). CV ES/EN regenerados (Chrome headless, mismo HTML de ATELIER `clientes/alexdasi/bio/`) y copiados a `content/downloadables/`.
+- **104 · PRESS SPACE :)** abajo a la izquierda como en la web original, en una pastilla del acento con texto en tinta (se lee igual en día y en noche), «:)» en texto plano con `font-variant-emoji: text`. Solo con ratón.
+- **105 · Día y noche iguales:** lo que difería: (1) espacio de noche soltaba además una ráfaga ARCOÍRIS de 16-36 manchas (`fluid.js`) y de día nada; (2) cambiar de color soltaba 2 manchas al azar solo de noche (`applySettings`); (3) la esfera ponía el fondo NEGRO en los dos modos (de día se iba la página a negro) y la bola siempre lima; (4) el glow de la flecha, lima fijo. Ahora espacio = acento siguiente + pincelada + ráfaga corta del acento nuevo (7 manchas) en los dos modos; solo cambian la paleta y la config del fluido.
+- **100 · Rendimiento** (tabla abajo): fluido que se duerme (sin gesto: deja de pedir frames a los ~12 s de noche / ~4 s de día, y nada más cargar; se despierta con ratón, cola, ajuste, resize o volver a la pestaña; en pausa con la esfera abierta), lienzo a 1× (`MAX_DPR`) y tinte a 512 de noche; las cartas flotan con CSS (`translate`) y la baraja para su bucle en reposo; solo la carta de delante, la anterior y la siguiente guardan vídeo (el resto vuelve a póster); vídeos de carta recodificados (escritorio 840 px, móvil 600 px, crf 29: 20,5 → 8,5 MB); pósters en webp por hueco (560/1000 escritorio, 420/780 móvil; elegidos por JS para que `naturalWidth` sean píxeles reales); Inter servida desde la web (variable, latín + latín ampliado, precarga) en vez de la hoja de Google que bloqueaba el pintado; esfera de móvil cargada en reposo, a 1,25× y a 30 fps si no la tocas, pausada fuera de pantalla. La esfera de escritorio ya solo bajaba al hacer clic (iframe + three.js de jsDelivr).
+
+### Rendimiento antes / después (home, exportación servida en local con gzip; `node tools/medir_rendimiento.mjs <url>`)
+| | Escritorio antes | Escritorio v4 | Móvil antes | Móvil v4 |
+|---|---|---|---|---|
+| Peso transferido en la primera carga | 1,33 MB | **0,48 MB** | 1,21 MB | **0,79 MB** |
+| Peticiones | 29 | 28 | 36 | 35 |
+| De otros dominios | 49 KB (Google Fonts) | 0 | 270 KB | 223 KB (three.js de la esfera) |
+| Imágenes / vídeo | 772 / 433 KB | 138 / 195 KB | 633 / 226 KB | 276 / 141 KB |
+| LCP | 896 ms | 388 ms | 424 ms | 100 ms |
+| rAF en reposo (intro, ≥ 14 s sin tocar) | 9,5/s continuo | **0** | 0 | 0 (la esfera va en su iframe) |
+| Trabajo del hilo principal en reposo (intro) | 1.053 ms/s | **0,3 ms/s** | 1.117 ms/s* | 1.145 ms/s* |
+| rAF en reposo con la baraja | 16/s | **0** | — | — |
+| JS por frame moviendo la baraja | 0,76 ms | 1,05 ms | — | — |
+| Memoria de vídeo: texturas WebGL | 27,3 MB | 8,1 MB | 0 | 0 |
+| Lienzo del fluido | 9,9 MB a 1× (≈ 40 MB en retina) | 9,9 MB (se queda a 1× en retina) | — | — |
+| Vídeos con datos en memoria tras pasar 20 cartas | 11 (≈ 40 MB) | 3 (≈ 8 MB) | 1 | 1 |
+
+\* Móvil: es la esfera WebGL de la intro (la pidió Alex girando sola). En este contenedor el WebGL va por software (SwiftShader) y ocupa toda la CPU a cualquier ritmo; en un móvil real va por GPU. Ahora va a 30 fps y 1,25× cuando no la tocas y se para fuera de pantalla. Los fps absolutos de aquí no valen; los bytes, las peticiones y los rAF, sí.
+
+**Preview vs web final:** la carpeta exportada pesa 27 MB (antes 37 MB) porque copia TODOS los medios de la baraja (vídeos HD de las fichas, jpg de respaldo, versiones móvil y escritorio), pero la home solo transfiere lo de la tabla. La web final en Hostinger transfiere lo mismo + Google Analytics (gtag, que la exportación quita; ~100 KB, asíncrono, no bloquea).
+
+**QA (exportación servida en local):** vivo.mjs 0 rojos en home ES y EN, About y ficha (iPhone 13, SE, Android 360, desktop) · nitidez 0 · medir.mjs 0 rojos (avisos: el bloque «hola» del About en móvil ocupa 1,4-1,8 pantallas en SE/13, y la cabecera de las fichas). Paridad día/noche comprobada con script: espacio, acento, glow, PRESS SPACE y esfera hacen lo mismo en los dos.

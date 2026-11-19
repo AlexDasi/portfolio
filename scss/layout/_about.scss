@@ -323,7 +323,7 @@
         &.magnet-mouse-active {
             color: var(--bkg-color);
             border-color: var(--accent-color);
-            box-shadow: 0 0 10px rgba(236, 249, 142, 0.4);
+            box-shadow: 0 0 10px color-mix(in srgb, var(--accent-color) 40%, transparent);
         }
 
         &.effect:hover:after,

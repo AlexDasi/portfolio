@@ -40,7 +40,9 @@ $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UT
                 <?php if (!$neutra): ?>
                 <img class="carta__poster" alt="" decoding="async" draggable="false"
                     data-poster-d="<?php echo $e($media . 'desktop_poster.jpg'); ?>"
-                    data-poster-m="<?php echo $e($media . 'movil_poster.jpg'); ?>">
+                    data-poster-m="<?php echo $e($media . 'movil_poster.jpg'); ?>"
+                    data-srcset-d="<?php echo $e($media . 'desktop_poster-560.webp 560w, ' . $media . 'desktop_poster-1000.webp 1000w'); ?>"
+                    data-srcset-m="<?php echo $e($media . 'movil_poster-420.webp 420w, ' . $media . 'movil_poster-780.webp 780w'); ?>">
                 <video class="carta__video" muted loop playsinline preload="none" disablepictureinpicture
                     data-video-d="<?php echo $e($media . 'desktop.mp4'); ?>"
                     data-video-m="<?php echo $e($media . 'movil.mp4'); ?>"></video>

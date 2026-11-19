@@ -67,7 +67,7 @@
 
     // Glow when the magnet engages (so the arrow matches the CV button glow).
     &.magnet-mouse-active{
-        box-shadow: 0 0 18px rgba(236, 249, 142, 0.5);
+        box-shadow: 0 0 18px color-mix(in srgb, var(--accent-color) 50%, transparent);
     }
 }
 

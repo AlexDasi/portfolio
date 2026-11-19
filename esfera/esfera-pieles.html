@@ -38,13 +38,15 @@
   @media (pointer:fine){html,body,*{cursor:none!important}}
   #cur{position:fixed;left:0;top:0;pointer-events:none;z-index:4;opacity:0;transition:opacity .2s}
   #cur i{position:absolute;left:0;top:0;display:block;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s,background .25s,transform .2s}
-  #cur.m0 i,#cur.m2 i,#cur.m3 i,#cur.m4 i{width:10px;height:10px;border-radius:50%;background:var(--lima);box-shadow:0 0 14px 4px rgba(236,249,142,.45)}
+  #cur.m0 i,#cur.m2 i,#cur.m3 i,#cur.m4 i{width:10px;height:10px;border-radius:50%;background:var(--lima);box-shadow:0 0 14px 4px color-mix(in srgb,var(--lima) 45%,transparent)}
   #cur.m1 i{width:24px;height:24px;border-radius:50%;border:1px solid var(--lima)}
   #cur.down i{transform:translate(-50%,-50%) scale(1.7);opacity:.6}
   #cur.m5 i{width:22px;height:22px;background:linear-gradient(var(--lima),var(--lima)) center/1px 100% no-repeat,linear-gradient(var(--lima),var(--lima)) center/100% 1px no-repeat}
   body.tactil #cur{display:none}
   /* embebida en alexdasi.com: solo la bola */
   body.embed header, body.embed nav, body.embed #hint{display:none}
+  /* v4 (feedback 98): embebida, sin fondo propio: se ve el fondo de la página (día o noche) */
+  html.embed, html.embed body{background:transparent}
   body.embed.tactil canvas#c, body.embed.movil canvas#c{touch-action:pan-y}
   @media (max-width:560px){
     header{left:16px;right:16px;top:14px}
@@ -90,7 +92,21 @@ const Q = new URLSearchParams(location.search), STILL = Q.has('still'), AUTO = Q
 let modo = Math.min(5, Math.max(0, (+Q.get('m') || 1) - 1));
 /* alexdasi.com (rama rediseno-baraja-2026-11): ?embed y ?piel= */
 const EMBED = Q.has('embed');
-if (EMBED) { document.body.classList.add('embed'); if (Q.has('movil')) document.body.classList.add('movil'); }
+if (EMBED) { document.documentElement.classList.add('embed'); document.body.classList.add('embed'); if (Q.has('movil')) document.body.classList.add('movil'); }
+/* v4 (feedback 98): embebida toma el ACENTO activo de la página (?acento=r,g,b y mensajes {esferaAcento}) y no pinta fondo.
+   La piel se diseñó en lima: se gira el tono de toda la imagen del lima al acento (con el lima, sin cambios). */
+const ACENTO = {v: null, listo: false};
+function ponerAcento(rgb){
+  if (!rgb || rgb.length !== 3) return;
+  ACENTO.v = rgb.map(x => Math.max(0, Math.min(255, +x)) / 255);
+  document.documentElement.style.setProperty('--lima', `rgb(${rgb.join(',')})`);
+  if (ACENTO.listo) ajustarTinte();
+}
+if (Q.has('acento')) ponerAcento(Q.get('acento').split(','));
+let PAUSA = false;
+addEventListener('message', e => { const d = e.data || {};
+  if (d.esferaAcento) ponerAcento(d.esferaAcento);
+  if ('esferaPausa' in d) { const antes = PAUSA; PAUSA = !!d.esferaPausa; if (antes && !PAUSA) { last = performance.now(); requestAnimationFrame(frame); } } });
 const PIELES = {solare: 0, chicle: 1, glaseado: 2, niebla: 3, gota: 4, prisma: 5};
 if (Q.has('piel') && Q.get('piel') in PIELES) modo = PIELES[Q.get('piel')];
 const avisar = (msg) => { if (EMBED && parent !== window) parent.postMessage({esfera: msg}, '*'); };
@@ -106,8 +122,10 @@ const HINTS = [
 const LIMA = new THREE.Color('#ECF98E');
 
 const canvas = document.getElementById('c');
-const renderer = new THREE.WebGLRenderer({canvas, antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: STILL});
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+const renderer = new THREE.WebGLRenderer({canvas, antialias: false, alpha: EMBED, powerPreference: 'high-performance', preserveDrawingBuffer: STILL});
+if (EMBED) renderer.setClearColor(0, 0);
+const MOVIL = EMBED && Q.has('movil');
+renderer.setPixelRatio(Math.min(devicePixelRatio, MOVIL ? 1.25 : 1.75));   // v4: en el móvil, la bola pequeña no necesita más
 renderer.toneMapping = THREE.AgXToneMapping;
 renderer.toneMappingExposure = 1.05;
 
@@ -241,7 +259,7 @@ const U = {
 };
 
 /* ---------- escena ---------- */
-const scene = new THREE.Scene(); scene.background = new THREE.Color(0);
+const scene = new THREE.Scene(); scene.background = EMBED ? null : new THREE.Color(0);
 const camera = new THREE.PerspectiveCamera(30, 1, .1, 100);
 const objetos = [];
 
@@ -549,18 +567,34 @@ solare.mesh.rotation.set(.2, 0, .44); chicle.mesh.rotation.set(.2, 0, .3); glase
 const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, {type: THREE.HalfFloatType, samples: 4}));
 composer.addPass(new RenderPass(scene, camera));
 const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), .2, .35, 1.0); composer.addPass(bloom);
+if (EMBED) { // el brillo suma luz pero no toca el alfa: el alfa queda = la silueta de la bola (con su antialias)
+  const bm = bloom.blendMaterial; bm.blending = THREE.CustomBlending; bm.blendEquation = THREE.AddEquation;
+  bm.blendSrc = THREE.SrcAlphaFactor; bm.blendDst = THREE.OneFactor; bm.blendSrcAlpha = THREE.ZeroFactor; bm.blendDstAlpha = THREE.OneFactor; }
 composer.addPass(new OutputPass());
 const grano = new ShaderPass({
-  uniforms: {tDiffuse: {value: null}, uTime: {value: 0}, uRes: U.uRes},
+  uniforms: {tDiffuse: {value: null}, uTime: {value: 0}, uRes: U.uRes, uTinte: {value: 0}, uGiro: {value: 0}, uSat: {value: 1}, uAlfa: {value: EMBED ? 1 : 0}},
   vertexShader: `varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-  fragmentShader: `uniform sampler2D tDiffuse;uniform float uTime;uniform vec2 uRes;varying vec2 vUv;
+  fragmentShader: `uniform sampler2D tDiffuse;uniform float uTime,uTinte,uGiro,uSat,uAlfa;uniform vec2 uRes;varying vec2 vUv;
     float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
-    void main(){vec3 c=texture2D(tDiffuse,vUv).rgb;
+    vec3 rgb2hsv(vec3 c){vec4 K=vec4(0.,-1./3.,2./3.,-1.);vec4 p=mix(vec4(c.bg,K.wz),vec4(c.gb,K.xy),step(c.b,c.g));vec4 q=mix(vec4(p.xyw,c.r),vec4(c.r,p.yzx),step(p.x,c.r));float d=q.x-min(q.w,q.y);float e=1.0e-10;return vec3(abs(q.z+(q.w-q.y)/(6.*d+e)),d/(q.x+e),q.x);}
+    vec3 hsv2rgb(vec3 c){vec4 K=vec4(1.,2./3.,1./3.,3.);vec3 p=abs(fract(c.xxx+K.xyz)*6.-K.www);return c.z*mix(K.xxx,clamp(p-K.xxx,0.,1.),c.y);}
+    void main(){vec4 t4=texture2D(tDiffuse,vUv);vec3 c=t4.rgb;
       float l=dot(c,vec3(.2126,.7152,.0722));c=mix(vec3(l),c,1.14);
-      c+=(h(vUv*uRes+fract(uTime)*91.)-.5)*.035*(1.-l*.6);
-      gl_FragColor=vec4(max(c,0.),1.);}`
+      if(uTinte>.5){vec3 hv=rgb2hsv(max(c,0.));hv.x=fract(hv.x+uGiro);hv.y=clamp(hv.y*uSat,0.,1.);c=hsv2rgb(hv);}   // del lima al acento
+      float a=mix(1.,clamp(t4.a,0.,1.),uAlfa);
+      c+=(h(vUv*uRes+fract(uTime)*91.)-.5)*.035*(1.-l*.6)*a;
+      gl_FragColor=vec4(max(c,0.),a);}`
 });
 composer.addPass(grano);
+function ajustarTinte(){
+  if (!ACENTO.v) { grano.uniforms.uTinte.value = 0; return; }
+  const hsv = c => { const [r, g, b] = c, mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn; let h = 0;
+    if (d) h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return [((h / 6) + 1) % 1, mx ? d / mx : 0]; };
+  const [hL, sL] = hsv([236 / 255, 249 / 255, 142 / 255]), [hA, sA] = hsv(ACENTO.v);
+  const giro = hA - hL, cambia = Math.abs(giro) > .004 || Math.abs(sA - sL) > .02;
+  grano.uniforms.uTinte.value = cambia ? 1 : 0; grano.uniforms.uGiro.value = giro; grano.uniforms.uSat.value = Math.min(2.2, Math.max(.3, sA / sL));
+}
+ACENTO.listo = true; ajustarTinte();
 
 /* ---------- tamaño ---------- */
 function resize(){
@@ -626,7 +660,7 @@ function elegir(i){
   if (typeof bloom !== 'undefined') bloom.strength += .35;          // destello suave al cambiar
 }
 botones.forEach((b, i) => b.addEventListener('click', () => elegir(i)));
-addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === 'ArrowRight') elegir((modo + 1) % 6); if (e.key === 'ArrowLeft') elegir((modo + 5) % 6); if (e.key >= '1' && e.key <= '6') elegir(+e.key - 1); });
+addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === ' ' && EMBED) { e.preventDefault(); avisar('espacio'); } if (e.key === 'ArrowRight') elegir((modo + 1) % 6); if (e.key === 'ArrowLeft') elegir((modo + 5) % 6); if (e.key >= '1' && e.key <= '6') elegir(+e.key - 1); });
 elegir(modo);
 
 /* ---------- HUD del prisma ---------- */
@@ -644,7 +678,12 @@ function golpeEsfera(o){ // rayo contra la esfera de radio o.radio·escala (anal
   return ray.ray.origin.clone().addScaledVector(ray.ray.direction, -bb - Math.sqrt(h));
 }
 let t = T0, last = performance.now();
+let ultimoToque = -1e9;
+addEventListener('pointerdown', () => { ultimoToque = performance.now(); }, true);
+addEventListener('pointermove', () => { ultimoToque = performance.now(); }, true);
 function frame(now){
+  // v4 (feedback 100): en el móvil, si nadie la toca, gira a 30 fps (la mitad de trabajo; a ese ritmo no se nota)
+  if (MOVIL && !PAUSA && now - ultimoToque > 1500 && now - last < 31) { requestAnimationFrame(frame); return; }
   const dt = STILL ? 1 / 60 : Math.min((now - last) / 1000, 1 / 30); last = now; t += dt;
   U.uTime.value = t; grano.uniforms.uTime.value = t;
 
@@ -819,6 +858,7 @@ function frame(now){
   if (sobre !== P.sobre) { P.sobre = sobre; document.body.classList.toggle('sobre', sobre); }
   composer.render(dt);
   if (EMBED && !window.__avisada && t - T0 > .25) { window.__avisada = true; avisar('lista'); }
+  if (PAUSA) return;                                               // v4: fuera de pantalla (móvil) no se pinta nada
   if (!STILL) requestAnimationFrame(frame); else window.__listo = true;
 }
 requestAnimationFrame(frame);

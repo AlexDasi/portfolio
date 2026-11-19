@@ -1239,8 +1239,10 @@ function registerFluidRuntimeAPI () {
             pointers.forEach((pointer) => {
                 pointer.color = generateColor();
             });
-            if (!config.FLAT) multipleSplats(2);
+            // v4 (feedback 105): cambiar de color ya no suelta manchas solo en noche; igual en día y en noche
         }
+        // solo el color no hace falta pintarlo ya (vale para las manchas nuevas): así la carga no despierta el fluido
+        if (Object.keys(partialConfig).some((k) => k !== 'EFFECT_COLOR')) despertar();
     }
 
     const desktopAPI = {
@@ -1268,6 +1270,32 @@ if (!config.NO_INTRO_SPLATS) multipleSplats(parseInt(Math.random() * 8) + 6);
 
 let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;
+
+/* v4 (feedback 100, rama rediseno-baraja-2026-11): el fluido se DUERME cuando no hay nada que mover.
+   Tras el último gesto, cuando el tinte ya se ha disipado (tiempo según DENSITY_DISSIPATION) o si está en pausa,
+   deja de pedir frames: cero trabajo en reposo. Cualquier gesto, golpe de la cola o ajuste lo despierta.
+   El lienzo se queda con su último fotograma (casi vacío), así que no se nota. */
+let ultimaActividad = config.NO_INTRO_SPLATS ? -1e9 : performance.now(); // sin manchas al cargar: duerme desde el principio
+let dormido = false;
+function tiempoHastaDormir () {
+    const d = Math.max(0.05, config.DENSITY_DISSIPATION || 1);
+    return Math.min(12, Math.max(3, 4.5 / d)) * 1000;   // noche (0,35) ≈ 12 s · día (1,1) ≈ 4 s; para entonces el tinte ya no se ve
+}
+function despertar () {
+    ultimaActividad = performance.now();
+    if (!dormido) return;
+    dormido = false;
+    lastUpdateTime = Date.now();
+    requestAnimationFrame(update);
+}
+window.__fluidDespertar = despertar;
+(function () {
+    const q = window.__fluidQueue = window.__fluidQueue || [];
+    q.push = function () { const n = Array.prototype.push.apply(q, arguments); despertar(); return n; };
+})();
+document.addEventListener('visibilitychange', () => { if (!document.hidden) despertar(); });
+window.addEventListener('resize', despertar);
+
 update();
 
 function update () {
@@ -1279,6 +1307,7 @@ function update () {
     if (!config.PAUSED)
         step(dt);
     render(null);
+    if (config.PAUSED || performance.now() - ultimaActividad > tiempoHastaDormir()) { dormido = true; return; }
     requestAnimationFrame(update);
 }
 
@@ -1586,6 +1615,7 @@ updatePointerDownData(pointer, -1, posX, posY);
 document.body.addEventListener('mousemove', e => {
     let pointer = pointers[0];
     if (!pointer.down) return;
+    despertar();
     let posX = scaleByPixelRatio(e.x);
     let posY = scaleByPixelRatio(e.y);
     updatePointerMoveData(pointer, posX, posY);
@@ -1597,6 +1627,7 @@ document.body.addEventListener('mousemove', e => {
 
 canvas.addEventListener('touchstart', e => {
     e.preventDefault();
+    despertar();
     const touches = e.targetTouches;
     while (touches.length >= pointers.length)
         pointers.push(new pointerPrototype());
@@ -1609,6 +1640,7 @@ canvas.addEventListener('touchstart', e => {
 
 canvas.addEventListener('touchmove', e => {
     e.preventDefault();
+    despertar();
     const touches = e.targetTouches;
     for (let i = 0; i < touches.length; i++) {
         let pointer = pointers[i + 1];
@@ -1630,12 +1662,16 @@ window.addEventListener('touchend', e => {
 });
 
 window.addEventListener('keydown', e => {
-    if (e.code === 'KeyP')
+    if (e.code === 'KeyP') {
         config.PAUSED = !config.PAUSED;
-    // En modo plano la tecla espacio la lleva js/cursor-color.js (cambia de color, sin manchas)
-    if (e.key === ' ' && !config.FLAT) {
+        despertar();
+    }
+    // v4 (feedback 105): la tecla espacio la lleva SIEMPRE js/cursor-color.js (color siguiente + ráfaga del acento),
+    // igual en día y en noche. Antes, en noche además soltaba aquí una ráfaga arcoíris y en día no.
+    if (e.key === ' ' && !window.__CURSOR) {
         e.preventDefault();
         multipleSplats(parseInt(Math.random() * 20) + 16, true);
+        despertar();
     }
 });
 
@@ -1765,7 +1801,8 @@ function getTextureScale (texture, width, height) {
 }
 
 function scaleByPixelRatio (input) {
-    let pixelRatio = window.devicePixelRatio || 1;
+    // v4 (feedback 100): MAX_DPR limita la resolución del lienzo (el fluido es blando: a 1× no se nota y pesa 4× menos en retina)
+    let pixelRatio = Math.min(window.devicePixelRatio || 1, (window.__FLUID_PRESET && window.__FLUID_PRESET.MAX_DPR) || 8);
     return Math.floor(input * pixelRatio);
 }
 

@@ -149,12 +149,25 @@
     this.pinta(true);
   };
 
+  // «url 560w, url 1000w» → la más pequeña que cubre el hueco (o la mayor)
+  function elige(set, px) {
+    if (!set) return null; // webp: todos los navegadores actuales (Safari 14+)
+    var c = set.split(',').map(function (x) { var p = x.trim().split(/\s+/); return { u: p[0], w: parseInt(p[1], 10) }; })
+      .sort(function (a, b) { return a.w - b.w; });
+    for (var k = 0; k < c.length; k++) if (c[k].w >= px * 0.95) return c[k].u;
+    return c.length ? c[c.length - 1].u : null;
+  }
+
   Baraja.prototype.posters = function () {
     var clave = this.modo === 'mesa' ? 'posterD' : 'posterM';
+    var c0 = this.cartas[0];
+    var ancho = ((c0 && c0.offsetWidth) || (this.modo === 'mesa' ? 432 : 280)) * (window.devicePixelRatio || 1);
     this.cartas.forEach(function (c, i) {
       var img = c.querySelector('.carta__poster');
       if (!img) return;
-      var src = img.dataset[clave];
+      // v4 (feedback 100): webp del tamaño del hueco (ancho de la carta × densidad de pantalla); el jpg, de respaldo.
+      // Se elige aquí y no con srcset para que naturalWidth diga los píxeles reales (lo miden vivo.mjs y nitidez.mjs).
+      var src = elige(img.dataset[clave === 'posterD' ? 'srcsetD' : 'srcsetM'], ancho) || img.dataset[clave];
       if (i > 2) img.loading = 'lazy';
       if (img.getAttribute('src') !== src) img.src = src;
       var v = c.querySelector('video');
@@ -190,11 +203,11 @@
           var giro = MESA.giroFrente + (MESA.giroDetras - MESA.giroFrente) * k;
           giro += (MESA.giroHover - giro) * hv * (d >= 0.5 ? 1 : 0);
           // velocidad: al pasar rápido se abren y se tumban un poco (como The Lookback); en reposo, flotan
-          giro += velGiro * (0.4 + 0.6 * k) + Math.sin(this.tiempo * 0.7 + i * 1.3) * VIVO.flotaGiro * k;
+          giro += velGiro * (0.4 + 0.6 * k);
           var x = d <= 1 ? d * MESA.hueco : MESA.hueco + (d - 1) * MESA.paso;
           x += Math.abs(velAbre) * d;
           var sc = 1 - d * MESA.escala + hv * 0.03;
-          var flota = Math.sin(this.tiempo * 0.9 + i * 0.8) * VIVO.flota;
+          var flota = 0; // v4: flotar lo hace el CSS (animación de `translate`, sin JS en reposo)
           tr = 'perspective(' + MESA.perspectiva + 'px) translate3d(' + (x * m.w).toFixed(1) + 'px,' + (d * MESA.subida * m.h - hv * 10 + flota).toFixed(1) + 'px,0)' +
             ' rotateY(' + giro.toFixed(2) + 'deg) scale(' + sc.toFixed(4) + ')';
           op = Math.max(0, Math.min(1, this.n - 1.5 - d));
@@ -241,6 +254,14 @@
       var va = this.cartas[antes].querySelector('video');
       if (va) va.pause();
     }
+    // v4 (feedback 100): solo quedan en memoria la de delante, la anterior y la siguiente; el resto vuelve a su póster
+    var n = this.n;
+    this.cartas.forEach(function (c, i) {
+      var d = ((i - f) % n + n) % n;
+      if (d === 0 || d === 1 || d === n - 1) return;
+      var v = c.querySelector('video');
+      if (v && v.dataset.cargado) { v.pause(); v.removeAttribute('src'); v.load(); delete v.dataset.cargado; c.classList.remove('is-video'); }
+    });
     this.videos();
     void self;
   };
@@ -272,6 +293,7 @@
   };
 
   Baraja.prototype.entra = function () {
+    this.root.classList.toggle('is-flotando', this.enPantalla);
     if (this.enPantalla) {
       this.root.classList.add('is-dentro');
       this.medir();
@@ -330,9 +352,8 @@
     this.pinta(false);
     var quieta = this.pos === this.obj && !this.arrastre && !this.ruedaFin;
     if (quieta) this.normaliza();
-    // en reposo siguen flotando mientras la baraja esté en pantalla (solo escritorio y sin «reducir movimiento»)
-    var flotar = this.enPantalla && this.modo === 'mesa' && !reduce && !document.hidden;
-    if (!quieta || hvMueve || this.vel || flotar) this.raf = requestAnimationFrame(this.paso);
+    // v4 (feedback 100): en reposo el bucle se para; el flotar lo lleva el CSS en el compositor
+    if (!quieta || hvMueve || this.vel) this.raf = requestAnimationFrame(this.paso);
   };
 
   // mantiene pos/obj en [0, n) cuando está quieta (bucle infinito sin números enormes)

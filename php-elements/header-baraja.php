@@ -26,7 +26,7 @@ $assetVersion = static function (string $relativePath): string {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#f7ff99">
+    <meta name="theme-color" content="#000000">
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:type" content="website">
@@ -47,8 +47,17 @@ $assetVersion = static function (string $relativePath): string {
     <link rel="alternate" hreflang="x-default" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="icon" type="image/svg+xml" href="/images/vectors/arrow.svg">
         
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">    
+    <!-- v4 (feedback 100): Inter servida desde la web (variable 200-700, solo latín + latín ampliado) con precarga;
+         antes era una hoja de Google Fonts que bloqueaba el pintado y abría dos conexiones más. -->
+    <link rel="preload" href="/content/fuentes/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+    <style>
+        @font-face { font-family: 'Inter'; font-style: normal; font-weight: 200 700; font-display: swap;
+            src: url('/content/fuentes/inter-latin-var.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+        @font-face { font-family: 'Inter'; font-style: normal; font-weight: 200 700; font-display: swap;
+            src: url('/content/fuentes/inter-latin-ext-var.woff2') format('woff2');
+            unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+    </style>
 
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-HSXNYNQRKG"></script>
     <script>
@@ -79,6 +88,7 @@ $assetVersion = static function (string $relativePath): string {
             try { tema = localStorage.getItem('alexdasi-tema-v3') || 'noche'; } catch (e) {}
             <?php if (!empty($temaForzado)): ?>tema = '<?php echo $temaForzado === 'noche' ? 'noche' : 'dia'; ?>';<?php endif; ?>
             html.classList.add(tema === 'noche' ? 'tema-noche' : 'tema-dia');
+            var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', tema === 'noche' ? '#000000' : '#f5f3ec');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));
             var paleta = [
@@ -94,16 +104,17 @@ $assetVersion = static function (string $relativePath): string {
             var c = paleta[i];
             html.style.setProperty('--cursor-color', 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')');
             window.__CURSOR = { paleta: paleta, i: i, fijo: fijo };
-            var comun = { BLOOM: false, SUNRAYS: false, COLORFUL: false, NO_INTRO_SPLATS: true,
+            /* v4 (feedback 100): lienzo a 1× aunque la pantalla sea retina y tinte a 512 (el fluido es blando: no se nota y pesa ~4× menos) */
+            var comun = { BLOOM: false, SUNRAYS: false, COLORFUL: false, NO_INTRO_SPLATS: true, MAX_DPR: 1,
                 DITHER_URL: 'images/vectors/arrow.svg' /* relativa: vale en vivo y en la exportación estática */ };
             /* Noche: su panel FX (captura del 19/11): density al mínimo, velocity ~35 %, vorticity 0,
                pressure iter al máximo, splat radius ~35 %, splat force al máximo, opacity ~50 %, shading sí, bloom no. */
             window.__FLUID_NOCHE = { FLAT: false, SHADING: true, BACK_COLOR: { r: 0, g: 0, b: 0 },
                 DENSITY_DISSIPATION: 0.35, VELOCITY_DISSIPATION: 1.0, CURL: 0, PRESSURE_ITERATIONS: 50,
-                SPLAT_RADIUS: 0.19, SPLAT_FORCE: 12000, EFFECT_OPACITY: 0.5, DYE_RESOLUTION: 1024 };
+                SPLAT_RADIUS: 0.19, SPLAT_FORCE: 12000, EFFECT_OPACITY: 0.5, DYE_RESOLUTION: 512 };
             window.__FLUID_DIA = { FLAT: true, SHADING: false, BACK_COLOR: { r: 245, g: 243, b: 236 },
                 DENSITY_DISSIPATION: 1.1, VELOCITY_DISSIPATION: 0.9, CURL: 2, PRESSURE_ITERATIONS: 20,
-                SPLAT_RADIUS: 0.3, SPLAT_FORCE: 6000, EFFECT_OPACITY: 0.9, DYE_RESOLUTION: 512 };
+                SPLAT_RADIUS: 0.3, SPLAT_FORCE: 6000, EFFECT_OPACITY: 0.65 /* v4 (feedback 99): 0,9 → 0,65, distraía */, DYE_RESOLUTION: 512 };
             var base = tema === 'noche' ? window.__FLUID_NOCHE : window.__FLUID_DIA;
             window.__FLUID_PRESET = Object.assign({}, comun, base, { EFFECT_COLOR: c });
         })();

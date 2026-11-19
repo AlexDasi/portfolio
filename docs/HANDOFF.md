@@ -4,6 +4,7 @@
 
 ## Rama `rediseno-baraja-2026-11` (2026-11-18, ATELIER conv. 1330) — SIN publicar
 - v2 (19/11): home = intro + baraja de 9 cartas en dominó; About nuevo en blanco (`about.php` + `php-pages/sobre-mi.php`); ES por defecto (`?lang=en`); `?pisos=a|b`, `?cursor=fijo`. Detalle en BITACORA (últimas entradas).
+- v4 (19/11, feedback 98-105): esfera detrás del saludo con imán, acento en todo, About diseñado, 15 años, PRESS SPACE :) abajo, día = noche, pasada de rendimiento (tabla en BITACORA). Medidor: `node tools/medir_rendimiento.mjs <url>`.
 - Preview estática: `python3 tools/export_preview.py <carpeta>` → https://atelier-demo-propuestas.pages.dev/2026-11-19_alexdasi-baraja-sobre-su-web/
 - NO mergear a `main` sin el sí de Alex (main despliega en vivo).
 

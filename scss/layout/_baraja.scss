@@ -196,9 +196,30 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
     background: var(--accent-color);
     pointer-events: auto;
     cursor: none;
-    transition: background-color .3s ease, transform .3s cubic-bezier(.22, 1, .36, 1);
-    &:hover { transform: scale(1.35); }
     vertical-align: baseline;
+    position: relative;
+    // v4 (feedback 98): anuncia el clic. Te sigue un poco y se imanta (--mx/--my desde js/esfera.js, sin transición:
+    // va pegado al ratón), crece y le sale un aro fino del acento que late. Escala y aro, con transición propia.
+    translate: var(--mx, 0px) var(--my, 0px);
+    scale: 1;
+    transition: background-color .3s ease, scale .45s cubic-bezier(.34, 1.56, .64, 1), box-shadow .4s ease;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -.09em;
+      border-radius: 50%;
+      border: 1px solid var(--accent-color);
+      opacity: 0;
+      scale: .6;
+      transition: opacity .3s ease, scale .45s cubic-bezier(.22, 1, .36, 1);
+      pointer-events: none;
+    }
+    &.is-cerca {
+      scale: 1.9;
+      box-shadow: 0 0 0 .05em color-mix(in srgb, var(--accent-color) 22%, transparent), 0 0 .35em color-mix(in srgb, var(--accent-color) 45%, transparent);
+      &::after { opacity: 1; scale: 1; animation: punto-aro 1.6s cubic-bezier(.22, 1, .36, 1) .2s infinite; }
+    }
+    &:focus-visible { outline: 1px solid var(--accent-color); outline-offset: .08em; }
   }
   &__pista {
     position: absolute;
@@ -219,6 +240,15 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
     letter-spacing: .01em;
   }
 }
+
+@keyframes punto-aro {
+  0% { scale: 1; opacity: .9; }
+  70% { scale: 1.75; opacity: 0; }
+  100% { scale: 1.75; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .intro__punto.is-cerca::after { animation: none; } }
+// con el punto imantado, el cursor propio se aparta: el punto ES el cursor
+html.punto-cerca .follow { opacity: 0 !important; transition: opacity .2s ease; }
 
 // ---------- Baraja ----------
 .slide-baraja { height: 100vh; }
@@ -350,6 +380,14 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
   }
 }
 html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(247, 247, 245, .08); }
+
+// v4 (feedback 100): las cartas flotan con CSS (propiedad `translate`, en el compositor): cero JS en reposo.
+@keyframes carta-flota { from { translate: 0 -5px; } to { translate: 0 5px; } }
+.baraja[data-modo="mesa"].is-flotando .carta { animation: carta-flota 3.5s ease-in-out infinite alternate; }
+@for $i from 1 through 16 {
+  .baraja[data-modo="mesa"] .carta:nth-child(#{$i}) { animation-delay: #{-(($i * 0.89) % 7)}s; }
+}
+@media (prefers-reduced-motion: reduce) { .baraja .carta { animation: none !important; } }
 
 .ficha {
   // v3 (feedback 93): minimal pero con sistema: filete, número y tipo arriba; nombre; sector; texto; dos acciones
@@ -730,30 +768,30 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
   .baraja__pista { text-transform: uppercase; }
 }
 
-// PRESS SPACE: en inglés, en una esquina (arriba a la izquierda, bajo el idioma), solo con ratón (feedback 86)
+// PRESS SPACE :) (feedback 86 → 104): ABAJO a la izquierda, como en la web original, con «:)» en texto plano.
+// Pastilla del color de acento con texto en tinta: se lee igual en día y en noche y sigue al acento.
+// La carita va en Inter y con font-variant-emoji: text (nunca se pinta como emoji). Solo con ratón.
 .press-space {
   position: fixed;
-  left: 26px;
-  top: 64px;
+  left: 22px;
+  bottom: 20px;
   z-index: $z-top;
   margin: 0;
+  padding: 7px 11px 6px;
+  border-radius: 99px;
+  background: var(--accent-color);
+  color: $tinta;
   font-family: $main-font;
+  font-variant-emoji: text;
   font-size: 13px;
-  font-weight: 400;
+  line-height: 1;
+  font-weight: 500;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--main-color);
-  opacity: .45;
+  white-space: nowrap;
   pointer-events: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  &::before {
-    content: "";
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--accent-color);
-    transition: background-color .3s ease;
-  }
+  transition: background-color .3s ease, opacity .4s ease;
+  &__cara { letter-spacing: .02em; margin-left: .35em; }
 }
 @media (hover: none), (pointer: coarse), (max-width: 1280px) { .press-space { display: none; } }
 
@@ -768,15 +806,17 @@ html.cursor-fijo .press-space { display: none; }
 .intro__esfera { display: none; }
 html.esfera-abierta .follow { opacity: 0 !important; }
 
+// v4 (feedback 98): la capa vive DENTRO de la pantalla de la intro, debajo del saludo (z 0 < .intro z 1).
+// Sin fondo propio: se queda el día o la noche que hubiera. La esfera viene transparente y teñida con el acento.
 .esfera-capa {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 5000;
-  background: rgba(0, 0, 0, 0);
-  transition: background-color .7s cubic-bezier(.22, 1, .36, 1);
-  &.is-abierta { background: #000; }
-  &.is-cerrando { background: rgba(0, 0, 0, 0); transition-duration: .6s; }
+  z-index: 0;
+  background: transparent;
 }
+// el saludo, siempre legible encima de la bola: de noche (texto claro) se invierte sobre ella;
+// de día el texto ya es tinta sobre un acento claro
+html.tema-noche.esfera-abierta .slide-index .intro { mix-blend-mode: difference; }
 .esfera-bola {
   position: absolute;
   left: 0; top: 0;
@@ -816,9 +856,7 @@ html.esfera-abierta .follow { opacity: 0 !important; }
       margin: 2svh 0 0;
       align-self: center;
       pointer-events: auto;
-      // el borde negro del lienzo se funde con el fondo (en día queda un halo oscuro suave)
-      -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 70%);
-      mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 70%);
+      // v4: la esfera llega transparente (sin lienzo negro): ni máscara ni halo, en día y en noche
       opacity: 0;
       transition: opacity .8s ease;
       &.is-lista { opacity: 1; }
@@ -939,3 +977,199 @@ body.pagina-proyecto { display: block; }
 }
 .pagina-proyecto .arrow-container { display: none; }
 html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
+
+// ============================================================
+// v4 · About más diseñado (feedback 102): acento con contención, sobrio, con movimiento
+// - la cifra (15) en tinta DENTRO de una bola del acento: se lee igual en día y en noche y la bola es el gesto
+// - pasos con su número en un punto del acento · ATELIER en bloque de acento · hitos con su punto en el filete
+// - lo que me llevo con subrayado de rotulador del acento · UX/UI y «Hablamos» en titular grande
+// - entrada escalonada al llegar a cada pantalla (solo transform/opacity) y bolas que te siguen un poco
+// ============================================================
+.sm__mini {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .1em;
+  color: var(--tinta-suave);
+  font-variant-numeric: tabular-nums;
+}
+.sm__rejilla--4 li { position: relative; transition: border-color .3s ease; }
+.sm__rejilla--4 li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: -1px;
+  height: 1px; width: 100%;
+  background: var(--accent-color);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+}
+.sm__rejilla--4 li:hover::before { transform: scaleX(1); }
+
+// la cifra dentro de la bola
+.sm__cabeza { display: flex; align-items: flex-end; justify-content: space-between; gap: 6vw; }
+.sm__cabeza-texto { flex: 1 1 auto; min-width: 0; }
+.sm__cifra { flex: 0 0 auto; display: flex; align-items: center; gap: 22px; }
+.sm__cifra-bola {
+  display: grid;
+  place-items: center;
+  width: clamp(150px, 15vw, 248px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent-color);
+  translate: var(--sx, 0px) var(--sy, 0px);
+  transition: background-color .4s ease;
+}
+.sm__cifra-n {
+  color: $tinta;
+  font-size: clamp(64px, 7vw, 116px);
+  font-weight: 600;
+  letter-spacing: -.06em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  margin-left: -.06em;
+}
+.sm__cifra-k { display: flex; flex-direction: column; gap: 6px; }
+.sm__cifra-titulo { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.sm__cifra-sub { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave); }
+
+// pasos: número en un punto del acento (tinta encima)
+.sm__pasos .sm__num {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: $tinta;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  transition: scale .35s cubic-bezier(.34, 1.56, .64, 1);
+}
+.sm__pasos li { align-items: flex-start; transition: padding .35s cubic-bezier(.22, 1, .36, 1); }
+.sm__pasos li:hover { padding-left: 8px; }
+.sm__pasos li:hover .sm__num { scale: 1.18; }
+.sm__pasos .sm__item-t { padding-top: 5px; }
+
+// ATELIER en bloque de acento
+.sm__bloque {
+  align-self: center;
+  padding: 36px 34px 26px;
+  border-radius: 8px;
+  background: var(--accent-color);
+  transition: background-color .4s ease;
+  p, a, .sm__h2 { color: $tinta !important; }
+  .sm__h2 { opacity: .7; }
+  .sm__texto { font-size: 17px; font-weight: 400; }
+  .sm__link {
+    background-image: linear-gradient($tinta, $tinta);
+    background-size: 100% 1px;
+    background-position: 0 85%;
+    font-weight: 500;
+    svg { transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
+    &:hover, &:focus-visible { background-size: 100% 1px; svg { transform: translate(2px, -2px); } }
+  }
+}
+
+// trayectoria: cada hito con su punto en el filete
+.sm__hitos { list-style: none; padding: 0; }
+.sm__hitos li { position: relative; padding-top: 22px !important; }
+.sm__hito {
+  position: absolute;
+  left: 0; top: -5px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--bkg-color);
+  transition: scale .35s cubic-bezier(.34, 1.56, .64, 1);
+}
+.sm__hitos li:hover .sm__hito { scale: 1.8; }
+.sm__hitos li:last-child .sm__hito { animation: hito-hoy 2.4s ease-in-out infinite; }
+@keyframes hito-hoy { 0%, 100% { box-shadow: 0 0 0 3px var(--bkg-color), 0 0 0 3px color-mix(in srgb, var(--accent-color) 0%, transparent); } 50% { box-shadow: 0 0 0 3px var(--bkg-color), 0 0 0 8px color-mix(in srgb, var(--accent-color) 35%, transparent); } }
+
+// lo que me llevo: subrayado grueso del acento bajo el título
+.sm__lista--subraya .sm__item-t {
+  display: inline;
+  background-image: linear-gradient(var(--accent-color), var(--accent-color));
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  padding-bottom: 3px;
+}
+.sm__lista--subraya .sm__item-p { margin-top: 8px; }
+
+// UX/UI: titular grande con su punto; casos numerados
+.sm__titulo--seccion { font-size: clamp(56px, 7vw, 120px); line-height: .95; letter-spacing: -.045em; margin-bottom: 26px; }
+.sm__caso-i { font-size: 13px; font-weight: 400; letter-spacing: .08em; color: var(--tinta-suave); margin-right: 12px; vertical-align: 2px; font-variant-numeric: tabular-nums; }
+.sm__casos a:hover .sm__caso-i { color: $tinta; }
+
+// Hablamos: titular enorme y la bola del acento detrás, que te sigue un poco
+.sm--habla { overflow: hidden; }
+.sm__titulo--enorme { position: relative; z-index: 1; font-size: clamp(64px, 11vw, 196px); line-height: .9; letter-spacing: -.055em; max-width: none; }
+.sm--habla .sm__entrada, .sm--habla .sm__botones { position: relative; z-index: 1; }
+.sm__habla-bola {
+  position: absolute;
+  right: 10vw;
+  top: 50%;
+  width: min(26vw, 42vh);
+  aspect-ratio: 1;
+  margin-top: calc(min(26vw, 42vh) / -2);
+  border-radius: 50%;
+  background: var(--accent-color);
+  translate: var(--sx, 0px) var(--sy, 0px);
+  transition: background-color .4s ease;
+  pointer-events: none;
+}
+.sm--habla .sm__boton--lleno { background: var(--accent-color); border-color: var(--accent-color); color: $tinta !important; }
+.sm--habla .sm__boton--lleno:hover, .sm--habla .sm__boton--lleno:focus-visible { background: var(--main-color); border-color: var(--main-color); color: var(--bkg-color) !important; }
+
+// entrada escalonada al llegar a cada pantalla (solo con JS: sin él, todo se ve)
+html.sm-anima {
+  .slide-sm .sm > *, .pantalla--sm .sm > * {
+    opacity: 0;
+    translate: 0 22px;
+    transition: opacity .7s ease, translate .9s cubic-bezier(.22, 1, .36, 1);
+  }
+  .slide-sm.is-vista .sm > *, .pantalla--sm.is-vista .sm > * { opacity: 1; translate: 0 0; }
+  @for $i from 1 through 5 {
+    .is-vista .sm > *:nth-child(#{$i}) { transition-delay: #{($i - 1) * .09}s; }
+  }
+  .sm__habla-bola { transition: opacity .9s ease, translate .9s cubic-bezier(.22, 1, .36, 1), scale 1.1s cubic-bezier(.22, 1, .36, 1), background-color .4s ease; }
+  .slide-sm .sm__habla-bola, .pantalla--sm .sm__habla-bola { scale: .6; }
+  .is-vista .sm__habla-bola { scale: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.sm-anima .slide-sm .sm > *, html.sm-anima .pantalla--sm .sm > * { opacity: 1; translate: none; transition: none; }
+  .sm__hitos li:last-child .sm__hito { animation: none; }
+}
+
+// Móvil y tablet: su propia composición (no es el escritorio estrechado)
+@media (max-width: 1280px) {
+  .sm__cabeza { flex-direction: column; align-items: flex-start; gap: 28px; }
+  .sm__cifra { gap: 16px; }
+  .sm__cifra-bola { width: 128px; }
+  .sm__cifra-n { font-size: 58px; }
+  .sm__bloque { padding: 26px 22px 18px; margin-top: 36px; }
+  .sm__titulo--seccion { font-size: clamp(48px, 13vw, 84px); }
+  .sm--habla { position: relative; min-height: 86svh; display: flex !important; flex-direction: column; justify-content: center; }
+  .sm__titulo--enorme { font-size: clamp(56px, 17vw, 120px); }
+  .sm__habla-bola { right: -12vw; top: 9%; margin-top: 0; width: 46vw; }
+}
+@media (max-width: 560px) {
+  .sm__cabeza { gap: 20px; }
+  .sm__cifra-bola { width: 84px; }
+  .sm__cifra-n { font-size: 38px; }
+  .sm--hola .sm__entrada { margin-top: 18px; font-size: 15px; }
+  // hola: los 4 «qué hago» en 2 columnas (cortos; así el bloque cabe en ~1 pantalla)
+  .sm--hola .sm__rejilla--4 { grid-template-columns: 1fr 1fr; gap: 0 18px; margin-top: 22px; }
+  .sm--hola .sm__rejilla--4 li { padding: 10px 0 12px; }
+  .sm--hola .sm__mini { margin-bottom: 4px; }
+  .sm--hola .sm__item-t { font-size: 15px; }
+  .sm--hola .sm__item-p { font-size: 13px; margin-top: 4px; }
+  .sm__titulo--seccion { font-size: 52px; }
+  .sm__titulo--enorme { font-size: 54px; }
+  .sm__hitos li { padding-top: 20px !important; }
+}
