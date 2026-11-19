@@ -67,4 +67,16 @@
       q.push({ x: t.clientX / window.innerWidth, y: 1 - t.clientY / window.innerHeight, dx: dx * 18, dy: -dy * 18, k: 3 });
     }, { passive: true });
   });
+
+  // v9 (QA H-01): pista «Proyectos ↓» en móvil y tablet: lleva a la baraja con un desplazamiento suave.
+  var bajar = document.querySelector('[data-bajar]');
+  if (bajar) {
+    bajar.addEventListener('click', function (e) {
+      var works = document.getElementById('works');
+      if (!works) return;
+      e.preventDefault();
+      works.scrollIntoView({ behavior: reduceQ ? 'auto' : 'smooth', block: 'start' });
+    });
+  }
 })();
+

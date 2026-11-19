@@ -1346,3 +1346,47 @@ html.cursor-fusion {
 @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
   .menu-movil, .menu-movil__enlace { transition: none !important; }
 }
+
+// ============================================================
+// v9 · QA móvil (ATELIER conv. 1330, informe 2026-11-19_qa-movil-alexdasi)
+// ============================================================
+// H-01 · pista para bajar en móvil y tablet: «Proyectos» + la flecha fina de escritorio al pie de la intro, siempre dentro
+// de la primera pantalla: en pantallas bajas (SE) la esfera encoge lo justo para que quepan saludo, esfera, claim y pista.
+.bajar { display: none; }
+@media (max-width: 1280px) {
+  #works { padding-top: 0; } // venía de la home antigua (6 vh): la baraja ya trae su aire
+  .pantalla--intro { flex-direction: column; }
+  .pantalla--intro .intro { flex: 1 0 auto; }
+  html.esfera-movil .pantalla--intro { min-height: calc(100svh - 128px); }
+  html.esfera-movil .pantalla--intro .intro { padding-bottom: 8px; }
+  html.esfera-movil .pantalla--intro .intro__esfera { width: min(100vw, 62svh, calc(100svh - 380px)); min-width: 240px; }
+  .bajar {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 96px;
+    min-height: 56px;
+    margin: 0 0 6px;
+    padding: 6px 10px;
+    font-family: $main-font;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--main-color);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    span { color: var(--main-color); opacity: .72; }
+    svg { width: 14px; height: 22px; color: var(--accent-color); }
+    &:active { opacity: .6; }
+  }
+}
+@media (max-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .bajar svg { animation: bajar-pulso 2.2s cubic-bezier(.45, 0, .2, 1) infinite; }
+  @keyframes bajar-pulso { 0%, 100% { translate: 0 -2px; } 50% { translate: 0 4px; } }
+}

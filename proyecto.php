@@ -15,15 +15,20 @@
 $barajaData = json_decode((string) file_get_contents(__DIR__ . '/content/baraja.json'), true);
 $lista = array_values(array_filter($barajaData['proyectos'] ?? [], static function ($x) { return empty($x['oculta']) && empty($x['neutra']); }));
 $slug = isset($_GET['p']) ? (string) $_GET['p'] : '';
-$idx = 0;
+$idx = -1;
 foreach ($lista as $k => $x) { if ($x['slug'] === $slug) { $idx = $k; } }
+/* v9 (QA H-11): una ficha que no existe (o sin ?p=) da la 404 de la web, nunca la ficha de Berto */
+if ($idx < 0) { http_response_code(404); include __DIR__ . '/404.php'; exit; }
 $total = count($lista);
 $P = $lista[$idx];
 $sig = $lista[($idx + 1) % $total];
 $tras = [$lista[($idx + 2) % $total], $lista[($idx + 3) % $total]];
 $bodyClass = 'sitio-baraja pagina-proyecto pagina-ficha';
 $pageTitle = $P['nombre'] . ' · Alex Dasi';
-$ogImage = 'https://alexdasi.com/content/baraja/' . $P['slug'] . '_scroll-desktop_poster.jpg';
+/* v9 (QA H-03/H-04): miniatura propia (su portada, content/og/<slug>.jpg con tools/og_fichas.py), descripción = su problema, URL propia */
+$ogImage = is_file(__DIR__ . '/content/og/' . $P['slug'] . '.jpg') ? 'https://www.alexdasi.com/content/og/' . $P['slug'] . '.jpg' : '';
+$metaDescription = ['es' => $P['nombre'] . '. ' . ($P['problema']['es'] ?? ''), 'en' => $P['nombre'] . '. ' . ($P['problema']['en'] ?? '')];
+$canonParams = ['p' => $P['slug']];
 include 'php-elements/header-baraja.php';
 $es = $lang === 'es';
 $L = $es ? 'es' : 'en';

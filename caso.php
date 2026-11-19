@@ -7,14 +7,20 @@
 $casosData = json_decode((string) file_get_contents(__DIR__ . '/content/casos.json'), true);
 $lista = $casosData['casos'] ?? [];
 $slug = isset($_GET['c']) ? (string) $_GET['c'] : '';
-$idx = 0;
+$idx = -1;
 foreach ($lista as $k => $x) { if ($x['slug'] === $slug) { $idx = $k; } }
+/* v9 (QA H-11): un caso que no existe da la 404 de la web */
+if ($idx < 0) { http_response_code(404); include __DIR__ . '/404.php'; exit; }
 $total = count($lista);
 $C = $lista[$idx];
 $sig = $lista[($idx + 1) % $total];
 $bodyClass = 'sitio-baraja pagina-proyecto pagina-ficha pagina-caso';
 $pageTitle = $C['nombre'] . ' · Alex Dasi';
-$ogImage = 'https://alexdasi.com/' . $C['portada']['grande'];
+/* v9 (QA H-03/H-04): miniatura JPG propia, descripción = subtítulo + entrada, URL propia */
+$ogImage = is_file(__DIR__ . '/content/og/caso-' . $C['slug'] . '.jpg') ? 'https://www.alexdasi.com/content/og/caso-' . $C['slug'] . '.jpg' : '';
+$casoDesc = static function (string $l) use ($C): string { $i = $C['intro'][$l] ?? []; return trim(strip_tags(($C['subtitulo'][$l] ?? '') . '. ' . (is_array($i) ? ($i[0] ?? '') : $i))); };
+$metaDescription = ['es' => $casoDesc('es'), 'en' => $casoDesc('en')];
+$canonParams = ['c' => $C['slug']];
 include 'php-elements/header-baraja.php';
 $es = $lang === 'es';
 $L = $es ? 'es' : 'en';

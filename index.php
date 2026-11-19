@@ -32,6 +32,9 @@ $pisos = ($lang === 'es') ? 'INICIO|PROYECTOS' : 'HOME|WORKS';
 <div class="hiddenDesktop">
     <div class="pantalla pantalla--intro">
         <?php include 'php-pages/intro.php'?>
+        <?php /* v9 (QA H-01): pista para bajar en móvil y tablet: la flecha fina de la de escritorio + «Proyectos», al pie de la
+           intro y siempre dentro de la primera pantalla (la esfera encoge en pantallas bajas para que quepa). */ ?>
+        <a class="bajar" href="#works" data-bajar><span><?php echo $lang === 'es' ? 'Proyectos' : 'Projects'; ?></span><svg viewBox="0 0 16 24" aria-hidden="true"><path d="M8 1v21M1.5 15.5 8 22l6.5-6.5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
     </div>
     <div class="pantalla pantalla--baraja" id="works">
         <?php include 'php-elements/baraja.php'?>

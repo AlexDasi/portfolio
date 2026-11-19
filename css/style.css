@@ -184,11 +184,6 @@ h3 {
   -o-transition: all 0.15s ease-in-out;
 }
 
-.circle {
-  /* Effect 2 */
-  /* Effect 2b — accent bloom on hover OR when the magnet engages, so the
-     circle fills exactly as the cursor dot is absorbed into it. */
-}
 .circle:after {
   pointer-events: none;
   position: absolute;
@@ -210,6 +205,9 @@ h3 {
   display: block;
   -webkit-font-smoothing: antialiased;
 }
+.circle {
+  /* Effect 2 */
+}
 .circle.effect:after {
   top: -2px;
   left: -2px;
@@ -218,6 +216,10 @@ h3 {
   background: var(--accent-color);
   transform: scale(0);
   transition: transform 0.2s;
+}
+.circle {
+  /* Effect 2b — accent bloom on hover OR when the magnet engages, so the
+     circle fills exactly as the cursor dot is absorbed into it. */
 }
 .circle.effect:hover:after, .circle.magnet-mouse-active.effect:after {
   transform: scale(1);
@@ -422,16 +424,6 @@ header {
   z-index: 200;
 }
 
-.floor {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  background: var(--accent-color);
-  opacity: 0.4;
-  transform: rotate(135deg) skew(20deg, 20deg);
-  border: none;
-  border-radius: 0;
-}
 .floor--1 {
   top: 0;
   z-index: 204;
@@ -447,6 +439,16 @@ header {
 .floor--4 {
   top: -60px;
   z-index: 201;
+}
+.floor {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  background: var(--accent-color);
+  opacity: 0.4;
+  transform: rotate(135deg) skew(20deg, 20deg);
+  border: none;
+  border-radius: 0;
 }
 .floor:hover {
   box-shadow: 0px 0px 4px 0px var(--accent-color);
@@ -2420,13 +2422,15 @@ body .MainSwiper .swiper-pagination-bullet-active, body .MainSwiper .swiper-pagi
   margin: 0;
   font-size: 1.8rem;
   line-height: 1.45;
-  color: var(--bkg-color);
-  text-align: left;
 }
 @media (min-width: 768px) {
   .case-summary__text {
     font-size: 1.6rem;
   }
+}
+.case-summary__text {
+  color: var(--bkg-color);
+  text-align: left;
 }
 
 .archive-page {
@@ -5400,6 +5404,78 @@ html.cursor-fusion .sm--habla .sm__boton--lleno:hover {
 @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
   .menu-movil, .menu-movil__enlace {
     transition: none !important;
+  }
+}
+.bajar {
+  display: none;
+}
+
+@media (max-width: 1280px) {
+  #works {
+    padding-top: 0;
+  }
+  .pantalla--intro {
+    flex-direction: column;
+  }
+  .pantalla--intro .intro {
+    flex: 1 0 auto;
+  }
+  html.esfera-movil .pantalla--intro {
+    min-height: calc(100svh - 128px);
+  }
+  html.esfera-movil .pantalla--intro .intro {
+    padding-bottom: 8px;
+  }
+  html.esfera-movil .pantalla--intro .intro__esfera {
+    width: min(100vw, 62svh, 100svh - 380px);
+    min-width: 240px;
+  }
+  .bajar {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 96px;
+    min-height: 56px;
+    margin: 0 0 6px;
+    padding: 6px 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--main-color);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .bajar span {
+    color: var(--main-color);
+    opacity: 0.72;
+  }
+  .bajar svg {
+    width: 14px;
+    height: 22px;
+    color: var(--accent-color);
+  }
+  .bajar:active {
+    opacity: 0.6;
+  }
+}
+@media (max-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .bajar svg {
+    animation: bajar-pulso 2.2s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  }
+  @keyframes bajar-pulso {
+    0%, 100% {
+      translate: 0 -2px;
+    }
+    50% {
+      translate: 0 4px;
+    }
   }
 }
 /* CANVAS */

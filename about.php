@@ -3,7 +3,8 @@
    lenguaje de la home (antes se traían tal cual las pantallas oscuras). Misma estructura que la home: pantallas
    completas que se pasan con «los pisos» o la flecha. ?s=about|uxui|contact abre en esa pantalla. */
 $bodyClass = 'sitio-baraja pagina-about';
-$pageTitle = 'Alex Dasi · About';
+$pageTitle = ['es' => 'Sobre mí · Alex Dasi', 'en' => 'About · Alex Dasi']; /* v9 (QA H-19): título por idioma */
+$canonParams = isset($_GET['s']) && in_array($_GET['s'], ['about', 'process', 'uxui', 'contact'], true) && $_GET['s'] !== 'about' ? ['s' => $_GET['s']] : [];
 include 'php-elements/header-baraja.php';
 include 'php-pages/sobre-mi.php';
 $pantallas = ['hola', 'como', 'tray', 'uxui', 'habla'];

@@ -2,12 +2,33 @@
 <?php
 require_once __DIR__ . '/i18n.php';
 $siteName = 'Alex Dasi Portfolio';
-$pageTitle = isset($pageTitle) && is_string($pageTitle) && trim($pageTitle) !== ''
-    ? trim($pageTitle)
-    : $siteName;
-$metaDescription = isset($metaDescription) && is_string($metaDescription) && trim($metaDescription) !== ''
-    ? trim($metaDescription)
-    : 'Portfolio of Alex Dasi, product, web and systems designer. I take complex, ambiguous problems and make them clear: products, websites and the systems behind them.';
+/* v9 (QA móvil H-03, H-04, H-18, H-19): título, descripción, miniatura y URL propios por página e idioma.
+   Cada página puede dar $pageTitle / $metaDescription / $ogImage como texto o como ['es' => …, 'en' => …],
+   y $canonParams (p. ej. ['p' => 'casa-albar']) para que og:url y canonical sean los de esa ficha. */
+$porIdioma = static function ($v) use ($lang) { return is_array($v) ? (string) ($v[$lang] ?? reset($v)) : (string) $v; };
+$pageTitle = isset($pageTitle) ? trim($porIdioma($pageTitle)) : '';
+if ($pageTitle === '') {
+    $pageTitle = $lang === 'es' ? 'Alex Dasi · Webs que se parecen a tu negocio' : 'Alex Dasi · Websites that look like your business';
+}
+$metaDescription = isset($metaDescription) ? trim($porIdioma($metaDescription)) : '';
+if ($metaDescription === '') {
+    $metaDescription = $lang === 'es'
+        ? 'Webs que se parecen a tu negocio, no a una plantilla. Alex Dasi, diseñador web y UX/UI: webs a medida para negocios y casos de producto.'
+        : 'Websites that look like your business, not like a template. Alex Dasi, web and UX/UI designer: custom websites for businesses and product case studies.';
+}
+if (mb_strlen($metaDescription) > 200) { $metaDescription = rtrim(mb_substr($metaDescription, 0, 197), " ,.;:") . '…'; }
+$sitioUrl = 'https://www.alexdasi.com';
+$ogImage = isset($ogImage) ? trim($porIdioma($ogImage)) : '';
+if ($ogImage === '') { $ogImage = $sitioUrl . '/images/og-alexdasi-2026-11_' . $lang . '.jpg'; }
+$canonPath = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+if ($canonPath === '/index.php') { $canonPath = '/'; }
+$canonQuery = isset($canonParams) && is_array($canonParams) ? $canonParams : [];
+$canonUrl = static function (string $l) use ($sitioUrl, $canonPath, $canonQuery): string {
+    $q = $canonQuery; if ($l === 'en') { $q['lang'] = 'en'; }
+    $qs = http_build_query($q);
+    return $sitioUrl . $canonPath . ($qs !== '' ? '?' . $qs : '');
+};
+$ogUrl = $canonUrl($lang);
 
 $assetVersion = static function (string $relativePath): string {
     $fullPath = dirname(__DIR__) . '/' . ltrim($relativePath, '/');
@@ -27,25 +48,28 @@ $assetVersion = static function (string $relativePath): string {
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
+    <link rel="canonical" href="<?php echo htmlspecialchars($ogUrl, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:type" content="website">
-    <?php $ogImage = isset($ogImage) && is_string($ogImage) && trim($ogImage) !== '' ? trim($ogImage) : 'https://alexdasi.com/images/og-alexdasi-portfolio.jpg'; $ogUrl = 'https://alexdasi.com' . strtok($_SERVER['REQUEST_URI'] ?? '/', '?'); ?>
+    <meta property="og:locale" content="<?php echo $lang === 'es' ? 'es_ES' : 'en_GB'; ?>">
     <meta property="og:url" content="<?php echo htmlspecialchars($ogUrl, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:image" content="<?php echo htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:image:secure_url" content="<?php echo htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Alex Dasi — product, web and systems designer">
-    <meta name="twitter:image" content="<?php echo htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta property="og:site_name" content="Alex Dasi Portfolio">
+    <meta property="og:image:alt" content="<?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:site_name" content="Alex Dasi">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="<?php echo htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8'); ?>">
     <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>
-    <link rel="alternate" hreflang="en" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>">
-    <link rel="alternate" hreflang="es" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>">
-    <link rel="alternate" hreflang="x-default" href="https://alexdasi.com<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="alternate" hreflang="es" href="<?php echo htmlspecialchars($canonUrl('es'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="alternate" hreflang="en" href="<?php echo htmlspecialchars($canonUrl('en'), ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="alternate" hreflang="x-default" href="<?php echo htmlspecialchars($canonUrl('es'), ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="icon" type="image/svg+xml" href="/images/vectors/arrow.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/icono-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
         
     <!-- v4 (feedback 100): Inter servida desde la web (variable 200-700, solo latín + latín ampliado) con precarga;
          antes era una hoja de Google Fonts que bloqueaba el pintado y abría dos conexiones más. -->

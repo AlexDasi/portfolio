@@ -8,7 +8,8 @@
 $es = !isset($lang) || $lang === 'es';
 $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); };
 $flecha = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
-$wa = 'https://wa.me/34616420048';
+/* v9 (QA H-20): el chat se abre con una frase para empezar */
+$wa = 'https://wa.me/34616420048?text=' . rawurlencode($es ? 'Hola Alex, tengo un negocio y me gustaría hablar de mi web.' : 'Hi Alex, I run a business and I’d like to talk about my website.');
 $cv = $es ? 'content/downloadables/alex-dasi_cv_2026-11.pdf' : 'content/downloadables/alex-dasi_cv_2026-11_en.pdf';
 
 $T = $es ? [
@@ -21,7 +22,7 @@ $T = $es ? [
         ['Webs para negocios y profesionales', 'Tiendas, restaurantes, estudios, librerías: gente con algo bueno que enseñar.'],
         ['Marca, si hace falta', 'Si tu negocio no tiene logo o se te ha quedado corto, empezamos por ahí.'],
         ['Todo lo de después', 'Dominio, hosting y mantenimiento: me ocupo yo.'],
-        ['Un panel sencillo', 'Si quieres cambiar tú textos o fotos, te lo dejo preparado.'],
+        ['Un panel sencillo', 'Si quieres cambiar tus textos o fotos, te lo dejo preparado.'],
     ],
     'como_t' => 'Cómo trabajo',
     'pasos' => [
@@ -111,7 +112,7 @@ $T = $es ? [
     ],
     'cv' => 'Download CV (PDF)',
     'habla_t' => 'Let’s talk',
-    'habla_p' => 'If you run a business and think your website could be better (or you don’t have one yet), drop me a line. I answer myself. And if you’re around Valencia, let’s meet for a coffee.',
+    'habla_p' => 'If you run a business and think your website could be better (or you don’t have one yet), drop me a line. I’ll reply myself. And if you’re around Valencia, let’s meet for a coffee.',
     'wa' => 'Message me on WhatsApp',
 ];
 
