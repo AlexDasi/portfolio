@@ -893,105 +893,13 @@ html.esfera-abierta .follow { opacity: 0 !important; }
   i { display: block; width: 1px; height: 8px; background: var(--main-color); opacity: .3; transition: height .3s ease, opacity .3s ease; }
   i.is-activa { height: 18px; opacity: 1; }
 }
-.baraja, .pf, .sm, .ficha { font-family: $main-font; }
+.baraja, .sm, .ficha { font-family: $main-font; }
 
 // ============================================================
 // v3 · Ficha de proyecto (feedback 94): vídeo, problema, qué hice, enlace. Página que se recorre con scroll normal.
 // ============================================================
 body.pagina-proyecto { display: block; }
-.pf {
-  position: relative;
-  z-index: 1;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 104px 6vw 80px;
-  color: var(--main-color);
-  p, a, dd, dt, h1, h2 { color: var(--main-color); }
-
-  &__volver {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    font-size: 13px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    opacity: .7;
-    svg { width: 12px; height: 12px; transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
-    &:hover { opacity: 1; svg { transform: translateX(-3px); } }
-  }
-  &__cab { margin-top: 28px; }
-  &__tipo {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave) !important;
-    &::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-color); }
-  }
-  &__titulo {
-    margin: 14px 0 0;
-    font-size: clamp(44px, 7vw, 112px);
-    line-height: .95;
-    letter-spacing: -.04em;
-    font-weight: 600;
-    text-transform: none;
-  }
-  &__punto { display: inline-block; width: .16em; height: .16em; margin-left: .05em; border-radius: 50%; background: var(--accent-color); }
-  &__sector { margin-top: 14px; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; font-weight: 300; color: var(--tinta-suave) !important; }
-
-  &__video {
-    margin: 48px 0 0;
-    border-radius: 6px;
-    overflow: hidden;
-    aspect-ratio: 16 / 10;
-    background: #111;
-    video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-    &.is-movil { aspect-ratio: 4 / 5; }
-  }
-
-  &__cuerpo {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: 40px 6vw;
-    margin-top: 56px;
-  }
-  &__datos {
-    margin: 0;
-    div { padding: 12px 0; border-top: 1px solid var(--linea); display: flex; justify-content: space-between; gap: 16px; }
-    div:last-child { border-bottom: 1px solid var(--linea); }
-    dt { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave) !important; }
-    dd { margin: 0; font-size: 15px; font-weight: 300; text-align: right; }
-  }
-  &__textos section + section { margin-top: 36px; }
-  &__h2 {
-    margin: 0 0 12px;
-    font-size: 13px; letter-spacing: .1em; text-transform: uppercase; font-weight: 400;
-    color: var(--tinta-suave) !important;
-  }
-  &__p { max-width: 54ch; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.45; font-weight: 300; }
-  &__acciones { margin-top: 36px; svg { width: 11px; height: 11px; } }
-  &__sinweb { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave) !important; }
-
-  &__sig {
-    display: flex;
-    align-items: baseline;
-    gap: 18px;
-    margin-top: 88px;
-    padding: 28px 0;
-    border-top: 1px solid var(--linea);
-    text-decoration: none;
-    svg { width: 18px; height: 18px; align-self: center; margin-left: auto; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
-    &:hover svg { transform: translateX(6px); }
-    &:hover .pf__sig-n { color: var(--accent-color) !important; }
-  }
-  &__sig-k { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave) !important; }
-  &__sig-n { font-size: clamp(28px, 3.4vw, 52px); font-weight: 600; letter-spacing: -.03em; transition: color .25s ease; }
-}
-@media (max-width: 760px) {
-  .pf { padding: 84px 6vw 56px; }
-  .pf__cuerpo { grid-template-columns: 1fr; margin-top: 36px; }
-  .pf__video { margin-top: 32px; }
-  .pf__sig { margin-top: 56px; }
-}
+// (v6: el bloque .pf de la ficha v3 se ha quitado; la ficha nueva vive en scss/ficha.scss)
 .pagina-proyecto .arrow-container { display: none; }
 html.tema-noche .carta--neutra .carta__cara { background: var(--accent-color); }
 
