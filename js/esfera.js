@@ -36,7 +36,15 @@
     });
   }).observe(html, { attributes: true, attributeFilter: ['class'] });
 
-  /* La mano (feedback 120): el marco solo recoge el ratón dentro de la bola. disco() da centro y radio en pantalla. */
+  // v8 (feedback 156): última posición del ratón, para decidir sin esperar a que se mueva
+  var raton = null;
+  window.addEventListener('mousemove', function (e) { raton = { clientX: e.clientX, clientY: e.clientY }; }, { passive: true, capture: true });
+
+  /* La mano (feedback 120): el marco solo recoge el ratón dentro de la bola. disco() da centro y radio en pantalla.
+     v8 (feedback 156): «el clic en la esfera a veces falla». Causa: el marco solo pasaba a recoger el ratón con un MOVIMIENTO
+     dentro de la bola ya lista. Al abrirla, el ratón ya está dentro (el punto queda dentro del disco) y si no se mueve, el
+     primer clic caía en la página y la esfera no se enteraba; igual si la esfera terminaba de cargar con el ratón quieto
+     encima. Ahora se mira la última posición en cuanto la bola está lista (revisar) y en cada pulsación (captura). */
   function mano(marco, disco) {
     var dentro = false;
     marco.style.pointerEvents = 'none';
@@ -69,9 +77,10 @@
         window.dispatchEvent(new CustomEvent('esfera:mano', { detail: true }));
       }
     }
+    function revisar() { if (raton && !dentro) mira(raton); }
     window.addEventListener('mousemove', mira, { passive: true });
     window.addEventListener('message', function (e) { if (e.source === marco.contentWindow && e.data && e.data.esfera === 'fuera') soltar(); });
-    return { soltar: soltar, quitar: function () { soltar(); window.removeEventListener('mousemove', mira); } };
+    return { soltar: soltar, revisar: revisar, quitar: function () { soltar(); window.removeEventListener('mousemove', mira); } };
   }
 
   function acento() {
@@ -85,7 +94,7 @@
   // La bola plana del acento se queda de marcador hasta que la esfera está lista. three.js solo baja al llegar a esa pantalla.
   document.querySelectorAll('[data-esfera-habla]').forEach(function (bolaH) {
     var esMovil = !fino || window.innerWidth <= 1280;
-    var marcoH = null, enVista = false;
+    var marcoH = null, enVista = false, manoHabla = null;
     function pausa(p) { if (marcoH) try { marcoH.contentWindow.postMessage({ esferaPausa: p }, '*'); } catch (e) {} }
     function cargarH() {
       if (marcoH) { pausa(false); return; }
@@ -98,14 +107,14 @@
       apuntar(pielH);
       bolaH.appendChild(marcoH);
       // dentro de la bola manda la esfera (su propio cursor, arrastre con inercia, clic); fuera, el fluido de la página
-      if (!esMovil) mano(marcoH, function () {
+      if (!esMovil) manoHabla = mano(marcoH, function () {
         if (!bolaH.classList.contains('is-lista')) return null;
         var r = bolaH.getBoundingClientRect();
         return r.width ? { x: r.left + r.width / 2, y: r.top + r.height / 2, r: r.width / 2 } : null;
       });
     }
     window.addEventListener('message', function (e) {
-      if (marcoH && e.source === marcoH.contentWindow && e.data && e.data.esfera === 'lista') bolaH.classList.add('is-lista');
+      if (marcoH && e.source === marcoH.contentWindow && e.data && e.data.esfera === 'lista') { bolaH.classList.add('is-lista'); if (manoHabla) manoHabla.revisar(); }
     });
     var pantalla = bolaH.closest('.swiper-slide');
     if (pantalla && !esMovil) {
@@ -292,6 +301,7 @@
   function lista() {
     if (!capa) return;
     capa.classList.add('is-lista'); // la esfera de verdad aparece y la bola plana se funde
+    if (manoH) manoH.revisar();     // v8 (feedback 156): si el ratón ya está encima, el primer clic ya es de la esfera
   }
 
   function cerrar() {

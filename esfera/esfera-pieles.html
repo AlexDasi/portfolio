@@ -65,6 +65,7 @@
     #hint{left:16px;right:16px}
   }
 </style>
+<script>/* v8 (feedback 149): embebida, transparente desde el primer pintado (antes de que baje three.js el fondo era negro) */if(/[?&]embed/.test(location.search))document.documentElement.classList.add("embed");</script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
@@ -193,12 +194,14 @@ function entorno(tech){
       uCold: {value: tech ? new THREE.Vector3(.35, .55, 1) : new THREE.Vector3(.18, .55, 1)},
       uKey: {value: tech ? new THREE.Vector3(1, .97, .92).multiplyScalar(3.2) : new THREE.Vector3(1, .6, .3).multiplyScalar(4)},
       uKeyDir: {value: tech ? new THREE.Vector3(-3, 2.2, 2.2) : new THREE.Vector3(-3, 1.6, 2)},
-      uRim: {value: tech ? new THREE.Vector3(.4, .6, 1).multiplyScalar(4.5) : new THREE.Vector3(.3, .6, 1).multiplyScalar(5.5)},
-      uTop: {value: tech ? 2.2 : 1.8}
+      uRim: {value: EMBED ? new THREE.Vector3(.72, .8, .95).multiplyScalar(tech ? 3.4 : 3.6) : tech ? new THREE.Vector3(.4, .6, 1).multiplyScalar(4.5) : new THREE.Vector3(.3, .6, 1).multiplyScalar(5.5)},   // v8: contraluz casi neutro
+      uTop: {value: tech ? 2.2 : 1.8},
+      uSuave: {value: EMBED ? 1 : 0}   // v8 (feedback 148): embebida, luz de estudio: discos más grandes y difusos (sin «ojo»)
     },
     vertexShader: `varying vec3 vD;void main(){vD=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
     fragmentShader: `varying vec3 vD;uniform vec3 uWarm,uCold,uKey,uKeyDir,uRim;uniform float uTop;
-      vec3 disco(vec3 d,vec3 c,float r,vec3 col){return col*smoothstep(cos(r),cos(r*.55),dot(d,normalize(c)));}
+      uniform float uSuave;
+      vec3 disco(vec3 d,vec3 c,float r,vec3 col){float rr=r*(1.+uSuave*.9);return col*(1.-uSuave*.55)*smoothstep(cos(rr),cos(rr*mix(.55,.05,uSuave)),dot(d,normalize(c)));}
       void main(){
         vec3 d=normalize(vD);float f=d.x*.5+.5;
         vec3 c=mix(uWarm,vec3(.08,.03,.01),smoothstep(0.,.3,f));
@@ -694,19 +697,22 @@ if (EMBED) { // el brillo suma luz pero no toca el alfa: el alfa queda = la silu
   bm.blendSrc = THREE.SrcAlphaFactor; bm.blendDst = THREE.OneFactor; bm.blendSrcAlpha = THREE.ZeroFactor; bm.blendDstAlpha = THREE.OneFactor; }
 composer.addPass(new OutputPass());
 const grano = new ShaderPass({
-  uniforms: {tDiffuse: {value: null}, uTime: {value: 0}, uRes: U.uRes, uTinte: {value: 0}, uGiro: {value: 0}, uSat: {value: 1}, uAlfa: {value: EMBED ? 1 : 0}, uLuz: {value: 0}},
+  uniforms: {tDiffuse: {value: null}, uTime: {value: 0}, uRes: U.uRes, uTinte: {value: 0}, uGiro: {value: 0}, uSat: {value: 1}, uAlfa: {value: EMBED ? 1 : 0}, uLuz: {value: 0}, uDia: {value: DIA ? 1 : 0}, uHL: {value: .1869}},
   vertexShader: `varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-  fragmentShader: `uniform sampler2D tDiffuse;uniform float uTime,uTinte,uGiro,uSat,uAlfa,uLuz;uniform vec2 uRes;varying vec2 vUv;
+  fragmentShader: `uniform sampler2D tDiffuse;uniform float uTime,uTinte,uGiro,uSat,uAlfa,uLuz,uDia,uHL;uniform vec2 uRes;varying vec2 vUv;
     float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
     vec3 rgb2hsv(vec3 c){vec4 K=vec4(0.,-1./3.,2./3.,-1.);vec4 p=mix(vec4(c.bg,K.wz),vec4(c.gb,K.xy),step(c.b,c.g));vec4 q=mix(vec4(p.xyw,c.r),vec4(c.r,p.yzx),step(p.x,c.r));float d=q.x-min(q.w,q.y);float e=1.0e-10;return vec3(abs(q.z+(q.w-q.y)/(6.*d+e)),d/(q.x+e),q.x);}
     vec3 hsv2rgb(vec3 c){vec4 K=vec4(1.,2./3.,1./3.,3.);vec3 p=abs(fract(c.xxx+K.xyz)*6.-K.www);return c.z*mix(K.xxx,clamp(p-K.xxx,0.,1.),c.y);}
     void main(){vec4 t4=texture2D(tDiffuse,vUv);vec3 c=t4.rgb;
       float l=dot(c,vec3(.2126,.7152,.0722));c=mix(vec3(l),c,1.14);
       c+=(1.-clamp(c,0.,1.))*uLuz*(1.-l)*mix(1.,clamp(t4.a,0.,1.),uAlfa);l=dot(c,vec3(.2126,.7152,.0722));   // v6: de día se levantan las sombras (la noche no cambia)
+      if(uAlfa>.5){vec3 hv=rgb2hsv(max(c,0.));float dh=abs(fract(hv.x-uHL+.5)-.5);hv.y*=mix(1.,.3,smoothstep(.1,.28,dh));c=hsv2rgb(hv);}   // v8 (feedback 148): los reflejos de otro tono (el contraluz azul) se quedan casi blancos: sin «ojo» de color
       if(uTinte>.5){vec3 hv=rgb2hsv(max(c,0.));hv.x=fract(hv.x+uGiro);hv.y=clamp(hv.y*uSat,0.,1.);c=hsv2rgb(hv);}   // del lima al acento
       float a=mix(1.,clamp(t4.a,0.,1.),uAlfa);
       c+=(h(vUv*uRes+fract(uTime)*91.)-.5)*.035*(1.-l*.6)*a;
-      gl_FragColor=vec4(max(c,0.),a);}`
+      c=max(c,0.);
+      if(uAlfa>.5)c=mix(c,min(c,vec3(a)),uDia);   // v8 (feedback 148): de día el brillo no sale de la silueta (sobre el papel era un halo blanquecino) ni deja filo claro
+      gl_FragColor=vec4(c,a);}`
 });
 composer.addPass(grano);
 function ajustarTinte(){
@@ -788,7 +794,7 @@ function elegir(i){
   cur.className = 'm' + i + (P.down ? ' down' : '');
   hint.style.opacity = 0; setTimeout(() => { hint.textContent = HINTS[modo]; hint.style.opacity = 1; }, 220);
   if (!EMBED) history.replaceState(null, '', '?m=' + (i + 1));
-  if (typeof bloom !== 'undefined') bloom.strength += .35;          // destello suave al cambiar
+  if (typeof bloom !== 'undefined') bloom.strength += .35;          // destello suave al cambiar (embebida, la primera vez no: el brillo aún no existe)
 }
 botones.forEach((b, i) => b.addEventListener('click', () => elegir(i)));
 addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === ' ' && EMBED) { e.preventDefault(); avisar('espacio'); } if (e.key === 'ArrowRight') elegir((modo + 1) % objetos.length); if (e.key === 'ArrowLeft') elegir((modo + objetos.length - 1) % objetos.length); if (e.key >= '1' && e.key <= String(objetos.length)) elegir(+e.key - 1); });
@@ -812,10 +818,16 @@ let t = T0, last = performance.now();
 let ultimoToque = -1e9;
 addEventListener('pointerdown', () => { ultimoToque = performance.now(); }, true);
 addEventListener('pointermove', () => { ultimoToque = performance.now(); }, true);
+const PASO = Q.has('pasoapaso') || (() => { try { return EMBED && !!parent.__PASOAPASO; } catch (e) { return false; } })();
 function frame(now){
+  if (PASO) {   // pruebas: un fotograma por cada window.__paso (Playwright)
+    if (!(window.__paso > 0)) { requestAnimationFrame(frame); return; } window.__paso--; }
   // v4 (feedback 100): en el móvil, si nadie la toca, gira a 30 fps (la mitad de trabajo; a ese ritmo no se nota)
   if (MOVIL && !PAUSA && now - ultimoToque > 1500 && now - last < 31) { requestAnimationFrame(frame); return; }
-  const dt = STILL ? 1 / 60 : Math.min((now - last) / 1000, 1 / 30); last = now; t += dt;
+  // v8 (feedback 149): el sello de tiempo del rAF puede ser ANTERIOR a 'last' (se fija con performance.now() al cargar el módulo
+  // o al quitar la pausa, y el fotograma empezó antes de esa tarea larga). Con dt negativo las 8 pieles «aparecían» a la vez
+  // (aparece 1,8) y el brillo se disparaba (bloom ×30): era la mancha a pantalla completa que se atascaba. dt nunca < 0.
+  const dt = STILL ? 1 / 60 : Math.max(0, Math.min((now - last) / 1000, 1 / 30)); last = Math.max(now, last); t += dt;
   U.uTime.value = t; grano.uniforms.uTime.value = t;
 
   if (AUTO) { // cursor fantasma para pruebas: órbita por encima de la bola
@@ -989,7 +1001,8 @@ function frame(now){
   }
 
   if (EMBED) { const ex = expo(), k = 1 - Math.exp(-dt * 5); renderer.toneMappingExposure += (ex - renderer.toneMappingExposure) * k;
-    grano.uniforms.uLuz.value += ((DIA ? LUZ_DIA[modo] : 0) - grano.uniforms.uLuz.value) * k; }
+    grano.uniforms.uLuz.value += ((DIA ? LUZ_DIA[modo] : 0) - grano.uniforms.uLuz.value) * k;
+    grano.uniforms.uDia.value += ((DIA ? 1 : 0) - grano.uniforms.uDia.value) * k; }
   bloom.strength += ([.1, .06, .06, .14, .1, .26, .22, .12][modo] - bloom.strength) * (1 - Math.exp(-dt * 6));
   if (sobre !== P.sobre) { P.sobre = sobre; document.body.classList.toggle('sobre', sobre); }
   composer.render(dt);

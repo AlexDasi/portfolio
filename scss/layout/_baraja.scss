@@ -207,6 +207,13 @@ html.tema-noche .nav-sutil__tema { transform: rotate(180deg); }
     translate: var(--mx, 0px) var(--my, 0px);
     scale: 1;
     transition: background-color .3s ease, scale .45s cubic-bezier(.34, 1.56, .64, 1), box-shadow .4s ease;
+    // v8 (feedback 156): zona de clic de ~46 px alrededor del punto (el punto mide 19 px: a veces el clic caía fuera)
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+    }
     &::after {
       content: "";
       position: absolute;
@@ -809,12 +816,9 @@ html.cursor-fijo .press-space { display: none; }
 // ============================================================
 .intro__esfera { display: none; }
 // v7 (feedback 125, 142): con la esfera abierta el punto de la página ya NO se esconde (venía de la v3, cuando el marco
-// tapaba toda la pantalla) y tampoco se lo traga el imán: sobre la flecha encendida sigue a la vista, en tinta. Dentro de la
-// bola manda el cursor de la propia esfera (html.cursor-en-esfera, más abajo).
-html.esfera-abierta body.sitio-baraja .follow.follow-mouse-active {
-  width: 10px !important; height: 10px !important; margin: 0 !important; opacity: 1 !important;
-  background-color: $tinta;
-}
+// tapaba toda la pantalla). Dentro de la bola manda el cursor de la propia esfera (html.cursor-en-esfera, más abajo).
+// v8 (feedback 158): fuera la excepción de la v7 («punto en tinta sobre la flecha imantada»): sobre la flecha el punto se
+// ABSORBE como en la web original, también con la esfera abierta (.follow-mouse-active de _cursor.scss).
 .esfera-capa.is-precarga { pointer-events: none; } // v7 (feedback 143): la esfera precargada, invisible hasta el clic
 
 // v4 (feedback 98): la capa vive DENTRO de la pantalla de la intro, debajo del saludo (z 0 < .intro z 1).

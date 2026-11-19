@@ -3618,6 +3618,12 @@ html.tema-noche .nav-sutil__tema {
   scale: 1;
   transition: background-color 0.3s ease, scale 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
 }
+.intro__punto::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+}
 .intro__punto::after {
   content: "";
   position: absolute;
@@ -4532,14 +4538,6 @@ html.cursor-fijo .press-space {
 
 .intro__esfera {
   display: none;
-}
-
-html.esfera-abierta body.sitio-baraja .follow.follow-mouse-active {
-  width: 10px !important;
-  height: 10px !important;
-  margin: 0 !important;
-  opacity: 1 !important;
-  background-color: #141415;
 }
 
 .esfera-capa.is-precarga {
