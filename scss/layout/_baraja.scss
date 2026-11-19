@@ -1180,3 +1180,169 @@ html.cursor-fusion {
   .sm--habla .sm__boton--lleno { --fusion-color: var(--main-color); }
   .sm--habla .sm__boton--lleno:hover { background: transparent; }
 }
+
+// ============================================================
+// v8 (feedback 159 + QA móvil H-06): cabecera del móvil (≤ 768 px) con fondo + menú a pantalla completa
+// ============================================================
+.barra-movil, .menu-movil { display: none; font-family: $main-font; }
+.menu-movil button { font-family: $main-font; }
+@media (max-width: 768px) {
+  // en móvil, idioma y accesos sueltos se van al menú (a 320 px o con letra grande se pisaban)
+  .sitio-baraja .lang-switch, .sitio-baraja .nav-sutil, .sitio-baraja .nav--top { display: none !important; }
+  body.sitio-baraja::before { display: none; } // el degradado de antes lo sustituye el fondo de la barra
+
+  .barra-movil {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: $z-top + 2;
+    min-height: 56px;
+    padding: env(safe-area-inset-top) max(6px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+    background: color-mix(in srgb, var(--bkg-color) 95%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: opacity .35s ease, translate .5s cubic-bezier(.22, 1, .36, 1);
+  }
+  .barra-movil__nombre {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: .01em;
+    color: var(--main-color);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .barra-movil__abrir {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--main-color);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    svg { width: 24px; height: 24px; display: block; }
+    &:focus-visible { outline: 1px solid var(--accent-color); outline-offset: -4px; }
+  }
+  // en las fichas, la barra se aparta al bajar y vuelve al subir (como la cabecera de escritorio)
+  html.fp-baja .pagina-ficha .barra-movil { opacity: 0; translate: 0 -14px; pointer-events: none; }
+
+  .menu-movil {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    z-index: $z-top + 3;
+    padding: env(safe-area-inset-top) max(6px, env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    background: var(--bkg-color);
+    color: var(--main-color);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .38s ease, visibility 0s linear .38s;
+    &[hidden] { display: none; }
+  }
+  html.menu-abierto .menu-movil { opacity: 1; visibility: visible; transition: opacity .38s ease, visibility 0s; }
+  html.menu-abierto, html.menu-abierto body { overflow: hidden; } // el fondo no se mueve (la web hace scroll en body)
+
+  .menu-movil__barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    padding-right: 0;
+  }
+  .menu-movil__enlaces {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin: auto 0;
+    padding: 24px 0;
+  }
+  .menu-movil__enlace {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 4px 0;
+    font-size: clamp(30px, 11vw, 54px);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+    color: var(--main-color);
+    text-decoration: none;
+    // el activo, subrayado en el acento (de día, su variante oscura)
+    background: linear-gradient(var(--accent-color), var(--accent-color)) left calc(100% - 2px) / 0 3px no-repeat;
+    opacity: 0;
+    translate: 0 14px;
+    transition: opacity .4s ease, translate .5s cubic-bezier(.22, 1, .36, 1), background-size .4s cubic-bezier(.22, 1, .36, 1);
+    transition-delay: calc(60ms + var(--i, 0) * 50ms);
+    &.is-active { background-size: 100% 3px; }
+    &:focus-visible { outline: 1px solid var(--accent-color); outline-offset: 4px; }
+  }
+  html.menu-abierto .menu-movil__enlace { opacity: 1; translate: 0 0; }
+
+  .menu-movil__pie {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding-top: 16px;
+    border-top: 1px solid var(--linea);
+    font-size: 14px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .menu-movil__fila { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; width: 100%; }
+  .menu-movil__idioma { display: flex; margin-left: -10px; }
+  .menu-movil__chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    color: var(--main-color);
+    opacity: .5;
+    text-decoration: none;
+    &.is-active { opacity: 1; text-decoration: underline; text-decoration-color: var(--accent-color); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+  }
+  .menu-movil__tema {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 10px 0 0;
+    border: 0;
+    background: none;
+    color: var(--main-color);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+    svg { width: 16px; height: 16px; flex: none; }
+  }
+  html.tema-noche .menu-movil__tema svg { transform: rotate(180deg); }
+  html.tema-dia .menu-movil__tema-noche, html.tema-noche .menu-movil__tema-dia { display: none; }
+  .menu-movil__contacto {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--main-color);
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: .01em;
+    font-size: 16px;
+    &:first-of-type { text-transform: uppercase; letter-spacing: .08em; font-size: 14px; }
+  }
+}
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .menu-movil, .menu-movil__enlace { transition: none !important; }
+}
