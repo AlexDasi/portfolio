@@ -28,8 +28,8 @@ $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UT
 /* el texto de los casos ya trae sus enlaces (<a>) de la página original: se deja pasar solo eso */
 $rico = static function ($s) { return strip_tags((string) $s, '<a><em><strong><br>'); };
 $T = $es
-    ? ['volver' => 'UX/UI', 'proyecto' => 'El proyecto', 'pantallas' => 'Decisiones y pantallas', 'sig' => 'Siguiente caso', 'anio' => 'Año', 'caso' => 'Caso UX/UI', 'video' => 'Vídeo']
-    : ['volver' => 'UX/UI', 'proyecto' => 'The project', 'pantallas' => 'Decisions and screens', 'sig' => 'Next case', 'anio' => 'Year', 'caso' => 'UX/UI case', 'video' => 'Video'];
+    ? ['volver' => 'UX/UI', 'proyecto' => 'El proyecto', 'pantallas' => 'Decisiones y pantallas', 'sig' => 'Siguiente caso', 'anio' => 'Año', 'caso' => 'Caso UX/UI', 'video' => 'Vídeo', 'mas' => 'Ver todas las pantallas']
+    : ['volver' => 'UX/UI', 'proyecto' => 'The project', 'pantallas' => 'Decisions and screens', 'sig' => 'Next case', 'anio' => 'Year', 'caso' => 'UX/UI case', 'video' => 'Video', 'mas' => 'Show all screens'];
 $navActual = 'uxui';
 $num = static function ($n) { return str_pad((string) $n, 2, '0', STR_PAD_LEFT); };
 $fd = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6h8M7 3l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
@@ -119,7 +119,7 @@ $enlaceConcepto = static function (string $href): string {
         <div class="fp__momentos-cab">
             <h2 class="fp__h2"><span><?php echo $num($n++); ?></span><?php echo $e($T['pantallas']); ?></h2>
         </div>
-        <div class="fp__caso">
+        <div class="fp__caso" data-fp-plegable>
             <?php $ki = 0; foreach ($grupos as $g): ?>
             <?php if ($g['tipo'] === 'img'): $vert = ($g['h'] ?? 1) > ($g['w'] ?? 1) * 1.1; $ki++; ?>
             <figure class="fp__c fp__c--img <?php echo $vert ? 'fp__c--vert' : 'fp__c--a' . ($ki % 3); ?><?php echo !empty($g['video']) ? ' fp__m--vid' : ''; ?>" data-fp-entra>
@@ -147,6 +147,7 @@ $enlaceConcepto = static function (string $href): string {
             <?php endif; ?>
             <?php endforeach; ?>
         </div>
+        <button class="fp__mas" type="button" data-fp-mas hidden><?php echo $e($T['mas']); ?></button>
     </section>
 
     <?php if (!empty($res[2])): ?>

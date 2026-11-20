@@ -503,16 +503,80 @@ html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
   .fp__claves { display: block; margin-top: 56px; }
   .fp__claves-lista { display: block; margin-top: 22px; li + li { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--linea); } p { max-width: none; font-size: 16px; } }
 
-  // momentos en móvil: columna, con los dos teléfonos en pareja (diseño propio, no la rejilla encogida)
+  // v9 (QA H-09): momentos en FILA con imán (como la baraja): los 9 se quedan, cambia el formato. Antes, en columna, eran
+  // 3,2-3,3 pantallas; ahora una fila de ~0,5. Scroll horizontal nativo con scroll-snap; la siguiente asoma a la derecha.
   .fp__momentos { margin-top: 64px; }
-  .fp__tira { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 4vw; margin-top: 22px; }
-  .fp__m { grid-column: 1 / -1 !important; margin-top: 0 !important; }
+  .fp__momentos-cab { align-items: center; }
+  .fp__tira {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 22px -6vw 0;
+    padding: 0 6vw 6px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 6vw;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar { display: none; }
+  }
+  .fp__m { flex: 0 0 80vw; grid-column: auto !important; margin-top: 0 !important; scroll-snap-align: start; }
+  .fp__m--tel { flex-basis: 40vw; --tw: 40vw; }
   .fp__m--d1 { order: 1; }
-  .fp__m--m1 { order: 2; grid-column: 1 / span 1 !important; --tw: 42vw; }
-  .fp__m--m2 { order: 3; grid-column: 2 / span 1 !important; --tw: 42vw; }
+  .fp__m--m1 { order: 2; }
+  .fp__m--m2 { order: 3; }
   .fp__m--z1 { order: 4; } .fp__m--v1 { order: 5; } .fp__m--e1 { order: 6; } .fp__m--e2 { order: 7; } .fp__m--d2 { order: 8; } .fp__m--v2 { order: 9; }
   .fp__m figcaption b { display: none; } // en móvil el orden cambia: sin número
   .fp__m figcaption { flex-wrap: wrap; gap: 4px 10px; }
+  .fp__m--tel figcaption span { font-size: 12px; }
+  .fp__m[data-fp-par] .fp__m-marco { transform: none !important; }
+
+  // v9 (QA H-09): lo largo se pliega con «Ver más» (solo con JS; sin JS se ve todo)
+  .fp__claves.is-plegado .fp__claves-lista {
+    li + li { margin-top: 14px; padding-top: 14px; }
+    p { display: none; }
+    b { font-size: 19px; }
+    b::before { margin-bottom: 6px; }
+  }
+  .fp__bloque.is-plegado .fp__p--ctx { display: none; }
+  .fp__caso.is-plegado {
+    max-height: 125svh;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(#000 72%, transparent);
+    mask-image: linear-gradient(#000 72%, transparent);
+  }
+  .fp__mas {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-top: 10px;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: $fuente;
+    font-size: 13px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--main-color);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-color);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    &:active { opacity: .62; }
+    &[hidden] { display: none; }
+  }
+
+  // v9 (QA H-09): cabecera y teléfono de portada más compactos
+  .fp { padding-top: 76px; }
+  .fp__cab { margin-top: 14px; }
+  .fp__datos { margin-top: 20px !important; > div { padding: 9px 0 10px; } dd { margin-top: 4px; } }
+  .fp__portada { margin-top: 24px; }
+  .fp__video--m.fp__tel { --tw: 42vw; }
+  .fp__relato { margin-top: 44px; }
 
   html.fp-js .fp .fp__tira [data-fp-entra] { opacity: 1; translate: none; }
 

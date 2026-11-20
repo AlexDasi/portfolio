@@ -34,8 +34,8 @@ $es = $lang === 'es';
 $L = $es ? 'es' : 'en';
 $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); };
 $T = $es
-    ? ['volver' => 'Proyectos', 'problema' => 'El problema', 'hice' => 'Qué hice', 'visitar' => 'Visitar la web', 'sig' => 'Siguiente proyecto', 'concepto' => 'Concepto', 'cliente' => 'Cliente', 'sinweb' => 'Sin web pública todavía', 'lugar' => 'Lugar', 'anio' => 'Año', 'tipo' => 'Tipo', 'sector' => 'Sector', 'rol' => 'Rol', 'momentos' => 'Momentos', 'vivo' => 'En vivo', 'escritorio' => 'Escritorio', 'movil' => 'Móvil', 'nota_concepto' => 'Marca inventada: proyecto propio, sin cliente.', 'captura' => 'Captura de', 'ver' => 'Ver', 'propio' => 'Concepto propio', 'claves' => 'Claves', 'detalle' => 'Detalle', 'video' => 'Vídeo', 'enuso' => 'En uso', 'foto' => 'Foto de mockup']
-    : ['volver' => 'Projects', 'problema' => 'The problem', 'hice' => 'What I did', 'visitar' => 'Visit the site', 'sig' => 'Next project', 'concepto' => 'Concept', 'cliente' => 'Client', 'sinweb' => 'No public site yet', 'lugar' => 'Place', 'anio' => 'Year', 'tipo' => 'Type', 'sector' => 'Sector', 'rol' => 'Role', 'momentos' => 'Moments', 'vivo' => 'Live', 'escritorio' => 'Desktop', 'movil' => 'Mobile', 'nota_concepto' => 'Invented brand: a self-initiated project, no client.', 'captura' => 'Screenshot of', 'ver' => 'View', 'propio' => 'Self-initiated concept', 'claves' => 'Key decisions', 'detalle' => 'Detail', 'video' => 'Video', 'enuso' => 'In use', 'foto' => 'Mockup photo'];
+    ? ['volver' => 'Proyectos', 'problema' => 'El problema', 'hice' => 'Qué hice', 'visitar' => 'Visitar la web', 'sig' => 'Siguiente proyecto', 'concepto' => 'Concepto', 'cliente' => 'Cliente', 'sinweb' => 'Sin web pública todavía', 'lugar' => 'Lugar', 'anio' => 'Año', 'tipo' => 'Tipo', 'sector' => 'Sector', 'rol' => 'Rol', 'momentos' => 'Momentos', 'vivo' => 'En vivo', 'escritorio' => 'Escritorio', 'movil' => 'Móvil', 'nota_concepto' => 'Marca inventada: proyecto propio, sin cliente.', 'captura' => 'Captura de', 'ver' => 'Ver', 'propio' => 'Concepto propio', 'claves' => 'Claves', 'detalle' => 'Detalle', 'video' => 'Vídeo', 'enuso' => 'En uso', 'foto' => 'Foto de mockup', 'mas' => 'Ver más']
+    : ['volver' => 'Projects', 'problema' => 'The problem', 'hice' => 'What I did', 'visitar' => 'Visit the site', 'sig' => 'Next project', 'concepto' => 'Concept', 'cliente' => 'Client', 'sinweb' => 'No public site yet', 'lugar' => 'Place', 'anio' => 'Year', 'tipo' => 'Type', 'sector' => 'Sector', 'rol' => 'Role', 'momentos' => 'Moments', 'vivo' => 'Live', 'escritorio' => 'Desktop', 'movil' => 'Mobile', 'nota_concepto' => 'Invented brand: a self-initiated project, no client.', 'captura' => 'Screenshot of', 'ver' => 'View', 'propio' => 'Self-initiated concept', 'claves' => 'Key decisions', 'detalle' => 'Detail', 'video' => 'Video', 'enuso' => 'In use', 'foto' => 'Mockup photo', 'mas' => 'Show more'];
 $base = 'content/baraja/' . $P['slug'];
 $media = $base . '_scroll-';
 $navActual = 'home';
@@ -124,22 +124,23 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
             <h2 class="fp__h2"><span>01</span><?php echo $e($T['problema']); ?></h2>
             <p class="fp__p fp__p--grande"><?php echo $e($P['problema'][$L]); ?></p>
         </div>
-        <div class="fp__bloque" data-fp-entra>
+        <div class="fp__bloque" data-fp-entra<?php echo !empty($P['contexto'][$L]) ? ' data-fp-plegable' : ''; ?>>
             <h2 class="fp__h2"><span>02</span><?php echo $e($T['hice']); ?></h2>
             <p class="fp__p"><?php echo $e($P['que_hice'][$L] ?? ''); ?></p>
-            <?php if (!empty($P['contexto'][$L])): ?><p class="fp__p fp__p--ctx"><?php echo $e($P['contexto'][$L]); ?></p><?php endif; ?>
+            <?php if (!empty($P['contexto'][$L])): ?><p class="fp__p fp__p--ctx"><?php echo $e($P['contexto'][$L]); ?></p><button class="fp__mas" type="button" data-fp-mas hidden><?php echo $e($T['mas']); ?></button><?php endif; ?>
             <?php if ($esConcepto): ?><p class="fp__nota"><?php echo $e($T['nota_concepto']); ?></p><?php endif; ?>
         </div>
     </section>
 
     <?php $claves = $P['claves'] ?? []; $n = 3; if ($claves): ?>
-    <section class="fp__claves" data-fp-entra aria-label="<?php echo $e($T['claves']); ?>">
+    <section class="fp__claves" data-fp-entra data-fp-plegable aria-label="<?php echo $e($T['claves']); ?>">
         <h2 class="fp__h2"><span><?php echo $num($n++); ?></span><?php echo $e($T['claves']); ?></h2>
         <ol class="fp__claves-lista">
             <?php foreach ($claves as $k => $c): ?>
             <li><b><?php echo $e($c['t'][$L]); ?></b><p><?php echo $e($c['d'][$L]); ?></p></li>
             <?php endforeach; ?>
         </ol>
+        <button class="fp__mas" type="button" data-fp-mas hidden><?php echo $e($T['mas']); ?></button>
     </section>
     <?php endif; ?>
 
@@ -147,7 +148,7 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
     <section class="fp__momentos" aria-label="<?php echo $e($T['momentos']); ?>">
         <div class="fp__momentos-cab">
             <h2 class="fp__h2"><span><?php echo $num($n++); ?></span><?php echo $e($T['momentos']); ?></h2>
-            <p class="fp__momentos-n"><?php echo $num(1); ?> — <?php echo $num(count($momentos)); ?></p>
+            <p class="fp__momentos-n"><span data-fp-n><?php echo $num(1); ?></span> — <?php echo $num(count($momentos)); ?></p>
         </div>
         <div class="fp__tira" data-fp-tira>
             <?php foreach ($momentos as $i => $m):

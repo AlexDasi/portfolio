@@ -61,6 +61,53 @@
     fotos.forEach(function (f) { ojoF.observe(f); });
   } else { fotos.forEach(carga); }
 
+  /* ---- v9 (QA H-09): en móvil lo largo se pliega con «Ver más» (sin JS se ve todo) ---- */
+  if (movil) {
+    [].forEach.call(raiz.querySelectorAll('[data-fp-plegable]'), function (bloque) {
+      var boton = bloque.querySelector('[data-fp-mas]') || (bloque.nextElementSibling && bloque.nextElementSibling.matches('[data-fp-mas]') ? bloque.nextElementSibling : null);
+      if (!boton) return;
+      bloque.classList.add('is-plegado');
+      if (bloque.classList.contains('fp__caso') && bloque.scrollHeight <= bloque.clientHeight + 40) { bloque.classList.remove('is-plegado'); return; }
+      boton.hidden = false;
+      boton.setAttribute('aria-expanded', 'false');
+      boton.addEventListener('click', function () {
+        bloque.classList.remove('is-plegado');
+        boton.hidden = true;
+        [].forEach.call(bloque.querySelectorAll('img[data-poster-d]'), function (f) { carga(f); });
+      });
+    });
+    // momentos en fila: se cargan todas sus capturas al acercarse (el observador no ve las que están fuera por la derecha)
+    // y el contador dice cuál tienes delante
+    var tira = raiz.querySelector('[data-fp-tira]'), cuenta = raiz.querySelector('[data-fp-n]');
+    if (tira) {
+      var cargaTira = function () { [].forEach.call(tira.querySelectorAll('img[data-poster-d]'), carga); };
+      if ('IntersectionObserver' in window) {
+        var ojoT = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { cargaTira(); ojoT.disconnect(); } }, { rootMargin: '700px 0px' });
+        ojoT.observe(tira);
+      } else { cargaTira(); }
+      if (cuenta) {
+        var figs = [].slice.call(tira.children).sort(function (a, b) { return a.getBoundingClientRect().left - b.getBoundingClientRect().left; });
+        var pide = false;
+        tira.addEventListener('scroll', function () {
+          if (pide) return; pide = true;
+          requestAnimationFrame(function () {
+            pide = false;
+            var x0 = tira.getBoundingClientRect().left, mejor = 0, d = 1e9;
+            figs.forEach(function (f, k) { var dd = Math.abs(f.getBoundingClientRect().left - x0 - 22); if (dd < d) { d = dd; mejor = k; } });
+            cuenta.textContent = (mejor < 9 ? '0' : '') + (mejor + 1);
+          });
+        }, { passive: true });
+        // vídeos de la fila: solo corre el que está a la vista dentro de la fila
+        if ('IntersectionObserver' in window) {
+          var ojoFila = new IntersectionObserver(function (es) {
+            es.forEach(function (e) { var v = e.target.querySelector('video[data-video]'); if (v) corre(v, e.intersectionRatio > 0.5); });
+          }, { root: tira, threshold: [0, 0.5, 1] });
+          figs.forEach(function (f) { ojoFila.observe(f); });
+        }
+      }
+    }
+  }
+
   /* ---- entrada ---- */
   var entran = [].slice.call(raiz.querySelectorAll('[data-fp-entra]'));
   if ('IntersectionObserver' in window && !quieto) {
