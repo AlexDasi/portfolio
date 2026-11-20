@@ -46,9 +46,9 @@ $assetVersion = static function (string $relativePath): string {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="<?php echo empty($noIndex) ? 'index, follow' : 'noindex, follow'; ?>">
     <meta name="theme-color" content="#000000">
-    <link rel="canonical" href="<?php echo htmlspecialchars($ogUrl, ENT_QUOTES, 'UTF-8'); ?>">
+    <?php if (empty($noIndex)): ?><link rel="canonical" href="<?php echo htmlspecialchars($ogUrl, ENT_QUOTES, 'UTF-8'); ?>"><?php endif; ?>
     <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8'); ?>">
     <meta property="og:type" content="website">

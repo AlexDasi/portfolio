@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /docs/
+Disallow: /tools/
+
+Sitemap: https://www.alexdasi.com/sitemap.xml

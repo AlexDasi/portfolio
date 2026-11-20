@@ -3,3 +3,13 @@ RedirectMatch 404 /\.git
 RedirectMatch 404 ^/docs(/|$)
 RedirectMatch 404 /\.ftp-deploy-sync-state\.json$
 RedirectMatch 404 ^/tools(/|$)
+
+# v9 (QA H-11): página 404 propia con el diseño de la web (antes, la de Hostinger en inglés)
+ErrorDocument 404 /404.php
+
+# v9 (QA H-18): una sola dirección (www), para no tener la web duplicada
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^alexdasi\.com$ [NC]
+RewriteRule ^(.*)$ https://www.alexdasi.com/$1 [R=301,L]
+</IfModule>

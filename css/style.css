@@ -5616,6 +5616,23 @@ html.cursor-fusion .sm--habla .sm__boton--lleno {
     background: color-mix(in srgb, var(--accent-color) 22%, transparent);
   }
 }
+.sm--404 {
+  min-height: 100vh;
+  min-height: 100svh;
+  height: auto;
+}
+
+.sm--404 .sm__boton--lleno {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #141415 !important;
+}
+
+@media (max-width: 1280px) {
+  .sm--404 {
+    padding: 110px 7vw 48px;
+  }
+}
 /* CANVAS */
 canvas {
   z-index: 0;
