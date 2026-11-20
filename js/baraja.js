@@ -284,8 +284,10 @@
     return v;
   };
 
+  // v9 (QA H-22): con «Ahorro de datos» del móvil, solo pósters (sin vídeos)
+  var ahorro = !!(navigator.connection && navigator.connection.saveData);
   Baraja.prototype.videos = function () {
-    if (!this.enPantalla || this.frente < 0 || reduce) return;
+    if (!this.enPantalla || this.frente < 0 || reduce || ahorro) return;
     var v = this.cargaVideo(this.frente, 'auto');
     if (v) {
       var p = v.play();

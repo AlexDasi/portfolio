@@ -5633,6 +5633,41 @@ html.cursor-fusion .sm--habla .sm__boton--lleno {
     padding: 110px 7vw 48px;
   }
 }
+@media (max-width: 1280px) and (orientation: landscape) and (max-height: 500px) {
+  html.esfera-movil .pantalla--intro {
+    min-height: 100svh;
+  }
+  html.esfera-movil .pantalla--intro .intro {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-content: center;
+    column-gap: 4vw;
+    padding: 64px 7vw 8px;
+  }
+  html.esfera-movil .pantalla--intro .intro__saludo {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+  }
+  html.esfera-movil .pantalla--intro .intro__sub {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    margin-top: 14px;
+  }
+  html.esfera-movil .pantalla--intro .intro__esfera {
+    grid-column: 2;
+    grid-row: 1/3;
+    width: min(72svh, 42vw);
+    min-width: 0;
+    margin: 0;
+    align-self: center;
+  }
+  .bajar {
+    margin-top: -56px;
+  }
+}
 /* CANVAS */
 canvas {
   z-index: 0;

@@ -69,7 +69,7 @@ $mm = [
             </button>
             <?php endif; ?>
         </div>
-        <a class="menu-movil__contacto" href="https://wa.me/34616420048">WhatsApp</a>
+        <a class="menu-movil__contacto" href="https://wa.me/34616420048?text=<?php echo rawurlencode($isEs ? 'Hola Alex, tengo un negocio y me gustaría hablar de mi web.' : 'Hi Alex, I run a business and I’d like to talk about my website.'); ?>">WhatsApp</a>
         <a class="menu-movil__contacto" href="mailto:hola@alexdasi.com">hola@alexdasi.com</a>
     </div>
 </div>

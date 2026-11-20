@@ -192,7 +192,7 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
     <section class="fp__visita" data-fp-entra>
         <p class="fp__h2"><span><?php echo $num($n++); ?></span><?php echo $e($T['vivo']); ?></p>
         <?php if (!empty($P['url'])): ?>
-        <p class="fp__host"><?php echo str_replace(['-', '.'], ['&#8209;', '.<wbr>'], $e($host)); /* corta solo en los puntos */ ?></p>
+        <p class="fp__host"><?php echo preg_replace('~\.(?=[^.]+$)~', '.', preg_replace('~\.~', '.<wbr>', str_replace('-', '&#8209;', $e($host)), substr_count($host, '.') - 1)); /* v9 (QA H-13): corta en los puntos menos en el último («.com» nunca se queda solo) */ ?></p>
         <a class="sm__boton sm__boton--lleno fp__boton" href="<?php echo $e($P['url']); ?>" target="_blank" rel="noopener"><?php echo $e($T['visitar']); ?>&nbsp;<?php echo $fl; ?></a>
         <?php else: ?>
         <p class="fp__host fp__host--sin"><?php echo $e($T['sinweb']); ?></p>

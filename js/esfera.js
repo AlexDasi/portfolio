@@ -112,7 +112,7 @@
     function cargarH() {
       if (marcoH) { pausa(false); return; }
       marcoH = document.createElement('iframe');
-      marcoH.title = 'Sphere';
+      marcoH.title = document.documentElement.lang === 'es' ? 'Esfera' : 'Sphere'; // v9 (QA H-19)
       marcoH.setAttribute('allowtransparency', 'true');
       marcoH.setAttribute('tabindex', '-1');
       var pielH = pielHabla();
@@ -157,7 +157,7 @@
       var f = document.createElement('iframe');
       f.src = src('&movil');
       apuntar(piel, true);
-      f.title = 'Sphere';
+      f.title = document.documentElement.lang === 'es' ? 'Esfera' : 'Sphere'; // v9 (QA H-19)
       f.setAttribute('allowtransparency', 'true');
       f.addEventListener('load', function () { caja.classList.add('is-lista'); });
       caja.appendChild(f);
@@ -228,7 +228,7 @@
     c.className = 'esfera-capa is-precarga';
     var m = document.createElement('iframe');
     m.className = 'esfera-marco';
-    m.title = 'Sphere';
+    m.title = document.documentElement.lang === 'es' ? 'Esfera' : 'Sphere'; // v9 (QA H-19)
     m.setAttribute('allowtransparency', 'true');
     m.setAttribute('tabindex', '-1');
     m.setAttribute('aria-hidden', 'true');
@@ -271,7 +271,7 @@
       capa.className = 'esfera-capa';
       marco = document.createElement('iframe');
       marco.className = 'esfera-marco';
-      marco.title = 'Sphere';
+      marco.title = document.documentElement.lang === 'es' ? 'Esfera' : 'Sphere'; // v9 (QA H-19)
       marco.setAttribute('allowtransparency', 'true');
       marco.src = src('&mano'); // import dinámico de verdad: three.js solo baja ahora, al hacer clic
       capa.appendChild(marco);
