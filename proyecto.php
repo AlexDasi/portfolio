@@ -24,11 +24,21 @@ $P = $lista[$idx];
 $sig = $lista[($idx + 1) % $total];
 $tras = [$lista[($idx + 2) % $total], $lista[($idx + 3) % $total]];
 $bodyClass = 'sitio-baraja pagina-proyecto pagina-ficha';
+$sinSwiper = true;
 $pageTitle = $P['nombre'] . ' · Alex Dasi';
 /* v9 (QA H-03/H-04): miniatura propia (su portada, content/og/<slug>.jpg con tools/og_fichas.py), descripción = su problema, URL propia */
 $ogImage = is_file(__DIR__ . '/content/og/' . $P['slug'] . '.jpg') ? 'https://www.alexdasi.com/content/og/' . $P['slug'] . '.jpg' : '';
 $metaDescription = ['es' => $P['nombre'] . '. ' . ($P['problema']['es'] ?? ''), 'en' => $P['nombre'] . '. ' . ($P['problema']['en'] ?? '')];
 $canonParams = ['p' => $P['slug']];
+/* v9 (QA H-10, LCP 3,0-3,5 s en 4G): la hoja de la ficha va en <head> y el póster de portada se precarga con prioridad alta
+   (móvil: el del teléfono, 540 px webp; tablet y escritorio: el del vídeo de escritorio, webp 1600 en vez del jpg). El vídeo, después. */
+$pmPoster = is_file(__DIR__ . '/content/baraja/' . $P['slug'] . '_caso-pm.mp4') ? 'content/baraja/' . $P['slug'] . '_caso-pm_poster-540.webp' : 'content/baraja/' . $P['slug'] . '_scroll-movil_poster.jpg';
+$pdPoster = 'content/baraja/' . $P['slug'] . '_scroll-desktop-hd_poster-1600.webp';
+if (!is_file(__DIR__ . '/' . $pdPoster)) { $pdPoster = 'content/baraja/' . $P['slug'] . '_scroll-desktop-hd_poster.jpg'; }
+$fichaCss = '/css/ficha.css?v=' . (is_file(__DIR__ . '/css/ficha.css') ? filemtime(__DIR__ . '/css/ficha.css') : '1');
+$headExtra = '<link rel="stylesheet" href="' . $fichaCss . '">'
+    . '<link rel="preload" as="image" href="/' . $pmPoster . '" fetchpriority="high" media="(max-width: 759px)">'
+    . '<link rel="preload" as="image" href="/' . $pdPoster . '" fetchpriority="high" media="(min-width: 760px)">';
 include 'php-elements/header-baraja.php';
 $es = $lang === 'es';
 $L = $es ? 'es' : 'en';
@@ -76,7 +86,6 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
 ?>
 
 <body class="<?php echo $bodyClass; ?>">
-    <link rel="stylesheet" href="/css/ficha.css?v=<?php echo $assetV('css/ficha.css'); ?>">
     <script>document.documentElement.classList.add('fp-js');</script>
 
     <?php include 'php-elements/nav-baraja.php'?>
@@ -107,12 +116,12 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
             <?php echo $barraNav; ?>
             <div class="fp__nav-pantalla">
                 <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $e($P['nombre'] . ' · ' . $T['escritorio']); ?>"
-                    data-video-d="<?php echo $e($media . 'desktop-hd.mp4'); ?>" data-poster-d="<?php echo $e($media . 'desktop-hd_poster.jpg'); ?>"></video>
+                    data-video-d="<?php echo $e($media . 'desktop-hd.mp4'); ?>" data-poster-d="<?php echo $e($pdPoster); ?>"></video>
             </div>
         </figure>
         <figure class="fp__video fp__video--m fp__tel<?php echo $pmMovil ? '' : ' fp__tel--corto'; ?>">
             <div class="fp__tel-pantalla">
-                <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $e($P['nombre'] . ' · ' . $T['movil']); ?>"
+                <video muted loop playsinline preload="none" disablepictureinpicture poster="<?php echo $e($pmPoster); ?>" aria-label="<?php echo $e($P['nombre'] . ' · ' . $T['movil']); ?>"
                     <?php if ($pmMovil): ?>data-video-m="<?php echo $e($base . '_caso-pm.mp4'); ?>" data-poster-m="<?php echo $e($base . '_caso-pm_poster-540.webp'); ?>"
                     <?php else: ?>data-video-m="<?php echo $e($media . 'movil.mp4'); ?>" data-poster-m="<?php echo $e($media . 'movil_poster.jpg'); ?>"<?php endif; ?>></video>
             </div>

@@ -168,9 +168,10 @@ $assetVersion = static function (string $relativePath): string {
         })();
     </script>
 
-    <link rel="stylesheet" href="/scss/js-style/swiper-bundle.min.css?v=<?php echo $assetVersion('scss/js-style/swiper-bundle.min.css'); ?>"/>
+    <?php if (empty($sinSwiper)): ?><link rel="stylesheet" href="/scss/js-style/swiper-bundle.min.css?v=<?php echo $assetVersion('scss/js-style/swiper-bundle.min.css'); ?>"/><?php endif; ?>
 
     <link rel="stylesheet" href="/css/style.css?v=<?php echo $assetVersion('css/style.css'); ?>">
+    <?php echo $headExtra ?? ''; /* v9 (QA H-10): hojas y precargas propias de la página (fichas: ficha.css y el póster de portada) */ ?>
 
 
 

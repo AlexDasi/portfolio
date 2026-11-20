@@ -15,12 +15,18 @@ $total = count($lista);
 $C = $lista[$idx];
 $sig = $lista[($idx + 1) % $total];
 $bodyClass = 'sitio-baraja pagina-proyecto pagina-ficha pagina-caso';
+$sinSwiper = true;
 $pageTitle = $C['nombre'] . ' · Alex Dasi';
 /* v9 (QA H-03/H-04): miniatura JPG propia, descripción = subtítulo + entrada, URL propia */
 $ogImage = is_file(__DIR__ . '/content/og/caso-' . $C['slug'] . '.jpg') ? 'https://www.alexdasi.com/content/og/caso-' . $C['slug'] . '.jpg' : '';
 $casoDesc = static function (string $l) use ($C): string { $i = $C['intro'][$l] ?? []; return trim(strip_tags(($C['subtitulo'][$l] ?? '') . '. ' . (is_array($i) ? ($i[0] ?? '') : $i))); };
 $metaDescription = ['es' => $casoDesc('es'), 'en' => $casoDesc('en')];
 $canonParams = ['c' => $C['slug']];
+/* v9 (QA H-10): la hoja en <head> y la portada con versión de 1200 (móvil retina) y precargada */
+$pc = $C['portada']; $p12 = preg_replace('~_portada-\d+\.webp$~', '_portada-1200.webp', $pc['grande']);
+$portadaSet = $pc['chica'] . ' ' . (int) ($pc['wc'] ?? 900) . 'w, ' . (is_file(__DIR__ . '/' . $p12) ? $p12 . ' 1200w, ' : '') . $pc['grande'] . ' ' . (int) ($pc['wg'] ?? $pc['w']) . 'w';
+$headExtra = '<link rel="stylesheet" href="/css/ficha.css?v=' . (is_file(__DIR__ . '/css/ficha.css') ? filemtime(__DIR__ . '/css/ficha.css') : '1') . '">'
+    . '<link rel="preload" as="image" imagesrcset="' . htmlspecialchars($portadaSet, ENT_QUOTES, 'UTF-8') . '" imagesizes="(max-width: 759px) 88vw, 92vw" fetchpriority="high">';
 include 'php-elements/header-baraja.php';
 $es = $lang === 'es';
 $L = $es ? 'es' : 'en';
@@ -54,7 +60,8 @@ $img = static function (array $b, string $alt, bool $pronto = false) use ($e): s
         return '<video muted loop playsinline preload="none" disablepictureinpicture aria-label="' . $alt . '" data-video="' . $e($b['video']) . '" data-poster-m="' . $e($b['poster']) . '" data-poster-d="' . $e($b['poster']) . '" data-wc="9999"></video>';
     }
     if ($pronto) {
-        return '<img src="' . $e($b['grande']) . '" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" decoding="async" fetchpriority="high" alt="' . $alt . '">';
+        // v9 (QA H-10): portada con srcset (en móvil basta la de 900) y prioridad alta
+        return '<img src="' . $e($b['grande']) . '" srcset="' . $e($GLOBALS['portadaSet']) . '" sizes="(max-width: 759px) 88vw, 92vw" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" decoding="async" fetchpriority="high" alt="' . $alt . '">';
     }
     return '<img data-poster-m="' . $e($b['chica']) . '" data-poster-d="' . $e($b['grande']) . '" data-wc="' . (int) $b['wc'] . '" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" decoding="async" alt="' . $alt . '">'
         . '<noscript><img src="' . $e($b['grande']) . '" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" alt="' . $alt . '"></noscript>';
@@ -66,7 +73,6 @@ $enlaceConcepto = static function (string $href): string {
 ?>
 
 <body class="<?php echo $bodyClass; ?>">
-    <link rel="stylesheet" href="/css/ficha.css?v=<?php echo $assetV('css/ficha.css'); ?>">
     <script>document.documentElement.classList.add('fp-js');</script>
 
     <?php include 'php-elements/nav-baraja.php'?>

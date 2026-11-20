@@ -22,14 +22,19 @@
     videos.push(v);
   });
   // vídeos cortos de «Momentos» (microinteracciones y pasadas): póster según el hueco, el mp4 solo al llegar
-  [].forEach.call(raiz.querySelectorAll('video[data-video]'), function (v) {
+  // v9 (QA H-10/H-21): su póster ya no se pide al cargar (competía con la portada): se pone con las capturas, al acercarse
+  function posterDe(v) {
+    if (v.getAttribute('poster')) return;
     var hueco = (v.parentNode.clientWidth || 300) * Math.min(window.devicePixelRatio || 1, 3);
     v.poster = hueco > (parseFloat(v.getAttribute('data-wc')) || 720) * 1.08 ? v.getAttribute('data-poster-d') : v.getAttribute('data-poster-m');
+  }
+  [].forEach.call(raiz.querySelectorAll('video[data-video]'), function (v) {
     v.dataset.src = v.getAttribute('data-video');
     videos.push(v);
   });
   function corre(v, si) {
     if (si) {
+      if (v.hasAttribute('data-video')) posterDe(v);
       if (!v.getAttribute('src')) { v.src = v.dataset.src; }
       if (quieto) return;                            // con «reducir movimiento» se queda el póster
       var p = v.play(); if (p && p.catch) p.catch(function () {});
@@ -48,8 +53,9 @@
   });
 
   /* ---- capturas de «Momentos»: la versión que toca según el hueco y la densidad de la pantalla ---- */
-  var fotos = [].slice.call(raiz.querySelectorAll('img[data-poster-d]'));
+  var fotos = [].slice.call(raiz.querySelectorAll('img[data-poster-d], video[data-video]'));
   function carga(img) {
+    if (img.tagName === 'VIDEO') { posterDe(img); return; }
     if (img.getAttribute('src')) return;
     var hueco = (img.parentNode.clientWidth || img.clientWidth || 300) * Math.min(window.devicePixelRatio || 1, 3);
     img.src = hueco > (parseFloat(img.getAttribute('data-wc')) || 900) * 1.08 ? img.getAttribute('data-poster-d') : img.getAttribute('data-poster-m');
@@ -73,14 +79,14 @@
       boton.addEventListener('click', function () {
         bloque.classList.remove('is-plegado');
         boton.hidden = true;
-        [].forEach.call(bloque.querySelectorAll('img[data-poster-d]'), function (f) { carga(f); });
+        [].forEach.call(bloque.querySelectorAll('img[data-poster-d], video[data-video]'), function (f) { carga(f); });
       });
     });
     // momentos en fila: se cargan todas sus capturas al acercarse (el observador no ve las que están fuera por la derecha)
     // y el contador dice cuál tienes delante
     var tira = raiz.querySelector('[data-fp-tira]'), cuenta = raiz.querySelector('[data-fp-n]');
     if (tira) {
-      var cargaTira = function () { [].forEach.call(tira.querySelectorAll('img[data-poster-d]'), carga); };
+      var cargaTira = function () { [].forEach.call(tira.querySelectorAll('img[data-poster-d], video[data-video]'), carga); };
       if ('IntersectionObserver' in window) {
         var ojoT = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { cargaTira(); ojoT.disconnect(); } }, { rootMargin: '700px 0px' });
         ojoT.observe(tira);
