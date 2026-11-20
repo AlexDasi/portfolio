@@ -136,7 +136,9 @@
 
   Baraja.prototype.medir = function () {
     var ancho = window.innerWidth;
-    var modo = ancho >= 900 ? 'mesa' : 'una';
+    // v9 (QA H-12): en táctil hasta 1280 (iPad y móvil en horizontal) va la fila con imán del móvil, no la mesa encogida
+    var tactil = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    var modo = ancho >= 900 && !(tactil && ancho <= 1280) ? 'mesa' : 'una';
     if (modo !== this.modo) {
       this.modo = modo;
       this.root.setAttribute('data-modo', modo);
@@ -385,7 +387,7 @@
 
   Baraja.prototype.agarra = function (e) {
     if (e.button !== 0) return;
-    this.arrastre = { x: e.clientX, y: e.clientY, obj: this.obj, id: e.pointerId, movido: false, t: performance.now(), vx: 0, lx: e.clientX, lt: performance.now(), eje: '' };
+    this.arrastre = { x: e.clientX, y: e.clientY, obj: this.obj, id: e.pointerId, movido: false, t: performance.now(), vx: 0, lx: e.clientX, lt: performance.now(), eje: '', dedo: e.pointerType !== 'mouse' };
     this.arrastreReciente = false;
   };
 
@@ -405,6 +407,8 @@
     var por = this.modo === 'mesa' ? ARRASTRE_MESA : 1 / Math.max(200, this.medidas.w);
     var mov = this.modo === 'mesa' ? (a.eje === 'x' ? dx : dy) : dx;
     this.obj = a.obj - mov * por;
+    // v9 (QA H-12): con el dedo, un gesto = una carta (antes, en el iPad en horizontal saltaba 2 y en el móvil en horizontal hasta 9)
+    if (a.dedo) this.obj = Math.max(Math.round(a.obj) - 1, Math.min(Math.round(a.obj) + 1, this.obj));
     this.toque();
     this.pedir();
   };
@@ -424,6 +428,7 @@
     var destino;
     if (rapido && Math.abs(hecho) < 1) destino = base + (a.vx < 0 ? 1 : -1);
     else destino = Math.round(this.obj + (hecho > 0 ? 0.2 : -0.2));
+    if (a.dedo) destino = Math.max(Math.round(base) - 1, Math.min(Math.round(base) + 1, destino));
     this.ir(destino);
   };
 
