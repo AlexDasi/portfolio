@@ -24,9 +24,10 @@ $metaDescription = ['es' => $casoDesc('es'), 'en' => $casoDesc('en')];
 $canonParams = ['c' => $C['slug']];
 /* v9 (QA H-10): la hoja en <head> y la portada con versión de 1200 (móvil retina) y precargada */
 $pc = $C['portada']; $p12 = preg_replace('~_portada-\d+\.webp$~', '_portada-1200.webp', $pc['grande']);
-$portadaSet = $pc['chica'] . ' ' . (int) ($pc['wc'] ?? 900) . 'w, ' . (is_file(__DIR__ . '/' . $p12) ? $p12 . ' 1200w, ' : '') . $pc['grande'] . ' ' . (int) ($pc['wg'] ?? $pc['w']) . 'w';
+$portadaMovil = is_file(__DIR__ . '/' . $p12) ? $p12 : $pc['chica'];
 $headExtra = '<link rel="stylesheet" href="/css/ficha.css?v=' . (is_file(__DIR__ . '/css/ficha.css') ? filemtime(__DIR__ . '/css/ficha.css') : '1') . '">'
-    . '<link rel="preload" as="image" imagesrcset="' . htmlspecialchars($portadaSet, ENT_QUOTES, 'UTF-8') . '" imagesizes="(max-width: 759px) 88vw, 92vw" fetchpriority="high">';
+    . '<link rel="preload" as="image" href="/' . htmlspecialchars($portadaMovil, ENT_QUOTES, 'UTF-8') . '" media="(max-width: 759px)" fetchpriority="high">'
+    . '<link rel="preload" as="image" href="/' . htmlspecialchars($pc['grande'], ENT_QUOTES, 'UTF-8') . '" media="(min-width: 760px)" fetchpriority="high">';
 include 'php-elements/header-baraja.php';
 $es = $lang === 'es';
 $L = $es ? 'es' : 'en';
@@ -61,7 +62,8 @@ $img = static function (array $b, string $alt, bool $pronto = false) use ($e): s
     }
     if ($pronto) {
         // v9 (QA H-10): portada con srcset (en móvil basta la de 900) y prioridad alta
-        return '<img src="' . $e($b['grande']) . '" srcset="' . $e($GLOBALS['portadaSet']) . '" sizes="(max-width: 759px) 88vw, 92vw" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" decoding="async" fetchpriority="high" alt="' . $alt . '">';
+        // (con <picture> por media y no srcset con «w»: así naturalWidth dice los píxeles reales, como en la baraja)
+        return '<picture><source media="(max-width: 759px)" srcset="' . $e($GLOBALS['portadaMovil']) . '"><img src="' . $e($b['grande']) . '" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" decoding="async" fetchpriority="high" alt="' . $alt . '"></picture>';
     }
     return '<img data-poster-m="' . $e($b['chica']) . '" data-poster-d="' . $e($b['grande']) . '" data-wc="' . (int) $b['wc'] . '" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" decoding="async" alt="' . $alt . '">'
         . '<noscript><img src="' . $e($b['grande']) . '" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" alt="' . $alt . '"></noscript>';

@@ -529,7 +529,6 @@ html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
   .fp__m--z1 { order: 4; } .fp__m--v1 { order: 5; } .fp__m--e1 { order: 6; } .fp__m--e2 { order: 7; } .fp__m--d2 { order: 8; } .fp__m--v2 { order: 9; }
   .fp__m figcaption b { display: none; } // en móvil el orden cambia: sin número
   .fp__m figcaption { flex-wrap: wrap; gap: 4px 10px; }
-  .fp__m--tel figcaption span { font-size: 12px; }
   .fp__m[data-fp-par] .fp__m-marco { transform: none !important; }
 
   // v9 (QA H-09): lo largo se pliega con «Ver más» (solo con JS; sin JS se ve todo)

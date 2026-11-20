@@ -641,3 +641,24 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 | Móvil: peso · peticiones · LCP | 1,38 MB · 40 · 220 ms | 1,40 MB · 41 · 392 ms |
 
 **QA v8 (php -S local):** `vivo.mjs` 0 rojos en home, Hablamos y la ficha de Casa Albar · `medir.mjs` (iPhone 13, SE, iPad, desktop) 0 rojos, 1 aviso de siempre (bloque «De dónde vengo» del About en SE) · menú del móvil a 390/320/300/260/768 · clics de la esfera (7 casos) · Hablamos (recargas y desde la home) · punto sobre la flecha con la esfera abierta (absorbido; a la vista fuera).
+
+---
+
+## 2026-11-20 — v9 · QA móvil (informe ATELIER `clientes/alexdasi/qa/2026-11-19_qa-movil-alexdasi.md`, conv. 1330, agente Web v9 · Móvil)
+
+- **H-03/H-04 · Compartir:** og:image nueva (intro de día con la esfera, 1200×630, `images/og-alexdasi-2026-11_es|en.jpg`, sin «12+ years»), una por ficha y por caso (`content/og/`, `tools/og_fichas.py`), description con el claim (fichas: su «problema»; casos: subtítulo + entrada), og:url + canonical + hreflang propios (`?p=`, `?c=`, `?s=`, `&lang=en`) en `https://www.alexdasi.com`. Títulos por idioma (H-19).
+- **H-07 · Errata:** «cambiar tus textos»; EN «I’ll reply myself».
+- **H-01 · Pista para bajar:** «Proyectos» + la flecha fina de escritorio al pie de la intro (móvil y tablet), siempre en la primera pantalla (la esfera encoge solo en pantallas bajas: `min(100vw, 62svh, 100svh − 380px)`); la primera carta asoma (`#works` sin el 6 vh de la home antigua). Móvil en horizontal: intro en dos columnas (H-14).
+- **H-02 · Volver a la carta:** «← Proyectos» = `index.php?carta=<slug>#works`; el atrás del navegador recupera la carta (sessionStorage al abrir una ficha desde la baraja) y la pantalla de la baraja (escritorio: piso 2). Probado en 390 y 1440 (v8: carta 1 e intro).
+- **H-05 · Hablamos en móvil/tablet:** la esfera va encima del titular, a la derecha; no pisa texto.
+- **160 · Hovers:** todo `:hover` dentro de `(hover: hover) and (pointer: fine)` (30 reglas → 0 sin proteger en home, Sobre mí, ficha y caso); en táctil, `:active` breve en enlaces y botones; filas de «Cómo trabajo» y puntos de la trayectoria quietos.
+- **H-08 · Reducir movimiento:** la esfera no gira sola, no flota, gas quieto, sin inercia; quieta deja de pintar. Medido: diferencia entre fotogramas en reposo 10-15 → 0.
+- **H-09 · Fichas cortas:** momentos en fila con imán y contador; «Claves» y contexto plegados con «Ver más»; cabecera y teléfono más compactos; casos con «Decisiones y pantallas» plegado. iPhone 13: 6,5-6,9 → 3,5-3,6 pantallas (casos 5,5-7,5 → 4,4); SE: 8,1-8,6 → 4,3-4,5.
+- **H-10/H-21 · LCP:** ficha.css en `<head>` (`$headExtra`), póster de portada precargado con prioridad (escritorio en webp 1600, `_scroll-desktop-hd_poster-1600.webp`), fichas sin swiper/baraja/esfera (`$sinSwiper`), pósters de momentos perezosos; casos con portada de 1200 en `<picture>` precargada. 4G + CPU ×4 con gzip: fichas móvil 2,4-2,5 → 1,1 s, escritorio 4,1-4,5 → 2,1-2,3 s; casos móvil 3,1-3,5 → 1,8-2,1 s.
+- **H-11 · 404 propia** (`404.php`, ES/EN, noindex) por `ErrorDocument` y para `?p=`/`?c=` inexistentes o vacíos (antes 200 con Berto).
+- **H-18:** `alexdasi.com` → `www` (301 en `.htaccess`), `robots.txt`, `sitemap.xml` (38 URL con hreflang), `favicon.ico` + iconos 180/192/512 (punto lima sobre negro).
+- **H-12 · Baraja en táctil ≤ 1280** (iPad y móvil en horizontal): fila con imán y un gesto = una carta (v8: hasta 3 en iPad horizontal y 4 en móvil horizontal con un mismo gesto).
+- **⚪:** H-13 (`.com` ya no se queda solo), H-19 (iframe «Esfera»/«Sphere»), H-20 (WhatsApp con frase, también en el menú), H-22 (con «Ahorro de datos» solo pósters).
+- **Sin hacer:** H-15 (scroll del documento en iOS: toca el layout base de todas las páginas y no se puede medir aquí; mejor con el iPhone de Alex delante), H-16 (sin JavaScript), H-17 (three.js alojado en casa: 12 módulos, pide su propia prueba), H-23 (medir en dispositivo real).
+
+**QA (php -S + proxy gzip local):** `vivo.mjs` 0 rojos en home, ficha (Imperio, Elsa EN), casos (Tulong, ATELIER) y Sobre mí en iPhone 13, SE, Android 360 y desktop 1440 (la 404 marca su propio 404 de consola: es la página) · `medir.mjs` 0 rojos (1 aviso de siempre: «De dónde vengo» en SE) · menú móvil (script propio: `menu-movil.mjs` es el de Imperio, busca `header.hd`) en 390/375/320/escritorio estrechado × 4 páginas: abre, toques ≥ 44 px, nada fuera, fondo quieto, cierra · hover de escritorio comprobado · rendimiento home (`medir_rendimiento.mjs`, sin gzip, v8 → v9): escritorio 1,36 → 1,37 MB, LCP 176 → 148 ms, rAF en reposo 0, JS por frame en la baraja 2,03 → 1,08 ms; móvil 1,40 → 1,27 MB, LCP 368 → 140 ms.
