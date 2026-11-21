@@ -54,10 +54,14 @@ function solare(){
       mat2 rot(float a){ return mat2(cos(a), -sin(a), sin(a), cos(a)); }
       void main(){
         vec3 ro = uCam, rd = normalize(vP - uCam), n = normalize(vN);
-        float b = dot(ro, rd), c = dot(ro, ro) - 1., h = max(b * b - c, 0.); float t0 = -b - sqrt(h), len = 2. * sqrt(h);
-        float paso = len / ${PASOS}.; vec3 acc = vec3(0.); float tr = 1.;
+        // el gas solo existe dentro de r = .86 (más fuera su densidad es < 1 %): se recorre esa esfera interior a paso fijo,
+        // así el borde de la bola no gasta pasos en vacío y los rayos que la rozan hacen pocos (conv. 1411, mismo aspecto)
+        float b = dot(ro, rd), c = dot(ro, ro) - .7396, h = b * b - c; vec3 acc = vec3(0.); float tr = 1.;
+        float t0 = -b - sqrt(max(h, 0.)), len = h > 0. ? 2. * sqrt(h) : 0.;
+        float paso = 1.72 / ${PASOS}.; float npasos = ceil(len / paso);
         float jit = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
         for (int i = 0; i < ${PASOS}; i++){                            // gas que sube y se enrosca, más denso hacia el centro
+          if (float(i) >= npasos) break;
           vec3 p = ro + rd * (t0 + paso * (float(i) + jit));
           vec3 dc = p - uCur * .8; float fc = exp(-dot(dc, dc) * 3.5) * uRem;   // remolino tras el cursor
           vec3 q = p; q.xz = rot(fc * 3.2) * q.xz; q.xy = rot(fc * 1.6) * q.xy;
