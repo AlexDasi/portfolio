@@ -110,10 +110,15 @@ $assetVersion = static function (string $relativePath): string {
         (function () {
             var html = document.documentElement;
             var q = new URLSearchParams(location.search);
-            var tema = 'noche';
-            try { tema = localStorage.getItem('alexdasi-tema-v3') || 'noche'; } catch (e) {}
+            /* v17 (Alex, 21/11: «el modo noche y el modo día, automáticos según la hora»): de 8:00 a 20:00 día, el resto noche.
+               Si lo cambias a mano (js/tema.js) se respeta durante esa visita (sessionStorage), no para siempre. */
+            var hora = new Date().getHours();
+            var tema = (hora >= 8 && hora < 20) ? 'dia' : 'noche';
+            try { tema = sessionStorage.getItem('alexdasi-tema-visita') || tema; } catch (e) {}
             <?php if (!empty($temaForzado)): ?>tema = '<?php echo $temaForzado === 'noche' ? 'noche' : 'dia'; ?>';<?php endif; ?>
             html.classList.add(tema === 'noche' ? 'tema-noche' : 'tema-dia');
+            /* v17: composiciones de la esfera de «Hablamos» para comparar (?bola=abajo|centro; por defecto, la esquina) */
+            try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (/^(abajo|centro)$/.test(bolaQ || '')) html.classList.add('bola-' + bolaQ); } catch (e) {}
             var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', tema === 'noche' ? '#000000' : '#f5f3ec');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));

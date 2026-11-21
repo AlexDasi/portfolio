@@ -92,6 +92,14 @@
     function revisar() { if (raton && !dentro) mira(raton); }
     window.addEventListener('mousemove', mira, { passive: true });
     window.addEventListener('message', function (e) { if (e.source === marco.contentWindow && e.data && e.data.esfera === 'fuera') soltar(); });
+    // v17: dentro de la bola el fluido del fondo sigue: el marco manda por dónde va el ratón y se lo damos al body
+    window.addEventListener('message', function (e) {
+      if (e.source !== marco.contentWindow || !e.data || e.data.esfera !== 'puntero') return;
+      var r = marco.getBoundingClientRect();
+      var cx = r.left + e.data.x, cy = r.top + e.data.y;
+      raton = { clientX: cx, clientY: cy };
+      try { document.body.dispatchEvent(new MouseEvent('mousemove', { clientX: cx, clientY: cy, bubbles: false })); } catch (er) {}
+    });
     return { soltar: soltar, revisar: revisar, quitar: function () { soltar(); window.removeEventListener('mousemove', mira); } };
   }
 
@@ -181,7 +189,7 @@
       });
     }
     window.addEventListener('message', function (e) {
-      if (marcoH && e.source === marcoH.contentWindow && e.data && e.data.esfera === 'lista') { bolaH.classList.add('is-lista'); if (manoHabla) manoHabla.revisar(); }
+      if (marcoH && e.source === marcoH.contentWindow && e.data && e.data.esfera === 'lista') { bolaH.classList.add('is-lista'); if (manoHabla) manoHabla.revisar(); if (!enVista) pausa(true); }
     });
     var pantalla = bolaH.closest('.swiper-slide');
     if (pantalla && !esMovil) {
@@ -192,6 +200,12 @@
       });
       var sw = pantalla.closest('[data-initial]');
       if (sw && +sw.getAttribute('data-initial') === indice) setTimeout(cargarH, 400);
+      // v17 (Alex, 21/11: «en Sobre mí la esfera de contacto ya debería estar cargada en 3D cuando llego»): se carga en
+      // reposo poco después de la página, en pausa, y al llegar al piso ya está lista (sin el disco plano ni el salto).
+      var precargaH = function () {
+        setTimeout(function () { (window.requestIdleCallback || function (f) { setTimeout(f, 50); })(function () { if (!marcoH) { cargarH(); if (!enVista) setTimeout(function () { pausa(true); }, 1500); } }, { timeout: 3000 }); }, 1800);
+      };
+      if (document.readyState === 'complete') precargaH(); else window.addEventListener('load', precargaH);
     } else if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {
         enVista = en[0].isIntersecting;
@@ -423,7 +437,12 @@
     if (m === 'espacio' && window.__acentoSiguiente) window.__acentoSiguiente(); // espacio con el foco en la esfera: igual que fuera
   });
   window.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrar(); });
-  window.addEventListener('pisos:cambio', function (e) { if (e.detail.index !== 0) cerrar(); });
+  // v17 (Alex, 21/11: «si cargo la bola y bajo, no quiero que desaparezca; cuando suba, que siga ahí hasta que yo la
+  // esconda»): al salir de la intro la esfera solo se pausa (no se cierra); al volver, sigue donde estaba.
+  window.addEventListener('pisos:cambio', function (e) {
+    if (!abierta || !marco) return;
+    try { marco.contentWindow.postMessage({ esferaPausa: e.detail.index !== 0 }, '*'); } catch (er) {}
+  });
   // un clic fuera de la bola (no en un enlace, botón, flecha o pisos) la cierra; el marco ya no recoge esos clics
   document.addEventListener('click', function (e) {
     if (!abierta || !capa) return;
@@ -431,4 +450,35 @@
     var b2 = caja0();
     if (Math.hypot(e.clientX - (b2.left + b2.width / 2), e.clientY - (b2.top + b2.height / 2)) > diametro() / 2 * 1.08) cerrar();
   });
+})();
+
+/* v17 (Alex, 21/11: «que el HUD sea sensible al fondo y se ponga blanco o negro según lo que haya debajo»): cada pieza del
+   HUD (idioma, «alex dasi», accesos, día/noche, pisos, PRESS SPACE / PRESS E, flechas) que cae encima de una esfera pasa a
+   tinta oscura; fuera de ella vuelve a su color (blanco de noche, oscuro de día). Comprobación barata cada 120 ms. */
+(function () {
+  if (!window.matchMedia || !matchMedia('(min-width: 1281px)').matches) return;
+  var SEL = '.lang-switch__item, .nav--items a, .nav-sutil__item, .nav-sutil__tema, .MainSwiper > .swiper-pagination .swiper-pagination-bullet, .press-space, .piel-3d, .arrow-container .circle';
+  function esferas() {
+    var out = [];
+    document.querySelectorAll('[data-esfera-habla], .esfera-capa .esfera-bola, .esfera-capa').forEach(function (b) {
+      var r = b.getBoundingClientRect();
+      if (r.width < 40 || r.bottom < 0 || r.top > innerHeight || r.right < 0 || r.left > innerWidth) return;
+      var cs = getComputedStyle(b); if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0) return;
+      out.push({ x: r.left + r.width / 2, y: r.top + r.height / 2, r: Math.min(r.width, r.height) / 2 * 0.97 });
+    });
+    return out;
+  }
+  function paso() {
+    var bs = esferas();
+    document.querySelectorAll(SEL).forEach(function (el) {
+      var on = false;
+      if (bs.length) {
+        var r = el.getBoundingClientRect();
+        if (r.width) { var x = r.left + r.width / 2, y = r.top + r.height / 2;
+          for (var i = 0; i < bs.length; i++) if (Math.hypot(x - bs[i].x, y - bs[i].y) < bs[i].r) { on = true; break; } }
+      }
+      el.classList.toggle('hud-sobre-esfera', on);
+    });
+  }
+  setInterval(function () { if (!document.hidden) paso(); }, 120);
 })();

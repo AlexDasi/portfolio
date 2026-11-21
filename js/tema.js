@@ -22,7 +22,7 @@
     root.classList.toggle('tema-dia', tema !== 'noche');
     clearTimeout(aplicar.t);
     aplicar.t = setTimeout(function () { root.classList.remove('tema-cambiando'); }, DUR + 80);
-    try { localStorage.setItem('alexdasi-tema-v3', tema); } catch (e) {}
+    try { sessionStorage.setItem('alexdasi-tema-visita', tema); } catch (e) {} // v17: solo para esta visita; por defecto, la hora
     var ajuste = tema === 'noche' ? window.__FLUID_NOCHE : window.__FLUID_DIA;
     var color = window.__colorFluido ? window.__colorFluido() : null;
     if (ajuste && color) ajuste = Object.assign({}, ajuste, { EFFECT_COLOR: color });

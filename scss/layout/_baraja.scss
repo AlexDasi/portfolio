@@ -1772,7 +1772,7 @@ body.pagina-uxui { overflow-y: auto; height: auto; }
 }
 html.tema-dia .ux__img { background: #e3e0d6; }
 
-.pagina-uxui .press-space { display: none !important; }
+// v17: PRESS SPACE también en UX/UI (Alex, 21/11)
 // v11: panel FX temporal (?fx) debajo de los accesos, sin tapar el día/noche
 .bg-controls { top: 78px !important; }
 
@@ -1929,4 +1929,93 @@ html.cursor-fijo .piel-3d { display: none; }
 // en escritorio el pie de los pisos (home y Sobre mí) lleva la esfera grande en la esquina, como UX/UI, fichas y 404
 @media (min-width: 1281px) {
   .pie--piso .sm__habla-bola, .pantalla--sm.pie .sm__habla-bola { right: -4vw; top: 8vh; width: 34vw; margin-top: 0; }
+}
+
+// ============================================================
+// v17 (Alex, 21/11: «PRESS SPACE abajo a la izquierda; PRESS E y el material abajo a la derecha. Mismo tamaño de texto,
+// mismo tratamiento, mismo peso, mismo color, mismo todo»): dos rótulos gemelos en las dos esquinas de abajo.
+// ============================================================
+@media (hover: hover) and (pointer: fine) and (min-width: 1281px) {
+  .press-space, .piel-3d {
+    position: fixed; bottom: 22px; z-index: $z-top;
+    margin: 0; padding: 0; border: 0; background: none;
+    font-family: $main-font; font-size: 11px; font-weight: 400; line-height: 1; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--main-color); opacity: .45; transition: opacity .35s ease;
+  }
+  .press-space { left: 22px; right: auto; }
+  .piel-3d { right: 22px; left: auto; gap: 0; pointer-events: auto; }
+  .piel-3d .piel-3d__icono { display: none; }
+  .piel-3d .piel-3d__tecla { opacity: 1; }
+  .piel-3d .piel-3d__tecla::after { content: "·"; margin: 0 .5em; }
+  html.esfera-a-la-vista .piel-3d, .piel-3d { opacity: .45; }
+  .piel-3d:hover { opacity: .9; }
+}
+
+// v17: flecha de subir arriba (gemela de la de abajo, debajo de «alex dasi») y la de abajo se va en el último piso
+.arrow-container--arriba { top: 74px; bottom: auto; opacity: 0; visibility: hidden; transition: opacity .4s ease, visibility 0s linear .4s; }
+.arrow-container--arriba.is-visible { opacity: 1; visibility: visible; transition: opacity .4s ease; }
+.arrow-container.slide-arrow__next { transition: opacity .4s ease, visibility 0s linear 0s; }
+.arrow-container.slide-arrow__next.is-oculta { opacity: 0; visibility: hidden; transition: opacity .4s ease, visibility 0s linear .4s; }
+@media (max-width: 1280px) { .arrow-container--arriba { display: none; } }
+
+// v17 (Alex, 21/11: «el efecto es raro porque desaparece el subrayado al hacer hover»): el filete ya no se va; al pasar el
+// ratón se redibuja de izquierda a derecha (sale por la derecha y vuelve a entrar) y la flecha avanza.
+@keyframes ver-redibuja {
+  0% { background-size: 100% 2px; background-position: 100% calc(50% + 12px); }
+  45% { background-size: 0 2px; background-position: 100% calc(50% + 12px); }
+  46% { background-size: 0 2px; background-position: 0 calc(50% + 12px); }
+  100% { background-size: 100% 2px; background-position: 0 calc(50% + 12px); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .ux__enlace:hover .ux__ver, .ux__ver:hover,
+  .baraja[data-modo="una"] .ficha__link:not(.ficha__link--fuera):hover {
+    background-image: linear-gradient(var(--accent-color), var(--accent-color)) !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% 2px !important;
+    animation: ver-redibuja .6s cubic-bezier(.65, 0, .35, 1);
+  }
+  .ux__ver svg { transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+}
+
+// v17 (Alex, 21/11: «descargar PDF: el resaltado tapa el texto y no se lee»): el resaltado cubre la palabra entera y el
+// texto pasa a tinta oscura encima, así se lee en día y noche.
+.sm__link, .sm__cv { padding: 0 .3em; margin-left: -.3em; background-position: 0 50%; transition: background-size .3s cubic-bezier(.22, 1, .36, 1), color .2s ease; }
+.sm__link:focus-visible, .sm__cv:focus-visible { background-size: 100% 1.5em; color: $tinta !important; }
+@media (hover: hover) and (pointer: fine) {
+  .sm__link:hover, .sm__cv:hover { background-size: 100% 1.5em; color: $tinta !important; }
+}
+
+// v17: HUD sensible al fondo (js/esfera.js, final): encima de una esfera, tinta oscura
+.hud-sobre-esfera { color: $tinta !important; transition: color .25s ease; }
+.swiper-pagination-bullet.hud-sobre-esfera, .swiper-pagination-bullet.hud-sobre-esfera * { color: $tinta !important; }
+.arrow-container .circle.hud-sobre-esfera .arrow::before, .arrow-container .circle.hud-sobre-esfera .arrow::after { border-color: $tinta !important; }
+.lang-switch__item.is-active.hud-sobre-esfera { background: $tinta; color: #f5f3ec !important; }
+
+// ============================================================
+// v17 (Alex, 21/11 + su captura: «la esfera de Hablamos en la esquina, arriba a la derecha, bastante más grande, como si nos
+// acercáramos al planeta; que no estorbe al HUD y no toque los pisos»). Por defecto, esquina de arriba a la derecha.
+// Composiciones para comparar: ?bola=abajo (abajo a la derecha, grande y cortada) · ?bola=centro (más centrada, detrás).
+// ============================================================
+@media (min-width: 1281px) {
+  .pie--piso .sm__habla-bola,
+  .pagina-proyecto .pie .sm__habla-bola, .pagina-404 .pie .sm__habla-bola {
+    position: absolute; right: -10vw; top: -20vh; bottom: auto; left: auto; width: 44vw; margin: 0; z-index: 0;
+  }
+  .pie--piso .sm--habla > :not(.sm__habla-bola), .pagina-proyecto .pie .sm--habla > :not(.sm__habla-bola), .pagina-404 .pie .sm--habla > :not(.sm__habla-bola) { position: relative; z-index: 1; }
+  .pagina-proyecto .pie, .pagina-404 .pie { overflow: hidden; }
+  .pie--piso { overflow: hidden; }
+
+  html.bola-abajo .pie--piso .sm__habla-bola,
+  html.bola-abajo .pagina-proyecto .pie .sm__habla-bola, html.bola-abajo .pagina-404 .pie .sm__habla-bola {
+    top: auto; bottom: -38vh; right: -14vw; width: 52vw;
+  }
+  html.bola-centro .pie--piso .sm__habla-bola,
+  html.bola-centro .pagina-proyecto .pie .sm__habla-bola, html.bola-centro .pagina-404 .pie .sm__habla-bola {
+    top: 50%; right: 12vw; width: 36vw; translate: 0 -50%;
+  }
+}
+.arrow-container--arriba .arrow.down { rotate: 180deg; } // la misma flecha que la de abajo, girada (v17)
+// v17: la esfera de la esquina un poco más arriba y menos ancha para no rozar los pisos de la derecha
+@media (min-width: 1281px) {
+  .pie--piso .sm__habla-bola, .pagina-proyecto .pie .sm__habla-bola, .pagina-404 .pie .sm__habla-bola { right: -8vw; top: -22vh; width: 40vw; }
 }

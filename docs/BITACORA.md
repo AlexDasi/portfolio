@@ -765,3 +765,16 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Botones (Alex):** «PRESS SPACE» y el de la piel 3D, sin pastilla de color y **sin rebote**: texto pequeño a media luz abajo a la derecha (uno encima del otro); al pasar el ratón solo sube la luz.
 - **Color al cambiar de piel (Alex: salía menta/azulito hasta pasar el ratón):** la esfera recargada llevaba el acento de cuando se creó el marco; ahora lleva el acento y el tema de ese momento (`js/esfera.js`).
 - **Hablamos (Alex: «me gustaba más con la esfera arriba a la derecha, en la esquina»):** en escritorio, el pie de los pisos (home y Sobre mí) con la esfera grande en la esquina (right −4vw, top 8vh, 34vw), como UX/UI y fichas.
+
+---
+
+## 2026-11-21 — v17 · HUD, flechas de slider, esfera de Hablamos en la esquina y arreglos (ATELIER conv. 1398)
+
+- **PRESS SPACE** abajo a la izquierda y **PRESS E · <piel>** abajo a la derecha, gemelos (11 px, mismo peso, color y luz). PRESS SPACE vuelve a UX/UI.
+- **Flechas de pisos = slider:** la de bajar abajo (se va en el último piso); la de subir arriba, debajo de «alex dasi», desde el 2.º (la misma flecha girada). Fuera el giro de la v15 y la flecha pequeña.
+- **Esfera de Hablamos** (pie de todas las páginas, escritorio): grande en la esquina de arriba a la derecha (40vw, cortada), sin tocar los pisos. Composiciones para comparar: `?bola=abajo` y `?bola=centro`.
+- **HUD sensible al fondo:** lo que cae encima de una esfera pasa a tinta oscura (js/esfera.js, final).
+- **Fluido sobre la esfera:** el marco pasa el ratón a la página (esfera-hq.html → mensaje `puntero`) y el fondo sigue moviéndose.
+- **Esfera de la home:** al bajar ya no se cierra, se pausa; al subir sigue ahí hasta que la escondes. **Sobre mí:** la de Hablamos se precarga en reposo y en pausa.
+- **Día/noche automático** por la hora (8-20 h día); el cambio a mano dura la visita.
+- **Pie:** solo «© Alex Dasi». **Enlaces «Ver el caso»:** el subrayado se redibuja al pasar el ratón. **Descargar CV:** el resaltado cubre la palabra y el texto pasa a oscuro.

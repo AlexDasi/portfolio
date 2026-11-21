@@ -55,7 +55,6 @@
 
     const mainPaginationEl = mainRoot.querySelector(':scope > .swiper-pagination');
 
-    let subiendo = false; // v15: ver pintarFlechas
     const mainSwiper = new Swiper('.MainSwiper', {
       direction: 'vertical',
       speed: 1000,
@@ -91,34 +90,17 @@
       }
     });
 
-    /* v15 (Alex, 21/11): la flecha grande baja hasta el último piso; ahí se da la vuelta y SUBE DE UNO EN UNO (antes saltaba
-       al primero) hasta el primero, donde vuelve a bajar. Desde el 2.º piso sale además una flecha pequeña para subir uno
-       (para no depender de la grande en los pisos intermedios). Los pisos de la derecha, las teclas ↑/↓ y la rueda siguen. */
+    /* v17 (Alex, 21/11): slider en toda regla. Abajo, la flecha de bajar (se esconde en el último piso); arriba, debajo de
+       «alex dasi», la de subir (desde el 2.º). Fuera el giro de la flecha grande y la flecha pequeña de la v15. */
     function pintarFlechas(sw) {
       const ultimo = sw.slides.length - 1;
-      if (sw.activeIndex >= ultimo) subiendo = true;
-      if (sw.activeIndex === 0) subiendo = false;
-      const arrow = document.querySelector('.MainSwiper .arrow') || document.querySelector('.arrow');
-      if (arrow) arrow.classList.toggle('up', subiendo);
-      const chica = document.querySelector('[data-pisos-subir]');
-      if (chica) chica.classList.toggle('is-visible', sw.activeIndex > 0 && !subiendo);
+      const abajo = document.querySelector('.arrow-container.slide-arrow__next.hiddenMobile') || document.querySelector('.arrow-container.slide-arrow__next');
+      if (abajo) abajo.classList.toggle('is-oculta', sw.activeIndex >= ultimo);
+      const arriba = document.querySelector('[data-pisos-subir]');
+      if (arriba) arriba.classList.toggle('is-visible', sw.activeIndex > 0);
     }
-
-    const arrowLink = mainRoot.querySelector('.arrow-container a') || document.querySelector('.arrow-container a');
-    if (arrowLink) {
-      arrowLink.addEventListener(
-        'click',
-        function (event) {
-          if (!subiendo) return;
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          mainSwiper.slidePrev();
-        },
-        true
-      );
-    }
-    const chica = document.querySelector('[data-pisos-subir]');
-    if (chica) chica.addEventListener('click', function (e) { e.preventDefault(); mainSwiper.slidePrev(); });
+    const arriba = document.querySelector('[data-pisos-subir]');
+    if (arriba) arriba.addEventListener('click', function (e) { e.preventDefault(); mainSwiper.slidePrev(); });
 
     // Teclado: ↓/AvPág bajan un piso, ↑/RePág suben uno (en la baraja de la home las flechas son de las cartas)
     window.addEventListener('keydown', function (e) {

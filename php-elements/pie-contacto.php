@@ -20,7 +20,6 @@ $pieEnPiso = !empty($pieEnPiso);
         </div>
     </section>
     <div class="pie__linea">
-        <span>© 2026 Alex Dasi</span>
-        <span><?php echo $pieEs ? 'Todos los derechos reservados' : 'All rights reserved'; ?></span>
+        <span>© Alex Dasi</span><?php /* v17 (Alex, 21/11: «lo de todos los derechos reservados y el año, no sé si hace falta»): fuera los dos; el © basta */ ?>
     </div>
 </footer>
