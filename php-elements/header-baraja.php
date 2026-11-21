@@ -174,7 +174,7 @@ $assetVersion = static function (string $relativePath): string {
             /* v6 (feedback 119): la piel de la esfera CAMBIA: una nueva al azar en cada carga (nunca la última que se vio) y otra
                cada vez que se vuelve a abrir (js/esfera.js). La última que se ha visto se apunta (localStorage, solo para no
                repetirla y para que «Hablamos» del Sobre mí enseñe esa). Fuera la sesión de la v5. ?piel= fuerza una. */
-            var PIELES = ['chicle', 'glaseado', 'prisma', 'alambre', 'maqueta', 'rayosx', 'anodizado']; /* v16 (Alex, conv. 1395): + las cuatro tech «que quiero verlos» */ /* v14 (Alex, 21/11, ATELIER conv. 1393): las tres en calidad alta (esfera/esfera-hq.html); el prisma lleva la textura de cuarzo, así que la gema sale del sorteo. v12: fuera planeta, gota y cuarzo (forma) */
+            var PIELES = ['chicle', 'glaseado', 'prisma']; /* v16 (Alex, conv. 1396): las cuatro tech (alambre, maqueta, rayos X, anodizado) NO convencen: se guardan en esfera/hq/esfera-hq_tech.js (se ven con ?piel=alambre…) pero fuera del sorteo y de la E */ /* v14 (Alex, 21/11, ATELIER conv. 1393): las tres en calidad alta (esfera/esfera-hq.html); el prisma lleva la textura de cuarzo, así que la gema sale del sorteo. v12: fuera planeta, gota y cuarzo (forma) */
             var piel = q.get('piel'), ultima = null;
             try { ultima = localStorage.getItem('alexdasi-piel-ultima'); sessionStorage.removeItem('alexdasi-piel'); } catch (e) {}
             if (PIELES.indexOf(ultima) < 0) ultima = null;
