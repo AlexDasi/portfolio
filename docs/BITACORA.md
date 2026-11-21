@@ -698,3 +698,5 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 
 **QA:** `vivo.mjs` 0 rojos en home, Sobre mí y UX/UI ES/EN (iPhone 13, SE, Android, desktop); menú y salto a #contacto probados; `vivo.mjs` arreglado (falsos «estiradas» con srcset).
 **Pendiente:** contenido del caso ATELIER con clientes y webs nuevas (más allá de la portada); calidad y variantes de la esfera (traspaso).
+
+**Publicado (21/11 13:27, «publica» de Alex, ATELIER conv. 1387):** `main` 3bbc976 en vivo. Comprobado: home, uxui.php, about.php y caso ATELIER 200; fichas antiguas y `about.php?s=uxui` con 301 a las nuevas; pie #contacto y mazo en vivo. Respaldo de lo anterior: f7d7164.
