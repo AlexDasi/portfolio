@@ -32,9 +32,25 @@
 
   abrirBtn.addEventListener('click', abrir);
   if (cerrarBtn) cerrarBtn.addEventListener('click', function () { cerrar(); });
+  // v11 (Alex, 21/11): «Contacto» baja al pie (#contacto) de la página en la que estés, con el panel ya cerrado
+  function irAlPie() {
+    var pie = document.getElementById('contacto');
+    if (!pie) return false;
+    setTimeout(function () { pie.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'end' }); }, DUR + 20);
+    return true;
+  }
   panel.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a');
-    if (a) cerrar(true); // el enlace navega; el panel se va
+    if (!a) return;
+    if (a.hasAttribute('data-menu-contacto') && document.getElementById('contacto')) { e.preventDefault(); cerrar(true); irAlPie(); return; }
+    cerrar(true); // el enlace navega; el panel se va
+  });
+  // tablet (769-1280: accesos de arriba) igual: si la página tiene el pie, «Contacto» baja a él
+  document.querySelectorAll('.nav-sutil__item[href*="s=contact"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (window.innerWidth > 1280 || !document.getElementById('contacto')) return;
+      e.preventDefault(); DUR = 0; irAlPie(); DUR = reduce ? 0 : 380;
+    });
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') cerrar();

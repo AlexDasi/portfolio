@@ -65,7 +65,7 @@ $T = $es ? [
     'cv' => 'Descargar CV (PDF)',
     'cv_otro' => 'In English',
     'habla_t' => 'Hablamos',
-    'habla_p' => 'Si tienes un negocio y crees que tu web podría estar mejor (o todavía no la tienes), escríbeme. Te contesto yo. Y si estás por Valencia, quedamos y lo vemos con un café.',
+    'habla_p' => 'Si tienes un negocio y crees que tu web podría estar mejor (o todavía no la tienes), escríbeme. Te contesto yo.',
     'wa' => 'Escríbeme por WhatsApp',
 ] : [
     'hola_t1' => "I'm Alex.",
@@ -117,7 +117,7 @@ $T = $es ? [
     'cv' => 'Download CV (PDF)',
     'cv_otro' => 'En español',
     'habla_t' => 'Let’s talk',
-    'habla_p' => 'If you run a business and think your website could be better (or you don’t have one yet), drop me a line. I’ll reply myself. And if you’re around Valencia, let’s meet for a coffee.',
+    'habla_p' => 'If you run a business and think your website could be better (or you don’t have one yet), drop me a line. I’ll reply myself.',
     'wa' => 'Message me on WhatsApp',
 ];
 

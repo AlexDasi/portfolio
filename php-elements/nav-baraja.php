@@ -18,7 +18,7 @@ $navActual = $navActual ?? 'home';
 </div>
 <p class="press-space" aria-hidden="true">PRESS SPACE<span class="press-space__cara">:)</span></p>
 <nav class="nav-sutil" aria-label="More">
-    <a class="nav-sutil__item nav-sutil__item--uxui<?php echo $navActual === 'uxui' ? ' is-active' : ''; ?>" href="about.php?s=uxui">UX/UI</a>
+    <a class="nav-sutil__item nav-sutil__item--uxui<?php echo $navActual === 'uxui' ? ' is-active' : ''; ?>" href="uxui.php">UX/UI</a>
     <a class="nav-sutil__item<?php echo $navActual === 'about' ? ' is-active' : ''; ?>" href="about.php?s=about">About</a>
     <a class="nav-sutil__item<?php echo $navActual === 'contact' ? ' is-active' : ''; ?>" href="about.php?s=contact">Contact</a>
     <?php if (empty($temaForzado)): ?>
@@ -32,10 +32,12 @@ $navActual = $navActual ?? 'home';
    de los textos) con «alex dasi» y un menú de dos líneas; el menú abre un panel a pantalla completa con los accesos en
    grande, idioma, día/noche, WhatsApp y email. Sustituye en móvil a idioma + accesos sueltos (a 320 px o con letra del
    sistema al 125-150 % «EN» pisaba «SOBRE MÍ»). js/menu-movil.js lo abre y cierra. */
+/* v11 (Alex, 21/11): + Inicio; UX/UI es página propia; Contacto baja al pie (#contacto) de la página en la que estés */
 $mm = [
-    ['uxui', 'UX/UI', 'UX/UI'],
-    ['about', 'Sobre mí', 'About'],
-    ['contact', 'Contacto', 'Contact'],
+    ['home', 'Inicio', 'Home', 'index.php'],
+    ['uxui', 'UX/UI', 'UX/UI', 'uxui.php'],
+    ['about', 'Sobre mí', 'About', 'about.php'],
+    ['contact', 'Contacto', 'Contact', !empty($conPie) ? '#contacto' : 'index.php#contacto'],
 ];
 ?>
 <header class="barra-movil" data-barra-movil>
@@ -53,7 +55,7 @@ $mm = [
     </div>
     <nav class="menu-movil__enlaces" aria-label="<?php echo $isEs ? 'Secciones' : 'Sections'; ?>">
         <?php foreach ($mm as $i => $m): ?>
-        <a class="menu-movil__enlace<?php echo $navActual === $m[0] ? ' is-active' : ''; ?>" href="about.php?s=<?php echo $m[0]; ?>"<?php echo $navActual === $m[0] ? ' aria-current="page"' : ''; ?> style="--i: <?php echo $i; ?>"><?php echo $isEs ? $m[1] : $m[2]; ?></a>
+        <a class="menu-movil__enlace<?php echo $navActual === $m[0] ? ' is-active' : ''; ?>" href="<?php echo $m[3]; ?>"<?php echo $m[0] === 'contact' ? ' data-menu-contacto' : ''; ?><?php echo $navActual === $m[0] ? ' aria-current="page"' : ''; ?> style="--i: <?php echo $i; ?>"><?php echo $isEs ? $m[1] : $m[2]; ?></a>
         <?php endforeach; ?>
     </nav>
     <div class="menu-movil__pie">

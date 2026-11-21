@@ -1668,3 +1668,111 @@ html.cursor-fusion {
 .sm__cvs { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 18px; margin: 18px 0 0; }
 .sm__cvs .sm__cv { margin-top: 0; }
 .sm__cv--otro { font-size: 13px !important; opacity: .8; }
+
+// ============================================================
+// v11 (Alex, 21/11, ATELIER conv. 1386): mazo en móvil, más acento en proyectos, página UX/UI, pie único
+// ============================================================
+
+// --- Mazo (móvil y tablet táctil): la de delante entera, dos detrás asomando arriba a la derecha ---
+@media (max-width: 1280px) and (min-height: 501px) {
+  .pantalla--baraja .baraja[data-modo="una"][data-mazo] {
+    .baraja__mesa { overflow: visible; }
+    .carta { top: 30px; height: min(calc(100% - 30px), 84vw); transform-origin: 50% 85%; }
+  }
+}
+
+// --- Más acento en proyectos: número, regla y «Ver proyecto» como botón del acento ---
+.baraja[data-modo="una"] {
+  .ficha__num { color: var(--accent-color); }
+  .ficha__cab { border-top-color: color-mix(in srgb, var(--accent-color) 55%, transparent); }
+  .baraja__regla i.is-activa { background: var(--accent-color); width: 3px; border-radius: 2px; }
+  .ficha__link:not(.ficha__link--fuera) {
+    padding: 0 16px !important;
+    min-height: 40px;
+    margin: 2px 0;
+    border-radius: 999px;
+    background: var(--accent-color);
+    color: $tinta;
+    svg { color: $tinta; }
+  }
+  .baraja__titulo { color: var(--main-color); }
+  .baraja__desliza svg { color: var(--accent-color); }
+}
+.baraja[data-modo="una"][data-mazo] .carta.is-frente .carta__cara { box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-color) 70%, transparent), 0 18px 40px -18px color-mix(in srgb, var(--accent-color) 45%, transparent); }
+
+// --- Menú del móvil: con «Inicio» son cuatro; un poco más pequeños para que quepan con letra grande ---
+@media (max-width: 768px) {
+  .menu-movil__enlace { font-size: clamp(28px, 9.5vw, 48px); }
+}
+
+// --- Pie: en UX/UI (página con scroll normal) también en escritorio ---
+@media (min-width: 1281px) {
+  .pagina-uxui .pie { display: block; padding: 96px 8vw 36px; border-top: 1px solid var(--linea); font-family: $main-font; color: var(--main-color); }
+  .pagina-uxui .pie__titulo { font-size: clamp(56px, 7vw, 120px); font-weight: 600; letter-spacing: -.05em; line-height: .95; margin: 0; }
+  .pagina-uxui .pie__punto { display: inline-block; width: .2em; height: .2em; margin-left: .04em; border-radius: 50%; background: var(--accent-color); }
+  .pagina-uxui .pie__texto { margin: 18px 0 0; max-width: 46ch; font-size: 19px; font-weight: 300; line-height: 1.5; opacity: .85; }
+  .pagina-uxui .pie__acciones { display: flex; gap: 12px; margin-top: 30px; }
+  .pagina-uxui .pie__boton { display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px; border: 1px solid var(--main-color); border-radius: 999px; font-size: 16px; color: var(--main-color); text-decoration: none; }
+  .pagina-uxui .pie__boton--lleno { background: var(--accent-color); border-color: var(--accent-color); color: $tinta; }
+  .pagina-uxui .pie__linea { display: flex; justify-content: space-between; margin-top: 72px; padding-top: 16px; border-top: 1px solid var(--linea); font-size: 13px; color: var(--tinta-suave); }
+}
+
+// --- Página UX/UI: titular, texto, CV y casos con su portada ---
+body.pagina-uxui { overflow-y: auto; height: auto; }
+.ux {
+  font-family: $main-font;
+  color: var(--main-color);
+  padding: 120px 8vw 40px;
+  max-width: 1500px;
+  margin: 0 auto;
+  &__cab { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  &__titulo { margin: 0; color: var(--main-color); font-size: clamp(64px, 10vw, 180px); font-weight: 600; letter-spacing: -.055em; line-height: .9; }
+  &__punto { display: inline-block; width: .17em; height: .17em; margin-left: .03em; border-radius: 50%; background: var(--accent-color); }
+  &__lead { margin: 0; font-size: clamp(22px, 2vw, 32px); font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+  &__texto { margin: 12px 0 0; max-width: 46ch; font-size: clamp(16px, 1.2vw, 19px); font-weight: 300; line-height: 1.55; opacity: .88; }
+  &__seccion {
+    display: flex; align-items: baseline; gap: 10px;
+    margin: 64px 0 18px; padding-top: 14px; border-top: 1px solid var(--linea);
+    font-size: 13px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave);
+    span { color: var(--accent-color); font-variant-numeric: tabular-nums; }
+  }
+  &__casos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 56px; }
+  &__enlace { display: grid; gap: 16px; color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  &__img {
+    display: block; position: relative; overflow: hidden; border-radius: 10px; background: #101011; aspect-ratio: 16 / 10;
+    img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.22, 1, .36, 1); }
+  }
+  &__info { display: flex; flex-direction: column; gap: 8px; }
+  &__fila { display: flex; align-items: center; justify-content: space-between; font-size: 13px; letter-spacing: .08em; color: var(--tinta-suave); font-variant-numeric: tabular-nums; }
+  &__num { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-color); color: $tinta; font-weight: 600; letter-spacing: 0; }
+  &__nombre { font-size: clamp(30px, 3.4vw, 56px); font-weight: 600; letter-spacing: -.035em; line-height: 1; }
+  &__sub { font-size: clamp(16px, 1.25vw, 20px); font-weight: 300; line-height: 1.4; opacity: .9; }
+  &__dato { display: block; font-size: 15px; font-weight: 300; line-height: 1.5; color: var(--tinta-suave); b { display: block; margin-bottom: 2px; font-size: 13px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--main-color); } }
+  &__ver {
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; margin-top: 6px; min-height: 44px; padding: 0 18px;
+    border-radius: 999px; border: 1px solid var(--accent-color); color: var(--main-color);
+    font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+    svg { width: 11px; height: 11px; transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
+  }
+  &__enlace:active &__img img { transform: scale(.985); }
+  @media (hover: hover) and (pointer: fine) {
+    &__enlace:hover &__img img { transform: scale(1.035); }
+    &__enlace:hover &__ver { background: var(--accent-color); color: $tinta; svg { transform: translateX(3px); } }
+  }
+  &__enlace:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 6px; border-radius: 12px; }
+}
+@media (max-width: 899px) {
+  .ux { padding-top: 96px; }
+  .ux__dato--papel { display: none !important; } // en móvil, solo el reto: menos texto por pantalla
+}
+@media (min-width: 900px) {
+  .ux__cab { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: end; gap: 6vw; }
+  .ux__casos { grid-template-columns: 1fr 1fr; gap: 96px 4vw; }
+  .ux__caso--grande { grid-column: 1 / -1; }
+  .ux__caso--grande .ux__enlace { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: center; gap: 4vw; }
+  .ux__caso--der .ux__img { order: 2; }
+  .ux__caso--grande .ux__info { gap: 12px; }
+}
+html.tema-dia .ux__img { background: #e3e0d6; }
+
+.pagina-uxui .press-space { display: none !important; }

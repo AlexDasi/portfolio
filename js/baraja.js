@@ -53,6 +53,9 @@
     this.hv = [];
     this.hover = -1;
     this.medidas = { w: 600, h: 375 };
+    // v11 (Alex, 21/11): en móvil, un mazo de verdad (3 cartas, la de delante sale volando al pasar); ?baraja=fila = la fila de antes
+    this.mazo = !/[?&]baraja=fila/.test(location.search);
+    if (this.mazo) root.setAttribute('data-mazo', '');
     this.arrastre = null;
     this.ruedaFin = 0;
     this.ruedaDir = 0;
@@ -218,6 +221,21 @@
           tr = 'perspective(' + MESA.perspectiva + 'px) translate3d(' + (t * MESA.salidaX * m.w).toFixed(1) + 'px,' + (t * 0.12 * m.h).toFixed(1) + 'px,0)' +
             ' rotateY(' + (MESA.giroFrente + t * 30).toFixed(2) + 'deg) scale(' + (1 - t * 0.04).toFixed(4) + ')';
           op = Math.max(0, 1 - t * 1.7);
+        }
+      } else if (this.mazo) {
+        // v11 · mazo: delante la carta entera; detrás asoman dos, un poco más arriba, a la derecha y giradas (como un mazo en
+        // la mano). Al pasar, la de delante se va volando a la izquierda girando y la siguiente avanza a su sitio.
+        var lean2 = Math.max(-10, Math.min(10, -v * 5));
+        if (d >= 0) {
+          var dd = Math.min(d, 2.6);
+          tr = 'perspective(900px) translate3d(' + (dd * 0.075 * m.w).toFixed(1) + 'px,' + (-dd * 0.05 * m.h).toFixed(1) + 'px,0)' +
+            ' rotateZ(' + (dd * 4.5).toFixed(2) + 'deg) rotateY(' + (d < 1 ? lean2 * (1 - d) : 0).toFixed(2) + 'deg) scale(' + (1 - dd * 0.055).toFixed(4) + ')';
+          op = d > 2 ? Math.max(0, 1 - (d - 2) * 2) : 1;
+        } else {
+          var tv = Math.min(-d, 1.6);
+          tr = 'perspective(900px) translate3d(' + (-tv * 1.2 * m.w).toFixed(1) + 'px,' + (tv * 0.08 * m.h).toFixed(1) + 'px,0)' +
+            ' rotateZ(' + (-tv * 16).toFixed(2) + 'deg) rotateY(' + lean2.toFixed(2) + 'deg)';
+          op = Math.max(0, 1 - Math.max(0, tv - 0.55) * 2.2);
         }
       } else {
         // fila: la de delante a la izquierda, la siguiente asomando a la derecha; las anteriores salen por la izquierda

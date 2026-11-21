@@ -54,6 +54,7 @@
   function siguiente() {
     var j = Math.floor(Math.random() * (c.paleta.length - 1));
     c.i = j >= c.i ? j + 1 : j; // al azar entre los demás: nunca repite el actual
+    try { sessionStorage.setItem('alexdasi-acento', c.i); } catch (e) {} // v11: el nuevo se queda para el resto de la visita
     aplicar();
     rafaga();
     document.documentElement.classList.add('cursor-cambiado');

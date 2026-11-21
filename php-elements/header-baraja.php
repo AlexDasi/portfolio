@@ -135,7 +135,11 @@ $assetVersion = static function (string $relativePath): string {
                 { r: 255, g: 122, b: 26, n: 'naranja-electrico', d: { r: 234, g: 101, b: 12 } } /* loco */
             ];
             var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
-            var i = fijo ? 0 : Math.floor(Math.random() * paleta.length);
+            /* v11 (Alex, 21/11: «no quiero que cambie el color acento mientras estés en la misma visita»): el acento se elige al
+               entrar y se guarda para toda la visita (sessionStorage); el espacio lo cambia y el nuevo también se queda. */
+            var i = -1; try { i = parseInt(sessionStorage.getItem('alexdasi-acento'), 10); } catch (e) {}
+            if (!(i >= 0 && i < paleta.length)) { i = Math.floor(Math.random() * paleta.length); try { sessionStorage.setItem('alexdasi-acento', i); } catch (e) {} }
+            if (fijo) i = 0;
             var c = paleta[i];
             html.style.setProperty('--cursor-color', 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')');
             html.style.setProperty('--cursor-color-dia', 'rgb(' + c.d.r + ',' + c.d.g + ',' + c.d.b + ')');

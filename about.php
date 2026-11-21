@@ -1,4 +1,6 @@
 <?php
+/* v11: UX/UI tiene página propia */
+if (($_GET['s'] ?? '') === 'uxui') { header('Location: uxui.php' . ((($_GET['lang'] ?? '') === 'en') ? '?lang=en' : ''), true, 301); exit; }
 /* About v2 (feedback 79, rama rediseno-baraja-2026-11, ATELIER conv. 1330): rediseñado en blanco roto con el
    lenguaje de la home (antes se traían tal cual las pantallas oscuras). Misma estructura que la home: pantallas
    completas que se pasan con «los pisos» o la flecha. ?s=about|uxui|contact abre en esa pantalla. */
@@ -7,11 +9,14 @@ $pageTitle = ['es' => 'Sobre mí · Alex Dasi', 'en' => 'About · Alex Dasi']; /
 $canonParams = isset($_GET['s']) && in_array($_GET['s'], ['about', 'process', 'uxui', 'contact'], true) && $_GET['s'] !== 'about' ? ['s' => $_GET['s']] : [];
 include 'php-elements/header-baraja.php';
 include 'php-pages/sobre-mi.php';
-$pantallas = ['hola', 'como', 'tray', 'uxui', 'habla'];
-$secciones = ['about' => 0, 'process' => 1, 'uxui' => 3, 'contact' => 4];
+/* v11 (Alex, 21/11): UX/UI tiene página propia (uxui.php); en móvil «Hablamos» es el pie (#contacto), igual que en la home */
+$pantallas = ['hola', 'como', 'tray', 'habla'];
+$pantallasMovil = ['hola', 'como', 'tray'];
+$secciones = ['about' => 0, 'process' => 1, 'contact' => 3];
+$conPie = true;
 $s = isset($_GET['s']) && isset($secciones[$_GET['s']]) ? $_GET['s'] : 'about';
 $navActual = $s === 'process' ? 'about' : $s;
-$pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|UX/UI|HABLAMOS' : 'HELLO|HOW I WORK|BACKGROUND|UX/UI|LET’S TALK';
+$pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|HABLAMOS' : 'HELLO|HOW I WORK|BACKGROUND|LET’S TALK';
 ?>
 
 <body class="<?php echo $bodyClass; ?>">
@@ -30,17 +35,17 @@ $pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|UX/UI|HABLAMOS' : 'H
 </div>
 
 <div class="hiddenDesktop sm-movil">
-    <?php foreach ($pantallas as $k): ?>
+    <?php foreach ($pantallasMovil as $k): ?>
     <div class="pantalla pantalla--sm" id="s-<?php echo $k; ?>"><?php sobre_pantalla($k, $T, $e, $flecha, $wa, $cv); ?></div>
     <?php endforeach; ?>
-    <?php $pieCorto = true; include 'php-elements/pie-contacto.php'; /* v10 */ ?>
+    <?php include 'php-elements/pie-contacto.php'; /* v11: el mismo pie que la home (es el contacto) */ ?>
 </div>
 
     <?php include 'php-elements/js-baraja.php'?>
     <script>
         /* Escritorio: el acceso de arriba que toca se marca según la pantalla */
         window.addEventListener('pisos:cambio', function (e) {
-            var marca = { 0: 'about', 1: 'about', 2: 'about', 3: 'uxui', 4: 'contact' }[e.detail.index];
+            var marca = { 0: 'about', 1: 'about', 2: 'about', 3: 'contact' }[e.detail.index];
             document.querySelectorAll('.nav-sutil__item').forEach(function (a) {
                 a.classList.toggle('is-active', a.getAttribute('href').indexOf('s=' + marca) !== -1);
             });
@@ -100,8 +105,8 @@ $pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|UX/UI|HABLAMOS' : 'H
         /* Móvil: abrir en la sección pedida */
         (function () {
             if (window.innerWidth > 1280) return;
-            var id = { about: 'hola', process: 'como', uxui: 'uxui', contact: 'habla' }['<?php echo $s; ?>'];
-            var el = document.getElementById('s-' + id);
+            var id = { about: 'hola', process: 'como', contact: 'contacto' }['<?php echo $s; ?>'];
+            var el = document.getElementById(id === 'contacto' ? 'contacto' : 's-' + id);
             if (el && id !== 'hola') setTimeout(function () { el.scrollIntoView(); }, 60);
         })();
     </script>

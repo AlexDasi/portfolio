@@ -6,6 +6,7 @@
 $bodyClass = 'sitio-baraja home-pisos'; /* v10: home-pisos = en móvil la página se imanta a cada pantalla */
 include 'php-elements/header-baraja.php';
 $navActual = 'home';
+$conPie = true; /* v11: el menú «Contacto» baja al pie */
 $pisos = ($lang === 'es') ? 'INICIO|PROYECTOS' : 'HOME|WORKS';
 ?>
 
