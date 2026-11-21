@@ -90,36 +90,70 @@ function saten(){
   return {objeto: m, cursorCss: 'punto', actualizar(){}};
 }
 
-/* ---------- 4 · POMPA DE JABÓN ---------- */
+/* ---------- 4 · POMPA DE JABÓN (v2, conv. 1401: «con mayor calidad») ----------
+   Una pompa real casi no refracta: se ve lo de detrás tal cual y encima los reflejos del estudio teñidos por la
+   interferencia de la película (fórmula de Airy por longitud de onda R, G, B). El grosor escurre (fino arriba, con la
+   mancha negra de cuando va a explotar; grueso abajo) y se arremolina con remolinos que suben. Cara de delante y de atrás. */
 function pompa(){
-  const n = ruido3(3);
-  const grosor = texRuido(512, 256, (u, v) => { const s = enEsfera(n, 1.1, 3)(u, v); return Math.min(1, Math.max(0, .45 + .55 * s + .3 * v)); });   // más fina arriba, más gruesa abajo (la pompa escurre)
-  const mat = new THREE.MeshPhysicalMaterial({color: 0xffffff, roughness: 0, metalness: 0, transmission: 1, thickness: .02, ior: 1.33, specularIntensity: 1,
-    iridescence: 1, iridescenceIOR: 1.33, iridescenceThicknessRange: [180, 820], iridescenceThicknessMap: grosor,
-    attenuationColor: new THREE.Color('#EFFFC0'), attenuationDistance: 6, side: THREE.DoubleSide, transparent: true, opacity: 1, depthWrite: false});
-  const m = new THREE.Mesh(new THREE.SphereGeometry(1, 160, 96), mat);
-  /* la película: interferencia de capa fina aproximada (color según grosor), visible sobre todo hacia el borde, como una pompa real */
-  const uP = {uG: {value: grosor}, uT: {value: 0}};
-  const pelicula = new THREE.Mesh(new THREE.SphereGeometry(1.002, 160, 96), new THREE.ShaderMaterial({uniforms: uP, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    vertexShader: 'varying vec2 vUv; varying vec3 vN, vV; void main(){ vUv = uv; vec4 mv = modelViewMatrix * vec4(position, 1.); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }',
-    fragmentShader: `uniform sampler2D uG; uniform float uT; varying vec2 vUv; varying vec3 vN, vV;
-      vec3 capa(float d){ vec3 w = vec3(650., 530., 440.); return .5 + .5 * cos(6.2831853 * 2. * 1.33 * d / w * 2.2); }
-      void main(){ float g = texture2D(uG, vUv + vec2(uT * .012, 0.)).r; float d = mix(220., 620., g);
-        float f = 1. - abs(dot(normalize(vN), normalize(vV))); float k = .1 + .9 * pow(f, 2.2);
-        vec3 c = capa(d); c = mix(vec3(dot(c, vec3(.33))), c, 1.15); gl_FragColor = vec4(c * k * .4, 1.); }`}));
-  const g = new THREE.Group(); g.add(m, pelicula);
-  return {objeto: g, cursorCss: 'punto', actualizar(dt, t){ grosor.offset.set(t * .012, Math.sin(t * .2) * .03); uP.uT.value = t; }};
+  const u = {uT: {value: 0}, uEnv: {value: null}, uK: {value: 3.2}};
+  const mat = new THREE.ShaderMaterial({uniforms: u, transparent: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending,
+    vertexShader: 'varying vec3 vO; varying vec3 vNw; varying vec3 vPw; void main(){ vO = position; vNw = normalize(mat3(modelMatrix) * normal); vec4 w = modelMatrix * vec4(position, 1.); vPw = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: `uniform float uT, uK; uniform sampler2D uEnv; varying vec3 vO; varying vec3 vNw; varying vec3 vPw; ${SIMPLEX}
+      vec3 entorno(vec3 d){ return texture2D(uEnv, vec2(atan(d.z, d.x) * .1591549 + .5, asin(clamp(d.y, -1., 1.)) * .3183099 + .5)).rgb; }
+      float airy(float dnm, float cosI, float lam){                     // reflectancia de una película de agua jabonosa (n = 1.33)
+        float n = 1.33; float sinT = sqrt(max(0., 1. - cosI * cosI)) / n; float cosT = sqrt(max(0., 1. - sinT * sinT));
+        float rs = (cosI - n * cosT) / (cosI + n * cosT); float rp = (n * cosI - cosT) / (n * cosI + cosT); float r = (abs(rs) + abs(rp)) * .5;
+        float del = 12.5663706 * n * dnm * cosT / lam; float r2 = r * r;
+        return (2. * r2 - 2. * r2 * cos(del)) / (1. + r2 * r2 - 2. * r2 * cos(del)); }
+      void main(){
+        vec3 n = normalize(vNw); if (!gl_FrontFacing) n = -n;
+        vec3 v = normalize(cameraPosition - vPw); float cosI = clamp(abs(dot(n, v)), .02, 1.);
+        vec3 p = normalize(vO);
+        // grosor: escurre hacia abajo + remolinos que suben y giran despacio
+        float t = uT;
+        vec3 q = p * 1.7 + vec3(0., -t * .06, 0.); q.xz = mat2(cos(t * .05), -sin(t * .05), sin(t * .05), cos(t * .05)) * q.xz;
+        float rem = snoise(q + snoise(q * 1.9 + t * .04) * .8) * .6 + snoise(p * 5.5 + vec3(t * .1, -t * .08, 0.)) * .18;
+        float caida = smoothstep(1., -1., p.y);                           // 0 arriba · 1 abajo
+        float dnm = mix(170., 960., pow(caida, 1.1)) + rem * mix(110., 240., caida);
+        float negra = smoothstep(105., 70., dnm);                         // la mancha negra (película más fina que la luz)
+        dnm = max(dnm, 20.);
+        vec3 R = vec3(airy(dnm, cosI, 650.), airy(dnm, cosI, 532.), airy(dnm, cosI, 455.)) * (1. - negra * .9);
+        vec3 env = entorno(reflect(-v, n));
+        float k = uK * (gl_FrontFacing ? 1. : .45);
+        vec3 col = env * R * k + R * .035;                                // reflejo del estudio teñido + un poco de película siempre
+        gl_FragColor = vec4(col, 1.); }`});
+  const m = new THREE.Mesh(new THREE.SphereGeometry(1, 192, 112), mat);
+  return {objeto: m, cursorCss: 'punto', entorno(env){ u.uEnv.value = env; }, actualizar(dt, t){ u.uT.value = t; }};
 }
 
-/* ---------- 5 · TERCIOPELO ---------- */
+/* ---------- 5 · TERCIOPELO (v2, conv. 1401: «con mayor calidad») ----------
+   Pelo de verdad: 40 capas (conchas) sobre la piel, cada una con las fibras recortadas a su altura; el pelo se tumba en
+   direcciones distintas por zonas (terciopelo chafado) y el brillo rasante (sheen) sale de las puntas. Pelusa en el borde. */
 function terciopelo(){
-  const n = ruido3(11);
-  const fibra = texRuido(1024, 512, (u, v) => { const a = enEsfera(n, 60, 2)(u, v), b = enEsfera(n, 3, 3)(u, v); return Math.min(1, Math.max(0, .5 + .35 * a + .3 * b)); });
-  const chafado = texRuido(512, 256, (u, v) => { const b = enEsfera(n, 2.2, 4)(u, v); const k = Math.min(1, Math.max(0, .78 + .45 * b)); return [k, k, k]; }, true);   // terciopelo chafado: zonas con el pelo en otra dirección
-  const mat = new THREE.MeshPhysicalMaterial({color: new THREE.Color('#4E6B06'), roughness: 1, sheen: 1, sheenColor: new THREE.Color('#F5FFA8'), sheenRoughness: .3,
-    bumpMap: fibra, bumpScale: .12, map: chafado, emissive: new THREE.Color('#1c2903'), emissiveIntensity: .3});
-  const m = new THREE.Mesh(new THREE.SphereGeometry(1, 160, 96), mat);
-  return {objeto: m, cursorCss: 'punto', actualizar(){}};
+  const CAPAS = 40, ALTO = .032, geo = new THREE.SphereGeometry(1, 192, 112);
+  const piel = new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({color: new THREE.Color('#2E4204'), roughness: 1, sheen: .6, sheenColor: new THREE.Color('#C9E64A'), sheenRoughness: .5}));
+  const mat = new THREE.MeshPhysicalMaterial({color: new THREE.Color('#5C7E0A'), roughness: 1, sheen: 1, sheenColor: new THREE.Color('#F8FFB4'), sheenRoughness: .3});
+  mat.onBeforeCompile = sh => {
+    sh.uniforms.uAlto = {value: ALTO}; sh.uniforms.uCapas = {value: CAPAS};
+    sh.vertexShader = 'uniform float uAlto, uCapas; varying vec3 vBase; varying float vH;\n' + SIMPLEX + '\n' + sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+      vH = (float(gl_InstanceID) + 1.) / uCapas; vBase = normalize(position);
+      vec3 cr = vec3(snoise(vBase * 1.6), snoise(vBase * 1.6 + 7.3), snoise(vBase * 1.6 + 13.1));      // hacia dónde se tumba el pelo
+      vec3 tum = normalize(cross(vBase, cr) + 1e-4);
+      transformed += vBase * vH * uAlto + tum * vH * vH * uAlto * 1.1 - vec3(0., 1., 0.) * vH * vH * uAlto * .25;`);
+    sh.vertexShader = sh.vertexShader.replace('#include <project_vertex>', '#include <project_vertex>').replace('#include <instancing_vertex>', '');   // sin matriz de instancia: solo usamos el índice
+    sh.fragmentShader = 'varying vec3 vBase; varying float vH;\nfloat h1(vec3 p){ return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }\nvec3 h3(vec3 p){ return fract(sin(vec3(dot(p, vec3(127.1, 311.7, 74.7)), dot(p, vec3(269.5, 183.3, 246.1)), dot(p, vec3(113.5, 271.9, 124.6)))) * 43758.5453); }\n'
+      + sh.fragmentShader.replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+      { vec3 P = vBase * 460.; vec3 c = floor(P); vec3 f = fract(P) - h3(c);                           // una fibra por celda, con largo propio
+        float largo = .55 + .45 * h1(c); float rad = .42 * (1. - vH * .65);
+        if (length(f - dot(f, vBase) * vBase) > rad || vH > largo) discard; }`)
+      .replace('#include <color_fragment>', '#include <color_fragment>\n diffuseColor.rgb *= mix(.18, 1.1, vH * vH);');    // oscuro en la raíz (oclusión), claro en las puntas
+  };
+  mat.customProgramCacheKey = () => 'terciopelo-v2';
+  const fibras = new THREE.InstancedMesh(geo, mat, CAPAS);
+  for (let i = 0; i < CAPAS; i++) fibras.setMatrixAt(i, new THREE.Matrix4());
+  fibras.frustumCulled = false;
+  const g = new THREE.Group(); g.add(piel, fibras);
+  return {objeto: g, cursorCss: 'punto', actualizar(){}};
 }
 
 export const NUEVOS = ['solare', 'globo', 'saten', 'pompa', 'terciopelo'];
