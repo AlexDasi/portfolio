@@ -715,3 +715,24 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **(conv. 1389)** Cursor (punto) en todas las páginas, fichas incluidas (magnet cargaba solo con swiper). UX/UI en escritorio por encima del lienzo del fluido (se veía un segundo y desaparecía). Fuera el cuarzo (forma) del sorteo: quedan chicle, glaseado, prisma y gema. Escenas de móvil en la mano «movil-chimenea» (Imperio, Mas Vesprada, Cocció, Vapor) ocultas (`oculto` en baraja.json): entraban torcidas arriba porque el script encaja la captura con un rectángulo girado (minAreaRect) y no con la perspectiva real.
 
 **Publicado (21/11 13:41, conv. 1391):** `main` fc36525 en vivo (v12 completa). Desde ahora el portfolio se publica sin pedir permiso (Alex: «publica SIEMPRE, no me pidas permiso»).
+
+---
+
+## 2026-11-21 — v13 · mockups, vídeo de Mas Vesprada y caso ATELIER (feedback 182-183 y 186-188, ATELIER conv. 1391)
+
+- **Mockups rehechos (24 escenas, 12 fichas):** encaje nuevo con la perspectiva real: la pantalla se saca rellenando desde una semilla sin cruzar bordes (Canny) y las esquinas son la intersección de 4 rectas ajustadas a los lados (antes: rectángulo girado → arriba torcido). Script: ATELIER `clientes/alexdasi/seleccion/grabar/2026-11-21_mockup-encaje.py` + `2026-11-21_mockup-escenas.py`. **14 fotos** (antes 6), cada ficha con una de portátil y una de móvil distintas a la de al lado; e1 = captura d1, e2 = m1 (las capturas d3/m3 originales no estaban guardadas). Vuelven las 4 e2 que estaban ocultas.
+- **Mas Vesprada:** la miniatura (vídeo de la carta) pasaba por los números del plano al cambiar de sección; ahora es la portada con un acercamiento lento (escritorio 6,2 s, móvil 7,8 s).
+- **Caso ATELIER rediseñado:** arriba las 7 mejores (Berto Sánchez, El Imperio, Elsa Moreno — clientes — y Casa Albar, Cocció, Solvera, Mas Vesprada) enlazando a sus fichas nuevas; fuera Otra Vez, Pati, Lenta y alè; texto nuevo (referencias antes que diseño, clientes reales, revisión de móvil); mockups nuevos dentro; resultado y stack al día.
+
+### Fotos de mockup (Unsplash, licencia Unsplash)
+| id | autor | uso |
+|---|---|---|
+| sKGpCOu_voE | Jakub Żerdzicki | móvil en la mano |
+| DxBUFxwUWJ8 | Jakub Żerdzicki | móvil en la mano (la de antes, ahora bien encajada) |
+| OQM6fjcp22c | Kelly Sikkema | móvil en la mano, fondo oscuro |
+| _HB3Y1wGlxw | Matteo Vella | móvil sobre rosa |
+| ZfQUwQsG1QY | G | móvil de estudio, gris |
+| y5_nKn4JRLI | Lucas Cleutjens | móvil sobre bloque, azul |
+| 1SAnrIxw5OY · qu8w7x-0gw4 · p0UwQ-Wd8TM · OOHsoUNRxt8 · UXvXdQC1GoM · j4uuKnN43_M · nXGw951o3Hk · 3xQ65cknLPk | Kari Shea · Devin Pickell (2) · Sincerely Media (2) · Alex Knight · Marcin Skalij · Quaritsch Photography | portátiles e iMac |
+
+**QA:** `vivo.mjs` 0 rojos en el caso ATELIER y la ficha de El Imperio (iPhone 13, SE, Android, desktop).

@@ -666,11 +666,11 @@
       },
       "intro": {
         "es": [
-          "ATELIER es mi forma de diseñar webs, escrita como un sistema. Sigue las tendencias de diseño web, mantiene un moodboard ordenado, propone tres direcciones para cada web, aprende de mi feedback y construye la web final.",
+          "ATELIER es mi forma de diseñar webs, escrita como un sistema. Guarda y ordena referencias, monta un moodboard para cada proyecto, propone caminos de diseño, aprende de mi feedback y construye la web final.",
           "La velocidad importa, pero el gusto va primero. Yo marco la dirección, tomo las decisiones y elijo qué se tira."
         ],
         "en": [
-          "ATELIER is how I design websites, written down as a system. It follows web design trends, keeps a structured moodboard, proposes three directions for every site, learns from my feedback and builds the final website.",
+          "ATELIER is how I design websites, written down as a system. It saves and sorts references, builds a moodboard for each project, proposes design directions, learns from my feedback and builds the final website.",
           "Speed matters, but taste comes first. I set the direction, make the calls and decide what gets thrown away."
         ]
       },
@@ -720,12 +720,12 @@
             "es": [
               "Figma, Astro, Tailwind",
               "Claude, GitHub",
-              "Cloudflare Pages"
+              "Hostinger"
             ],
             "en": [
               "Figma, Astro, Tailwind",
               "Claude, GitHub",
-              "Cloudflare Pages"
+              "Hostinger"
             ]
           }
         }
@@ -757,116 +757,151 @@
             "en": "The outcome"
           },
           "d": {
-            "es": "En sus primeras semanas: más de 20 decisiones de diseño registradas y diez webs construidas. Tres hicieron el recorrido completo, de las direcciones a la web final.",
-            "en": "In its first weeks: 20+ design decisions logged and ten sites built. Three went all the way, from directions to final site."
+            "es": "Webs para clientes reales (Berto Sánchez, Librería El Imperio, Elsa Moreno) y una colección de conceptos que sirven de banco de pruebas, cada una con su propia cara.",
+            "en": "Websites for real clients (Berto Sánchez, Librería El Imperio, Elsa Moreno) and a set of concepts that work as a test bench, each with a face of its own."
           }
         }
       ],
       "bloques": [
         {
           "tipo": "concepto",
-          "src": "content/pictures/projects/casa-albar/casa-albar-home-hero.jpg",
+          "src": "content/baraja/berto-sanchez_scroll-desktop-hd_poster-1600.webp",
+          "alt": {
+            "es": "Portada de Berto Sánchez",
+            "en": "Berto Sánchez homepage"
+          },
+          "nombre": "Berto Sánchez",
+          "linea": {
+            "es": "Cliente · las piezas de un diseñador industrial, a pantalla completa",
+            "en": "Client · an industrial designer’s pieces, full screen"
+          },
+          "href": "proyecto.php?p=berto-sanchez",
+          "w": 1600,
+          "h": 1000,
+          "grande": "content/baraja/berto-sanchez_scroll-desktop-hd_poster-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/berto-sanchez_scroll-desktop_poster-1000.webp",
+          "wc": 1000
+        },
+        {
+          "tipo": "concepto",
+          "src": "content/baraja/imperio_scroll-desktop-hd_poster-1600.webp",
+          "alt": {
+            "es": "Portada de Librería El Imperio",
+            "en": "Librería El Imperio homepage"
+          },
+          "nombre": "Librería El Imperio",
+          "linea": {
+            "es": "Cliente · librería de barrio con clubes, agenda y tienda",
+            "en": "Client · neighbourhood bookshop with clubs, events and shop"
+          },
+          "href": "proyecto.php?p=imperio",
+          "w": 1600,
+          "h": 1000,
+          "grande": "content/baraja/imperio_scroll-desktop-hd_poster-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/imperio_scroll-desktop_poster-1000.webp",
+          "wc": 1000
+        },
+        {
+          "tipo": "concepto",
+          "src": "content/baraja/elsa-moreno_scroll-desktop-hd_poster-1600.webp",
+          "alt": {
+            "es": "Portada de Elsa Moreno",
+            "en": "Elsa Moreno homepage"
+          },
+          "nombre": "Elsa Moreno",
+          "linea": {
+            "es": "Cliente · una poeta con sus libros, su escena y su agenda",
+            "en": "Client · a poet’s books, stage work and calendar"
+          },
+          "href": "proyecto.php?p=elsa-moreno",
+          "w": 1600,
+          "h": 1000,
+          "grande": "content/baraja/elsa-moreno_scroll-desktop-hd_poster-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/elsa-moreno_scroll-desktop_poster-1000.webp",
+          "wc": 1000
+        },
+        {
+          "tipo": "concepto",
+          "src": "content/baraja/casa-albar_scroll-desktop-hd_poster-1600.webp",
           "alt": {
             "es": "Portada de Casa Albar",
             "en": "Casa Albar homepage"
           },
           "nombre": "Casa Albar",
           "linea": {
-            "es": "Un hotel cuya web pasa del día a la noche",
-            "en": "A hotel website that goes from day to night"
+            "es": "Concepto · un hotel cuya web pasa del día a la noche",
+            "en": "Concept · a hotel website that goes from day to night"
           },
-          "href": "casa-albar.php?lang=en",
-          "w": 1440,
-          "h": 900,
-          "kb": 161,
-          "grande": "content/casos/atelier_01-1440.webp",
-          "wg": 1440,
-          "chica": "content/casos/atelier_01-900.webp",
-          "wc": 900
+          "href": "proyecto.php?p=casa-albar",
+          "w": 1600,
+          "h": 1000,
+          "grande": "content/baraja/casa-albar_scroll-desktop-hd_poster-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/casa-albar_scroll-desktop_poster-1000.webp",
+          "wc": 1000
         },
         {
           "tipo": "concepto",
-          "src": "content/pictures/projects/ale/ale-home-hero.jpg",
+          "src": "content/baraja/coccio_scroll-desktop-hd_poster-1600.webp",
           "alt": {
-            "es": "Portada de alè",
-            "en": "alè homepage"
+            "es": "Portada de Cocció",
+            "en": "Cocció homepage"
           },
-          "nombre": "alè",
+          "nombre": "Cocció",
           "linea": {
-            "es": "Un estudio de yoga cuya web respira contigo",
-            "en": "A yoga studio website that breathes with you"
+            "es": "Concepto · el scroll es el horno de un taller de cerámica",
+            "en": "Concept · the scroll is a pottery kiln"
           },
-          "href": "ale.php?lang=en",
-          "w": 1440,
-          "h": 900,
-          "kb": 76,
-          "grande": "content/casos/atelier_02-1440.webp",
-          "wg": 1440,
-          "chica": "content/casos/atelier_02-900.webp",
-          "wc": 900
+          "href": "proyecto.php?p=coccio",
+          "w": 1600,
+          "h": 1000,
+          "grande": "content/baraja/coccio_scroll-desktop-hd_poster-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/coccio_scroll-desktop_poster-1000.webp",
+          "wc": 1000
         },
         {
           "tipo": "concepto",
-          "src": "content/pictures/projects/otra-vez/otra-vez-home-hero.jpg",
+          "src": "content/baraja/solvera_scroll-desktop-hd_poster-1600.webp",
           "alt": {
-            "es": "Portada de Otra Vez",
-            "en": "Otra Vez homepage"
+            "es": "Portada de Solvera",
+            "en": "Solvera homepage"
           },
-          "nombre": "Otra Vez",
+          "nombre": "Solvera",
           "linea": {
-            "es": "Una tienda vintage llevada como un archivo",
-            "en": "A vintage store run like an archive"
+            "es": "Concepto · una bodega con un solo vino y 36 meses de espera",
+            "en": "Concept · a winery with one wine and 36 months of waiting"
           },
-          "href": "otra-vez.php?lang=en",
-          "w": 1440,
-          "h": 900,
-          "kb": 152,
-          "grande": "content/casos/atelier_03-1440.webp",
-          "wg": 1440,
-          "chica": "content/casos/atelier_03-900.webp",
-          "wc": 900
+          "href": "proyecto.php?p=solvera",
+          "w": 1600,
+          "h": 1000,
+          "grande": "content/baraja/solvera_scroll-desktop-hd_poster-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/solvera_scroll-desktop_poster-1000.webp",
+          "wc": 1000
         },
         {
           "tipo": "concepto",
-          "src": "content/pictures/projects/pati/pati-home-hero.jpg",
+          "src": "content/baraja/mas-vesprada_scroll-desktop-hd_poster-1600.webp",
           "alt": {
-            "es": "Portada de Pati",
-            "en": "Pati homepage"
+            "es": "Portada de Mas Vesprada",
+            "en": "Mas Vesprada homepage"
           },
-          "nombre": "Pati",
+          "nombre": "Mas Vesprada",
           "linea": {
-            "es": "Una cafetería de brunch construida alrededor de su patio",
-            "en": "A brunch café built around its courtyard"
+            "es": "Concepto · una finca de bodas que se dibuja con el scroll",
+            "en": "Concept · a wedding estate drawn as you scroll"
           },
-          "href": "pati.php?lang=en",
-          "w": 1440,
-          "h": 900,
-          "kb": 142,
-          "grande": "content/casos/atelier_04-1440.webp",
-          "wg": 1440,
-          "chica": "content/casos/atelier_04-900.webp",
-          "wc": 900
-        },
-        {
-          "tipo": "concepto",
-          "src": "content/pictures/projects/lenta/lenta-home-hero.jpg",
-          "alt": {
-            "es": "Portada de Lenta",
-            "en": "Lenta homepage"
-          },
-          "nombre": "Lenta",
-          "linea": {
-            "es": "Un estudio de tatuaje donde el flash se vende como producto",
-            "en": "A tattoo studio where flash is sold like product"
-          },
-          "href": "lenta.php?lang=en",
-          "w": 1440,
-          "h": 900,
-          "kb": 99,
-          "grande": "content/casos/atelier_05-1440.webp",
-          "wg": 1440,
-          "chica": "content/casos/atelier_05-900.webp",
-          "wc": 900
+          "href": "proyecto.php?p=mas-vesprada",
+          "w": 1600,
+          "h": 1000,
+          "grande": "content/baraja/mas-vesprada_scroll-desktop-hd_poster-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/mas-vesprada_scroll-desktop_poster-1000.webp",
+          "wc": 1000
         },
         {
           "tipo": "cita",
@@ -879,85 +914,82 @@
           "tipo": "texto",
           "p": {
             "es": [
-              "Yo quería lo contrario: un proceso en el que la velocidad esté al servicio del gusto y cada web tenga personalidad propia. ATELIER funciona como un único ciclo. Las tendencias y las referencias guardadas se convierten en un moodboard etiquetado por paleta, tipografía, layout y movimiento. Cada brief recibe tres direcciones. Yo elijo. La dirección elegida se convierte en una web real en Astro, con revisión automática de enlaces, accesibilidad y responsive. Mi feedback vuelve al sistema."
+              "Yo quería lo contrario: un proceso en el que la velocidad esté al servicio del gusto y cada web tenga personalidad propia. ATELIER funciona como un único ciclo: referencias guardadas y comentadas, un moodboard acotado para cada proyecto, caminos de diseño que salen de ese moodboard, una demo navegable y, cuando la elijo, la web final en código. Mi feedback vuelve al sistema y lo afina para la siguiente."
             ],
             "en": [
-              "I wanted the opposite: a process where speed serves taste and every site has a personality of its own. ATELIER runs as one loop. Trends and saved references become a moodboard tagged by palette, type, layout and motion. Every brief gets three directions. I choose. The chosen direction becomes a real site in Astro, checked automatically for links, accessibility and responsive layouts. My feedback goes back into the system."
+              "I wanted the opposite: a process where speed serves taste and every site has a personality of its own. ATELIER runs as one loop: saved and annotated references, a focused moodboard for each project, design directions drawn from that moodboard, a clickable demo and, once I choose, the final site in code. My feedback goes back into the system and sharpens it for the next one."
             ]
           }
         },
         {
           "tipo": "cita",
           "txt": {
-            "es": "Direcciones antes que webs.",
-            "en": "Directions before builds."
+            "es": "Referencias antes que diseño.",
+            "en": "References before design."
           }
         },
         {
           "tipo": "texto",
           "p": {
             "es": [
-              "Cada dirección define paleta, tipografía, layout y una pieza estrella, y se enseña en escritorio y móvil con una demo ligera. Tirarla cuesta poco, así que tiro muchas."
+              "Nada se diseña de memoria. Cada web arranca de referencias que he guardado y votado: estudios, webs premiadas y proyectos de Behance, mirados por dentro, no solo la portada. De ahí salen la tipografía, el color, el tipo de foto y la estructura, y cada decisión queda apuntada con su referencia."
             ],
             "en": [
-              "Each direction defines palette, typography, layout and one signature piece, shown on desktop and mobile with a light demo. It costs little to throw away, so I throw away a lot."
+              "Nothing is designed from memory. Every site starts from references I have saved and voted on: studios, award-winning sites and Behance projects, looked at from the inside, not just the cover. Type, colour, photo style and structure come from there, and every decision is logged with its reference."
             ]
           }
         },
         {
           "tipo": "img",
-          "src": "content/pictures/projects/atelier/atelier-three-directions-otra-vez.jpg",
+          "src": "content/baraja/imperio_caso-e1-1600.webp",
           "alt": {
-            "es": "Tres direcciones visuales propuestas para Otra Vez: Archivo, Mosaico y Ocre",
-            "en": "Three visual directions proposed for Otra Vez: Archivo, Mosaico and Ocre"
+            "es": "La web de la Librería El Imperio en un portátil",
+            "en": "Librería El Imperio’s website on a laptop"
           },
-          "w": 1440,
-          "h": 453,
-          "kb": 129,
-          "grande": "content/casos/atelier_06-1440.webp",
-          "wg": 1440,
-          "chica": "content/casos/atelier_06-900.webp",
+          "w": 1600,
+          "h": 1066,
+          "grande": "content/baraja/imperio_caso-e1-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/imperio_caso-e1-900.webp",
           "wc": 900
         },
         {
           "tipo": "texto",
           "p": {
             "es": [
-              "Otra Vez necesitó cuatro rondas. Las primeras se descartaron: demasiado parecidas entre sí, demasiado editoriales, demasiado color. La cuarta ronda dio con Archivo, con las fotos de tienda tomadas de Mosaico. Pati y Lenta necesitaron dos rondas cada una, mezclando lo mejor de varias direcciones."
+              "Con clientes reales el sistema se pone a prueba. Berto Sánchez, diseñador industrial, necesitaba que sus piezas hablaran solas. La Librería El Imperio quería juntar clubes de lectura, agenda y tienda en una sola web de barrio. Elsa Moreno, poeta, tenía una web de plantilla que escondía sus poemas. Tres negocios distintos, tres webs que no se parecen entre sí."
             ],
             "en": [
-              "Otra Vez took four rounds. The first ones were rejected: too similar to each other, too editorial, too much colour. The fourth round landed on Archivo, with the shop photos borrowed from Mosaico. Pati and Lenta each needed two rounds, mixing the best parts of several directions."
+              "Real clients put the system to the test. Berto Sánchez, an industrial designer, needed his pieces to speak for themselves. Librería El Imperio wanted book clubs, events and its shop in one neighbourhood website. Elsa Moreno, a poet, had a template site that hid her poems. Three different businesses, three websites that look nothing alike."
             ]
           }
         },
         {
           "tipo": "img",
-          "src": "content/pictures/projects/atelier/atelier-proposals-pati.jpg",
+          "src": "content/baraja/elsa-moreno_caso-e2-900.webp",
           "alt": {
-            "es": "Segunda ronda de direcciones para Pati",
-            "en": "Second round of directions for Pati"
+            "es": "La web de Elsa Moreno en el móvil",
+            "en": "Elsa Moreno’s website on a phone"
           },
-          "w": 1440,
-          "h": 1350,
-          "kb": 213,
-          "grande": "content/casos/atelier_07-1440.webp",
-          "wg": 1440,
-          "chica": "content/casos/atelier_07-900.webp",
-          "wc": 900
+          "w": 900,
+          "h": 1071,
+          "grande": "content/baraja/elsa-moreno_caso-e2-900.webp",
+          "wg": 900,
+          "chica": "content/baraja/elsa-moreno_caso-e2-520.webp",
+          "wc": 520
         },
         {
           "tipo": "img",
-          "src": "content/pictures/projects/atelier/atelier-proposals-lenta.jpg",
+          "src": "content/baraja/berto-sanchez_caso-e1-1600.webp",
           "alt": {
-            "es": "Segunda ronda de direcciones para Lenta",
-            "en": "Second round of directions for Lenta"
+            "es": "La web de Berto Sánchez en un portátil",
+            "en": "Berto Sánchez’s website on a laptop"
           },
-          "w": 1440,
-          "h": 1210,
-          "kb": 200,
-          "grande": "content/casos/atelier_08-1440.webp",
-          "wg": 1440,
-          "chica": "content/casos/atelier_08-900.webp",
+          "w": 1600,
+          "h": 1067,
+          "grande": "content/baraja/berto-sanchez_caso-e1-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/berto-sanchez_caso-e1-900.webp",
           "wc": 900
         },
         {
@@ -971,23 +1003,40 @@
           "tipo": "texto",
           "p": {
             "es": [
-              "Son dos de las reglas del perfil de gusto que el sistema guarda por escrito. Cada comentario empieza como sugerencia y se convierte en regla cuando se repite o cuando lo generalizo. Otras: nada de tiendas de plantillas, un único sistema de marcos por web y, si un detalle de marca necesita explicación, sobra.",
-              "Un panel de control privado lo une todo: el radar de tendencias, cada ronda de direcciones con mis notas, las webs y un modo revisión en el que clavo comentarios directamente sobre los elementos en vivo. Esos pines se convierten en la lista de tareas de la siguiente iteración.",
-              "En sus primeras semanas, ATELIER registró más de 20 decisiones de diseño y construyó diez webs. Tres pasaron por el proceso completo, de las direcciones a la web final, y son las que ves arriba."
+              "Son dos de las reglas del perfil de gusto que el sistema guarda por escrito. Cada comentario mío empieza como sugerencia y se convierte en regla cuando se repite. Otras: nada de plantillas, móvil, tablet y escritorio son tres diseños distintos, y ninguna web se enseña sin pasar antes una revisión de móvil (peso en 4G, letra, fotos, botones)."
             ],
             "en": [
-              "Those are two of the rules in the taste profile the system keeps in writing. Every comment starts as a suggestion and becomes a rule once it repeats or I generalise it. Others: no template stores, one frame system per site, and if a brand detail needs explaining, it should not be there.",
-              "A private control panel ties it together: the trend radar, every round of directions with my notes, the sites, and a review mode where I pin comments straight onto live elements. Those pins become the next iteration's to-do list.",
-              "In its first weeks ATELIER logged more than 20 design decisions and built ten sites. Three went through the full process, from directions to final site, and are shown above."
+              "These are two of the rules in the taste profile the system keeps in writing. Each comment of mine starts as a suggestion and becomes a rule when it repeats. Others: no templates, phone, tablet and desktop are three different designs, and no site is shown before passing a mobile check (weight on 4G, type, photos, buttons)."
             ]
           }
         },
         {
-          "tipo": "cita",
-          "txt": {
-            "es": "Las marcas son ficticias. El proceso es real.",
-            "en": "The brands are fictional. The process is real."
-          }
+          "tipo": "img",
+          "src": "content/baraja/casa-albar_caso-e2-900.webp",
+          "alt": {
+            "es": "Casa Albar en el móvil",
+            "en": "Casa Albar on a phone"
+          },
+          "w": 900,
+          "h": 1071,
+          "grande": "content/baraja/casa-albar_caso-e2-900.webp",
+          "wg": 900,
+          "chica": "content/baraja/casa-albar_caso-e2-520.webp",
+          "wc": 520
+        },
+        {
+          "tipo": "img",
+          "src": "content/baraja/coccio_caso-e1-1600.webp",
+          "alt": {
+            "es": "Cocció en un portátil",
+            "en": "Cocció on a laptop"
+          },
+          "w": 1600,
+          "h": 1067,
+          "grande": "content/baraja/coccio_caso-e1-1600.webp",
+          "wg": 1600,
+          "chica": "content/baraja/coccio_caso-e1-900.webp",
+          "wc": 900
         },
         {
           "tipo": "texto",

@@ -69,6 +69,7 @@ $img = static function (array $b, string $alt, bool $pronto = false) use ($e): s
         . '<noscript><img src="' . $e($b['grande']) . '" width="' . (int) $b['w'] . '" height="' . (int) $b['h'] . '" alt="' . $alt . '"></noscript>';
 };
 $enlaceConcepto = static function (string $href): string {
+    if (strpos($href, 'proyecto.php') === 0) { return $href; } // v12: ATELIER enlaza a las fichas nuevas
     $s = preg_replace('~\.php$~', '', $href);
     return $s === 'casa-albar' ? 'proyecto.php?p=casa-albar' : 'php-pages/projects/' . $s . '.php';
 };

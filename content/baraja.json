@@ -131,8 +131,8 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "Bio",
-            "en": "Bio"
+            "es": "Proyecto Facetas 02",
+            "en": "Facetas 02 project"
           },
           "w": 1600,
           "h": 1067,
@@ -140,23 +140,23 @@
             1600,
             900
           ],
-          "mockup": "portatil-escritorio-madera"
+          "mockup": "OOHsoUNRxt8"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "Contacto",
-            "en": "Contact"
+            "es": "Facetas 01 en móvil",
+            "en": "Facetas 01 on mobile"
           },
           "w": 900,
-          "h": 1145,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-jardin"
+          "mockup": "_HB3Y1wGlxw"
         },
         {
           "id": "d2",
@@ -326,33 +326,32 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "Listas",
-            "en": "Lists"
+            "es": "Agenda",
+            "en": "Events"
           },
           "w": 1600,
-          "h": 1067,
+          "h": 1066,
           "anchos": [
             1600,
             900
           ],
-          "mockup": "portatil-plantas"
+          "mockup": "qu8w7x-0gw4"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "Ficha de libro",
-            "en": "Book page"
+            "es": "Clubes de lectura",
+            "en": "Book clubs"
           },
           "w": 900,
-          "h": 1072,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-chimenea",
-          "oculto": true
+          "mockup": "sKGpCOu_voE"
         },
         {
           "id": "d2",
@@ -524,32 +523,32 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "La Hora Blanca, en negro de escena",
-            "en": "La Hora Blanca, in stage black"
+            "es": "Poesía: los libros",
+            "en": "Poetry: the books"
           },
           "w": 1600,
-          "h": 950,
+          "h": 1067,
           "anchos": [
             1600,
             900
           ],
-          "mockup": "portatil-blanco"
+          "mockup": "1SAnrIxw5OY"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "Ficha de libro",
-            "en": "Book page"
+            "es": "Agenda en móvil",
+            "en": "Calendar on mobile"
           },
           "w": 900,
-          "h": 1200,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-escalera"
+          "mockup": "ZfQUwQsG1QY"
         },
         {
           "id": "d2",
@@ -722,32 +721,32 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "Bio",
-            "en": "Bio"
+            "es": "Proyecto Roll",
+            "en": "Roll project"
           },
           "w": 1600,
-          "h": 950,
+          "h": 1067,
           "anchos": [
             1600,
             900
           ],
-          "mockup": "portatil-blanco"
+          "mockup": "nXGw951o3Hk"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "Contacto",
-            "en": "Contact"
+            "es": "Nautica en móvil",
+            "en": "Nautica on mobile"
           },
           "w": 900,
-          "h": 1200,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-escalera"
+          "mockup": "OQM6fjcp22c"
         },
         {
           "id": "d2",
@@ -919,8 +918,8 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "La mesa",
-            "en": "The table"
+            "es": "Las nueve habitaciones",
+            "en": "The nine rooms"
           },
           "w": 1600,
           "h": 1067,
@@ -928,23 +927,23 @@
             1600,
             900
           ],
-          "mockup": "portatil-escritorio-madera"
+          "mockup": "p0UwQ-Wd8TM"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "Reserva",
-            "en": "Booking"
+            "es": "Ficha de habitación",
+            "en": "Room page"
           },
           "w": 900,
-          "h": 1145,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-jardin"
+          "mockup": "y5_nKn4JRLI"
         },
         {
           "id": "d2",
@@ -1116,8 +1115,8 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "La hornada",
-            "en": "The firing"
+            "es": "El proceso",
+            "en": "The process"
           },
           "w": 1600,
           "h": 1067,
@@ -1125,15 +1124,15 @@
             1600,
             900
           ],
-          "mockup": "portatil-plantas"
+          "mockup": "UXvXdQC1GoM"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "El proceso",
-            "en": "The process"
+            "es": "Talleres en móvil",
+            "en": "Workshops on mobile"
           },
           "w": 900,
           "h": 1072,
@@ -1141,8 +1140,7 @@
             900,
             520
           ],
-          "mockup": "movil-chimenea",
-          "oculto": true
+          "mockup": "DxBUFxwUWJ8"
         },
         {
           "id": "d2",
@@ -1314,8 +1312,8 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "La finca",
-            "en": "The estate"
+            "es": "Los vinos",
+            "en": "The wines"
           },
           "w": 1600,
           "h": 1067,
@@ -1323,23 +1321,23 @@
             1600,
             900
           ],
-          "mockup": "portatil-escritorio-madera"
+          "mockup": "j4uuKnN43_M"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "Visitas",
-            "en": "Visits"
+            "es": "Ficha del vino",
+            "en": "Wine page"
           },
           "w": 900,
-          "h": 1145,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-jardin"
+          "mockup": "_HB3Y1wGlxw"
         },
         {
           "id": "d2",
@@ -1512,8 +1510,8 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "El día",
-            "en": "The day"
+            "es": "El plano se dibuja",
+            "en": "The plan draws itself"
           },
           "w": 1600,
           "h": 1067,
@@ -1521,24 +1519,23 @@
             1600,
             900
           ],
-          "mockup": "portatil-plantas"
+          "mockup": "3xQ65cknLPk"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "El día, en móvil",
-            "en": "The day on mobile"
+            "es": "Menús en móvil",
+            "en": "Menus on mobile"
           },
           "w": 900,
-          "h": 1072,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-chimenea",
-          "oculto": true
+          "mockup": "sKGpCOu_voE"
         },
         {
           "id": "d2",
@@ -1710,8 +1707,8 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "La tienda",
-            "en": "The shop"
+            "es": "El año en flor",
+            "en": "The year in bloom"
           },
           "w": 1600,
           "h": 1067,
@@ -1719,23 +1716,23 @@
             1600,
             900
           ],
-          "mockup": "portatil-escritorio-madera"
+          "mockup": "OOHsoUNRxt8"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "El año en flor, en móvil",
-            "en": "The year in bloom on mobile"
+            "es": "Ramo de la semana",
+            "en": "Bouquet of the week"
           },
           "w": 900,
-          "h": 1145,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-jardin"
+          "mockup": "ZfQUwQsG1QY"
         },
         {
           "id": "d2",
@@ -1906,33 +1903,32 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "El circuito, más adentro",
-            "en": "Deeper into the circuit"
+            "es": "El circuito",
+            "en": "The circuit"
           },
           "w": 1600,
-          "h": 1067,
+          "h": 1066,
           "anchos": [
             1600,
             900
           ],
-          "mockup": "portatil-plantas"
+          "mockup": "qu8w7x-0gw4"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "El circuito en móvil",
-            "en": "The circuit on mobile"
+            "es": "Turnos en móvil",
+            "en": "Slots on mobile"
           },
           "w": 900,
-          "h": 1072,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-chimenea",
-          "oculto": true
+          "mockup": "OQM6fjcp22c"
         },
         {
           "id": "d2",
@@ -2104,32 +2100,32 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "La tienda",
-            "en": "The shop"
+            "es": "Catálogo de piezas",
+            "en": "Catalogue"
           },
           "w": 1600,
-          "h": 950,
+          "h": 1067,
           "anchos": [
             1600,
             900
           ],
-          "mockup": "portatil-blanco"
+          "mockup": "1SAnrIxw5OY"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "Ficha de pieza",
-            "en": "Piece page"
+            "es": "Catálogo en móvil",
+            "en": "Catalogue on mobile"
           },
           "w": 900,
-          "h": 1200,
+          "h": 1071,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-escalera"
+          "mockup": "y5_nKn4JRLI"
         },
         {
           "id": "d2",
@@ -2301,32 +2297,32 @@
           "marco": "escena-p",
           "medio": "img",
           "pie": {
-            "es": "Origen",
-            "en": "Origin"
+            "es": "Tienda",
+            "en": "Shop"
           },
           "w": 1600,
-          "h": 950,
+          "h": 1067,
           "anchos": [
             1600,
             900
           ],
-          "mockup": "portatil-blanco"
+          "mockup": "nXGw951o3Hk"
         },
         {
           "id": "e2",
           "marco": "escena-t",
           "medio": "img",
           "pie": {
-            "es": "Ficha de producto",
-            "en": "Product page"
+            "es": "Cafés destacados",
+            "en": "Featured coffees"
           },
           "w": 900,
-          "h": 1200,
+          "h": 1072,
           "anchos": [
             900,
             520
           ],
-          "mockup": "movil-escalera"
+          "mockup": "DxBUFxwUWJ8"
         },
         {
           "id": "d2",
