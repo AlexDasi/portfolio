@@ -700,3 +700,14 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 **Pendiente:** contenido del caso ATELIER con clientes y webs nuevas (más allá de la portada); calidad y variantes de la esfera (traspaso).
 
 **Publicado (21/11 13:27, «publica» de Alex, ATELIER conv. 1387):** `main` 3bbc976 en vivo. Comprobado: home, uxui.php, about.php y caso ATELIER 200; fichas antiguas y `about.php?s=uxui` con 301 a las nuevas; pie #contacto y mazo en vivo. Respaldo de lo anterior: f7d7164.
+
+---
+
+## 2026-11-21 — v12 · pie grande, preloader y ajustes (feedback 173-180, ATELIER conv. 1388) — rama `v12-preloader`
+
+- **Pie = «Hablamos» de siempre** (grande, alto, con la esfera) en home, Sobre mí y UX/UI (`pie-contacto.php`), + línea © 2026.
+- **Preloader** en la primera página de la visita (entrar de fuera o recargar), móvil y escritorio: fondo, «alex dasi» y el punto del acento latiendo; se va cuando la esfera de la home pinta (móvil) o al cargar; tope 3,2 s, mínimo 0,65 s. `?sinprecarga` lo salta (QA).
+- **Acento:** cambia en cada visita (entrar de fuera o recargar, nunca el mismo que el anterior) y se mantiene al navegar por dentro.
+- **Enlaces unificados:** «Ver proyecto» (home) y «Ver el caso» (UX/UI) sin pastilla: mayúsculas, filete del acento y flecha del acento.
+- **UX/UI móvil:** cabecera más compacta, el primer caso entra en la primera pantalla.
+- **Esfera:** inercia en el punto medio (sensibilidad 3,9, frenado 1,7); fuera del sorteo el planeta (solare) y la gota.

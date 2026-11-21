@@ -137,9 +137,34 @@ $assetVersion = static function (string $relativePath): string {
             var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
             /* v11 (Alex, 21/11: «no quiero que cambie el color acento mientras estés en la misma visita»): el acento se elige al
                entrar y se guarda para toda la visita (sessionStorage); el espacio lo cambia y el nuevo también se queda. */
-            var i = -1; try { i = parseInt(sessionStorage.getItem('alexdasi-acento'), 10); } catch (e) {}
-            if (!(i >= 0 && i < paleta.length)) { i = Math.floor(Math.random() * paleta.length); try { sessionStorage.setItem('alexdasi-acento', i); } catch (e) {} }
+            /* v12 (Alex, 21/11: «cada visita me cambie el color, pero dentro de la web no»): se mantiene solo si vienes de otra
+               página de la web (navegación interna o atrás/adelante); al entrar de fuera o al recargar, otro distinto al último. */
+            var i = -1, interna = false, recarga = false;
+            try { var nv = performance.getEntriesByType('navigation')[0]; recarga = !!nv && nv.type === 'reload'; interna = !!nv && nv.type === 'back_forward'; } catch (e) {}
+            try { if (document.referrer && new URL(document.referrer).host === location.host) interna = true; } catch (e) {}
+            try { i = parseInt(sessionStorage.getItem('alexdasi-acento'), 10); } catch (e) {}
+            if (recarga || !interna || !(i >= 0 && i < paleta.length)) {
+                var ant = i; i = Math.floor(Math.random() * (paleta.length - (ant >= 0 && ant < paleta.length ? 1 : 0)));
+                if (ant >= 0 && ant < paleta.length && i >= ant) i++;
+                try { sessionStorage.setItem('alexdasi-acento', i); } catch (e) {}
+            }
             if (fijo) i = 0;
+            /* v12 (Alex, 21/11: «un preloader al principio de la web, en móvil y en ordenador»): solo en la primera página de la
+               visita (entrar de fuera o recargar). Se va cuando la esfera de la home pinta (móvil) o al cargar la página; tope 3,2 s. */
+            if ((recarga || !interna) && !q.has('sinprecarga')) {
+                html.classList.add('precarga');
+                var t0p = Date.now(), fuera = function () {
+                    if (!html.classList.contains('precarga') || html.classList.contains('precarga--fuera')) return;
+                    var espera = Math.max(0, 650 - (Date.now() - t0p));
+                    setTimeout(function () { html.classList.add('precarga--fuera'); setTimeout(function () { html.classList.remove('precarga', 'precarga--fuera'); }, 700); }, espera);
+                };
+                window.addEventListener('esfera:lista', fuera);
+                window.addEventListener('load', function () {
+                    // en la home del móvil se espera a la esfera (si tarda, el tope); en el resto, al cargar
+                    if (document.querySelector('.pantalla--intro') && window.innerWidth <= 1280) setTimeout(fuera, 1800); else fuera();
+                });
+                setTimeout(fuera, 3200);
+            }
             var c = paleta[i];
             html.style.setProperty('--cursor-color', 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')');
             html.style.setProperty('--cursor-color-dia', 'rgb(' + c.d.r + ',' + c.d.g + ',' + c.d.b + ')');
@@ -147,7 +172,7 @@ $assetVersion = static function (string $relativePath): string {
             /* v6 (feedback 119): la piel de la esfera CAMBIA: una nueva al azar en cada carga (nunca la última que se vio) y otra
                cada vez que se vuelve a abrir (js/esfera.js). La última que se ha visto se apunta (localStorage, solo para no
                repetirla y para que «Hablamos» del Sobre mí enseñe esa). Fuera la sesión de la v5. ?piel= fuerza una. */
-            var PIELES = ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'];
+            var PIELES = ['chicle', 'glaseado', 'prisma', 'cuarzo', 'gema']; /* v12 (Alex, 21/11): fuera el planeta (solare) y la gota del sorteo; siguen disponibles con ?piel= */
             var piel = q.get('piel'), ultima = null;
             try { ultima = localStorage.getItem('alexdasi-piel-ultima'); sessionStorage.removeItem('alexdasi-piel'); } catch (e) {}
             if (PIELES.indexOf(ultima) < 0) ultima = null;

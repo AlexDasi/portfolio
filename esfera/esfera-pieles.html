@@ -797,7 +797,7 @@ canvas.addEventListener('pointermove', e => { if (MANO && e.pointerType !== 'tou
     manoDentro = true;
     if (!R.drag && !chicle.agarre && !P.down && fueraDeBola(e.clientX, e.clientY, 1.12)) { devolver(); return; } }
   if (e.pointerType === 'touch') document.body.classList.add('tactil');
-  if (R.drag) { const now = performance.now(), dx = e.clientX - R.lx, dy = e.clientY - R.ly, k = (MOVIL ? 4.6 : 3.2) / Math.min(innerWidth, innerHeight), ddt = Math.max((now - R.lt) / 1000, 1 / 120);
+  if (R.drag) { const now = performance.now(), dx = e.clientX - R.lx, dy = e.clientY - R.ly, k = (MOVIL ? 3.9 : 3.2) / Math.min(innerWidth, innerHeight), ddt = Math.max((now - R.lt) / 1000, 1 / 120);
     const o = objetos[modo].mesh; o.rotateOnWorldAxis(EJE_Y, dx * k); o.rotateOnWorldAxis(EJE_X, dy * k);
     R.vx += (dx * k / ddt - R.vx) * .5; R.vy += (dy * k / ddt - R.vy) * .5; R.lx = e.clientX; R.ly = e.clientY; R.lt = now; }
   mover(e.clientX, e.clientY); });
@@ -805,7 +805,7 @@ canvas.addEventListener('pointerdown', e => { pulsado = {x: e.clientX, y: e.clie
   if (modo === 1) { rayT.setFromCamera(new THREE.Vector2(P.x * 2 - 1, P.y * 2 - 1), camera); const h = rayT.intersectObject(chicle.mesh, false)[0];   // chicle: clic = pellizco
     if (h) { const k = 0, pz = chicle.pell[k]; pz.a.copy(chicle.mesh.worldToLocal(h.point.clone()).normalize()); pz.activo = true; chicle.agarre = {k, w: h.point.clone()}; cur.classList.add('down'); canvas.setPointerCapture?.(e.pointerId); return; } }
   R.drag = true; R.lx = e.clientX; R.ly = e.clientY; R.lt = performance.now(); R.vx = R.vy = 0; cur.classList.add('down'); canvas.setPointerCapture?.(e.pointerId); });
-const soltar = e => { P.down = false; if (chicle.agarre) { chicle.pell[chicle.agarre.k].activo = false; chicle.agarre = null; } R.drag = false; if (performance.now() - R.lt > (MOVIL ? 160 : 80)) R.vx = R.vy = 0; if (MOVIL) { R.vx *= 1.35; R.vy *= 1.35; } cur.classList.remove('down'); if (e.pointerType === 'touch') { P.dentro = false; P.primero = true; } };
+const soltar = e => { P.down = false; if (chicle.agarre) { chicle.pell[chicle.agarre.k].activo = false; chicle.agarre = null; } R.drag = false; if (performance.now() - R.lt > (MOVIL ? 120 : 80)) R.vx = R.vy = 0; cur.classList.remove('down'); if (e.pointerType === 'touch') { P.dentro = false; P.primero = true; } };
 canvas.addEventListener('pointerup', e => {
   // embebida: un clic (sin arrastrar) fuera de la bola la cierra
   if (EMBED && pulsado && !Q.has('movil')) {
@@ -895,7 +895,7 @@ function frame(now){
     o.mesh.updateMatrixWorld();
   });
 
-  R.vx *= Math.exp(-dt * (MOVIL ? 1.1 : 2.2)); R.vy *= Math.exp(-dt * (MOVIL ? 1.1 : 2.2));   // v11 (Alex, 21/11): en el móvil, más inercia: un toque y sigue girando
+  R.vx *= Math.exp(-dt * (MOVIL ? 1.7 : 2.2)); R.vy *= Math.exp(-dt * (MOVIL ? 1.7 : 2.2));   // v11 → v12 (Alex, 21/11: «demasiada inercia, que me deje jugar»): punto medio
   if (REDUCE && !R.drag) R.vx = R.vy = 0;                          // v9: sin inercia al soltar
   const dentro = P.dentro && !R.drag;            // mientras giras, la pieza no reacciona al cursor
   ndc.set(P.x * 2 - 1, P.y * 2 - 1); ray.setFromCamera(ndc, camera);

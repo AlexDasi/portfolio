@@ -15,9 +15,9 @@
 (function () {
   'use strict';
   var q = new URLSearchParams(location.search);
-  var PIELES = window.__PIELES || ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'];
-  var piel = PIELES.indexOf(window.__PIEL) >= 0 ? window.__PIEL : 'solare';
-  var forzada = PIELES.indexOf(q.get('piel')) >= 0;
+  var PIELES = window.__PIELES || ['chicle', 'glaseado', 'prisma', 'cuarzo', 'gema'];
+  var piel = PIELES.indexOf(window.__PIEL) >= 0 ? window.__PIEL : 'cuarzo';
+  var forzada = ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'].indexOf(q.get('piel')) >= 0;
   var fino = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var html = document.documentElement;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -161,7 +161,7 @@
       f.setAttribute('allowtransparency', 'true');
       // v10: lista = primer fotograma pintado (mensaje 'lista'), no el 'load' del marco (que llegaba antes de que se viera
       // nada); hasta entonces late el disco del acento (preloader). Red de seguridad: 4 s después del load.
-      var lista = function () { caja.classList.add('is-lista'); };
+      var lista = function () { if (caja.classList.contains('is-lista')) return; caja.classList.add('is-lista'); window.dispatchEvent(new Event('esfera:lista')); };
       window.addEventListener('message', function (e) { if (e.source === f.contentWindow && e.data && e.data.esfera === 'lista') lista(); });
       f.addEventListener('load', function () { setTimeout(lista, 4000); });
       caja.appendChild(f);

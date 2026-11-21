@@ -6417,6 +6417,161 @@ html.tema-dia .ux__img {
   top: 78px !important;
 }
 
+@media (max-width: 1280px) {
+  .pie {
+    padding: 0 0 calc(22px + env(safe-area-inset-bottom));
+  }
+  .pie .sm--habla {
+    min-height: 92svh;
+    padding-top: 72px !important;
+    padding-bottom: 28px !important;
+    justify-content: center;
+  }
+  .pie .pie__linea {
+    margin: 0 7vw;
+  }
+}
+@media (max-width: 560px) {
+  .pie .sm__habla-bola {
+    width: min(48vw, 280px);
+    margin: 0 -10vw 6px auto;
+  }
+  .pie .sm--habla .sm__titulo--enorme {
+    font-size: 64px;
+  }
+}
+@media (min-width: 1281px) {
+  .pagina-uxui .pie {
+    padding: 0 0 36px;
+  }
+  .pagina-uxui .pie .sm--habla {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 92vh;
+    padding: 10vh 8vw 6vh;
+  }
+  .pagina-uxui .pie .sm__habla-bola {
+    position: absolute;
+    right: -4vw;
+    top: 8vh;
+    width: 34vw;
+  }
+  .pagina-uxui .pie .sm__botones {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .pagina-uxui .pie .pie__linea {
+    margin: 0 8vw;
+  }
+}
+.baraja[data-modo=una] .ficha__link:not(.ficha__link--fuera),
+.ux__ver {
+  padding: 0 !important;
+  min-height: 44px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(var(--accent-color), var(--accent-color)) no-repeat 0 calc(50% + 12px)/100% 2px;
+  color: var(--main-color);
+}
+.baraja[data-modo=una] .ficha__link:not(.ficha__link--fuera) svg,
+.ux__ver svg {
+  color: var(--accent-color);
+}
+
+.ux__ver {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ux__enlace:hover .ux__ver {
+    background-color: transparent;
+    color: var(--main-color);
+  }
+  .ux__enlace:hover .ux__ver svg {
+    transform: translateX(4px);
+  }
+}
+@media (max-width: 899px) {
+  .ux {
+    padding-top: 84px;
+  }
+  .ux__cab {
+    gap: 12px;
+  }
+  .ux__texto {
+    font-size: 15px;
+  }
+  .ux__seccion {
+    margin-top: 28px;
+  }
+}
+html.precarga::before, html.precarga::after {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  transition: opacity 0.55s ease, visibility 0s linear 0.55s;
+}
+
+html.precarga::before {
+  content: "alex dasi";
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #000;
+  color: #f7f7f5;
+  font: 300 22px/1 "Inter", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+html.precarga::after {
+  content: "";
+  left: calc(50% + 54px);
+  top: calc(50% - 1px);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cursor-color, #ecf98e);
+  animation: precarga-late 1.1s ease-in-out infinite;
+}
+
+html.precarga.precarga--fuera::before, html.precarga.precarga--fuera::after {
+  opacity: 0;
+  visibility: hidden;
+}
+
+html.tema-dia.precarga::before {
+  background: #f5f3ec;
+  color: #141415;
+}
+
+html.tema-dia.precarga::after {
+  background: var(--cursor-color-dia, #7a9b18);
+}
+
+@keyframes precarga-late {
+  0%, 100% {
+    scale: 1;
+    opacity: 0.9;
+  }
+  50% {
+    scale: 1.9;
+    opacity: 0.55;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.precarga::after {
+    animation: none;
+  }
+}
 /* CANVAS */
 canvas {
   z-index: 0;
