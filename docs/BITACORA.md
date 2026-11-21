@@ -805,3 +805,16 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Paleta:** siete acentos de la misma luz (lima, menta, cielo, lila, rosa, coral, albaricoque); la variante de día es la misma familia un punto más llena (ya no oscura). Texto pequeño en acento, de día, mezclado con tinta para que se lea.
 - **CTAs:** «Descargar CV» con barrido del acento de izquierda a derecha; «Ver el caso» con barrido del acento.
 - **UX/UI (escritorio):** tres pisos — portada con índice (hover con fondo del acento) · los cinco casos en un slider horizontal (arrastre, rueda horizontal, ← →, flechas y progreso; tarjetas rectas, al pasar el ratón borde y sombra del acento) · Hablamos. `?vista=lista` enseña la lista anterior.
+
+---
+
+## 2026-11-21 — v20 · arreglos antes del design system (ATELIER conv. 1405)
+
+- Menú, PULSA ESPACIO y PULSA E en el idioma de la página (antes «About/Contact» en inglés en UX/UI y fichas).
+- Menú e idioma: hover = active (2 px del acento, misma altura). ALEX DASI: subrayado grueso del acento a la altura del texto (sin caja) + punto del acento.
+- Paleta: el lima es SAGRADO (#ECF98E, de día y de noche); menta de hace dos versiones; coral más anaranjado; siete en total, entre pastel y flúor.
+- Proyectos (home): fuera la línea del acento encima; el acento pasa a las etiquetas bajo el nombre.
+- CTAs de texto unificados (Ver proyecto, Visitar web, Ver el caso, Descargar CV, In English, Cómo funciona ATELIER): mayúsculas 12 px, filete fino pegado al texto que se rellena del acento de izquierda a derecha; zona táctil de 44 px con un pseudo-elemento.
+- Hablamos: la esfera junto a la palabra, montándose en la S; composición `?bola=abajo-centro` (un trozo grande asomando por abajo).
+- Home: la esfera ya no se cierra al picar fuera. Cursor: el punto de la página no se esconde hasta que la esfera pinta el suyo.
+- `esfera-hq.min.js?v=20`: el navegador usaba la copia vieja (por eso la E no llegaba desde dentro de la esfera).

@@ -118,7 +118,7 @@ $assetVersion = static function (string $relativePath): string {
             <?php if (!empty($temaForzado)): ?>tema = '<?php echo $temaForzado === 'noche' ? 'noche' : 'dia'; ?>';<?php endif; ?>
             html.classList.add(tema === 'noche' ? 'tema-noche' : 'tema-dia');
             /* v17: composiciones de la esfera de «Hablamos» para comparar (?bola=abajo|centro; por defecto, la esquina) */
-            try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (/^(abajo|centro)$/.test(bolaQ || '')) html.classList.add('bola-' + bolaQ); var hq = new URLSearchParams(location.search).get('hablamos'); if (/^(plana|velada|lejos)$/.test(hq || '')) html.classList.add('hablamos-' + hq); } catch (e) {}
+            try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (/^(abajo|centro|abajo-centro)$/.test(bolaQ || '')) html.classList.add('bola-' + bolaQ); var hq = new URLSearchParams(location.search).get('hablamos'); if (/^(plana|velada|lejos)$/.test(hq || '')) html.classList.add('hablamos-' + hq); } catch (e) {}
             var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', tema === 'noche' ? '#000000' : '#f5f3ec');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));
@@ -128,17 +128,17 @@ $assetVersion = static function (string $relativePath): string {
             /* v8 (feedback 147): cada acento tiene su variante de DÍA, más oscura y saturada (mismo tono; ≈ 3:1 sobre el papel,
                la tinta encima ≥ 5,1:1). De día todo lo que usa acento toma la variante (--cursor-color-dia → --accent-color):
                subrayados, fusión del cursor, fluido, PRESS SPACE, resaltados. La noche no cambia. Tabla en docs/BITACORA.md. */
-            /* v19 (Alex, 21/11: «los acentos más brillantes, en la línea del lima o el menta; 5-7 colores llamativos con la misma
-               intensidad; me gustan más las versiones claras que las oscuras»): siete de la misma luz; la de día (d) es la misma
-               familia un punto más llena, ya no oscura. */
+            /* v20 (Alex, 21/11: «mi color lima es sagrado, no se toca nunca»; «una gama entre pastel y flúor, ni una cosa ni la
+               otra»; el menta de hace dos versiones; el coral un pelín más anaranjado, no rosa chicle). El lima es SIEMPRE
+               #ECF98E, de día y de noche. La de día (d) es la misma familia un punto más llena. Ver el design system. */
             var paleta = [
-                { r: 236, g: 249, b: 142, n: 'lima', d: { r: 218, g: 242, b: 92 } },
-                { r: 150, g: 240, b: 196, n: 'menta', d: { r: 104, g: 228, b: 168 } },
-                { r: 142, g: 210, b: 255, n: 'cielo', d: { r: 98, g: 188, b: 255 } },
-                { r: 198, g: 176, b: 255, n: 'lila', d: { r: 172, g: 142, b: 255 } },
-                { r: 255, g: 172, b: 212, n: 'rosa', d: { r: 255, g: 140, b: 196 } },
-                { r: 255, g: 176, b: 140, n: 'coral', d: { r: 255, g: 148, b: 106 } },
-                { r: 255, g: 222, b: 112, n: 'albaricoque', d: { r: 255, g: 206, b: 68 } }
+                { r: 236, g: 249, b: 142, n: 'lima', d: { r: 236, g: 249, b: 142 } },
+                { r: 140, g: 232, b: 186, n: 'menta', d: { r: 112, g: 222, b: 166 } },
+                { r: 255, g: 174, b: 122, n: 'coral', d: { r: 255, g: 152, b: 96 } },
+                { r: 132, g: 204, b: 255, n: 'cielo', d: { r: 104, g: 186, b: 255 } },
+                { r: 192, g: 168, b: 255, n: 'lila', d: { r: 170, g: 140, b: 255 } },
+                { r: 255, g: 164, b: 206, n: 'rosa', d: { r: 255, g: 138, b: 190 } },
+                { r: 255, g: 214, b: 102, n: 'albaricoque', d: { r: 255, g: 200, b: 70 } }
             ];
             var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
             /* v11 (Alex, 21/11: «no quiero que cambie el color acento mientras estés en la misma visita»): el acento se elige al

@@ -8,7 +8,7 @@ $navActual = $navActual ?? 'home';
 <div class="follow hiddenMobile"></div>
 <nav class="nav nav--top">
     <ul>
-        <li class="nav--items single"> <a href="index.php">alex dasi</a>
+        <li class="nav--items single"> <a href="index.php">alex dasi<i class="logo-punto" aria-hidden="true">.</i></a>
         </li>
     </ul>
 </nav>
@@ -16,14 +16,14 @@ $navActual = $navActual ?? 'home';
     <a class="lang-switch__item<?php echo $isEs ? ' is-active' : ''; ?>" data-i18n-keep href="<?php echo htmlspecialchars(i18n_url('es'), ENT_QUOTES, 'UTF-8'); ?>" hreflang="es" lang="es"<?php echo $isEs ? ' aria-current="true"' : ''; ?>>ES</a>
     <a class="lang-switch__item<?php echo $isEs ? '' : ' is-active'; ?>" href="<?php echo htmlspecialchars(i18n_url('en'), ENT_QUOTES, 'UTF-8'); ?>" hreflang="en" lang="en"<?php echo $isEs ? '' : ' aria-current="true"'; ?>>EN</a>
 </div>
-<p class="press-space" aria-hidden="true">PRESS SPACE<span class="press-space__cara">:)</span></p>
+<p class="press-space" aria-hidden="true"><?php echo $isEs ? 'PULSA ESPACIO' : 'PRESS SPACE'; /* v20 (Alex): en el idioma de la página */ ?><span class="press-space__cara">:)</span></p>
 <?php /* v15 (Alex, 21/11): cambiar la piel 3D de la esfera a mano (botón o tecla E), como el PRESS SPACE del color. js/esfera.js */ ?>
-<button class="piel-3d" type="button" data-piel-3d aria-label="<?php echo $isEs ? 'Cambiar la esfera 3D' : 'Change the 3D sphere'; ?>"><span class="piel-3d__tecla">PRESS E</span><svg class="piel-3d__icono" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="8" cy="8" rx="6.25" ry="2.4" fill="none" stroke="currentColor" stroke-width="1.1"/></svg><span class="piel-3d__nombre" data-piel-nombre>3D</span></button>
+<button class="piel-3d" type="button" data-piel-3d aria-label="<?php echo $isEs ? 'Cambiar la esfera 3D' : 'Change the 3D sphere'; ?>"><span class="piel-3d__tecla"><?php echo $isEs ? 'PULSA E' : 'PRESS E'; ?></span><svg class="piel-3d__icono" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="8" cy="8" rx="6.25" ry="2.4" fill="none" stroke="currentColor" stroke-width="1.1"/></svg><span class="piel-3d__nombre" data-piel-nombre>3D</span></button>
 <nav class="nav-sutil" aria-label="More">
     <a class="nav-sutil__item nav-sutil__item--uxui<?php echo $navActual === 'uxui' ? ' is-active' : ''; ?>" href="uxui.php">UX/UI</a>
-    <a class="nav-sutil__item<?php echo $navActual === 'about' ? ' is-active' : ''; ?>" href="about.php?s=about">About</a>
+    <a class="nav-sutil__item<?php echo $navActual === 'about' ? ' is-active' : ''; ?>" href="about.php?s=about"><?php echo $isEs ? 'Sobre mí' : 'About'; /* v20: el idioma de la página, no el de un traductor que solo corre en algunas */ ?></a>
     <?php /* v15 (Alex, 21/11): «Contact» lleva al pie de la página en la que estés (en los pisos, al último) */ ?>
-    <a class="nav-sutil__item<?php echo $navActual === 'contact' ? ' is-active' : ''; ?>" href="<?php echo !empty($conPie) ? '#contacto' : 'about.php?s=contact'; ?>" data-contacto>Contact</a>
+    <a class="nav-sutil__item<?php echo $navActual === 'contact' ? ' is-active' : ''; ?>" href="<?php echo !empty($conPie) ? '#contacto' : 'about.php?s=contact'; ?>" data-contacto><?php echo $isEs ? 'Contacto' : 'Contact'; ?></a>
     <?php if (empty($temaForzado)): ?>
     <button class="nav-sutil__tema" type="button" data-tema aria-label="Day / night">
         <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.25" fill="none" stroke="currentColor" stroke-width="1"/><path d="M8 2.75a5.25 5.25 0 0 1 0 10.5z" fill="currentColor"/></svg>

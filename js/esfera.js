@@ -85,7 +85,8 @@
       if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < d.r * 0.96) {
         dentro = true;
         marco.style.pointerEvents = 'auto';
-        html.classList.add('cursor-en-esfera');
+        // v20 (Alex: «el cursor desaparece al entrar en la bola y, si lo dejo quieto, no se ve»): el punto de la página no se
+        // esconde hasta que el marco dice que ya pinta el suyo (primer mensaje 'puntero')
         window.dispatchEvent(new CustomEvent('esfera:mano', { detail: true }));
       }
     }
@@ -95,6 +96,7 @@
     // v17: dentro de la bola el fluido del fondo sigue: el marco manda por dónde va el ratón y se lo damos al body
     window.addEventListener('message', function (e) {
       if (e.source !== marco.contentWindow || !e.data || e.data.esfera !== 'puntero') return;
+      if (dentro && !html.classList.contains('cursor-en-esfera')) html.classList.add('cursor-en-esfera');
       var r = marco.getBoundingClientRect();
       var cx = r.left + e.data.x, cy = r.top + e.data.y;
       raton = { clientX: cx, clientY: cy };
@@ -488,7 +490,9 @@
     try { marco.contentWindow.postMessage({ esferaPausa: e.detail.index !== 0 }, '*'); } catch (er) {}
   });
   // un clic fuera de la bola (no en un enlace, botón, flecha o pisos) la cierra; el marco ya no recoge esos clics
-  document.addEventListener('click', function (e) {
+  // v20 (Alex, 21/11: «no me gusta que si picas fuera de la esfera se deshaga»): ya no se cierra al picar fuera; se
+  // esconde con su propio gesto (clic en el punto / Escape)
+  if (false) document.addEventListener('click', function (e) {
     if (!abierta || !capa) return;
     if (e.target.closest && e.target.closest('a, button, .circle, .swiper-pagination, [data-esfera], .nav-sutil, .nav')) return;
     var b2 = caja0();

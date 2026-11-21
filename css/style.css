@@ -7621,6 +7621,127 @@ html.tema-dia {
     padding: 20px 0 40px;
   }
 }
+@media (min-width: 1281px) {
+  .lang-switch__item::after, .nav-sutil__item::after {
+    height: 2px !important;
+    bottom: 1px !important;
+    background: var(--accent-color) !important;
+  }
+  .sitio-baraja .nav--top .nav--items a {
+    background: linear-gradient(var(--accent-color), var(--accent-color)) no-repeat 0 52%/calc(100% - 0.45em) 1.45em !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    color: var(--main-color) !important;
+    top: 0 !important;
+    line-height: 24px !important;
+    display: inline-block;
+  }
+  .logo-punto {
+    font-style: normal;
+    color: var(--accent-color);
+    margin-left: 0.08em;
+  }
+  html.tema-dia .sitio-baraja .nav--top .nav--items a, .sitio-baraja .nav--top .nav--items a {
+    color: #141415 !important;
+  }
+  html.tema-noche .sitio-baraja .nav--top .nav--items a {
+    color: #141415 !important;
+  }
+  .baraja[data-modo=mesa] .ficha__cab {
+    border-top: 1px solid var(--linea) !important;
+  }
+  .baraja[data-modo=mesa] .ficha__meta {
+    color: var(--acento-texto) !important;
+  }
+}
+.logo-punto {
+  font-style: normal;
+}
+
+@media (max-width: 1280px) {
+  .logo-punto {
+    color: var(--accent-color);
+  }
+}
+.ficha__link, .ux__ver, .sm__cv, .sm__link {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  min-height: 0 !important;
+  padding: 0 0 4px !important;
+  margin: 0;
+  border: 0 !important;
+  border-radius: 0 !important;
+  animation: none !important;
+  font-size: 12px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  color: var(--main-color) !important;
+  background: linear-gradient(var(--accent-color), var(--accent-color)) no-repeat 0 100%/0 2px, linear-gradient(color-mix(in srgb, var(--main-color) 28%, transparent), color-mix(in srgb, var(--main-color) 28%, transparent)) no-repeat 0 100%/100% 1px !important;
+  transition: background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.ficha__link svg, .ux__ver svg, .sm__cv svg, .sm__link svg {
+  width: 10px;
+  height: 10px;
+  color: currentColor !important;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ux__ver::before {
+  display: none !important;
+}
+
+.sm__cv--otro {
+  opacity: 0.7;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ficha__link:hover, .ux__ver:hover, .ux__enlace:hover .ux__ver, .uxp__tarjeta:hover .ux__ver, .sm__cv:hover, .sm__link:hover {
+    background-size: 100% 2px, 100% 1px !important;
+    color: var(--main-color) !important;
+  }
+  .ficha__link:hover svg, .ux__ver:hover svg, .ux__enlace:hover .ux__ver svg, .uxp__tarjeta:hover .ux__ver svg, .sm__cv:hover svg, .sm__link:hover svg {
+    transform: translateX(3px);
+    color: currentColor !important;
+  }
+}
+.ficha__link:focus-visible, .ux__ver:focus-visible, .sm__cv:focus-visible, .sm__link:focus-visible {
+  background-size: 100% 2px, 100% 1px !important;
+}
+
+@media (min-width: 1281px) {
+  .pie--piso .sm__habla-bola, .pagina-proyecto .pie .sm__habla-bola, .pagina-404 .pie .sm__habla-bola {
+    left: 47vw !important;
+    right: auto !important;
+    top: 22vh !important;
+    bottom: auto !important;
+    width: 24vw !important;
+    margin: 0 !important;
+    z-index: 0 !important;
+  }
+  .pie--piso .sm--habla h2, .pagina-proyecto .pie .sm--habla h2 {
+    position: relative;
+    z-index: 1;
+  }
+  html.bola-abajo-centro .pie--piso .sm__habla-bola, html.bola-abajo-centro .pagina-proyecto .pie .sm__habla-bola, html.bola-abajo-centro .pagina-404 .pie .sm__habla-bola {
+    left: 50% !important;
+    top: auto !important;
+    bottom: -34vw !important;
+    width: 50vw !important;
+    margin-left: -25vw !important;
+  }
+}
+.ficha__link::after, .ux__ver::after, .sm__cv::after, .sm__link::after, .fp__volver::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: -13px;
+  bottom: -13px;
+}
+
 /* CANVAS */
 canvas {
   z-index: 0;

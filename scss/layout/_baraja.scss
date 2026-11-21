@@ -2225,3 +2225,61 @@ html.tema-dia { --acento-texto: color-mix(in srgb, var(--accent-color) 40%, #141
 .uxp__indice a:hover span { color: $tinta !important; }
 .MainSwiper > .swiper-pagination { z-index: 400 !important; } // v19: los pisos siempre por encima (el slider de casos pasa por debajo)
 @media (min-width: 1281px) { .uxp__casos { padding-right: 7.5vw; } .UxSwiper { overflow: hidden !important; } .UxSwiper .swiper-wrapper { padding: 20px 0 40px; } } // v19: el slider termina antes de los pisos
+
+// ============================================================
+// v20 (Alex, 21/11, conv. 1405)
+// ============================================================
+@media (min-width: 1281px) {
+  // menú e idioma: hover = active, al píxel (2 px del acento, misma altura)
+  .lang-switch__item::after, .nav-sutil__item::after { height: 2px !important; bottom: 1px !important; background: var(--accent-color) !important; }
+  // ALEX DASI: sin caja; un subrayado grueso del acento que ocupa la altura del texto, y el punto del acento al final
+  .sitio-baraja .nav--top .nav--items a {
+    background: linear-gradient(var(--accent-color), var(--accent-color)) no-repeat 0 52% / calc(100% - .45em) 1.45em !important;
+    padding: 0 !important; border-radius: 0 !important; color: var(--main-color) !important; top: 0 !important; line-height: 24px !important; display: inline-block;
+  }
+  .logo-punto { font-style: normal; color: var(--accent-color); margin-left: .08em; }
+  html.tema-dia .sitio-baraja .nav--top .nav--items a, .sitio-baraja .nav--top .nav--items a { color: $tinta !important; }
+  html.tema-noche .sitio-baraja .nav--top .nav--items a { color: $tinta !important; }
+  // proyectos (home): fuera la línea del acento encima; el acento va en las etiquetas de debajo del nombre
+  .baraja[data-modo="mesa"] .ficha__cab { border-top: 1px solid var(--linea) !important; }
+  .baraja[data-modo="mesa"] .ficha__meta { color: var(--acento-texto) !important; }
+}
+.logo-punto { font-style: normal; }
+@media (max-width: 1280px) { .logo-punto { color: var(--accent-color); } }
+
+// --- CTAs de texto unificados (v20, Alex: «unifica todos los CTAs; me gustan los del subrayado de izquierda a derecha»):
+// mayúsculas 12 px .12em, sin cajas ni rellenos; filete fino pegado al texto (3 px por debajo) que al pasar el ratón se
+// rellena con el acento de izquierda a derecha; la flecha avanza 3 px.
+.ficha__link, .ux__ver, .sm__cv, .sm__link {
+  position: relative !important; display: inline-flex !important; align-items: center; gap: 8px; min-height: 0 !important;
+  padding: 0 0 4px !important; margin: 0; border: 0 !important; border-radius: 0 !important; animation: none !important;
+  font-size: 12px !important; letter-spacing: .12em !important; text-transform: uppercase; text-decoration: none !important;
+  color: var(--main-color) !important;
+  background: linear-gradient(var(--accent-color), var(--accent-color)) no-repeat 0 100% / 0 2px,
+              linear-gradient(color-mix(in srgb, var(--main-color) 28%, transparent), color-mix(in srgb, var(--main-color) 28%, transparent)) no-repeat 0 100% / 100% 1px !important;
+  transition: background-size .45s cubic-bezier(.22, 1, .36, 1) !important;
+  svg { width: 10px; height: 10px; color: currentColor !important; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+}
+.ux__ver::before { display: none !important; }
+.sm__cv--otro { opacity: .7; }
+@media (hover: hover) and (pointer: fine) {
+  .ficha__link:hover, .ux__ver:hover, .ux__enlace:hover .ux__ver, .uxp__tarjeta:hover .ux__ver, .sm__cv:hover, .sm__link:hover {
+    background-size: 100% 2px, 100% 1px !important; color: var(--main-color) !important;
+    svg { transform: translateX(3px); color: currentColor !important; }
+  }
+}
+.ficha__link:focus-visible, .ux__ver:focus-visible, .sm__cv:focus-visible, .sm__link:focus-visible { background-size: 100% 2px, 100% 1px !important; }
+
+// --- Hablamos (v20, Alex: «la esfera más cerca de la palabra Hablamos, montándose un poco en la S»)
+@media (min-width: 1281px) {
+  .pie--piso .sm__habla-bola, .pagina-proyecto .pie .sm__habla-bola, .pagina-404 .pie .sm__habla-bola {
+    left: 47vw !important; right: auto !important; top: 22vh !important; bottom: auto !important; width: 24vw !important; margin: 0 !important; z-index: 0 !important;
+  }
+  .pie--piso .sm--habla h2, .pagina-proyecto .pie .sm--habla h2 { position: relative; z-index: 1; }
+  // composición para comparar: ?bola=abajo-centro — un trozo grande asomando por abajo, entre PULSA ESPACIO y PULSA E
+  html.bola-abajo-centro .pie--piso .sm__habla-bola, html.bola-abajo-centro .pagina-proyecto .pie .sm__habla-bola, html.bola-abajo-centro .pagina-404 .pie .sm__habla-bola {
+    left: 50% !important; top: auto !important; bottom: -34vw !important; width: 50vw !important; margin-left: -25vw !important;
+  }
+}
+// v20 (QA medir.mjs): los CTAs de texto ya no tienen 44 px de alto; la zona táctil se agranda sin mover nada
+.ficha__link::after, .ux__ver::after, .sm__cv::after, .sm__link::after, .fp__volver::after { content: ""; position: absolute; left: -6px; right: -6px; top: -13px; bottom: -13px; }
