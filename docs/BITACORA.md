@@ -677,3 +677,5 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **CV:** nombre en una línea con Inter (no Anton), «6 años en Edimburgo»; PDFs ES/EN regenerados (fuente en ATELIER `clientes/alexdasi/bio/`). El de la web sale en su idioma y al lado, discreto, el otro. Sobre mí: «Seis años».
 
 **QA (php -S local):** `vivo.mjs` 0 rojos en home ES/EN y Sobre mí (iPhone 13, SE, Android 360, desktop) · `medir.mjs` 0 rojos nuevos (UX/UI en SE = 2,4 pantallas, igual que antes; ahora el medidor lo separa como bloque) · capturas iPhone 13, SE, Android, iPad · imán probado · esfera, primer fotograma local con CPU ×4: 4,6-4,8 s → 3,8-4,0 s (sin compresión; en vivo se mide tras publicar).
+
+**Publicado (21/11 12:45, «publica» de Alex, ATELIER conv. 1385):** `main` 506b647, en vivo. Esfera en vivo (iPhone 13 emulado, 4G 9 Mb/s + 150 ms, CPU ×4, sin caché), primer fotograma: antes 4,6-6,3 s → ahora 3,5-5,0 s (mediana ~3,5); three.js baja con brotli en 118 KB. El disco del acento late desde el primer pintado. Respaldo de lo anterior: commit 7ef6f79.
