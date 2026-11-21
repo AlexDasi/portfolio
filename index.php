@@ -3,7 +3,7 @@
    About, UX/UI, proceso y contacto viven en about.php (acceso sutil arriba a la derecha).
    Estructura de siempre: pantallas completas; solo se cambia de pantalla con «los pisos» o la flecha.
    La rueda no cambia de pantalla: en la intro mueve el fluido y en la baraja pasa cartas. */
-$bodyClass = 'sitio-baraja';
+$bodyClass = 'sitio-baraja home-pisos'; /* v10: home-pisos = en móvil la página se imanta a cada pantalla */
 include 'php-elements/header-baraja.php';
 $navActual = 'home';
 $pisos = ($lang === 'es') ? 'INICIO|PROYECTOS' : 'HOME|WORKS';
@@ -34,11 +34,14 @@ $pisos = ($lang === 'es') ? 'INICIO|PROYECTOS' : 'HOME|WORKS';
         <?php include 'php-pages/intro.php'?>
         <?php /* v9 (QA H-01): pista para bajar en móvil y tablet: la flecha fina de la de escritorio + «Proyectos», al pie de la
            intro y siempre dentro de la primera pantalla (la esfera encoge en pantallas bajas para que quepa). */ ?>
-        <a class="bajar" href="#works" data-bajar><span><?php echo $lang === 'es' ? 'Proyectos' : 'Projects'; ?></span><svg viewBox="0 0 16 24" aria-hidden="true"><path d="M8 1v21M1.5 15.5 8 22l6.5-6.5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></a>
+        <?php /* v10 (Alex, 21/11): botón de llamada a la acción: «Proyectos» y la flecha dentro del círculo del acento, más grande,
+           latiendo igual que antes. La intro ocupa justo una pantalla y la página se imanta: o intro o proyectos. */ ?>
+        <a class="bajar" href="#works" data-bajar><span class="bajar__txt"><?php echo $lang === 'es' ? 'Proyectos' : 'Projects'; ?></span><span class="bajar__bola" aria-hidden="true"><svg viewBox="0 0 16 24"><path d="M8 2v19M2 15l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
     </div>
     <div class="pantalla pantalla--baraja" id="works">
         <?php include 'php-elements/baraja.php'?>
     </div>
+    <?php include 'php-elements/pie-contacto.php'?>
 </div>
 
     <?php include 'php-elements/js-baraja.php'?>

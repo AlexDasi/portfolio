@@ -74,6 +74,8 @@ $assetVersion = static function (string $relativePath): string {
     <!-- v4 (feedback 100): Inter servida desde la web (variable 200-700, solo latín + latín ampliado) con precarga;
          antes era una hoja de Google Fonts que bloqueaba el pintado y abría dos conexiones más. -->
     <link rel="preload" href="/content/fuentes/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+    <?php /* v10 (Alex, 21/11: esfera más rápida en el móvil): en táctil la esfera arranca nada más cargar; su three.js (uno, de casa) se pide ya desde aquí */ ?>
+    <?php if (empty($sinSwiper)): ?><link rel="preload" href="/esfera/three-r160-esfera.min.js" as="script" crossorigin media="(hover: none), (max-width: 1280px)"><?php endif; ?>
     <style>
         @font-face { font-family: 'Inter'; font-style: normal; font-weight: 200 700; font-display: swap;
             src: url('/content/fuentes/inter-latin-var.woff2') format('woff2');

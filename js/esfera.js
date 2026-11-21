@@ -159,12 +159,17 @@
       apuntar(piel, true);
       f.title = document.documentElement.lang === 'es' ? 'Esfera' : 'Sphere'; // v9 (QA H-19)
       f.setAttribute('allowtransparency', 'true');
-      f.addEventListener('load', function () { caja.classList.add('is-lista'); });
+      // v10: lista = primer fotograma pintado (mensaje 'lista'), no el 'load' del marco (que llegaba antes de que se viera
+      // nada); hasta entonces late el disco del acento (preloader). Red de seguridad: 4 s después del load.
+      var lista = function () { caja.classList.add('is-lista'); };
+      window.addEventListener('message', function (e) { if (e.source === f.contentWindow && e.data && e.data.esfera === 'lista') lista(); });
+      f.addEventListener('load', function () { setTimeout(lista, 4000); });
       caja.appendChild(f);
     };
-    // la bola se carga con la página ya pintada y en reposo (no compite con el primer pintado)
-    var luego = function () { (window.requestIdleCallback || function (fn) { setTimeout(fn, 300); })(cargar, { timeout: 1200 }); };
-    if (document.readyState === 'complete') luego(); else window.addEventListener('load', luego);
+    // v10 (Alex, 21/11: «que cargue mucho más rápido»): el marco se crea en cuanto existe el DOM (este script va al final
+    // del body), sin esperar al 'load' de la página (que esperaba a los pósters de la baraja) ni al reposo. three.js ya
+    // viene de casa en un solo archivo y precargado desde la cabecera.
+    cargar();
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {
         var f = caja.querySelector('iframe');

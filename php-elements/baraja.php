@@ -26,6 +26,8 @@ $barajaTxt = [
 $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); };
 ?>
 <section class="baraja" data-baraja aria-roledescription="carousel" aria-label="<?php echo $e($barajaTxt['label']); ?>">
+    <?php /* v10 (Alex, 21/11): en móvil y tablet la pantalla de proyectos lleva su título y cabe entera en un pantallazo */ ?>
+    <div class="baraja__cabeza"><h2 class="baraja__titulo"><?php echo $e($barajaTxt['label']); ?></h2><span class="baraja__desliza" aria-hidden="true"><?php echo $e($barajaTxt['hintTouch']); ?><svg viewBox="0 0 16 10"><path d="M1 5h13M10 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span></div>
     <div class="baraja__mesa" data-baraja-mesa>
         <?php foreach ($barajaCartas as $i => $p):
             $neutra = !empty($p['neutra']);

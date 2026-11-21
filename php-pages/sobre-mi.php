@@ -10,7 +10,10 @@ $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UT
 $flecha = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
 /* v9 (QA H-20): el chat se abre con una frase para empezar */
 $wa = 'https://wa.me/34616420048?text=' . rawurlencode($es ? 'Hola Alex, tengo un negocio y me gustaría hablar de mi web.' : 'Hi Alex, I run a business and I’d like to talk about my website.');
-$cv = $es ? 'content/downloadables/alex-dasi_cv_2026-11.pdf' : 'content/downloadables/alex-dasi_cv_2026-11_en.pdf';
+/* v10 (Alex, 21/11): el CV sale solo en el idioma de la web; al lado, discreto, el del otro idioma. ?v= = fecha del PDF (caché) */
+$cvVer = static function (string $f): string { $r = dirname(__DIR__) . '/' . $f; return $f . (is_file($r) ? '?v=' . filemtime($r) : ''); };
+$cv = $cvVer($es ? 'content/downloadables/alex-dasi_cv_2026-11.pdf' : 'content/downloadables/alex-dasi_cv_2026-11_en.pdf');
+$cvOtro = $cvVer($es ? 'content/downloadables/alex-dasi_cv_2026-11_en.pdf' : 'content/downloadables/alex-dasi_cv_2026-11.pdf');
 
 $T = $es ? [
     'hola_t1' => 'Soy Alex.',
@@ -38,7 +41,7 @@ $T = $es ? [
     'tray_t' => 'De dónde vengo',
     'tray' => [
         ['Valencia', 'Estudié Diseño de Producto y Gráfico en el CEU San Pablo.'],
-        ['Edimburgo · 2016-2021', 'Cinco años como diseñador en Registers of Scotland y Scottish Enterprise: marca, campañas, informes, web e intranet.'],
+        ['Edimburgo · 2016-2021', 'Seis años como diseñador en Registers of Scotland y Scottish Enterprise: marca, campañas, informes, web e intranet.'],
         ['En remoto para Londres · 2021-2025', 'Diseño digital para Knowadays, una plataforma de formación online: web, email, redes y editorial.'],
         ['El salto a UX/UI · 2022-2024', 'Posgrado en diseño y desarrollo web (ID3, ESAT) e Idrica: el UX/UI de una plataforma para depuradoras, con alarmas, mapas y muchos datos.'],
         ['Sobre el terreno · 2024-2025', 'Logística con World Central Kitchen en la DANA de Valencia y en Filipinas. De ahí salió Tulong.'],
@@ -60,6 +63,7 @@ $T = $es ? [
         ['knowadays', 'Knowadays', 'Web, landings, email y redes de una marca de formación', '2021-2025'],
     ],
     'cv' => 'Descargar CV (PDF)',
+    'cv_otro' => 'In English',
     'habla_t' => 'Hablamos',
     'habla_p' => 'Si tienes un negocio y crees que tu web podría estar mejor (o todavía no la tienes), escríbeme. Te contesto yo. Y si estás por Valencia, quedamos y lo vemos con un café.',
     'wa' => 'Escríbeme por WhatsApp',
@@ -89,7 +93,7 @@ $T = $es ? [
     'tray_t' => 'Where I come from',
     'tray' => [
         ['Valencia', 'I studied Product and Graphic Design at CEU San Pablo.'],
-        ['Edinburgh · 2016-2021', 'Five years as a designer at Registers of Scotland and Scottish Enterprise: brand, campaigns, reports, web and intranet.'],
+        ['Edinburgh · 2016-2021', 'Six years as a designer at Registers of Scotland and Scottish Enterprise: brand, campaigns, reports, web and intranet.'],
         ['Remote for London · 2021-2025', 'Digital design for Knowadays, an online learning platform: web, email, social and editorial.'],
         ['The move into UX/UI · 2022-2024', 'A postgraduate in web design and development (ID3, ESAT) and Idrica: UX/UI for a platform that runs wastewater plants.'],
         ['In the field · 2024-2025', 'Logistics with World Central Kitchen during the Valencia floods and in the Philippines. That’s where Tulong came from.'],
@@ -111,6 +115,7 @@ $T = $es ? [
         ['knowadays', 'Knowadays', 'Web, landing pages, email and social for a learning brand', '2021-2025'],
     ],
     'cv' => 'Download CV (PDF)',
+    'cv_otro' => 'En español',
     'habla_t' => 'Let’s talk',
     'habla_p' => 'If you run a business and think your website could be better (or you don’t have one yet), drop me a line. I’ll reply myself. And if you’re around Valencia, let’s meet for a coffee.',
     'wa' => 'Message me on WhatsApp',
@@ -182,7 +187,7 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
         <h2 class="sm__titulo sm__titulo--seccion"><span class="sm__grueso">UX/UI</span><span class="sm__punto" aria-hidden="true"></span></h2>
         <p class="sm__texto sm__texto--grande"><?php echo $e($T['ux_t']); ?></p>
         <p class="sm__texto"><?php echo $e($T['ux_p']); ?></p>
-        <a class="sm__cv" href="<?php echo $e($cv); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv']); ?></a>
+        <p class="sm__cvs"><a class="sm__cv" href="<?php echo $e($cv); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv']); ?></a><a class="sm__cv sm__cv--otro" href="<?php echo $e($GLOBALS['cvOtro'] ?? $cv); ?>" target="_blank" rel="noopener" hreflang="<?php echo $T['cv_otro'] === 'In English' ? 'en' : 'es'; ?>"><?php echo $e($T['cv_otro']); ?></a></p>
     </div>
     <ul class="sm__casos">
         <?php foreach ($T['casos'] as $ci => $c): ?>

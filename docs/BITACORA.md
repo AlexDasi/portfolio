@@ -662,3 +662,18 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Sin hacer:** H-15 (scroll del documento en iOS: toca el layout base de todas las páginas y no se puede medir aquí; mejor con el iPhone de Alex delante), H-16 (sin JavaScript), H-17 (three.js alojado en casa: 12 módulos, pide su propia prueba), H-23 (medir en dispositivo real).
 
 **QA (php -S + proxy gzip local):** `vivo.mjs` 0 rojos en home, ficha (Imperio, Elsa EN), casos (Tulong, ATELIER) y Sobre mí en iPhone 13, SE, Android 360 y desktop 1440 (la 404 marca su propio 404 de consola: es la página) · `medir.mjs` 0 rojos (1 aviso de siempre: «De dónde vengo» en SE) · menú móvil (script propio: `menu-movil.mjs` es el de Imperio, busca `header.hd`) en 390/375/320/escritorio estrechado × 4 páginas: abre, toques ≥ 44 px, nada fuera, fondo quieto, cierra · hover de escritorio comprobado · rendimiento home (`medir_rendimiento.mjs`, sin gzip, v8 → v9): escritorio 1,36 → 1,37 MB, LCP 176 → 148 ms, rAF en reposo 0, JS por frame en la baraja 2,03 → 1,08 ms; móvil 1,40 → 1,27 MB, LCP 368 → 140 ms.
+
+---
+
+## 2026-11-21 — v10 · móvil (feedback de Alex por audio, ATELIER conv. 398)
+
+- **Esfera más rápida (móvil):** three.js r160 alojado en casa en un solo archivo con solo lo que usa la esfera (`esfera/three-r160-esfera.min.js`, esbuild, 518 KB → 125 KB gzip; antes ~12 módulos encadenados desde jsDelivr) — resuelve también H-17. Precargado desde la cabecera en táctil. El marco se crea al tener el DOM (antes esperaba al `load` de la página, que esperaba a los pósters de la baraja, y al reposo). Preloader: disco plano del acento latiendo en el sitio de la bola hasta el primer fotograma (mensaje `lista`), luego fundido.
+- **Botón «Proyectos»:** la flecha dentro del círculo del acento (60 px) con un aro que sale y se apaga; la flecha sigue latiendo. La intro ocupa justo una pantalla (la baraja ya no asoma).
+- **Imán (solo táctil, `body.home-pisos`):** scroll-snap obligatorio: intro · proyectos · pie. Con ratón/trackpad no (frenaría la rueda).
+- **Proyectos en un pantallazo:** título «Proyectos.» con el punto del acento + «Desliza →»; la carta (4:5 de siempre) toma el alto que sobra; ficha compacta de alto fijo (texto a 3 líneas; 2 en pantallas ≤ 700 px; sin texto ≤ 600 px) y la regla de marcas siempre a la vista.
+- **Pie de contacto** (`php-elements/pie-contacto.php`, móvil y tablet): en la home, Hablamos + WhatsApp + email + «© 2026 Alex Dasi · Todos los derechos reservados»; en Sobre mí solo la línea final.
+- **Hablamos (móvil):** bola más pequeña; WhatsApp y email dentro de la primera pantalla también en SE.
+- **Casos UX/UI en táctil:** fuera el tinte del acento al tocar (se encendía al hacer scroll por encima); solo un leve apagado con retardo.
+- **CV:** nombre en una línea con Inter (no Anton), «6 años en Edimburgo»; PDFs ES/EN regenerados (fuente en ATELIER `clientes/alexdasi/bio/`). El de la web sale en su idioma y al lado, discreto, el otro. Sobre mí: «Seis años».
+
+**QA (php -S local):** `vivo.mjs` 0 rojos en home ES/EN y Sobre mí (iPhone 13, SE, Android 360, desktop) · `medir.mjs` 0 rojos nuevos (UX/UI en SE = 2,4 pantallas, igual que antes; ahora el medidor lo separa como bloque) · capturas iPhone 13, SE, Android, iPad · imán probado · esfera, primer fotograma local con CPU ×4: 4,6-4,8 s → 3,8-4,0 s (sin compresión; en vivo se mide tras publicar).

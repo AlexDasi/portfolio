@@ -33,6 +33,7 @@ $pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|UX/UI|HABLAMOS' : 'H
     <?php foreach ($pantallas as $k): ?>
     <div class="pantalla pantalla--sm" id="s-<?php echo $k; ?>"><?php sobre_pantalla($k, $T, $e, $flecha, $wa, $cv); ?></div>
     <?php endforeach; ?>
+    <?php $pieCorto = true; include 'php-elements/pie-contacto.php'; /* v10 */ ?>
 </div>
 
     <?php include 'php-elements/js-baraja.php'?>
