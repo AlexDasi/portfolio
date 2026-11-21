@@ -118,7 +118,7 @@ $assetVersion = static function (string $relativePath): string {
             <?php if (!empty($temaForzado)): ?>tema = '<?php echo $temaForzado === 'noche' ? 'noche' : 'dia'; ?>';<?php endif; ?>
             html.classList.add(tema === 'noche' ? 'tema-noche' : 'tema-dia');
             /* v17: composiciones de la esfera de «Hablamos» para comparar (?bola=abajo|centro; por defecto, la esquina) */
-            try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (/^(abajo|centro|abajo-centro)$/.test(bolaQ || '')) html.classList.add('bola-' + bolaQ); var hq = new URLSearchParams(location.search).get('hablamos'); if (/^(plana|velada|lejos)$/.test(hq || '')) html.classList.add('hablamos-' + hq); } catch (e) {}
+            try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (bolaQ === 'abajo-centro') html.classList.add('bola-abajo-centro'); /* v25: fuera las composiciones ya descartadas (?bola=abajo|centro, ?hablamos=…) */ } catch (e) {}
             var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', tema === 'noche' ? '#000000' : '#f5f3ec');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));

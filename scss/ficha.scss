@@ -434,7 +434,7 @@ body.pagina-ficha { display: block; }
 html.fp-baja .pagina-ficha {
   .nav--top, .lang-switch, .nav-sutil { opacity: 0; translate: 0 -14px; pointer-events: none; }
 }
-.pagina-ficha .press-space { display: none; }
+// v25 (Alex: «ha desaparecido el press space»): también en las fichas (antes se escondía aquí)
 @media (max-width: 1280px) { html.fp-baja body.pagina-ficha::before { opacity: 0; } body.pagina-ficha::before { transition: opacity .35s ease; } }
 
 // Día: los huecos de vídeo en un gris papel, no en negro

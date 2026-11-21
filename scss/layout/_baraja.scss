@@ -2399,3 +2399,21 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
     color: color-mix(in srgb, var(--main-color) 38%, transparent) !important;
   }
 }
+
+// ============================================================
+// v25 (Alex, 21/11: «el HUD un poco más grande, está muy sutil; y más fino, no tan bold; baja la opacidad, que no pese»;
+// «alex dasi un poco más grande»; minúsculas, sí)
+// ============================================================
+.lang-switch__item, .sitio-baraja .nav--top .nav--items a, .nav-sutil__item, .press-space, .piel-3d, .piel-3d__tecla, .piel-3d__nombre {
+  font-size: 15px !important; font-weight: 300 !important; letter-spacing: .01em !important;
+}
+@media (min-width: 1281px) {
+  .lang-switch__item, .nav-sutil__item { opacity: .78 !important; }
+  .lang-switch__item.is-active, .nav-sutil__item.is-active, .lang-switch__item:hover, .nav-sutil__item:hover { opacity: 1 !important; }
+  .press-space, .piel-3d { opacity: .5 !important; }
+  .piel-3d:hover { opacity: .9 !important; }
+  .sitio-baraja .nav--top .nav--items a { font-size: 17px !important; font-weight: 400 !important; }
+  .lang-switch__item::after, .nav-sutil__item::after { height: 1.5px !important; }
+  .pagina-ficha .press-space { display: block !important; }
+}
+@media (min-width: 1281px) { .sitio-baraja .nav--top .nav--items a { translate: 0 2px; } }

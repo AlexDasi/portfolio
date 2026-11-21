@@ -857,3 +857,13 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Logo:** sin punto (se salía del subrayado).
 - **Flechas blancas en la intro:** el HUD contaba la capa precargada de la esfera como «esfera a la vista» y se ponía en tinta oscura; ahora solo la esfera abierta.
 - **Proyectos (home):** texto de la ficha más grande (nombre 40 px, texto 17 px); «usa la rueda o arrastra» encima de la primera carta, a la izquierda, gris claro.
+
+---
+
+## 2026-11-21 — v25 · HUD más grande y fino, pendientes (ATELIER conv. 1412)
+
+- **HUD (minúsculas, se quedan):** 15 px, peso 300, menú e idioma al 78 % (activo y hover al 100 %, filete de 1,5 px), pulsa espacio / pulsa e al 50 %; alex dasi a 17 px, peso 400.
+- **pulsa espacio** vuelve a las fichas y casos (ficha.scss lo escondía).
+- **Limpieza:** fuera las composiciones descartadas (`?bola=abajo|centro`, `?hablamos=…`); queda `?bola=abajo-centro` mientras Alex decide.
+- **Rendimiento:** la comprobación del color del HUD sobre la esfera solo corre con una esfera en pantalla (antes, siempre cada 120 ms).
+- **Design system:** estilos `hud` y `hud-logo`, Hud en minúsculas, páginas v25 y pendientes.

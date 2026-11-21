@@ -530,5 +530,15 @@
       el.classList.toggle('hud-sobre-esfera', on);
     });
   }
-  setInterval(function () { if (!document.hidden) paso(); }, 120);
+  // v25 (rendimiento, Alex: «el cursor a veces va a tirones»): solo se mira mientras hay una esfera en pantalla
+  var vistas = 0, limpio = true;
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) { en.forEach(function (x) { vistas += x.isIntersecting ? 1 : -1; }); vistas = Math.max(0, vistas); }, { threshold: 0 });
+    document.querySelectorAll('[data-esfera-habla], .pantalla--intro, .MainSwiper .swiper-slide:first-child').forEach(function (el) { io.observe(el); });
+  } else vistas = 1;
+  setInterval(function () {
+    if (document.hidden) return;
+    if (!vistas) { if (!limpio) { document.querySelectorAll('.hud-sobre-esfera').forEach(function (el) { el.classList.remove('hud-sobre-esfera'); }); limpio = true; } return; }
+    limpio = false; paso();
+  }, 150);
 })();
