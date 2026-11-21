@@ -224,7 +224,7 @@
       piel = pielH; rotular(pielH); // v15: el botón de la piel enseña (y parte de) la que se ve
       // v18 (Alex, 21/11: «el glaseado en grande pesa muchísimo, da tirones»): en escritorio la de Hablamos va a densidad 1,25
       // y el glaseado con la transmisión a media resolución (esfera-hq: ?dpr, ?ligero)
-      marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : '&mano&dpr=1.25' + (pielH === 'glaseado' ? '&ligero' : '')), pielH);
+      marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : (html.classList.contains('bola-abajo-centro') ? '&mano&dpr=1&ligero' : '&mano&dpr=1.25' + (pielH === 'glaseado' ? '&ligero' : '')))   /* v22: la grande de abajo, a densidad 1 */, pielH);
       apuntar(pielH);
       bolaH.appendChild(marcoH);
       // dentro de la bola manda la esfera (su propio cursor, arrastre con inercia, clic); fuera, el fluido de la página

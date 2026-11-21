@@ -2219,8 +2219,9 @@ html.sm-anima .slide-pie .sm > .sm__habla-bola { opacity: 1 !important; translat
   .uxp__tarjeta .ux__ver { margin-top: auto !important; }
 }
 // v19: el texto pequeño en el acento, de día, mezclado con la tinta para que se lea (los acentos ya son claros)
-:root { --acento-texto: var(--accent-color); }
-html.tema-dia { --acento-texto: color-mix(in srgb, var(--accent-color) 40%, #141415); }
+// v22: declarado en el body (donde vive --accent-color); en :root se quedaba congelado en el lima inicial
+body { --acento-texto: var(--accent-color); }
+html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%, #141415); }
 .uxp__num, .uxp__titulo-casos span, .uxp__indice a span, .baraja[data-modo] .ficha__num { color: var(--acento-texto) !important; }
 .uxp__indice a:hover span { color: $tinta !important; }
 .MainSwiper > .swiper-pagination { z-index: 400 !important; } // v19: los pisos siempre por encima (el slider de casos pasa por debajo)
@@ -2283,3 +2284,30 @@ html.tema-dia { --acento-texto: color-mix(in srgb, var(--accent-color) 40%, #141
 }
 // v20 (QA medir.mjs): los CTAs de texto ya no tienen 44 px de alto; la zona táctil se agranda sin mover nada
 .ficha__link::after, .ux__ver::after, .sm__cv::after, .sm__link::after, .fp__volver::after { content: ""; position: absolute; left: -6px; right: -6px; top: -13px; bottom: -13px; }
+
+// ============================================================
+// v22 (Alex, 21/11, conv. 1408)
+// ============================================================
+@media (min-width: 1281px) {
+  // ALEX DASI: el mismo en día y en noche (fuera la caja del acento que ponía la cabecera antigua en noche) y sin
+  // subrayado extra al pasar el ratón: ya lleva el suyo
+  .sitio-baraja .nav--top .single, html.tema-noche .sitio-baraja .nav--top .single, html.tema-dia .sitio-baraja .nav--top .single { background: none !important; }
+  html.tema-noche .sitio-baraja .nav--top .single > a, html.tema-dia .sitio-baraja .nav--top .single > a { padding: 0 !important; min-height: 0 !important; background-clip: border-box !important; }
+  .sitio-baraja .nav--top .single > a::after, .sitio-baraja .nav--top .single > a::before { display: none !important; }
+  .sitio-baraja .nav--top .single > a:hover { text-decoration: none !important; }
+  // menú: hover = active, también en peso y opacidad (sin fusión del cursor, sin cambios de opacidad)
+  .nav-sutil__item, .nav-sutil__item:hover, .nav-sutil__item.is-active, .lang-switch__item, .lang-switch__item:hover, .lang-switch__item.is-active { opacity: 1 !important; font-weight: 400 !important; text-shadow: none !important; }
+  // proyectos (home): fuera el halo fijo detrás de la carta activa
+  .baraja[data-modo="mesa"]::before { display: none !important; }
+  // Hablamos: la esfera separada de la palabra y más pequeña, flotando entre el punto y los pisos
+  .pie--piso .sm__habla-bola, .pagina-proyecto .pie .sm__habla-bola, .pagina-404 .pie .sm__habla-bola {
+    left: 67vw !important; top: 33vh !important; width: 17vw !important;
+  }
+  // ?bola=abajo-centro, más cerca: más ancha y asomando lo mismo (≈ 230 px)
+  html.bola-abajo-centro .pie--piso .sm__habla-bola, html.bola-abajo-centro .pagina-proyecto .pie .sm__habla-bola, html.bola-abajo-centro .pagina-404 .pie .sm__habla-bola {
+    left: 50% !important; top: auto !important; width: 76vw !important; margin-left: -38vw !important; bottom: calc(-76vw + 230px) !important;
+  }
+  // UX/UI: un solo destacado — sin borde; la sombra del acento y el filete de la tarjeta neutro
+  .uxp__tarjeta .uxp__img, .uxp__tarjeta:hover .uxp__img { outline: 0 !important; }
+  .uxp__tarjeta .uxp__info { border-top: 1px solid var(--linea) !important; }
+}

@@ -818,3 +818,14 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - Hablamos: la esfera junto a la palabra, montándose en la S; composición `?bola=abajo-centro` (un trozo grande asomando por abajo).
 - Home: la esfera ya no se cierra al picar fuera. Cursor: el punto de la página no se esconde hasta que la esfera pinta el suyo.
 - `esfera-hq.min.js?v=20`: el navegador usaba la copia vieja (por eso la E no llegaba desde dentro de la esfera).
+
+---
+
+## 2026-11-21 — v22 · acento de verdad, menú, Hablamos y baraja (ATELIER conv. 1408)
+
+- **Bug del acento:** `--acento-texto` se declaraba en `:root`, donde `--accent-color` aún vale el lima inicial → números, puntos y etiquetas salían siempre en lima. Ahora en `body`.
+- **Paleta = design system:** seis acentos; el lila pasa al azul de Alex (#6483FD / #496EFF día); fuera el albaricoque.
+- **Menú:** fuera la fusión del cursor sobre el menú y el logo (hacía el hover más gordo/opaco y una caja en ALEX DASI de noche); hover = active al píxel. ALEX DASI igual en día y noche y sin subrayado extra.
+- **Baraja:** fuera el halo fijo; la rueda no pasaba cartas al volver de una ficha (`?carta`): ahora se mira el piso al arrancar.
+- **Hablamos:** la esfera separada de la palabra, más pequeña, flotando entre el punto y los pisos. `?bola=abajo-centro` más ancha (76vw) asomando lo mismo y a densidad 1 para no pesar.
+- **UX/UI:** un solo destacado en las tarjetas (halo del acento), sin borde ni filete del acento.

@@ -30,7 +30,7 @@
   if (window.innerWidth <= 1280) return;
   if (new URLSearchParams(location.search).get('fusion') === 'no') return;
 
-  var SEL = '.sm__casos a, .sm__boton, .ficha__link:not(.fp__volver), .nav-sutil__item, .nav--top .single > a';
+  var SEL = '.sm__casos a, .sm__boton'; // v22 (Alex: «el hover del menú es más gordo y opaco que el active»; «ALEX DASI en noche sale con un recuadro más grande»): fuera el menú, el logo y los CTAs de texto (ya tienen su barrido)
   var LINK = '.ficha__link, .nav-sutil__item, .nav--top .single > a';
   var K = { size: 10, lerp: 0.4, lerpHot: 0.28, underline: 3 };
 

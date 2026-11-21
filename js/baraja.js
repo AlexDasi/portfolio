@@ -121,6 +121,9 @@
       self.entra();
       self.pedir();
     });
+    // v22 (Alex: «de repente el scroll no funciona»): al volver de una ficha (?carta) la página abre ya en la baraja y el
+    // aviso de los pisos había salido antes de que este script escuchara: se mira el piso actual al arrancar
+    if (this.root.closest('.MainSwiper') && window.mainSwiper && window.mainSwiper.activeIndex === 1) { this.enPantalla = true; this.entra(); this.pedir(); }
     if (!this.root.closest('.MainSwiper') && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (entradas) {
         self.enPantalla = entradas[0].isIntersecting;

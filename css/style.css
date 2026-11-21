@@ -7590,11 +7590,11 @@ html.sm-anima .slide-pie .sm > .sm__habla-bola {
     margin-top: auto !important;
   }
 }
-:root {
+body {
   --acento-texto: var(--accent-color);
 }
 
-html.tema-dia {
+html.tema-dia body {
   --acento-texto: color-mix(in srgb, var(--accent-color) 40%, #141415);
 }
 
@@ -7742,6 +7742,48 @@ html.tema-dia {
   bottom: -13px;
 }
 
+@media (min-width: 1281px) {
+  .sitio-baraja .nav--top .single, html.tema-noche .sitio-baraja .nav--top .single, html.tema-dia .sitio-baraja .nav--top .single {
+    background: none !important;
+  }
+  html.tema-noche .sitio-baraja .nav--top .single > a, html.tema-dia .sitio-baraja .nav--top .single > a {
+    padding: 0 !important;
+    min-height: 0 !important;
+    background-clip: border-box !important;
+  }
+  .sitio-baraja .nav--top .single > a::after, .sitio-baraja .nav--top .single > a::before {
+    display: none !important;
+  }
+  .sitio-baraja .nav--top .single > a:hover {
+    text-decoration: none !important;
+  }
+  .nav-sutil__item, .nav-sutil__item:hover, .nav-sutil__item.is-active, .lang-switch__item, .lang-switch__item:hover, .lang-switch__item.is-active {
+    opacity: 1 !important;
+    font-weight: 400 !important;
+    text-shadow: none !important;
+  }
+  .baraja[data-modo=mesa]::before {
+    display: none !important;
+  }
+  .pie--piso .sm__habla-bola, .pagina-proyecto .pie .sm__habla-bola, .pagina-404 .pie .sm__habla-bola {
+    left: 67vw !important;
+    top: 33vh !important;
+    width: 17vw !important;
+  }
+  html.bola-abajo-centro .pie--piso .sm__habla-bola, html.bola-abajo-centro .pagina-proyecto .pie .sm__habla-bola, html.bola-abajo-centro .pagina-404 .pie .sm__habla-bola {
+    left: 50% !important;
+    top: auto !important;
+    width: 76vw !important;
+    margin-left: -38vw !important;
+    bottom: calc(-76vw + 230px) !important;
+  }
+  .uxp__tarjeta .uxp__img, .uxp__tarjeta:hover .uxp__img {
+    outline: 0 !important;
+  }
+  .uxp__tarjeta .uxp__info {
+    border-top: 1px solid var(--linea) !important;
+  }
+}
 /* CANVAS */
 canvas {
   z-index: 0;

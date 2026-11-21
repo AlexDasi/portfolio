@@ -136,9 +136,9 @@ $assetVersion = static function (string $relativePath): string {
                 { r: 140, g: 232, b: 186, n: 'menta', d: { r: 112, g: 222, b: 166 } },
                 { r: 255, g: 174, b: 122, n: 'coral', d: { r: 255, g: 152, b: 96 } },
                 { r: 132, g: 204, b: 255, n: 'cielo', d: { r: 104, g: 186, b: 255 } },
-                { r: 192, g: 168, b: 255, n: 'lila', d: { r: 170, g: 140, b: 255 } },
-                { r: 255, g: 164, b: 206, n: 'rosa', d: { r: 255, g: 138, b: 190 } },
-                { r: 255, g: 214, b: 102, n: 'albaricoque', d: { r: 255, g: 200, b: 70 } }
+                { r: 100, g: 131, b: 253, n: 'lila', d: { r: 73, g: 110, b: 255 } },   // v22: el azul que puso Alex en el design system
+                { r: 255, g: 164, b: 206, n: 'rosa', d: { r: 255, g: 138, b: 190 } }
+                /* v22: fuera el albaricoque (Alex lo quitó en el design system) */
             ];
             var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
             /* v11 (Alex, 21/11: «no quiero que cambie el color acento mientras estés en la misma visita»): el acento se elige al
