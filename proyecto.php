@@ -43,6 +43,7 @@ $headExtra = '<link rel="stylesheet" href="' . $fichaCss . '">'
 include 'php-elements/header-baraja.php';
 $es = $lang === 'es';
 $L = $es ? 'es' : 'en';
+$ver = static function ($f) { $r = __DIR__ . '/' . $f; return $f . (is_file($r) ? '?v=' . filemtime($r) : ''); }; // v27b: los vídeos y pósters regrabados se piden de nuevo (antes salía el viejo de la caché)
 $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); };
 $T = $es
     ? ['volver' => 'Proyectos', 'problema' => 'El problema', 'hice' => 'Qué hice', 'visitar' => 'Visitar la web', 'sig' => 'Siguiente proyecto', 'concepto' => 'Concepto', 'cliente' => 'Cliente', 'sinweb' => 'Sin web pública todavía', 'lugar' => 'Lugar', 'anio' => 'Año', 'tipo' => 'Tipo', 'sector' => 'Sector', 'rol' => 'Rol', 'momentos' => 'Momentos', 'vivo' => 'En vivo', 'escritorio' => 'Escritorio', 'movil' => 'Móvil', 'nota_concepto' => 'Marca inventada: proyecto propio, sin cliente.', 'captura' => 'Captura de', 'ver' => 'Ver', 'propio' => 'Concepto propio', 'claves' => 'Claves', 'detalle' => 'Detalle', 'video' => 'Vídeo', 'enuso' => 'En uso', 'foto' => 'Foto de mockup', 'mas' => 'Ver más']
@@ -118,7 +119,7 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
             <?php echo $barraNav; ?>
             <div class="fp__nav-pantalla">
                 <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $e($P['nombre'] . ' · ' . $T['escritorio']); ?>"
-                    data-video-d="<?php echo $e($media . 'desktop-hd.mp4'); ?>" data-poster-d="<?php echo $e($pdPoster); ?>"></video>
+                    data-video-d="<?php echo $e($ver($media . 'desktop-hd.mp4')); ?>" data-poster-d="<?php echo $e($ver($pdPoster)); ?>"></video>
             </div>
         </figure>
         <figure class="fp__video fp__video--m fp__tel<?php echo $pmMovil ? '' : ' fp__tel--corto'; ?>">
@@ -176,7 +177,7 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
                     <div class="<?php echo $pantalla; ?>" style="aspect-ratio: <?php echo (int) $m['w']; ?> / <?php echo (int) $m['h']; ?>">
                     <?php if ($vid): ?>
                         <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $alt; ?>"
-                            data-video="<?php echo $e($m['src']); ?>" data-poster-m="<?php echo $e($m['chica']); ?>" data-poster-d="<?php echo $e($m['grande']); ?>" data-wc="<?php echo (int) $m['wc']; ?>"></video>
+                            data-video="<?php echo $e($ver($m['src'])); ?>" data-poster-m="<?php echo $e($ver($m['chica'])); ?>" data-poster-d="<?php echo $e($ver($m['grande'])); ?>" data-wc="<?php echo (int) $m['wc']; ?>"></video>
                     <?php else: /* dos versiones por captura; js/ficha.js pide la que toca según el hueco y la pantalla */ ?>
                         <img data-poster-m="<?php echo $e($m['chica']); ?>" data-poster-d="<?php echo $e($m['grande']); ?>" data-wc="<?php echo (int) $m['wc']; ?>"
                             width="<?php echo (int) $m['w']; ?>" height="<?php echo (int) $m['h']; ?>" decoding="async" alt="<?php echo $alt; ?>">
