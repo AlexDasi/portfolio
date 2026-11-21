@@ -118,7 +118,7 @@ $assetVersion = static function (string $relativePath): string {
             <?php if (!empty($temaForzado)): ?>tema = '<?php echo $temaForzado === 'noche' ? 'noche' : 'dia'; ?>';<?php endif; ?>
             html.classList.add(tema === 'noche' ? 'tema-noche' : 'tema-dia');
             /* v17: composiciones de la esfera de «Hablamos» para comparar (?bola=abajo|centro; por defecto, la esquina) */
-            try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (/^(abajo|centro)$/.test(bolaQ || '')) html.classList.add('bola-' + bolaQ); } catch (e) {}
+            try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (/^(abajo|centro)$/.test(bolaQ || '')) html.classList.add('bola-' + bolaQ); var hq = new URLSearchParams(location.search).get('hablamos'); if (/^(plana|velada|lejos)$/.test(hq || '')) html.classList.add('hablamos-' + hq); } catch (e) {}
             var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', tema === 'noche' ? '#000000' : '#f5f3ec');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));
@@ -153,6 +153,9 @@ $assetVersion = static function (string $relativePath): string {
             if (recarga || !interna || !(i >= 0 && i < paleta.length)) {
                 var ant = i; i = Math.floor(Math.random() * (paleta.length - (ant >= 0 && ant < paleta.length ? 1 : 0)));
                 if (ant >= 0 && ant < paleta.length && i >= ant) i++;
+                /* v18 (Alex, 21/11: «el lima lo veo aparecer poco, debería salir más»): 1 de cada 3 visitas, lima (si no tocaba ya) */
+                var iLima = paleta.findIndex ? paleta.findIndex(function (x) { return x.n === 'lima'; }) : 0;
+                if (iLima >= 0 && ant !== iLima && Math.random() < 0.34) i = iLima;
                 try { sessionStorage.setItem('alexdasi-acento', i); } catch (e) {}
             }
             if (fijo) i = 0;

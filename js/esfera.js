@@ -140,11 +140,35 @@
         u.searchParams.set('acento', acento());
         if (dia()) u.searchParams.set('dia', ''); else u.searchParams.delete('dia');
         u.pathname = u.pathname.replace(/[^/]+$/, pagina(piel).split('/').pop());
-        f.src = u.pathname.replace(/^\//, '') + u.search;
+        if (f.closest('[data-esfera-habla]')) { if (piel === 'glaseado') u.searchParams.set('ligero', ''); else u.searchParams.delete('ligero'); }
+        var nueva = u.pathname.replace(/^\//, '') + u.search;
+        /* v18 (Alex, 21/11: «al apretar E, mientras tarda, un preloader o mantener el material antiguo, y una transición más
+           sutil»): la esfera se funde (0,35 s), late el disco del acento mientras carga la nueva y la nueva entra fundiéndose
+           (0,7 s) al pintar su primer fotograma (mensaje 'lista'). Red de seguridad: 7 s. */
+        f.dataset.cambiando = '1';
+        f.style.transition = 'opacity .35s ease';
+        f.style.opacity = '0';
+        var par = f.parentNode;
+        setTimeout(function () {
+          if (par && par.matches && par.matches('[data-esfera-habla], .intro__esfera')) par.classList.add('is-cambiando');
+          f.src = nueva;
+          setTimeout(function () { entra(f); }, 7000);
+        }, 360);
       } catch (e) {}
     });
     rotular(piel);
   }
+  function entra(f) {
+    if (!f || !f.dataset.cambiando) return;
+    delete f.dataset.cambiando;
+    f.style.transition = 'opacity .7s cubic-bezier(.22, 1, .36, 1)';
+    f.style.opacity = '';
+    var par = f.parentNode; if (par && par.classList) par.classList.remove('is-cambiando');
+  }
+  window.addEventListener('message', function (e) {
+    if (!e.data || e.data.esfera !== 'lista') return;
+    document.querySelectorAll('iframe[data-cambiando]').forEach(function (f) { if (f.contentWindow === e.source) entra(f); });
+  });
   window.__pielSiguiente = cambiarPiel;
   rotular(piel);
   if (botonPiel) botonPiel.addEventListener('click', cambiarPiel);
@@ -178,7 +202,9 @@
       marcoH.setAttribute('tabindex', '-1');
       var pielH = pielHabla();
       piel = pielH; rotular(pielH); // v15: el botón de la piel enseña (y parte de) la que se ve
-      marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : '&mano'), pielH);
+      // v18 (Alex, 21/11: «el glaseado en grande pesa muchísimo, da tirones»): en escritorio la de Hablamos va a densidad 1,25
+      // y el glaseado con la transmisión a media resolución (esfera-hq: ?dpr, ?ligero)
+      marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : '&mano&dpr=1.25' + (pielH === 'glaseado' ? '&ligero' : '')), pielH);
       apuntar(pielH);
       bolaH.appendChild(marcoH);
       // dentro de la bola manda la esfera (su propio cursor, arrastre con inercia, clic); fuera, el fluido de la página

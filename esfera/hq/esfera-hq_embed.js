@@ -41,9 +41,9 @@ addEventListener('message', e => { const d = e.data || {};
 const lienzo = document.getElementById('c');
 const renderer = new THREE.WebGLRenderer({canvas: lienzo, antialias: false, alpha: true, powerPreference: 'high-performance'});
 renderer.setClearColor(0, EMBED ? 0 : 1);
-renderer.setPixelRatio(Math.min(devicePixelRatio, MOVIL ? 1.5 : 2));
+renderer.setPixelRatio(Math.min(devicePixelRatio, +Q.get('dpr') || (MOVIL ? 1.5 : 2)));   // v18: ?dpr= para esferas grandes (Hablamos) y pieles pesadas
 renderer.toneMapping = THREE.AgXToneMapping; renderer.toneMappingExposure = expo();
-if ('transmissionResolutionScale' in renderer) renderer.transmissionResolutionScale = 1;
+if ('transmissionResolutionScale' in renderer) renderer.transmissionResolutionScale = Q.has('ligero') ? 0.5 : 1;   // v18: ?ligero, la transmisión a media resolución
 const scene = new THREE.Scene();
 const cam = new THREE.PerspectiveCamera(SPEC.camara.fov, 1, .1, 100);
 const pivote = new THREE.Group(), incl = new THREE.Group();

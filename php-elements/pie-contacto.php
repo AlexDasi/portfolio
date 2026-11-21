@@ -19,7 +19,5 @@ $pieEnPiso = !empty($pieEnPiso);
             <a class="sm__boton" href="mailto:hola@alexdasi.com">hola@alexdasi.com</a>
         </div>
     </section>
-    <div class="pie__linea">
-        <span>© Alex Dasi</span><?php /* v17 (Alex, 21/11: «lo de todos los derechos reservados y el año, no sé si hace falta»): fuera los dos; el © basta */ ?>
-    </div>
+    <?php /* v18 (Alex, 21/11: «la línea con Alex Dasi abajo me la quitaría»): fuera la línea del pie */ ?>
 </footer>

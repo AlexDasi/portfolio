@@ -5,8 +5,11 @@
    v15 (Alex, 21/11): fuera el zigzag (foto izquierda / derecha) y los tamaños distintos: índice de cinco filas IGUALES
    (número + nombre + reto y papel a la izquierda, portada 16:10 a la derecha), una línea fina entre caso y caso. Datos: content/casos.json (los mismos de caso.php)
    + textos de php-pages/sobre-mi.php. Aquí no se escribe copy nuevo salvo las etiquetas. */
-$bodyClass = 'sitio-baraja pagina-proyecto pagina-uxui';
-$sinSwiper = true;
+/* v18 · PROPUESTA A (Alex, 21/11: «en UX/UI perdemos la gracia de navegar con las flechas que tenemos en el resto»):
+   ?vista=pisos → en escritorio, UX/UI en pisos como Sobre mí: portada · un caso por pantalla · Hablamos. Móvil, igual que hoy. */
+$vistaPisos = (($_GET['vista'] ?? '') === 'pisos');
+$bodyClass = $vistaPisos ? 'sitio-baraja pagina-uxui pagina-uxui--pisos' : 'sitio-baraja pagina-proyecto pagina-uxui';
+$sinSwiper = !$vistaPisos;
 $pageTitle = ['es' => 'UX/UI · Alex Dasi', 'en' => 'UX/UI · Alex Dasi'];
 $metaDescription = ['es' => 'Casos de producto digital y UX/UI de Alex Dasi: Tulong, Idrica, ATELIER, Clustag y Knowadays.', 'en' => 'Digital product and UX/UI case studies by Alex Dasi: Tulong, Idrica, ATELIER, Clustag and Knowadays.'];
 include 'php-elements/header-baraja.php';
@@ -28,6 +31,54 @@ $resumen = static function (array $C, int $k) use ($L) { $r = $C['resumen'][$k] 
 
     <?php include 'php-elements/nav-baraja.php'?>
 
+<?php if ($vistaPisos):
+    $nombres = []; foreach ($T['casos'] as $t) { $C = $porSlug[$t[0]] ?? null; if ($C) $nombres[] = mb_strtoupper($C['nombre']); }
+    $pisosU = 'UX/UI|' . implode('|', $nombres) . '|' . ($es ? 'HABLAMOS' : 'LET’S TALK');
+    $total = count($nombres);
+?>
+<div class="hiddenMobile swiper MainSwiper uxp" data-menu="<?php echo $e($pisosU); ?>" data-wheel="off" data-initial="0">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide uxp__slide uxp__slide--portada">
+            <div class="uxp__portada">
+                <h1 class="ux__titulo">UX/UI<span class="ux__punto" aria-hidden="true"></span></h1>
+                <div class="ux__intro">
+                    <p class="ux__lead"><?php echo $e($T['ux_t']); ?></p>
+                    <p class="ux__texto"><?php echo $e($T['ux_p']); ?></p>
+                    <p class="sm__cvs ux__cvs"><a class="sm__cv" href="<?php echo $e($cv); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv']); ?></a><a class="sm__cv sm__cv--otro" href="<?php echo $e($cvOtro); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv_otro']); ?></a></p>
+                </div>
+                <ol class="uxp__indice">
+                    <?php $n = 0; foreach ($T['casos'] as $t): $C = $porSlug[$t[0]] ?? null; if (!$C) continue; $n++; ?>
+                    <li><a href="#" data-uxp-ir="<?php echo $n; ?>"><span><?php echo str_pad((string) $n, 2, '0', STR_PAD_LEFT); ?></span><?php echo $e($C['nombre']); ?></a></li>
+                    <?php endforeach; ?>
+                </ol>
+            </div>
+        </div>
+        <?php $n = 0; foreach ($T['casos'] as $i => $t): $C = $porSlug[$t[0]] ?? null; if (!$C) continue; $n++; $p = $C['portada'];
+            $p12 = preg_replace('~_portada-\d+\.webp$~', '_portada-1200.webp', $p['grande']); $set = $p['chica'] . ' ' . $p['wc'] . 'w, ' . (is_file(__DIR__ . '/' . $p12) ? $p12 . ' 1200w, ' : '') . $p['grande'] . ' ' . $p['wg'] . 'w'; ?>
+        <div class="swiper-slide uxp__slide">
+            <article class="uxp__caso">
+                <a class="uxp__img" href="caso.php?c=<?php echo $e($C['slug']); ?>" tabindex="-1" aria-hidden="true">
+                    <img src="<?php echo $e($p['grande']); ?>" srcset="<?php echo $e($set); ?>" sizes="56vw" width="<?php echo (int) $p['wc']; ?>" height="<?php echo (int) round($p['wc'] * $p['h'] / $p['w']); ?>" alt="" loading="<?php echo $n === 1 ? 'eager' : 'lazy'; ?>" decoding="async">
+                </a>
+                <div class="uxp__info">
+                    <p class="uxp__num"><?php echo str_pad((string) $n, 2, '0', STR_PAD_LEFT); ?> / <?php echo str_pad((string) $total, 2, '0', STR_PAD_LEFT); ?><span><?php echo $e($t[3] ?: ($C['anios'] ?? '')); ?></span></p>
+                    <h2 class="uxp__nombre"><?php echo $e($C['nombre']); ?><i aria-hidden="true">.</i></h2>
+                    <p class="uxp__sub"><?php echo $e($t[2]); ?></p>
+                    <p class="uxp__dato"><b><?php echo $e($U['reto']); ?></b><?php echo $e($resumen($C, 0)); ?></p>
+                    <p class="uxp__dato"><b><?php echo $e($U['papel']); ?></b><?php echo $e($resumen($C, 1)); ?></p>
+                    <a class="ux__ver" href="caso.php?c=<?php echo $e($C['slug']); ?>"><?php echo $e($U['ver']); ?><?php echo $fd; ?></a>
+                </div>
+            </article>
+        </div>
+        <?php endforeach; ?>
+        <div class="swiper-slide slide-sm slide-pie"><?php $pieEnPiso = true; include 'php-elements/pie-contacto.php'; $pieEnPiso = false; ?></div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <?php include 'php-elements/arrow.php'?>
+</div>
+<script>document.addEventListener('click', function (e) { var a = e.target.closest('[data-uxp-ir]'); if (!a || !window.mainSwiper) return; e.preventDefault(); window.mainSwiper.slideTo(+a.getAttribute('data-uxp-ir')); });</script>
+<div class="hiddenDesktop">
+<?php endif; ?>
 <main class="ux">
     <header class="ux__cab">
         <h1 class="ux__titulo">UX/UI<span class="ux__punto" aria-hidden="true"></span></h1>
@@ -71,6 +122,7 @@ $resumen = static function (array $C, int $k) use ($L) { $r = $C['resumen'][$k] 
 </main>
 
 <?php include 'php-elements/pie-contacto.php'?>
+<?php if ($vistaPisos): ?></div><?php endif; ?>
 
     <?php $sinBaraja = true; include 'php-elements/js-baraja.php'?>
 

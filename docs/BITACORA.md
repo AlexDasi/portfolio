@@ -778,3 +778,17 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Esfera de la home:** al bajar ya no se cierra, se pausa; al subir sigue ahí hasta que la escondes. **Sobre mí:** la de Hablamos se precarga en reposo y en pausa.
 - **Día/noche automático** por la hora (8-20 h día); el cambio a mano dura la visita.
 - **Pie:** solo «© Alex Dasi». **Enlaces «Ver el caso»:** el subrayado se redibuja al pasar el ratón. **Descargar CV:** el resaltado cubre la palabra y el texto pasa a oscuro.
+
+---
+
+## 2026-11-21 — v18 · ajustes y propuestas (ATELIER conv. 1399)
+
+- **Glaseado pesado en grande:** la esfera de Hablamos (escritorio) va a densidad 1,25 y el glaseado con la transmisión a media resolución (`esfera-hq`: `?dpr`, `?ligero`; min.js reconstruido con esbuild desde `esfera/hq/esfera-hq_embed.js`, three 0.160).
+- **`?bola=centro`** = centrada en VERTICAL, pegada a la derecha.
+- **Lima más a menudo:** 1 de cada 3 visitas (si no tocaba ya).
+- **Flechas:** bola de 68 px (antes 100) y flecha al 70 %; fuera magnet-mouse en ellas, imán propio de 6 px como mucho.
+- **«ALEX DASI» y UX/UI · Sobre mí · Contacto** con el mismo tratamiento (13 px, mayúsculas, .1em, color pleno).
+- **Proyectos (home, escritorio):** más acento: punto del acento tras el nombre, número y regla del acento, halo suave detrás de la carta.
+- **Tecla E:** la esfera se funde, late el disco del acento mientras carga y la nueva entra fundiéndose al pintar. **Color (espacio):** transición de 0,8 s (`@property --cursor-color`).
+- **Hablamos:** no encoge al salir del piso. **Pie:** fuera la línea «© Alex Dasi».
+- **Propuestas para mirar:** Hablamos `?hablamos=plana|velada|lejos` (+ `?bola=abajo|centro`); UX/UI en pisos `uxui.php?vista=pisos`.

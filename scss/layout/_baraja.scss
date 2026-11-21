@@ -2011,11 +2011,118 @@ html.cursor-fijo .piel-3d { display: none; }
   }
   html.bola-centro .pie--piso .sm__habla-bola,
   html.bola-centro .pagina-proyecto .pie .sm__habla-bola, html.bola-centro .pagina-404 .pie .sm__habla-bola {
-    top: 50%; right: 12vw; width: 36vw; translate: 0 -50%;
+    top: 50%; bottom: auto; right: -10vw; width: 40vw; margin-top: -20vw; // v18: centrada en VERTICAL, pegada a la derecha
   }
 }
 .arrow-container--arriba .arrow.down { rotate: 180deg; } // la misma flecha que la de abajo, girada (v17)
 // v17: la esfera de la esquina un poco más arriba y menos ancha para no rozar los pisos de la derecha
 @media (min-width: 1281px) {
   .pie--piso .sm__habla-bola, .pagina-proyecto .pie .sm__habla-bola, .pagina-404 .pie .sm__habla-bola { right: -8vw; top: -22vh; width: 40vw; }
+}
+
+// v18 (Alex, 21/11: «las flechas definitivamente más pequeñas, la bola entera»): 100 → 68 px, la flecha a escala
+.arrow-container .circle[data-iman-sutil] { width: 68px; height: 68px; transition: translate .25s cubic-bezier(.22, 1, .36, 1), box-shadow .25s ease; }
+.arrow-container .circle[data-iman-sutil] .arrow { scale: .7; }
+.arrow-container { align-items: center; }
+
+// v18 (Alex, 21/11: «alex dasi y UX/UI · Sobre mí · Contacto con el mismo tratamiento: tamaño, peso, color, mismo todo»)
+@media (min-width: 1281px) {
+  .sitio-baraja .nav--top .nav--items a,
+  .nav-sutil__item {
+    font-family: $main-font !important; font-size: 13px !important; font-weight: 400 !important; line-height: 1 !important;
+    letter-spacing: .1em !important; text-transform: uppercase !important; color: var(--main-color) !important; opacity: 1 !important;
+  }
+}
+@media (min-width: 1281px) { .sitio-baraja .nav--top .nav--items a.hud-sobre-esfera, .nav-sutil .nav-sutil__item.hud-sobre-esfera { color: $tinta !important; } }
+
+// v18: mientras carga la piel nueva (tecla E), late el disco del acento donde está la esfera
+[data-esfera-habla].is-cambiando, .intro__esfera.is-cambiando { animation: esfera-cambia-late 1.1s ease-in-out infinite; }
+@keyframes esfera-cambia-late { 50% { opacity: .55; } }
+
+// v18 (Alex, 21/11: «el cambio de color, que no sea tan inmediato: una transición sutil de uno al siguiente»)
+@property --cursor-color { syntax: '<color>'; inherits: true; initial-value: rgb(236, 249, 142); }
+@property --cursor-color-dia { syntax: '<color>'; inherits: true; initial-value: rgb(122, 155, 24); }
+html { transition: --cursor-color .8s ease, --cursor-color-dia .8s ease; }
+.sm__habla-bola.is-lista.is-cambiando { background-color: var(--accent-color); }
+// v18 (Alex, 21/11: «cuando subo desde contacto, la esfera se hace pequeña; es raro»): la del pie no encoge al salir del piso
+html.sm-anima .slide-pie .sm__habla-bola, html.sm-anima .pie .sm__habla-bola, .slide-pie .sm__habla-bola { scale: 1 !important; }
+html.sm-anima .slide-pie .sm > .sm__habla-bola { opacity: 1 !important; translate: var(--sx, 0px) var(--sy, 0px) !important; }
+
+// ============================================================
+// v18 · PROPUESTAS para la esfera de Hablamos (Alex, 21/11: «en 3D en la esquina me molesta más de lo que me gusta;
+// plana quedaba muy bien porque el texto se veía perfecto»). Se comparan con ?hablamos=plana|velada|lejos
+//  · plana:  el disco plano del acento, como antes; al tocarlo con el ratón se vuelve 3D (y se puede girar)
+//  · velada: la 3D a media luz detrás; al tocarla, entera
+//  · lejos:  la 3D más pequeña y más metida en la esquina, lejos del titular
+// ============================================================
+@media (min-width: 1281px) {
+  html.hablamos-plana .sm__habla-bola.is-lista { background-color: var(--accent-color); }
+  html.hablamos-plana .sm__habla-bola iframe { opacity: 0 !important; transition: opacity .5s ease !important; }
+  html.hablamos-plana.cursor-en-esfera .sm__habla-bola.is-lista { background-color: transparent; }
+  html.hablamos-plana.cursor-en-esfera .sm__habla-bola iframe { opacity: 1 !important; }
+
+  html.hablamos-velada .sm__habla-bola iframe { opacity: .32 !important; transition: opacity .6s ease !important; }
+  html.hablamos-velada.cursor-en-esfera .sm__habla-bola iframe { opacity: 1 !important; }
+
+  html.hablamos-lejos .pie--piso .sm__habla-bola,
+  html.hablamos-lejos .pagina-proyecto .pie .sm__habla-bola, html.hablamos-lejos .pagina-404 .pie .sm__habla-bola { width: 24vw; top: -7vh; right: -5vw; }
+}
+
+// v18 (Alex, 21/11: «en la parte de proyectos necesito más presencia del color acento en esta composición»), escritorio:
+// el punto del acento al final del nombre (el mismo gesto que «Hablamos.»), número y regla en el acento, y un halo suave
+// del acento detrás de la carta activa
+@media (min-width: 1281px) {
+  .baraja[data-modo="mesa"] {
+    .ficha__nombre::after { content: "."; color: var(--accent-color); }
+    .ficha__num { color: var(--accent-color); }
+    .ficha__cab { border-top: 2px solid var(--accent-color) !important; }
+    .ficha__tipo { color: var(--main-color); }
+    &::before {
+      content: ""; position: absolute; z-index: 0; pointer-events: none;
+      left: -6vw; top: 8%; width: 46vw; height: 84%;
+      background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-color) 38%, transparent), transparent);
+      filter: blur(10px);
+    }
+  }
+}
+
+// ============================================================
+// v18 · PROPUESTA A para UX/UI: pisos (uxui.php?vista=pisos), escritorio
+// portada con titular + índice de los cinco casos → un caso por pantalla (portada grande a la izquierda, ficha a la derecha,
+// el mismo lenguaje que la baraja de la home: número y punto del acento, halo) → Hablamos
+// ============================================================
+@media (min-width: 1281px) {
+  .pagina-uxui--pisos { overflow: hidden; }
+  .uxp .uxp__slide { height: 100vh; display: flex; align-items: center; }
+  .uxp__portada { width: 100%; padding: 0 8vw; display: grid; grid-template-columns: 1.1fr 1fr; gap: 0 6vw; align-items: end; }
+  .uxp__portada .ux__titulo { grid-column: 1 / -1; margin: 0 0 4vh; }
+  .uxp__portada .ux__intro { max-width: 46ch; }
+  .uxp__indice { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--linea); }
+  .uxp__indice a {
+    display: flex; align-items: baseline; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--linea);
+    font-family: $main-font; font-size: clamp(22px, 2vw, 32px); letter-spacing: -.01em; color: var(--main-color); text-decoration: none;
+    transition: padding .35s cubic-bezier(.22, 1, .36, 1), color .2s ease;
+    span { font-size: 12px; letter-spacing: .1em; color: var(--accent-color); }
+  }
+  .uxp__indice a:hover { padding-left: 12px; }
+  .uxp__caso { width: 100%; padding: 0 8vw; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 5vw; align-items: center; position: relative; }
+  .uxp__caso::before {
+    content: ""; position: absolute; z-index: 0; pointer-events: none; left: 2vw; top: -14vh; width: 56vw; height: 128%;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-color) 30%, transparent), transparent); filter: blur(10px);
+  }
+  .uxp__img { position: relative; z-index: 1; display: block; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,.45); transform: perspective(1400px) rotateY(6deg); transform-origin: 0 50%;
+    transition: transform .8s cubic-bezier(.22, 1, .36, 1); }
+  .uxp__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .uxp__img:hover { transform: perspective(1400px) rotateY(0deg) scale(1.01); }
+  .uxp__info { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; border-top: 2px solid var(--accent-color); padding-top: 16px; }
+  .uxp__num { margin: 0; display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .12em; color: var(--accent-color); span { color: var(--tinta-suave); } }
+  .uxp__nombre { margin: 0; font-family: $main-font; font-weight: 600; font-size: clamp(40px, 4.2vw, 68px); letter-spacing: -.03em; line-height: 1; color: var(--main-color); i { font-style: normal; color: var(--accent-color); } }
+  .uxp__sub { margin: 0; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave); }
+  .uxp__dato { margin: 0; font-size: 15px; line-height: 1.55; color: var(--main-color); max-width: 42ch; b { display: block; font-weight: 400; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave); margin-bottom: 4px; } }
+  .uxp .ux__ver { align-self: flex-start; margin-top: 6px; }
+  // entrada al llegar al piso
+  .uxp .uxp__img, .uxp .uxp__info { opacity: 0; translate: 0 26px; transition: opacity .7s ease, translate .9s cubic-bezier(.22, 1, .36, 1), transform .8s cubic-bezier(.22, 1, .36, 1); }
+  .uxp .swiper-slide-active .uxp__img, .uxp .swiper-slide-active .uxp__info { opacity: 1; translate: 0 0; }
+  .uxp .swiper-slide-active .uxp__info { transition-delay: .12s; }
 }
