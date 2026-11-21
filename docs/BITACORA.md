@@ -836,3 +836,7 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 
 - **HUD en minúsculas (prueba de Alex):** idioma, alex dasi, menú, pulsa espacio, pulsa e · material — 13 px, .02em. alex dasi en semibold con el subrayado del acento en un `span` (cubre la palabra entera; el punto queda fuera).
 - **Móvil (medir.mjs en iPhone 13, SE, iPad):** CTAs de texto con zona táctil real de 44 px y el filete pegado al texto; «Vídeo» del pie a 44 px; UX/UI en móvil sin el párrafo del reto (6,9 → ~5 pantallas en el SE). Queda: casos de UX/UI 4,7 pantallas y «Momentos» de las fichas 2,6 (galerías, se acepta).
+## 2026-11-21 — v19 · Solare lima en calidad alta, al sorteo (ATELIER conv. 1402)
+- Alex: de los cinco materiales nuevos «Solare lima sí me gusta… en alta calidad y mételo en el sorteo». Globo, satén, pompa y terciopelo no convencen: se quedan en `esfera/hq/esfera-hq_materiales.js` fuera del sorteo.
+- **Solare lima** (`?piel=solare`): gas lima y ámbar que se enrosca y da luz dentro (raymarch, 72 pasos en escritorio / 36 en táctil) bajo una carcasa de cristal esmerilado con barniz (MeshPhysical con transmisión rugosa) que lo difumina y coge los reflejos del estudio. Cursor: el gas se arremolina donde pasas y la luz se aviva, con inercia (se apaga despacio).
+- Sorteo: chicle · glaseado · prisma · solare (y la E pasa por las cuatro).
