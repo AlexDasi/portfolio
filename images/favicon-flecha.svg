@@ -1,0 +1,7 @@
+<svg width="32" height="32" viewBox="0 0 35 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- v21 (Alex, 21/11: «en Chrome en modo noche el favicon no se ve»): la flecha en tinta sobre pestañas claras y en blanco
+     roto sobre pestañas oscuras (sigue el tema del navegador/sistema, que es el que pinta la pestaña) -->
+<style>path{stroke:#141415}@media (prefers-color-scheme: dark){path{stroke:#f7f7f5}}</style>
+<path d="M17.5 1L17.5 30" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M32 15.5L17.5 30L3 15.5" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

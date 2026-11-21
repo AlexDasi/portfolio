@@ -67,7 +67,7 @@ $assetVersion = static function (string $relativePath): string {
     <link rel="alternate" hreflang="es" href="<?php echo htmlspecialchars($canonUrl('es'), ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="alternate" hreflang="en" href="<?php echo htmlspecialchars($canonUrl('en'), ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="alternate" hreflang="x-default" href="<?php echo htmlspecialchars($canonUrl('es'), ENT_QUOTES, 'UTF-8'); ?>">
-    <link rel="icon" type="image/svg+xml" href="/images/vectors/arrow.svg">
+    <link rel="icon" type="image/svg+xml" href="/images/favicon-flecha.svg?v=21">
     <link rel="icon" type="image/png" sizes="192x192" href="/images/icono-192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
         
