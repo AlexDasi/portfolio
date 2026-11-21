@@ -8,7 +8,7 @@ $navActual = $navActual ?? 'home';
 <div class="follow hiddenMobile"></div>
 <nav class="nav nav--top">
     <ul>
-        <li class="nav--items single"> <a href="index.php"><span class="logo-txt">alex dasi</span><i class="logo-punto" aria-hidden="true">.</i></a>
+        <li class="nav--items single"> <a href="index.php"><span class="logo-txt">alex dasi</span><?php /* v24 (Alex): sin punto en el logo: se salía del subrayado */ ?></a>
         </li>
     </ul>
 </nav>
@@ -20,7 +20,7 @@ $navActual = $navActual ?? 'home';
 <?php /* v15 (Alex, 21/11): cambiar la piel 3D de la esfera a mano (botón o tecla E), como el PRESS SPACE del color. js/esfera.js */ ?>
 <button class="piel-3d" type="button" data-piel-3d aria-label="<?php echo $isEs ? 'Cambiar la esfera 3D' : 'Change the 3D sphere'; ?>"><span class="piel-3d__tecla"><?php echo $isEs ? 'PULSA E' : 'PRESS E'; ?></span><svg class="piel-3d__icono" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="8" cy="8" rx="6.25" ry="2.4" fill="none" stroke="currentColor" stroke-width="1.1"/></svg><span class="piel-3d__nombre" data-piel-nombre>3D</span></button>
 <nav class="nav-sutil" aria-label="More">
-    <a class="nav-sutil__item nav-sutil__item--uxui<?php echo $navActual === 'uxui' ? ' is-active' : ''; ?>" href="uxui.php">UX/UI</a>
+    <a class="nav-sutil__item nav-sutil__item--uxui<?php echo $navActual === 'uxui' ? ' is-active' : ''; ?>" href="uxui.php"><?php echo $isEs ? 'Producto' : 'Product'; /* v24 (Alex: «UX/UI se queda muy específico; lo llamaría Producto») */ ?></a>
     <a class="nav-sutil__item<?php echo $navActual === 'about' ? ' is-active' : ''; ?>" href="about.php?s=about"><?php echo $isEs ? 'Sobre mí' : 'About'; /* v20: el idioma de la página, no el de un traductor que solo corre en algunas */ ?></a>
     <?php /* v15 (Alex, 21/11): «Contact» lleva al pie de la página en la que estés (en los pisos, al último) */ ?>
     <a class="nav-sutil__item<?php echo $navActual === 'contact' ? ' is-active' : ''; ?>" href="<?php echo !empty($conPie) ? '#contacto' : 'about.php?s=contact'; ?>" data-contacto><?php echo $isEs ? 'Contacto' : 'Contact'; ?></a>
@@ -38,7 +38,7 @@ $navActual = $navActual ?? 'home';
 /* v11 (Alex, 21/11): + Inicio; UX/UI es página propia; Contacto baja al pie (#contacto) de la página en la que estés */
 $mm = [
     ['home', 'Inicio', 'Home', 'index.php'],
-    ['uxui', 'UX/UI', 'UX/UI', 'uxui.php'],
+    ['uxui', 'Producto', 'Product', 'uxui.php'],
     ['about', 'Sobre mí', 'About', 'about.php'],
     ['contact', 'Contacto', 'Contact', !empty($conPie) ? '#contacto' : 'index.php#contacto'],
 ];

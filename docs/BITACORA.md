@@ -847,3 +847,13 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Peso:** 36 pasos de gas en escritorio / 20 en móvil (antes 72/36), ruido 4+2 octavas (antes 4+4), sin el segundo render de la transmisión, sin fondo de refracción y a densidad 1,25 (móvil 1). Medido en el mismo equipo: 12,9 s → 1,1 s por fotograma en software (≈ 11 veces menos trabajo).
 - **Se queda:** el remolino del cursor con inercia.
 - Embed: las pieles de un solo shader pueden pedir `dpr` y `sinFondo`.
+
+---
+
+## 2026-11-21 — v24 · Producto en una pantalla, punto que late, arreglos (ATELIER conv. 1410)
+
+- **UX/UI → Producto** (menú, título y pisos). En escritorio, UNA pantalla: a la izquierda el caso señalado (portada con halo del acento + ficha + «Ver el caso»), a la derecha «Producto.», el texto más grande, la lista de casos (pasar el ratón = enseñar; la activa barrida del acento) y el CV (botón lleno + «In English»). Luego Hablamos. Fuera el slider horizontal.
+- **Intro:** el punto de «Alex Dasi.» abre Y cierra la esfera (y Escape); en reposo late con un aro suave cada 3,2 s (el punto no crece).
+- **Logo:** sin punto (se salía del subrayado).
+- **Flechas blancas en la intro:** el HUD contaba la capa precargada de la esfera como «esfera a la vista» y se ponía en tinta oscura; ahora solo la esfera abierta.
+- **Proyectos (home):** texto de la ficha más grande (nombre 40 px, texto 17 px); «usa la rueda o arrastra» encima de la primera carta, a la izquierda, gris claro.

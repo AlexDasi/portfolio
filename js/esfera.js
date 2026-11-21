@@ -471,7 +471,9 @@
     if (q.get('precarga') !== 'no') enReposo(precargar, 1500); // la de la próxima vez, ya en reposo
   }
 
-  punto.addEventListener('click', function (e) { e.preventDefault(); abrir(); });
+  // v24 (Alex: «ahora no sé cómo volver a reducir la esfera»): el punto abre y cierra (y Escape cierra)
+  punto.addEventListener('click', function (e) { e.preventDefault(); if (abierta) cerrar(); else abrir(); setTimeout(function () { punto.classList.toggle('is-abierta', abierta); }, 0); });
+  window.addEventListener('keydown', function (e) { if (e.key === 'Escape') setTimeout(function () { punto.classList.toggle('is-abierta', abierta); }, 0); });
   window.addEventListener('message', function (e) {
     var m = e.data && e.data.esfera;
     if (pre && e.source === pre.marco.contentWindow) { // la precargada: lista y a dormir hasta el clic
@@ -508,7 +510,7 @@
   var SEL = '.lang-switch__item, .nav--items a, .nav-sutil__item, .nav-sutil__tema, .MainSwiper > .swiper-pagination .swiper-pagination-bullet, .press-space, .piel-3d, .arrow-container .circle';
   function esferas() {
     var out = [];
-    document.querySelectorAll('[data-esfera-habla], .esfera-capa .esfera-bola, .esfera-capa').forEach(function (b) {
+    document.querySelectorAll('[data-esfera-habla], .esfera-capa.is-abierta .esfera-bola').forEach(function (b) { // v24: solo la esfera abierta (la precargada y la capa entera ponían el HUD negro en la intro)
       var r = b.getBoundingClientRect();
       if (r.width < 40 || r.bottom < 0 || r.top > innerHeight || r.right < 0 || r.left > innerWidth) return;
       var cs = getComputedStyle(b); if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0) return;

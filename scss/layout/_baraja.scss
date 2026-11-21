@@ -2334,3 +2334,68 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
   // los CTAs de texto con su zona táctil real de 44 px; el filete sigue pegado al texto
   .ficha__link, .ux__ver, .sm__cv, .sm__link, .fp__volver { min-height: 44px !important; padding: 0 !important; background-position: 0 calc(50% + 12px), 0 calc(50% + 12px) !important; }
 }
+
+// ============================================================
+// v24 · Producto en una pantalla (escritorio): a la izquierda el caso que señalas (portada + ficha), a la derecha el
+// titular, el texto, la lista de casos (pasar el ratón = enseñar) y el CV. Un solo destacado: la fila activa barrida del
+// acento; la portada sale con su halo del acento.
+// ============================================================
+@media (min-width: 1281px) {
+  .uxe { display: grid !important; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 5vw; align-items: center; padding: 96px 8vw 110px; box-sizing: border-box; }
+  .uxe__vista { position: relative; display: grid; }
+  .uxe__caso { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 18px; color: var(--main-color); text-decoration: none;
+    opacity: 0; visibility: hidden; translate: 0 10px; transition: opacity .45s ease, translate .6s cubic-bezier(.22, 1, .36, 1), visibility 0s linear .45s; }
+  .uxe__caso.is-on { opacity: 1; visibility: visible; translate: 0 0; transition: opacity .45s ease, translate .6s cubic-bezier(.22, 1, .36, 1); }
+  .uxe__img { display: block; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden; box-shadow: 0 30px 70px -30px color-mix(in srgb, var(--accent-color) 70%, transparent); }
+  .uxe__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: scale .9s cubic-bezier(.22, 1, .36, 1); }
+  .uxe__caso:hover .uxe__img img { scale: 1.025; }
+  .uxe__info { display: flex; flex-direction: column; gap: 10px; }
+  .uxe__fila { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .12em; color: var(--tinta-suave); }
+  .uxe__num { color: var(--acento-texto); }
+  .uxe__nombre { font-size: clamp(32px, 2.8vw, 46px); font-weight: 600; letter-spacing: -.03em; line-height: 1; i { font-style: normal; color: var(--accent-color); } }
+  .uxe__sub { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave); }
+  .uxe__dato { font-size: 15px; line-height: 1.55; max-width: 60ch; color: var(--main-color); }
+  .uxe__caso .ux__ver { align-self: flex-start; }
+
+  .uxe__lado { display: flex; flex-direction: column; gap: 22px; }
+  .uxe__titulo { margin: 0; font-size: clamp(64px, 6.2vw, 104px); font-weight: 700; letter-spacing: -.045em; line-height: .92; color: var(--main-color); i { font-style: normal; color: var(--accent-color); } }
+  .uxe__lead { margin: 0; font-size: clamp(18px, 1.35vw, 22px); line-height: 1.45; max-width: 34ch; color: var(--main-color); }
+  .uxe__lista { list-style: none; margin: 4px 0 0; padding: 0; border-top: 1px solid var(--linea); }
+  .uxe__lista a { position: relative; z-index: 0; display: flex; align-items: baseline; gap: 16px; padding: 12px 10px; margin: 0 -10px; border-bottom: 1px solid var(--linea);
+    font-size: clamp(20px, 1.6vw, 26px); letter-spacing: -.01em; color: var(--main-color); text-decoration: none; transition: color .25s ease;
+    span { font-size: 12px; letter-spacing: .12em; color: var(--acento-texto); transition: color .25s ease; } }
+  .uxe__lista a::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--accent-color); transform: scaleX(0); transform-origin: left; transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
+  .uxe__lista a.is-on { color: $tinta; span { color: $tinta; } }
+  .uxe__lista a.is-on::before { transform: scaleX(1); }
+  .uxe__cv { display: flex; align-items: center; gap: 22px; margin: 6px 0 0; }
+  .uxe__cv .sm__boton { min-height: 46px; padding: 0 22px; font-size: 15px; }
+}
+@media (min-width: 1281px) {
+  .uxe { padding-right: 9.5vw !important; }
+  .uxe__titulo { text-transform: none !important; }
+  .uxe__cv .sm__boton--lleno { background: var(--accent-color) !important; border-color: var(--accent-color) !important; color: $tinta !important; }
+  .uxe__cv .sm__boton--lleno:hover { background: var(--main-color) !important; border-color: var(--main-color) !important; color: var(--bkg-color) !important; }
+}
+
+// v24 (Alex: «que el punto de Alex Dasi tenga un latido sutil, un halo que aparece y se diluye, indicando que ahí pasa
+// algo; el punto no crece»): en reposo, un aro suave cada 3,2 s; al acercarte, el aro de siempre; con la esfera abierta, nada
+@keyframes punto-latido { 0% { scale: 1; opacity: 0; } 12% { opacity: .55; } 70% { scale: 2.1; opacity: 0; } 100% { scale: 2.1; opacity: 0; } }
+@media (hover: hover) and (pointer: fine) and (min-width: 1281px) {
+  .intro__punto:not(.is-cerca):not(.is-abierta)::after { opacity: 1; scale: 1; animation: punto-latido 3.2s cubic-bezier(.22, 1, .36, 1) 1.2s infinite; }
+  .intro__punto.is-abierta::after { animation: none !important; opacity: 0 !important; }
+}
+@media (prefers-reduced-motion: reduce) { .intro__punto::after { animation: none !important; } }
+
+// v24 (Alex: «el texto de los proyectos, un poco más grande, que se lea mejor»; «USA LA RUEDA O ARRASTRA, arriba de la
+// primera carta, alineado a la izquierda, muy sutil, gris clarito»). Escritorio.
+@media (min-width: 1281px) {
+  .baraja[data-modo="mesa"] .ficha { width: 470px !important; max-width: 470px !important; }
+  .baraja[data-modo="mesa"] .ficha__nombre { font-size: 40px !important; letter-spacing: -.03em; }
+  .baraja[data-modo="mesa"] .ficha__meta { font-size: 13px !important; }
+  .baraja[data-modo="mesa"] .ficha__texto { font-size: 17px !important; line-height: 1.5 !important; max-width: 40ch; }
+  .baraja[data-modo="mesa"] .baraja__pista {
+    position: absolute !important; left: 98px !important; right: auto !important; top: 196px !important; bottom: auto !important;
+    margin: 0 !important; font-size: 12px !important; letter-spacing: .02em !important; text-transform: lowercase !important;
+    color: color-mix(in srgb, var(--main-color) 38%, transparent) !important;
+  }
+}
