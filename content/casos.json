@@ -1002,13 +1002,13 @@
         }
       ],
       "portada": {
-        "src": "content/pictures/projects/atelier/atelier-header-three-concepts.jpg",
+        "src": "content/pictures/projects/atelier/atelier-portada-webs-2026.jpg",
         "alt": {
-          "es": "Tres webs creadas con ATELIER: Otra Vez, Pati y Lenta",
-          "en": "Three websites built with ATELIER: Otra Vez, Pati and Lenta"
+          "es": "Webs hechas con ATELIER: Cocció, Casa Albar, Elsa Moreno, Librería El Imperio y Berto Sánchez",
+          "en": "Websites made with ATELIER: Cocció, Casa Albar, Elsa Moreno, Librería El Imperio and Berto Sánchez"
         },
-        "w": 1920,
-        "h": 1280,
+        "w": 1800,
+        "h": 1200,
         "kb": 367,
         "grande": "content/casos/atelier_portada-1800.webp",
         "wg": 1800,

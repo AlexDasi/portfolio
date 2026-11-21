@@ -28,6 +28,8 @@ $assetVersion = static function (string $relativePath): string {
 			? '/js/fluid.js?v=<?php echo $assetVersion('js/fluid.js'); ?>'
 			: '/js/fluidMobile.js?v=<?php echo $assetVersion('js/fluidMobile.js'); ?>';
 		document.head.appendChild(fluidScript);
+		/* v11 (Alex, 21/11): panel FX temporal para que Alex ajuste el fluido: solo con ?fx en la URL (no lo ve nadie más) */
+		if (/[?&]fx\b/.test(location.search)) { var fx = document.createElement('script'); fx.src = '/js/background-controls.js?v=<?php echo $assetVersion('js/background-controls.js'); ?>'; document.head.appendChild(fx); }
 	})();
 </script>
 

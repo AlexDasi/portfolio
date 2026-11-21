@@ -679,3 +679,22 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 **QA (php -S local):** `vivo.mjs` 0 rojos en home ES/EN y Sobre mí (iPhone 13, SE, Android 360, desktop) · `medir.mjs` 0 rojos nuevos (UX/UI en SE = 2,4 pantallas, igual que antes; ahora el medidor lo separa como bloque) · capturas iPhone 13, SE, Android, iPad · imán probado · esfera, primer fotograma local con CPU ×4: 4,6-4,8 s → 3,8-4,0 s (sin compresión; en vivo se mide tras publicar).
 
 **Publicado (21/11 12:45, «publica» de Alex, ATELIER conv. 1385):** `main` 506b647, en vivo. Esfera en vivo (iPhone 13 emulado, 4G 9 Mb/s + 150 ms, CPU ×4, sin caché), primer fotograma: antes 4,6-6,3 s → ahora 3,5-5,0 s (mediana ~3,5); three.js baja con brotli en 118 KB. El disco del acento late desde el primer pintado. Respaldo de lo anterior: commit 7ef6f79.
+
+---
+
+## 2026-11-21 — v11 · contacto, UX/UI aparte, mazo (feedback 161-172, ATELIER conv. 1386) — rama `v11-contacto-uxui`, SIN publicar
+
+- **Contacto = pie único** (`php-elements/pie-contacto.php`, `#contacto`): el mismo en la home, Sobre mí y UX/UI. «Contacto» del menú baja al pie de la página en la que estés (`js/menu-movil.js`; en tablet también los accesos de arriba). En móvil, Sobre mí ya no tiene pantalla «Hablamos» (es el pie). Escritorio: Sobre mí mantiene su pantalla Hablamos.
+- **Menú del móvil:** Inicio · UX/UI · Sobre mí · Contacto.
+- **UX/UI en página propia** (`uxui.php`, scroll normal): titular, texto, CV ES/EN, los 5 casos con su portada (Tulong, Idrica y ATELIER a lo ancho alternando; Clustag y Knowadays en pareja), número en el acento, «Ver el caso», pie. `about.php?s=uxui` → 301 a `uxui.php`.
+- **Acento fijo en la visita** (sessionStorage `alexdasi-acento`; el espacio lo cambia y se queda).
+- **Mazo en móvil** (`js/baraja.js`, `data-mazo`): delante la carta entera, dos detrás asomando arriba a la derecha y giradas; al pasar, la de delante sale volando a la izquierda. `?baraja=fila` = la fila de antes.
+- **Más acento en proyectos:** número, filete, «Ver proyecto» como botón del acento, marca activa de la regla, borde y sombra de la carta.
+- **Esfera móvil con más inercia** (sensibilidad 3,2 → 4,6, frenado 2,2 → 1,1, el giro sigue al soltar aunque el dedo se pare hasta 160 ms).
+- **Fuera «Valencia» del copy de venta** (Hablamos, pie, CV «webs para clientes»). Lo biográfico (estudios, DANA) se queda.
+- **ATELIER:** portada nueva (abanico de 5 webs: Cocció, Casa Albar, Elsa Moreno, El Imperio, Berto Sánchez) en `content/casos/atelier_portada-*.webp` + og; enlace «Cómo funciona ATELIER» → `caso.php?c=atelier`; `.htaccess` manda las fichas antiguas (tulong, idrica, atelier, clustag, knowadays, casa-albar, elsa) a las nuevas (301).
+- **Cursor que desaparecía:** al volver atrás se quedaba la mancha de fusión activa y el punto apagado; ahora se limpia en `pagehide`/`pageshow`.
+- **Fluido:** se va antes (noche 0,35 → 1,2; día 1,1 → 1,8). Panel FX temporal con `?fx` (tecla B) para que Alex lo ajuste y mande captura.
+
+**QA:** `vivo.mjs` 0 rojos en home, Sobre mí y UX/UI ES/EN (iPhone 13, SE, Android, desktop); menú y salto a #contacto probados; `vivo.mjs` arreglado (falsos «estiradas» con srcset).
+**Pendiente:** contenido del caso ATELIER con clientes y webs nuevas (más allá de la portada); calidad y variantes de la esfera (traspaso).

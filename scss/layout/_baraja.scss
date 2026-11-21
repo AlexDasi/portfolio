@@ -1776,3 +1776,5 @@ body.pagina-uxui { overflow-y: auto; height: auto; }
 html.tema-dia .ux__img { background: #e3e0d6; }
 
 .pagina-uxui .press-space { display: none !important; }
+// v11: panel FX temporal (?fx) debajo de los accesos, sin tapar el día/noche
+.bg-controls { top: 78px !important; }

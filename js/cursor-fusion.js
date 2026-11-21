@@ -132,4 +132,10 @@
   window.addEventListener('scroll', pedir, { passive: true });
   document.addEventListener('mouseout', function (e) { if (!e.relatedTarget) { cambia(null); mostrar(false); } });
   window.addEventListener('blur', function () { cambia(null); mostrar(false); });
+  // v11 (Alex, 21/11: «a veces el cursor desaparece y tengo que recargar»): al volver atrás (página guardada en memoria) se
+  // quedaba la mancha activa y el punto apagado. Al salir y al volver, todo a su estado normal.
+  function limpia() { cambia(null); mostrar(false); html.classList.remove('fusion-activa', 'cursor-en-esfera'); }
+  window.addEventListener('pagehide', limpia);
+  window.addEventListener('pageshow', function (e) { if (e.persisted) limpia(); });
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') html.classList.remove('fusion-activa'); });
 })();

@@ -6413,6 +6413,10 @@ html.tema-dia .ux__img {
   display: none !important;
 }
 
+.bg-controls {
+  top: 78px !important;
+}
+
 /* CANVAS */
 canvas {
   z-index: 0;

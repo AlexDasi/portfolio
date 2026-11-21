@@ -12,4 +12,8 @@ ErrorDocument 404 /404.php
 RewriteEngine On
 RewriteCond %{HTTP_HOST} ^alexdasi\.com$ [NC]
 RewriteRule ^(.*)$ https://www.alexdasi.com/$1 [R=301,L]
+# v11 (Alex, 21/11: «arreglar todos los links para que vayan a la versión nueva»): las fichas antiguas van a las nuevas
+RewriteRule ^php-pages/projects/(tulong|idrica-wastewater|atelier|clustag|knowadays)\.php$ /caso.php?c=$1 [R=301,L,QSA]
+RewriteRule ^php-pages/projects/casa-albar\.php$ /proyecto.php?p=casa-albar [R=301,L,QSA]
+RewriteRule ^php-pages/projects/elsa\.php$ /proyecto.php?p=elsa-moreno [R=301,L,QSA]
 </IfModule>

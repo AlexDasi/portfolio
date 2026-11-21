@@ -157,7 +157,7 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
     <div class="sm__col sm__col--aparte sm__bloque">
         <h2 class="sm__h2"><?php echo $e($T['atelier_t']); ?></h2>
         <p class="sm__texto"><?php echo $e($T['atelier_p']); ?></p>
-        <a class="sm__link" href="php-pages/projects/atelier.php"><?php echo $e($T['atelier_a']); ?><?php echo $flecha; ?></a>
+        <a class="sm__link" href="caso.php?c=atelier"><?php echo $e($T['atelier_a']); ?><?php echo $flecha; ?></a>
     </div>
 </section>
 <?php break;

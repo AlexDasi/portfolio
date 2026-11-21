@@ -162,10 +162,10 @@ $assetVersion = static function (string $relativePath): string {
             /* Noche: su panel FX (captura del 19/11): density al mínimo, velocity ~35 %, vorticity 0,
                pressure iter al máximo, splat radius ~35 %, splat force al máximo, opacity ~50 %, shading sí, bloom no. */
             window.__FLUID_NOCHE = { FLAT: false, SHADING: true, BACK_COLOR: { r: 0, g: 0, b: 0 },
-                DENSITY_DISSIPATION: 0.35, VELOCITY_DISSIPATION: 1.0, CURL: 0, PRESSURE_ITERATIONS: 50,
+                DENSITY_DISSIPATION: 1.2 /* v11 (Alex, 21/11: «que desaparezca antes»): 0,35 → 1,2 */, VELOCITY_DISSIPATION: 1.0, CURL: 0, PRESSURE_ITERATIONS: 50,
                 SPLAT_RADIUS: 0.19, SPLAT_FORCE: 10000 /* v7 (feedback 141): 12000 → 10000 */, EFFECT_OPACITY: 0.4 /* v7 (feedback 141): 0,5 → 0,4, que moleste menos */, DYE_RESOLUTION: 512 };
             window.__FLUID_DIA = { FLAT: true, SHADING: false, BACK_COLOR: { r: 245, g: 243, b: 236 },
-                DENSITY_DISSIPATION: 1.1, VELOCITY_DISSIPATION: 0.9, CURL: 2, PRESSURE_ITERATIONS: 20,
+                DENSITY_DISSIPATION: 1.8 /* v11: 1,1 → 1,8 */, VELOCITY_DISSIPATION: 0.9, CURL: 2, PRESSURE_ITERATIONS: 20,
                 SPLAT_RADIUS: 0.2 /* v5 (feedback 108): 0,3 → 0,2, manchas más pequeñas */, SPLAT_FORCE: 4000 /* v5: 6000 → 4500, rastro más corto · v7 (feedback 141): → 4000 */,
                 EFFECT_OPACITY: 0.35 /* v4 (feedback 99): 0,9 → 0,65 · v5 (feedback 108): → 0,45 · v7 (feedback 141): → 0,35, que moleste menos */, DYE_RESOLUTION: 512 };
             var base = tema === 'noche' ? window.__FLUID_NOCHE : window.__FLUID_DIA;
