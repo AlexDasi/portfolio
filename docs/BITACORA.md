@@ -874,3 +874,14 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 
 - **Caso ATELIER:** fuera los 5 mockups de foto (MacBook Pro e iMac viejos, uno torcido). Capturas nuevas de las webs en vivo (escritorio 1440×900 @2x, móvil 390×844 @3x) dentro de dispositivos actuales dibujados (portátil de bisel fino con muesca; móvil con isla y barra de estado), rectos y con fondo transparente: `content/baraja/<slug>_atelier-{d,m}-*.webp`. Las fichas de cada proyecto no se tocan.
 - **Producto:** la lista sin bloques llenos: filas a media luz, la señalada plena con un filete de 2 px del acento de lado a lado; la portada entra como una cortina (clip-path).
+
+---
+
+## 2026-11-21 — v27 · fichas: mockups planos, vídeos fluidos en marcha y «Y después» (ATELIER conv. 1414)
+
+- **Mockups:** fuera las 24 escenas con foto (e1/e2: portátiles e iMac viejos, manos, plantas, mesas, piedras). En su sitio `p1` (portátil) y `p2` (móvil) planos, rectos y sin fondo, con pantallas que no salen en ninguna otra parte de la ficha (marco `plano`). Scripts: ATELIER `seleccion/grabar/2026-11-21_mockups-planos-{capturas,render}.mjs`.
+- **Vídeos:** los de «Momentos» corren solos a la vista (si los pausas, se quedan parados); el botón solo aparece con el ratón encima y se va al salir. Grabador nuevo `2026-11-21_grabar-caso-fluido.mjs`: la página va 4 veces más lenta mientras graba → 70-120 fotogramas reales por segundo. Regrabados Elsa (portada sin la E/L cortadas, índice, proyectos), Berto, Berto Studio y los v1/v2 del resto.
+- **Elsa:** «libro en modo lectura» → vídeo «Los poemas, verso a verso». **Berto Studio:** la tipografía de la bio → vídeo «La descripción se abre».
+- **Repetidos:** fuera capturas del mismo aparato y sección que un vídeo (Cocció, Brot, Vapor, Mas Vesprada); Solvera, «El diario»; pósters de vídeo de un momento distinto.
+- **Siguiente proyecto:** el siguiente en grande (nombre a la izquierda, portada recta) + «Y después» con los dos siguientes, cada uno con su enlace. Fuera los naipes girados que no se podían clicar.
+- **Halo del punto:** nace dentro de la bola y crece hacia fuera; ya no aparece precargado por fuera al acercarse.
