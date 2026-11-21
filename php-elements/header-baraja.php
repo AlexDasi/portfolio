@@ -172,7 +172,7 @@ $assetVersion = static function (string $relativePath): string {
             /* v6 (feedback 119): la piel de la esfera CAMBIA: una nueva al azar en cada carga (nunca la última que se vio) y otra
                cada vez que se vuelve a abrir (js/esfera.js). La última que se ha visto se apunta (localStorage, solo para no
                repetirla y para que «Hablamos» del Sobre mí enseñe esa). Fuera la sesión de la v5. ?piel= fuerza una. */
-            var PIELES = ['chicle', 'glaseado', 'prisma', 'cuarzo', 'gema']; /* v12 (Alex, 21/11): fuera el planeta (solare) y la gota del sorteo; siguen disponibles con ?piel= */
+            var PIELES = ['chicle', 'glaseado', 'prisma', 'gema']; /* v12 (Alex, 21/11): fuera el planeta (solare), la gota y el cuarzo (forma) del sorteo; siguen disponibles con ?piel= */
             var piel = q.get('piel'), ultima = null;
             try { ultima = localStorage.getItem('alexdasi-piel-ultima'); sessionStorage.removeItem('alexdasi-piel'); } catch (e) {}
             if (PIELES.indexOf(ultima) < 0) ultima = null;

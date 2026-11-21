@@ -351,7 +351,8 @@
             900,
             520
           ],
-          "mockup": "movil-chimenea"
+          "mockup": "movil-chimenea",
+          "oculto": true
         },
         {
           "id": "d2",
@@ -1140,7 +1141,8 @@
             900,
             520
           ],
-          "mockup": "movil-chimenea"
+          "mockup": "movil-chimenea",
+          "oculto": true
         },
         {
           "id": "d2",
@@ -1535,7 +1537,8 @@
             900,
             520
           ],
-          "mockup": "movil-chimenea"
+          "mockup": "movil-chimenea",
+          "oculto": true
         },
         {
           "id": "d2",
@@ -1928,7 +1931,8 @@
             900,
             520
           ],
-          "mockup": "movil-chimenea"
+          "mockup": "movil-chimenea",
+          "oculto": true
         },
         {
           "id": "d2",

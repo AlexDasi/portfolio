@@ -57,6 +57,7 @@ $rol = $P['rol'][$L] ?? [];
 /* Momentos del caso (content/baraja.json › caso): se pintan los que existan en disco, en el orden del json */
 $momentos = [];
 foreach (($P['caso'] ?? []) as $m) {
+    if (!empty($m['oculto'])) { continue; } // v12 (Alex, 21/11): mockups mal encajados, fuera hasta rehacerlos
     $b = $base . '_caso-' . $m['id'];
     $vid = ($m['medio'] ?? 'img') === 'vid';
     if ($vid) {

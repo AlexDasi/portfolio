@@ -15,8 +15,8 @@
 (function () {
   'use strict';
   var q = new URLSearchParams(location.search);
-  var PIELES = window.__PIELES || ['chicle', 'glaseado', 'prisma', 'cuarzo', 'gema'];
-  var piel = PIELES.indexOf(window.__PIEL) >= 0 ? window.__PIEL : 'cuarzo';
+  var PIELES = window.__PIELES || ['chicle', 'glaseado', 'prisma', 'gema'];
+  var piel = PIELES.indexOf(window.__PIEL) >= 0 ? window.__PIEL : 'glaseado';
   var forzada = ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'].indexOf(q.get('piel')) >= 0;
   var fino = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var html = document.documentElement;

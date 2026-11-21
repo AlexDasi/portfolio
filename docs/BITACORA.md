@@ -711,3 +711,5 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Enlaces unificados:** «Ver proyecto» (home) y «Ver el caso» (UX/UI) sin pastilla: mayúsculas, filete del acento y flecha del acento.
 - **UX/UI móvil:** cabecera más compacta, el primer caso entra en la primera pantalla.
 - **Esfera:** inercia en el punto medio (sensibilidad 3,9, frenado 1,7); fuera del sorteo el planeta (solare) y la gota.
+
+- **(conv. 1389)** Cursor (punto) en todas las páginas, fichas incluidas (magnet cargaba solo con swiper). UX/UI en escritorio por encima del lienzo del fluido (se veía un segundo y desaparecía). Fuera el cuarzo (forma) del sorteo: quedan chicle, glaseado, prisma y gema. Escenas de móvil en la mano «movil-chimenea» (Imperio, Mas Vesprada, Cocció, Vapor) ocultas (`oculto` en baraja.json): entraban torcidas arriba porque el script encaja la captura con un rectángulo girado (minAreaRect) y no con la perspectiva real.
