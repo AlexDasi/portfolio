@@ -7784,6 +7784,41 @@ html.tema-dia body {
     border-top: 1px solid var(--linea) !important;
   }
 }
+.lang-switch__item, .sitio-baraja .nav--top .nav--items a, .nav-sutil__item, .press-space, .piel-3d, .piel-3d__tecla, .piel-3d__nombre {
+  text-transform: lowercase !important;
+  letter-spacing: 0.02em !important;
+  font-size: 13px !important;
+}
+
+@media (min-width: 1281px) {
+  .sitio-baraja .nav--top .nav--items a {
+    background: none !important;
+    font-weight: 600 !important;
+  }
+  .logo-txt {
+    background: linear-gradient(var(--accent-color), var(--accent-color)) no-repeat 0 55%/100% 1.2em;
+    padding: 0 1px;
+  }
+}
+@media (max-width: 1280px) {
+  .pagina-uxui .ux__caso .ux__dato {
+    display: none !important;
+  }
+  .pagina-uxui .ux__caso {
+    padding-bottom: 28px !important;
+  }
+  .fv-pie {
+    min-height: 44px !important;
+    margin: -12px 0 !important;
+  }
+}
+@media (max-width: 1280px) {
+  .ficha__link, .ux__ver, .sm__cv, .sm__link, .fp__volver {
+    min-height: 44px !important;
+    padding: 0 !important;
+    background-position: 0 calc(50% + 12px), 0 calc(50% + 12px) !important;
+  }
+}
 /* CANVAS */
 canvas {
   z-index: 0;

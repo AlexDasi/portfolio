@@ -829,3 +829,10 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Baraja:** fuera el halo fijo; la rueda no pasaba cartas al volver de una ficha (`?carta`): ahora se mira el piso al arrancar.
 - **Hablamos:** la esfera separada de la palabra, más pequeña, flotando entre el punto y los pisos. `?bola=abajo-centro` más ancha (76vw) asomando lo mismo y a densidad 1 para no pesar.
 - **UX/UI:** un solo destacado en las tarjetas (halo del acento), sin borde ni filete del acento.
+
+---
+
+## 2026-11-21 — v23 · HUD en minúsculas y repaso móvil (ATELIER conv. 1409)
+
+- **HUD en minúsculas (prueba de Alex):** idioma, alex dasi, menú, pulsa espacio, pulsa e · material — 13 px, .02em. alex dasi en semibold con el subrayado del acento en un `span` (cubre la palabra entera; el punto queda fuera).
+- **Móvil (medir.mjs en iPhone 13, SE, iPad):** CTAs de texto con zona táctil real de 44 px y el filete pegado al texto; «Vídeo» del pie a 44 px; UX/UI en móvil sin el párrafo del reto (6,9 → ~5 pantallas en el SE). Queda: casos de UX/UI 4,7 pantallas y «Momentos» de las fichas 2,6 (galerías, se acepta).

@@ -8,7 +8,7 @@ $navActual = $navActual ?? 'home';
 <div class="follow hiddenMobile"></div>
 <nav class="nav nav--top">
     <ul>
-        <li class="nav--items single"> <a href="index.php">alex dasi<i class="logo-punto" aria-hidden="true">.</i></a>
+        <li class="nav--items single"> <a href="index.php"><span class="logo-txt">alex dasi</span><i class="logo-punto" aria-hidden="true">.</i></a>
         </li>
     </ul>
 </nav>
