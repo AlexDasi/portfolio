@@ -74,12 +74,17 @@ foreach (($P['caso'] ?? []) as $m) {
         $m['chica'] = $b . '-' . ($m['anchos'][1] ?? $m['anchos'][0]) . '.webp';
         $m['wc'] = $m['anchos'][1] ?? $m['anchos'][0];
         if (!is_file(__DIR__ . '/' . $m['grande'])) { continue; }
+        // v28 (feedback 296, conv. 1416): un mockup plano puede llevar un vídeo dentro de la pantalla (La Hora Blanca es un vídeo)
+        if (!empty($m['video']) && is_file(__DIR__ . '/' . $base . '_caso-' . $m['video'] . '.mp4')) {
+            $vb = $base . '_caso-' . $m['video'];
+            $m['pv'] = ['src' => $vb . '.mp4', 'd' => $vb . '_poster-1280.webp', 'm' => $vb . '_poster-720.webp'];
+        }
     }
     $momentos[] = $m;
 }
 $pmMovil = is_file(__DIR__ . '/' . $base . '_caso-pm.mp4');
 $etiqueta = static function (array $m) use ($T): string {
-    if ($m['medio'] === 'vid') { return $T['video']; }
+    if ($m['medio'] === 'vid' || !empty($m['pv'])) { return $T['video']; }
     switch ($m['marco']) { case 'tel': return $T['movil']; case 'det': return $T['detalle']; case 'escena-p': case 'escena-t': return $T['enuso']; case 'plano': return ((int) $m['w'] > (int) $m['h']) ? $T['escritorio'] : $T['movil']; default: return $T['escritorio']; }
 };
 $barraNav = '<span class="fp__nav-barra" aria-hidden="true"><i></i><i></i><i></i><b>' . ($host !== '' ? $e($host) : $e($P['nombre'])) . '</b></span>';
@@ -124,8 +129,8 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
         </figure>
         <figure class="fp__video fp__video--m fp__tel<?php echo $pmMovil ? '' : ' fp__tel--corto'; ?>">
             <div class="fp__tel-pantalla">
-                <video muted loop playsinline preload="none" disablepictureinpicture poster="<?php echo $e($pmPoster); ?>" aria-label="<?php echo $e($P['nombre'] . ' · ' . $T['movil']); ?>"
-                    <?php if ($pmMovil): ?>data-video-m="<?php echo $e($base . '_caso-pm.mp4'); ?>" data-poster-m="<?php echo $e($base . '_caso-pm_poster-540.webp'); ?>"
+                <video muted loop playsinline preload="none" disablepictureinpicture poster="<?php echo $e($ver($pmPoster)); ?>" aria-label="<?php echo $e($P['nombre'] . ' · ' . $T['movil']); ?>"
+                    <?php if ($pmMovil): ?>data-video-m="<?php echo $e($ver($base . '_caso-pm.mp4')); ?>" data-poster-m="<?php echo $e($ver($base . '_caso-pm_poster-540.webp')); ?>"
                     <?php else: ?>data-video-m="<?php echo $e($media . 'movil.mp4'); ?>" data-poster-m="<?php echo $e($media . 'movil_poster.jpg'); ?>"<?php endif; ?>></video>
             </div>
         </figure>
@@ -178,8 +183,15 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
                     <?php if ($vid): ?>
                         <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $alt; ?>"
                             data-video="<?php echo $e($ver($m['src'])); ?>" data-poster-m="<?php echo $e($ver($m['chica'])); ?>" data-poster-d="<?php echo $e($ver($m['grande'])); ?>" data-wc="<?php echo (int) $m['wc']; ?>"></video>
+                    <?php elseif (!empty($m['pv'])): /* v28: portátil plano + el vídeo dentro de su pantalla (posición medida en el render: 144,77 · 1312×820 de 1600×1000) */ ?>
+                        <img data-poster-m="<?php echo $e($ver($m['chica'])); ?>" data-poster-d="<?php echo $e($ver($m['grande'])); ?>" data-wc="<?php echo (int) $m['wc']; ?>"
+                            width="<?php echo (int) $m['w']; ?>" height="<?php echo (int) $m['h']; ?>" decoding="async" alt="<?php echo $alt; ?>">
+                        <span class="fp__plano-pantalla">
+                            <video muted loop playsinline preload="none" disablepictureinpicture aria-label="<?php echo $alt; ?>"
+                                data-video="<?php echo $e($ver($m['pv']['src'])); ?>" data-poster-m="<?php echo $e($ver($m['pv']['m'])); ?>" data-poster-d="<?php echo $e($ver($m['pv']['d'])); ?>" data-wc="720"></video>
+                        </span>
                     <?php else: /* dos versiones por captura; js/ficha.js pide la que toca según el hueco y la pantalla */ ?>
-                        <img data-poster-m="<?php echo $e($m['chica']); ?>" data-poster-d="<?php echo $e($m['grande']); ?>" data-wc="<?php echo (int) $m['wc']; ?>"
+                        <img data-poster-m="<?php echo $e($ver($m['chica'])); ?>" data-poster-d="<?php echo $e($ver($m['grande'])); ?>" data-wc="<?php echo (int) $m['wc']; ?>"
                             width="<?php echo (int) $m['w']; ?>" height="<?php echo (int) $m['h']; ?>" decoding="async" alt="<?php echo $alt; ?>">
                         <noscript><img src="<?php echo $e($m['grande']); ?>" width="<?php echo (int) $m['w']; ?>" height="<?php echo (int) $m['h']; ?>" alt="<?php echo $alt; ?>"></noscript>
                     <?php endif; ?>

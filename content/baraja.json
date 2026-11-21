@@ -104,18 +104,12 @@
         },
         {
           "id": "z1",
-          "marco": "det",
-          "medio": "img",
+          "marco": "nav",
+          "medio": "vid",
           "pie": {
-            "es": "Tipografía de la bio",
-            "en": "Bio typography"
-          },
-          "w": 1280,
-          "h": 680,
-          "anchos": [
-            1280,
-            900
-          ]
+            "es": "La ficha sale de la franja",
+            "en": "The details rise from the strip"
+          }
         },
         {
           "id": "v1",
@@ -527,7 +521,8 @@
           "anchos": [
             1600,
             900
-          ]
+          ],
+          "video": "hb"
         },
         {
           "id": "p2",
@@ -1290,8 +1285,8 @@
           "marco": "plano",
           "medio": "img",
           "pie": {
-            "es": "La finca",
-            "en": "The estate"
+            "es": "Pedir una visita",
+            "en": "Requesting a visit"
           },
           "w": 1600,
           "h": 1000,
@@ -2074,8 +2069,8 @@
           "marco": "plano",
           "medio": "img",
           "pie": {
-            "es": "La tienda",
-            "en": "The shop"
+            "es": "La tienda por dentro",
+            "en": "Inside the shop"
           },
           "w": 1600,
           "h": 1000,
