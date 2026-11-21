@@ -646,3 +646,64 @@ html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
 }
 @media (hover: hover) and (pointer: fine) { .fv-pie:hover { color: var(--main-color); } }
 @media (prefers-reduced-motion: reduce) { .fv-aro { animation-duration: 2s; } }
+
+// v27 (Alex, conv. 1414): los vídeos de «Momentos» corren solos; mientras cargan solos no sale el botón (solo el póster),
+// y corriendo el botón de pausa solo aparece con el ratón encima y se va al salir.
+.fv--auto .fv-boton[data-estado="carga"] { opacity: 0; }
+
+// v27 (Alex, conv. 1414: «mockups limpios y minimalistas, como los de Atelier, en todos»): fuera las escenas con foto
+// (portátiles viejos, manos, plantas, mesas); en su sitio, portátil y móvil modernos planos, rectos y sin fondo,
+// con pantallas que no salen en ninguna otra parte de la ficha.
+.fp__m--plano .fp__m-pantalla { background: none; border-radius: 0; overflow: visible; }
+.fp__m--p1 { grid-column: 2 / span 10; }
+.fp__m--p2 { grid-column: 1 / span 4; margin-top: 2vw; }
+@media (max-width: $movil) { .fp__m--p1 { order: 6; } .fp__m--p2 { order: 7; flex-basis: 56vw; } }
+
+// v27 · «Siguiente proyecto» (Alex, conv. 1414): todo lo que se ve se puede clicar. El siguiente, grande: nombre a la
+// izquierda y su portada recta a la derecha (sin naipes girados); debajo, «Y después» con los dos siguientes, cada uno su enlace.
+// Reposo: portada entera y quieta. Encima: la portada se acerca un poco dentro de su marco, el nombre se subraya con el
+// acento de izquierda a derecha y la flecha avanza (lo mismo en pequeño en «Y después»).
+.fp__sigs { margin-top: clamp(72px, 10vw, 180px); border-top: 1px solid var(--linea); }
+.fp__sig--uno { margin-top: 0 !important; border-top: 0 !important; overflow: visible; }
+.fp__sig--uno .fp__sig-texto { grid-column: 1 / span 6; }
+.fp__sig-img {
+  grid-column: 7 / span 6; display: block; overflow: hidden; border-radius: 3px; aspect-ratio: 16 / 10; background: #101011;
+  img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: scale .9s cubic-bezier(.22, 1, .36, 1); }
+}
+.fp__luego {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 2vw; align-items: start;
+  padding: 26px 0 clamp(40px, 5vw, 80px); border-top: 1px solid var(--linea);
+}
+.fp__luego-k { grid-column: 1 / span 6; margin: 0; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave) !important; }
+.fp__luego-a {
+  grid-column: span 3; display: grid; grid-template-columns: 42% 1fr; gap: 14px; align-items: start; text-decoration: none; color: var(--main-color);
+}
+.fp__luego-a + .fp__luego-a { grid-column: span 3; }
+.fp__luego-img { display: block; overflow: hidden; border-radius: 2px; aspect-ratio: 16 / 10; background: #101011;
+  img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: scale .7s cubic-bezier(.22, 1, .36, 1); } }
+.fp__luego-t {
+  display: flex; flex-direction: column; gap: 4px; min-width: 0;
+  i { font-style: normal; font-size: 12px; letter-spacing: .1em; color: var(--tinta-suave); font-variant-numeric: tabular-nums; }
+  b { font-size: clamp(17px, 1.4vw, 22px); font-weight: 600; letter-spacing: -.02em; line-height: 1.1; color: var(--main-color);
+      background-image: linear-gradient(var(--accent-color), var(--accent-color)); background-repeat: no-repeat; background-size: 0 2px; background-position: 0 100%; transition: background-size .45s cubic-bezier(.22, 1, .36, 1); align-self: flex-start; }
+  span { font-size: 13px; color: var(--tinta-suave); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .fp__sig--uno:hover .fp__sig-img img { scale: 1.04; }
+  .fp__luego-a:hover .fp__luego-img img { scale: 1.06; }
+  .fp__luego-a:hover .fp__luego-t b { background-size: 100% 2px; }
+}
+.fp__sig--uno:focus-visible .fp__sig-img { outline: 2px solid var(--accent-color); outline-offset: 4px; }
+.fp__luego-a:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 6px; }
+@media (max-width: $movil) {
+  .fp__sigs { margin-top: 64px; }
+  .fp__sig--uno .fp__sig-img { display: block; margin-top: 24px; }
+  .fp__luego { display: block; padding-top: 20px; }
+  .fp__luego-k { margin-bottom: 14px !important; }
+  .fp__luego-a { grid-template-columns: 38% 1fr; min-height: 44px; }
+  .fp__luego-a + .fp__luego-a { margin-top: 16px; }
+}
+@media (max-width: 1100px) and (min-width: #{$movil + 1}) {
+  .fp__luego-a { grid-column: span 6; } .fp__luego-a + .fp__luego-a { grid-column: span 6; } .fp__luego-k { grid-column: 1 / span 12; margin-bottom: 14px; }
+}
+html.tema-dia .fp__sig-img, html.tema-dia .fp__luego-img { background: #e3e0d6; }

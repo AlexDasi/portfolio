@@ -79,7 +79,7 @@ foreach (($P['caso'] ?? []) as $m) {
 $pmMovil = is_file(__DIR__ . '/' . $base . '_caso-pm.mp4');
 $etiqueta = static function (array $m) use ($T): string {
     if ($m['medio'] === 'vid') { return $T['video']; }
-    switch ($m['marco']) { case 'tel': return $T['movil']; case 'det': return $T['detalle']; case 'escena-p': case 'escena-t': return $T['enuso']; default: return $T['escritorio']; }
+    switch ($m['marco']) { case 'tel': return $T['movil']; case 'det': return $T['detalle']; case 'escena-p': case 'escena-t': return $T['enuso']; case 'plano': return ((int) $m['w'] > (int) $m['h']) ? $T['escritorio'] : $T['movil']; default: return $T['escritorio']; }
 };
 $barraNav = '<span class="fp__nav-barra" aria-hidden="true"><i></i><i></i><i></i><b>' . ($host !== '' ? $e($host) : $e($P['nombre'])) . '</b></span>';
 $fl = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
@@ -201,19 +201,27 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
         <?php endif; ?>
     </section>
 
-    <a class="fp__sig" href="proyecto.php?p=<?php echo $e($sig['slug']); ?>" aria-label="<?php echo $e($T['sig'] . ': ' . $sig['nombre']); ?>">
-        <span class="fp__sig-texto">
-            <span class="fp__sig-k"><?php echo $e($T['sig']); ?><i><?php echo $num((($idx + 1) % $total) + 1); ?> / <?php echo $num($total); ?></i></span>
-            <span class="fp__sig-n"><?php echo $e($sig['nombre']); ?></span>
-            <span class="fp__sig-s"><?php echo $e($sig['sector'][$L]); ?><?php echo $fd; ?></span>
-        </span>
-        <span class="fp__mazo" aria-hidden="true">
-            <span class="fp__naipe fp__naipe--1"><img src="content/baraja/<?php echo $e($sig['slug']); ?>_scroll-desktop_poster-1000.webp" width="1000" height="625" loading="lazy" decoding="async" alt=""></span>
+    <?php /* v27 (Alex, conv. 1414: «se ven más proyectos pero solo se puede clicar uno»): el siguiente, grande (nombre a la
+       izquierda, su portada recta a la derecha) y debajo «Y después», los dos que vienen, cada uno con su propio enlace. */ ?>
+    <section class="fp__sigs" aria-label="<?php echo $e($T['sig']); ?>">
+        <a class="fp__sig fp__sig--uno" href="proyecto.php?p=<?php echo $e($sig['slug']); ?>" aria-label="<?php echo $e($T['sig'] . ': ' . $sig['nombre']); ?>">
+            <span class="fp__sig-texto">
+                <span class="fp__sig-k"><?php echo $e($T['sig']); ?><i><?php echo $num((($idx + 1) % $total) + 1); ?> / <?php echo $num($total); ?></i></span>
+                <span class="fp__sig-n"><?php echo $e($sig['nombre']); ?></span>
+                <span class="fp__sig-s"><?php echo $e($sig['sector'][$L]); ?><?php echo $fd; ?></span>
+            </span>
+            <span class="fp__sig-img" aria-hidden="true"><img src="content/baraja/<?php echo $e($sig['slug']); ?>_scroll-desktop_poster-1000.webp" width="1000" height="625" loading="lazy" decoding="async" alt=""></span>
+        </a>
+        <div class="fp__luego">
+            <p class="fp__luego-k"><?php echo $e($es ? 'Y después' : 'And then'); ?></p>
             <?php foreach ($tras as $k => $t): ?>
-            <span class="fp__naipe fp__naipe--<?php echo $k + 2; ?>"><img src="content/baraja/<?php echo $e($t['slug']); ?>_scroll-desktop_poster-1000.webp" width="1000" height="625" loading="lazy" decoding="async" alt=""></span>
+            <a class="fp__luego-a" href="proyecto.php?p=<?php echo $e($t['slug']); ?>">
+                <span class="fp__luego-img" aria-hidden="true"><img src="content/baraja/<?php echo $e($t['slug']); ?>_scroll-desktop_poster-560.webp" width="560" height="350" loading="lazy" decoding="async" alt=""></span>
+                <span class="fp__luego-t"><i><?php echo $num((($idx + 2 + $k) % $total) + 1); ?></i><b><?php echo $e($t['nombre']); ?></b><span><?php echo $e($t['sector'][$L]); ?></span></span>
+            </a>
             <?php endforeach; ?>
-        </span>
-    </a>
+        </div>
+    </section>
 </main>
 
 <?php include 'php-elements/pie-contacto.php'; ?>

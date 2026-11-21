@@ -52,8 +52,8 @@
     if (v._pie) v._pie.setAttribute('aria-pressed', e === 'corre' ? 'true' : 'false');
   }
   function alterna(v) {
-    if (v._estado === 'corre' || v._estado === 'carga') { v._quiere = false; v.pause(); estado(v, 'parado'); return; }
-    v._quiere = true;
+    if (v._estado === 'corre' || v._estado === 'carga') { v._quiere = false; v._paro = true; v.pause(); estado(v, 'parado'); return; }
+    v._quiere = true; v._paro = false; v.parentNode.classList.remove('fv--auto');
     posterDe(v);
     if (!v.getAttribute('src')) v.src = v.dataset.src;
     estado(v, v.readyState >= 3 ? 'corre' : 'carga');
@@ -65,6 +65,7 @@
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'fv-boton'; b.innerHTML = ICO;
     caja.appendChild(b); v._boton = b;
+    caja.addEventListener('mouseleave', function () { caja.classList.remove('fv--toca'); }); // v27: el botón se va al salir el ratón
     b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); alterna(v); if (v._estado === 'corre') caja.classList.add('fv--toca'); });
     var fig = v.closest('figure');
     var i = fig && fig.querySelector('figcaption i');
@@ -81,9 +82,14 @@
     estado(v, 'parado');
   }
   function corre(v, si) {
-    if (v.hasAttribute('data-video')) { // vídeos de ejemplo: los arranca la persona
-      if (si) { posterDe(v); if (v._fuera && v._quiere) { v._fuera = false; var p0 = v.play(); if (p0 && p0.catch) p0.catch(function () {}); } }
-      else if (!v.paused) { v._fuera = true; v.pause(); }
+    if (v.hasAttribute('data-video')) { // v27 (Alex, conv. 1414): «todos los mockups que sean vídeos, ya activos» → corren solos a la vista; si la persona los pausa, se quedan parados
+      if (si) {
+        posterDe(v);
+        if (v._paro || quieto) return;
+        v._quiere = true; v._fuera = false; v.parentNode.classList.add('fv--auto');
+        if (!v.getAttribute('src')) v.src = v.dataset.src;
+        var p0 = v.play(); if (p0 && p0.catch) p0.catch(function () { estado(v, 'parado'); });
+      } else if (!v.paused) { v._fuera = true; v.pause(); }
       return;
     }
     if (si) {
