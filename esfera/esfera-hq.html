@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Sphere</title>
+<!-- v14 (ATELIER conv. 1393): la esfera en calidad alta (three.js, elegida en el A/B de la conv. 1390). Fuente: esfera/hq/esfera-hq_embed.js -->
+<script>if(/[?&]embed/.test(location.search))document.documentElement.classList.add("embed");</script>
+<link rel="preload" href="hq/estudio_esfera-hq_512.hdr" as="fetch" crossorigin>
+<style>
+  :root{--lima:#ECF98E}
+  html,body{margin:0;height:100%;background:#000;overflow:hidden}
+  html.embed,html.embed body{background:transparent}
+  canvas#c{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none;cursor:none}
+  body.embed.tactil canvas#c,body.embed.movil canvas#c{touch-action:pan-y}
+  #cur{position:fixed;left:0;top:0;pointer-events:none;z-index:4;opacity:0;transition:opacity .2s}
+  #cur i{position:absolute;left:0;top:0;display:block;width:10px;height:10px;border-radius:50%;background:var(--lima);box-shadow:0 0 14px 4px color-mix(in srgb,var(--lima) 45%,transparent);transform:translate(-50%,-50%);transition:transform .2s,opacity .2s}
+  #cur.down i{transform:translate(-50%,-50%) scale(1.7);opacity:.6}
+  body.tactil #cur{display:none}
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Sphere, drag to spin it in any direction"></canvas>
+<div id="cur"><i></i></div>
+<script type="module" src="esfera-hq.min.js"></script>
+</body>
+</html>

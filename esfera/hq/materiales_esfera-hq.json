@@ -1,0 +1,79 @@
+{
+  "_nota": "ATELIER conv. 1390 · los MISMOS materiales para las dos vías del A/B: lo leen escena_blender.py (Cycles) y la página three.js. Texturas en assets/ (gen_assets.py). Lima siempre (gusto de Alex, conv. 1014); luz cálida a la izquierda y fría a la derecha (conv. 1007).",
+  "camara": {
+    "fov": 30,
+    "distancia": 5.2,
+    "inclinacion": 0.28,
+    "vuelta_s": 12
+  },
+  "exposicion": 1.35,
+  "chicle": {
+    "color": "#BDE224",
+    "rugosidadMap": "chicle_rugosidad.png",
+    "normalMap": "chicle_normal.png",
+    "normal": 0.35,
+    "clearcoat": 0.5,
+    "clearcoatRugosidad": 0.22,
+    "sheen": 0.2,
+    "sheenColor": "#F4FFC0",
+    "sheenRugosidad": 0.5,
+    "subsurface": 0.25,
+    "subsurfaceRadio": [
+      0.12,
+      0.09,
+      0.03
+    ],
+    "emisivo": "#8fb515",
+    "emisivoK": 0.12
+  },
+  "glaseado": {
+    "capa": {
+      "colorMap": "glaseado_color.png",
+      "rugosidadMap": "glaseado_rugosidad.png",
+      "normalMap": "glaseado_normal.png",
+      "normal": 0.7,
+      "transmision": 1.0,
+      "ior": 1.31,
+      "grosor": 0.45,
+      "atenuacion": "#EAF7A8",
+      "atenuacionDist": 2.0
+    },
+    "nucleo": {
+      "radio": 0.7,
+      "emisivoMap": "glaseado_nucleo.png",
+      "emisivoK": 2.2,
+      "color": "#1d2604",
+      "rugosidad": 0.35
+    }
+  },
+  "cuarzo": {
+    "color": "#F6FAD8",
+    "rugosidadMap": "cuarzo_rugosidad.png",
+    "normalMap": "cuarzo_normal.png",
+    "normal": 0.8,
+    "transmision": 1.0,
+    "ior": 1.54,
+    "grosor": 1.5,
+    "atenuacion": "#E2F07A",
+    "atenuacionDist": 1.6,
+    "bisel": 0.035,
+    "velo": {
+      "map": "cuarzo_velo.png",
+      "planos": 3,
+      "lado": 1.25,
+      "color": "#EEF3C8",
+      "emisivoK": 0.25
+    }
+  },
+  "three": {
+    "_nota": "calibración de three.js frente a Cycles (misma intención, otra física): el relieve se lee más duro sin GI",
+    "normalK": 0.45,
+    "glaseado": {
+      "normalK": 0.28
+    },
+    "cuarzo": {
+      "rugK": 1.3,
+      "veloK": 4
+    }
+  }
+}

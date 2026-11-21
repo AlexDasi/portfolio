@@ -736,3 +736,12 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 | 1SAnrIxw5OY · qu8w7x-0gw4 · p0UwQ-Wd8TM · OOHsoUNRxt8 · UXvXdQC1GoM · j4uuKnN43_M · nXGw951o3Hk · 3xQ65cknLPk | Kari Shea · Devin Pickell (2) · Sincerely Media (2) · Alex Knight · Marcin Skalij · Quaritsch Photography | portátiles e iMac |
 
 **QA:** `vivo.mjs` 0 rojos en el caso ATELIER y la ficha de El Imperio (iPhone 13, SE, Android, desktop).
+
+## 2026-11-21 — v14 · la esfera en calidad alta (three.js elegido en el A/B, ATELIER conv. 1390 → 1393)
+- **A/B (conv. 1390):** misma escena en three.js (girable) y en Blender/Cycles (vídeo), mismos materiales. Alex: «se ve increíble en three js»; el póster de Blender como primer fotograma, fuera («se nota el cambio»).
+- **Esfera nueva:** `esfera/esfera-hq.html` + `esfera/esfera-hq.min.js` (esbuild, 149 KB gzip; fuente `esfera/hq/esfera-hq_embed.js`) + `esfera/hq/` (HDR de estudio 512, GLB por piel, texturas 1024/2048 en webp, `materiales_esfera-hq.json`). Misma API que `esfera-pieles.html` para `js/esfera.js` (embed, acento, día, mano, móvil, frac, pausa, lista/fuera/cerrar/espacio).
+- **Pieles en el sorteo:** chicle · glaseado · prisma (con textura de cuarzo turbio y velos lechosos). La gema sale (es la misma idea que el prisma nuevo). `?esfera=v12` vuelve a las pieles de antes.
+- **Giro libre (Alex, conv. 1393):** se arrastra en cualquier dirección (trackball), con inercia media, y vuelve a su giro lento sobre el eje vertical. En el móvil, un toque que empieza dentro de la bola es para girarla; fuera, la página hace scroll.
+- **Entrada:** la bola nace del disco del acento (escala .9 → 1 en 1,1 s) y el giro arranca desde 0: sin póster ni salto.
+- **Chicle (conv. 1390, 7ada1cd traído a main):** en `esfera-pieles.html` agarra en todo el borde visible y no se suelta en el móvil.
+- **Pendiente:** los efectos de cursor de cada piel (pellizco del chicle, rascar el glaseado, cara encendida del prisma) en la versión de calidad alta; GLB con meshopt para bajar peso en el móvil.

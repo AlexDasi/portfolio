@@ -101,7 +101,11 @@
     if (col.d && dia()) col = col.d;
     return col.r + ',' + col.g + ',' + col.b;
   }
-  function src(extra, p) { return 'esfera/esfera-pieles.html?embed&piel=' + (p || piel) + '&acento=' + acento() + (dia() ? '&dia' : '') + (/^[ab]$/.test(q.get('niebla') || '') ? '&niebla=' + q.get('niebla') : '') + (extra || ''); } // v8 (feedback 157): ?niebla=a|b
+  // v14 (Alex, conv. 1393: «se ve increíble en three js»): chicle, glaseado y prisma (con textura de cuarzo) en calidad alta,
+  // giro libre en todas direcciones. ?esfera=v12 vuelve a las pieles de antes (con sus efectos de cursor) para comparar.
+  var HQ = ['chicle', 'glaseado', 'prisma', 'cuarzo', 'gema'];
+  function pagina(p) { return HQ.indexOf(p) >= 0 && q.get('esfera') !== 'v12' ? 'esfera/esfera-hq.html' : 'esfera/esfera-pieles.html'; }
+  function src(extra, p) { return pagina(p || piel) + '?embed&piel=' + (p || piel) + '&acento=' + acento() + (dia() ? '&dia' : '') + (/^[ab]$/.test(q.get('niebla') || '') ? '&niebla=' + q.get('niebla') : '') + (extra || ''); } // v8 (feedback 157): ?niebla=a|b
 
   // ---------- «Hablamos» (Sobre mí): la esfera con la ÚLTIMA piel que se ha visto (feedback 106, 119) ----------
   // La bola plana del acento se queda de marcador hasta que la esfera está lista. three.js solo baja al llegar a esa pantalla.

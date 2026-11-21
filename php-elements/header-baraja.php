@@ -75,7 +75,7 @@ $assetVersion = static function (string $relativePath): string {
          antes era una hoja de Google Fonts que bloqueaba el pintado y abría dos conexiones más. -->
     <link rel="preload" href="/content/fuentes/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
     <?php /* v10 (Alex, 21/11: esfera más rápida en el móvil): en táctil la esfera arranca nada más cargar; su three.js (uno, de casa) se pide ya desde aquí */ ?>
-    <?php if (empty($sinSwiper)): ?><link rel="preload" href="/esfera/three-r160-esfera.min.js" as="script" crossorigin media="(hover: none), (max-width: 1280px)"><?php endif; ?>
+    <?php if (empty($sinSwiper)): ?><link rel="modulepreload" href="/esfera/esfera-hq.min.js" media="(hover: none), (max-width: 1280px)"><?php endif; ?>
     <style>
         @font-face { font-family: 'Inter'; font-style: normal; font-weight: 200 700; font-display: swap;
             src: url('/content/fuentes/inter-latin-var.woff2') format('woff2');
@@ -172,7 +172,7 @@ $assetVersion = static function (string $relativePath): string {
             /* v6 (feedback 119): la piel de la esfera CAMBIA: una nueva al azar en cada carga (nunca la última que se vio) y otra
                cada vez que se vuelve a abrir (js/esfera.js). La última que se ha visto se apunta (localStorage, solo para no
                repetirla y para que «Hablamos» del Sobre mí enseñe esa). Fuera la sesión de la v5. ?piel= fuerza una. */
-            var PIELES = ['chicle', 'glaseado', 'prisma', 'gema']; /* v12 (Alex, 21/11): fuera el planeta (solare), la gota y el cuarzo (forma) del sorteo; siguen disponibles con ?piel= */
+            var PIELES = ['chicle', 'glaseado', 'prisma']; /* v14 (Alex, 21/11, ATELIER conv. 1393): las tres en calidad alta (esfera/esfera-hq.html); el prisma lleva la textura de cuarzo, así que la gema sale del sorteo. v12: fuera planeta, gota y cuarzo (forma) */
             var piel = q.get('piel'), ultima = null;
             try { ultima = localStorage.getItem('alexdasi-piel-ultima'); sessionStorage.removeItem('alexdasi-piel'); } catch (e) {}
             if (PIELES.indexOf(ultima) < 0) ultima = null;
