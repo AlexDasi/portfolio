@@ -896,3 +896,11 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Caché:** el vídeo y el póster móvil de la portada (`pm`) y las imágenes de «Momentos» también llevan `?v=`.
 - **Mockups:** Solvera p1 salía con la puerta de edad → «Pedir una visita» (paisaje + formulario); Reissue p1 (dirección y mapa) → «La tienda por dentro».
 - Rama `v28-videos-fluidos-2026-11-21`, pendiente del ok de Alex para pasar a `main` (publicar).
+
+---
+
+## 2026-11-21 — v29 · el punto: quieto con halo que respira, el hover de siempre (ATELIER conv. 1421)
+
+- Alex: «el punto quieto y con un pequeño parpadeo, un halo pequeño; al hacer hover, el mismo efecto de antes; al hacer clic, la bola».
+- Causa de que no hiciera nada: el v27 dejaba el aro (`::after`) con `scale` y `opacity` en `!important`, y una animación no puede con eso.
+- Fuera los bloques v24 (latido) y v27 (desde dentro). Reposo: `punto-respira` (brillo pequeño del acento, 2,6 s), sin moverse ni crecer. Hover (`.is-cerca`): el de la v4 (imán, crece ×1,9, brillo y aro `punto-aro`). Esfera abierta: nada.

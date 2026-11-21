@@ -2377,15 +2377,6 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
   .uxe__cv .sm__boton--lleno:hover { background: var(--main-color) !important; border-color: var(--main-color) !important; color: var(--bkg-color) !important; }
 }
 
-// v24 (Alex: «que el punto de Alex Dasi tenga un latido sutil, un halo que aparece y se diluye, indicando que ahí pasa
-// algo; el punto no crece»): en reposo, un aro suave cada 3,2 s; al acercarte, el aro de siempre; con la esfera abierta, nada
-@keyframes punto-latido { 0% { scale: 1; opacity: 0; } 12% { opacity: .55; } 70% { scale: 2.1; opacity: 0; } 100% { scale: 2.1; opacity: 0; } }
-@media (hover: hover) and (pointer: fine) and (min-width: 1281px) {
-  .intro__punto:not(.is-cerca):not(.is-abierta)::after { opacity: 1; scale: 1; animation: punto-latido 3.2s cubic-bezier(.22, 1, .36, 1) 1.2s infinite; }
-  .intro__punto.is-abierta::after { animation: none !important; opacity: 0 !important; }
-}
-@media (prefers-reduced-motion: reduce) { .intro__punto::after { animation: none !important; } }
-
 // v24 (Alex: «el texto de los proyectos, un poco más grande, que se lea mejor»; «USA LA RUEDA O ARRASTRA, arriba de la
 // primera carta, alineado a la izquierda, muy sutil, gris clarito»). Escritorio.
 @media (min-width: 1281px) {
@@ -2437,16 +2428,17 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
   .uxe__caso.is-on .uxe__info { opacity: 1; transition: opacity .4s ease .2s; }
 }
 
-// v27 (Alex, conv. 1414: «el halo del punto tiene que salir desde el centro de la bola, desde dentro; al pasar el ratón
-// aparece precargado ya por fuera»). El aro mide lo mismo que el punto y nace dentro (escala .25, invisible):
-// en reposo y al acercarse crece desde el centro hacia fuera y se desvanece; nunca se queda pintado fuera.
-.intro__punto::after { inset: 0 !important; scale: .25 !important; opacity: 0 !important; transition: none !important; }
-@keyframes punto-desde-dentro { 0% { scale: .25; opacity: 0; } 15% { opacity: .75; } 75% { scale: 2.3; opacity: 0; } 100% { scale: 2.3; opacity: 0; } }
-@keyframes punto-desde-dentro-cerca { 0% { scale: .25; opacity: 0; } 12% { opacity: .9; } 70% { scale: 1.9; opacity: 0; } 100% { scale: 1.9; opacity: 0; } }
-@media (hover: hover) and (pointer: fine) and (min-width: 1281px) {
-  .intro__punto:not(.is-cerca):not(.is-abierta)::after { animation: punto-desde-dentro 3.2s cubic-bezier(.22, 1, .36, 1) 1.2s infinite !important; }
+// v29 (Alex, conv. 1421: «el punto quieto y con un pequeño parpadeo, un halo pequeño; al hacer hover, el mismo efecto de
+// antes, para saber que ahí pasa algo; al hacer clic, la bola»). Sustituye a v24 y v27: el v27 dejaba el aro con
+// `scale`/`opacity` en !important y ninguna animación podía moverlo (el punto se quedaba sin efecto).
+// · Reposo: el punto no se mueve ni crece; solo respira un halo pequeño del acento (brillo que sube y baja).
+// · Hover (.is-cerca, js/esfera.js): el de la v4 — imán, crece, brillo y el aro fino que late (punto-aro).
+// · Con la esfera abierta: nada.
+@keyframes punto-respira {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color) 0%, transparent), 0 0 .1em color-mix(in srgb, var(--accent-color) 30%, transparent); }
+  50% { box-shadow: 0 0 0 .035em color-mix(in srgb, var(--accent-color) 22%, transparent), 0 0 .32em color-mix(in srgb, var(--accent-color) 60%, transparent); }
 }
-.intro__punto.is-cerca::after { animation: punto-desde-dentro-cerca 1.5s cubic-bezier(.22, 1, .36, 1) infinite !important; }
-.intro__punto.is-cerca { box-shadow: none !important; }
-.intro__punto.is-abierta::after { animation: none !important; }
-@media (prefers-reduced-motion: reduce) { .intro__punto::after { animation: none !important; } }
+.intro__punto:not(.is-cerca):not(.is-abierta) { animation: punto-respira 2.6s ease-in-out .8s infinite; }
+.intro__punto.is-cerca { animation: none; }
+.intro__punto.is-abierta, .intro__punto.is-abierta::after { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .intro__punto, .intro__punto::after { animation: none !important; } }
