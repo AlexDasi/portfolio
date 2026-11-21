@@ -802,8 +802,11 @@ canvas.addEventListener('pointermove', e => { if (MANO && e.pointerType !== 'tou
     R.vx += (dx * k / ddt - R.vx) * .5; R.vy += (dy * k / ddt - R.vy) * .5; R.lx = e.clientX; R.ly = e.clientY; R.lt = now; }
   mover(e.clientX, e.clientY); });
 canvas.addEventListener('pointerdown', e => { pulsado = {x: e.clientX, y: e.clientY, t: performance.now()}; if (e.pointerType === 'touch') { document.body.classList.add('tactil'); P.primero = true; } mover(e.clientX, e.clientY); P.down = true;
-  if (modo === 1) { rayT.setFromCamera(new THREE.Vector2(P.x * 2 - 1, P.y * 2 - 1), camera); const h = rayT.intersectObject(chicle.mesh, false)[0];   // chicle: clic = pellizco
-    if (h) { const k = 0, pz = chicle.pell[k]; pz.a.copy(chicle.mesh.worldToLocal(h.point.clone()).normalize()); pz.activo = true; chicle.agarre = {k, w: h.point.clone()}; cur.classList.add('down'); canvas.setPointerCapture?.(e.pointerId); return; } }
+  if (modo === 1) { rayT.setFromCamera(new THREE.Vector2(P.x * 2 - 1, P.y * 2 - 1), camera);   // chicle: clic = pellizco
+    /* v13 (ATELIER conv. 1390, «engancha cuando le da la gana»): antes el rayo iba contra la malla SIN deformar (radio 1) y la
+       bola se ve deformada hasta ~1,12: cerca del borde el clic no agarraba y giraba. Ahora esfera analítica con el radio que se ve. */
+    const h = golpeR(chicle, rayT.ray, 1.1);
+    if (h) { const k = 0, pz = chicle.pell[k]; pz.a.copy(chicle.mesh.worldToLocal(h.clone()).normalize()); pz.activo = true; chicle.agarre = {k, w: h.clone()}; cur.classList.add('down'); canvas.setPointerCapture?.(e.pointerId); return; } }
   R.drag = true; R.lx = e.clientX; R.ly = e.clientY; R.lt = performance.now(); R.vx = R.vy = 0; cur.classList.add('down'); canvas.setPointerCapture?.(e.pointerId); });
 const soltar = e => { P.down = false; if (chicle.agarre) { chicle.pell[chicle.agarre.k].activo = false; chicle.agarre = null; } R.drag = false; if (performance.now() - R.lt > (MOVIL ? 120 : 80)) R.vx = R.vy = 0; cur.classList.remove('down'); if (e.pointerType === 'touch') { P.dentro = false; P.primero = true; } };
 canvas.addEventListener('pointerup', e => {
@@ -817,6 +820,10 @@ canvas.addEventListener('pointerup', e => {
   if (MANO && fueraDeBola(e.clientX, e.clientY, 1.12)) setTimeout(devolver, 0);   // soltó el arrastre fuera de la bola
 });
 canvas.addEventListener('pointerup', soltar); canvas.addEventListener('pointercancel', soltar);
+/* v13 (conv. 1390): en el móvil embebido el lienzo deja pasar el scroll vertical (pan-y) y un estirón en vertical se convertía
+   en scroll → pointercancel → el chicle se soltaba solo. Con el chicle, un toque que empieza DENTRO de la bola es para él. */
+canvas.addEventListener('touchstart', e => { const t = e.touches[0];
+  if (modo === 1 && t && !fueraDeBola(t.clientX, t.clientY, 1.0)) e.preventDefault(); }, {passive: false});
 canvas.addEventListener('pointerleave', () => { P.dentro = false; P.primero = true; if (MANO && !R.drag && !chicle.agarre) devolver(); });
 addEventListener('pointermove', e => { if (e.pointerType !== 'touch') { cur.style.transform = `translate(${e.clientX}px,${e.clientY}px)`; cur.style.opacity = 1; } });
 document.documentElement.addEventListener('mouseleave', () => { cur.style.opacity = 0; });
@@ -842,6 +849,11 @@ const fmt = (n, d) => n.toFixed(d).replace('.', ',');
 /* ---------- bucle ---------- */
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), tmp = new THREE.Vector3(), tmpM = new THREE.Matrix4();
 const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3(), tmp2 = new THREE.Vector3();
+function golpeR(o, r0, k = 1){ // como golpeEsfera, con cualquier rayo y margen k sobre el radio
+  const r = o.radio * k * o.mesh.scale.x, oc = r0.origin.clone().sub(o.mesh.position);
+  const bb = oc.dot(r0.direction), cc = oc.lengthSq() - r * r, h = bb * bb - cc;
+  return h < 0 ? null : r0.origin.clone().addScaledVector(r0.direction, -bb - Math.sqrt(h));
+}
 function golpeEsfera(o){ // rayo contra la esfera de radio o.radio·escala (analítico)
   const r = o.radio * o.mesh.scale.x, oc = tmp.copy(ray.ray.origin).sub(o.mesh.position);
   const bb = oc.dot(ray.ray.direction), cc = oc.lengthSq() - r * r, h = bb * bb - cc;
