@@ -2417,3 +2417,22 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
   .pagina-ficha .press-space { display: block !important; }
 }
 @media (min-width: 1281px) { .sitio-baraja .nav--top .nav--items a { translate: 0 2px; } }
+
+// v26 (Alex: «el estado en reposo de la lista no me gusta; mejor que se subraye todo en el acento, y que la imagen no haga
+// ese efecto»): sin bloques llenos. Las filas a media luz; la señalada, plena, con el número en el acento y un filete de 2 px
+// del acento que la recorre entera de izquierda a derecha. La portada entra como una cortina de abajo arriba (clip-path).
+@media (min-width: 1281px) {
+  .uxe__lista a { margin: 0 !important; padding: 12px 0 !important; color: var(--main-color) !important; opacity: .45; transition: opacity .3s ease, padding .4s cubic-bezier(.22, 1, .36, 1) !important; }
+  .uxe__lista a span { color: var(--tinta-suave) !important; }
+  .uxe__lista a::before { inset: auto 0 -1px 0 !important; height: 2px !important; z-index: 1 !important; background: var(--accent-color) !important; transform: scaleX(0); }
+  .uxe__lista a.is-on { opacity: 1; padding-left: 14px !important; }
+  .uxe__lista a.is-on span { color: var(--acento-texto) !important; }
+  .uxe__lista a.is-on::before { transform: scaleX(1); }
+  .uxe__lista:hover a:not(:hover) { opacity: .35; }
+  .uxe__caso { translate: none !important; transition: opacity 0s linear .6s, visibility 0s linear .6s !important; }
+  .uxe__caso .uxe__img { clip-path: inset(100% 0 0 0 round 10px); transition: clip-path .6s cubic-bezier(.65, 0, .35, 1); }
+  .uxe__caso .uxe__info { opacity: 0; transition: opacity .3s ease; }
+  .uxe__caso.is-on { transition: none !important; z-index: 1; }
+  .uxe__caso.is-on .uxe__img { clip-path: inset(0 0 0 0 round 10px); }
+  .uxe__caso.is-on .uxe__info { opacity: 1; transition: opacity .4s ease .2s; }
+}

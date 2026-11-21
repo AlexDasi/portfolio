@@ -941,16 +941,16 @@
         },
         {
           "tipo": "img",
-          "src": "content/baraja/imperio_caso-e1-1600.webp",
+          "src": "content/baraja/imperio_atelier-d-1600.webp",
           "alt": {
             "es": "La web de la Librería El Imperio en un portátil",
             "en": "Librería El Imperio’s website on a laptop"
           },
           "w": 1600,
-          "h": 1066,
-          "grande": "content/baraja/imperio_caso-e1-1600.webp",
+          "h": 1000,
+          "grande": "content/baraja/imperio_atelier-d-1600.webp",
           "wg": 1600,
-          "chica": "content/baraja/imperio_caso-e1-900.webp",
+          "chica": "content/baraja/imperio_atelier-d-900.webp",
           "wc": 900
         },
         {
@@ -966,30 +966,30 @@
         },
         {
           "tipo": "img",
-          "src": "content/baraja/elsa-moreno_caso-e2-900.webp",
+          "src": "content/baraja/elsa-moreno_atelier-m-900.webp",
           "alt": {
             "es": "La web de Elsa Moreno en el móvil",
             "en": "Elsa Moreno’s website on a phone"
           },
           "w": 900,
           "h": 1071,
-          "grande": "content/baraja/elsa-moreno_caso-e2-900.webp",
+          "grande": "content/baraja/elsa-moreno_atelier-m-900.webp",
           "wg": 900,
-          "chica": "content/baraja/elsa-moreno_caso-e2-520.webp",
+          "chica": "content/baraja/elsa-moreno_atelier-m-520.webp",
           "wc": 520
         },
         {
           "tipo": "img",
-          "src": "content/baraja/berto-sanchez_caso-e1-1600.webp",
+          "src": "content/baraja/berto-sanchez_atelier-d-1600.webp",
           "alt": {
             "es": "La web de Berto Sánchez en un portátil",
             "en": "Berto Sánchez’s website on a laptop"
           },
           "w": 1600,
-          "h": 1067,
-          "grande": "content/baraja/berto-sanchez_caso-e1-1600.webp",
+          "h": 1000,
+          "grande": "content/baraja/berto-sanchez_atelier-d-1600.webp",
           "wg": 1600,
-          "chica": "content/baraja/berto-sanchez_caso-e1-900.webp",
+          "chica": "content/baraja/berto-sanchez_atelier-d-900.webp",
           "wc": 900
         },
         {
@@ -1012,30 +1012,30 @@
         },
         {
           "tipo": "img",
-          "src": "content/baraja/casa-albar_caso-e2-900.webp",
+          "src": "content/baraja/casa-albar_atelier-m-900.webp",
           "alt": {
             "es": "Casa Albar en el móvil",
             "en": "Casa Albar on a phone"
           },
           "w": 900,
           "h": 1071,
-          "grande": "content/baraja/casa-albar_caso-e2-900.webp",
+          "grande": "content/baraja/casa-albar_atelier-m-900.webp",
           "wg": 900,
-          "chica": "content/baraja/casa-albar_caso-e2-520.webp",
+          "chica": "content/baraja/casa-albar_atelier-m-520.webp",
           "wc": 520
         },
         {
           "tipo": "img",
-          "src": "content/baraja/coccio_caso-e1-1600.webp",
+          "src": "content/baraja/coccio_atelier-d-1600.webp",
           "alt": {
             "es": "Cocció en un portátil",
             "en": "Cocció on a laptop"
           },
           "w": 1600,
-          "h": 1067,
-          "grande": "content/baraja/coccio_caso-e1-1600.webp",
+          "h": 1000,
+          "grande": "content/baraja/coccio_atelier-d-1600.webp",
           "wg": 1600,
-          "chica": "content/baraja/coccio_caso-e1-900.webp",
+          "chica": "content/baraja/coccio_atelier-d-900.webp",
           "wc": 900
         },
         {

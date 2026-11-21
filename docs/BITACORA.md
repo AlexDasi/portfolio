@@ -867,3 +867,10 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Limpieza:** fuera las composiciones descartadas (`?bola=abajo|centro`, `?hablamos=…`); queda `?bola=abajo-centro` mientras Alex decide.
 - **Rendimiento:** la comprobación del color del HUD sobre la esfera solo corre con una esfera en pantalla (antes, siempre cada 120 ms).
 - **Design system:** estilos `hud` y `hud-logo`, Hud en minúsculas, páginas v25 y pendientes.
+
+---
+
+## 2026-11-21 — v26 · mockups nuevos del caso ATELIER y lista de Producto (ATELIER conv. 1413)
+
+- **Caso ATELIER:** fuera los 5 mockups de foto (MacBook Pro e iMac viejos, uno torcido). Capturas nuevas de las webs en vivo (escritorio 1440×900 @2x, móvil 390×844 @3x) dentro de dispositivos actuales dibujados (portátil de bisel fino con muesca; móvil con isla y barra de estado), rectos y con fondo transparente: `content/baraja/<slug>_atelier-{d,m}-*.webp`. Las fichas de cada proyecto no se tocan.
+- **Producto:** la lista sin bloques llenos: filas a media luz, la señalada plena con un filete de 2 px del acento de lado a lado; la portada entra como una cortina (clip-path).
