@@ -14,12 +14,13 @@ import {OutputPass} from 'three/examples/jsm/postprocessing/OutputPass.js';
 import {ShaderPass} from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import SPEC from './materiales_esfera-hq.json';
 import {crearTech, TECH} from './esfera-hq_tech.js';   // v16: alambre · maqueta · rayosx · anodizado
+import {crearMaterial, NUEVOS} from './esfera-hq_materiales.js';   // v17: solare · globo · saten · pompa · terciopelo (conv. 1397)
 
 const Q = new URLSearchParams(location.search);
 const BASE = 'hq/';
 const EMBED = Q.has('embed'), MOVIL = EMBED && Q.has('movil'), MANO = Q.has('mano'), FRAC = +Q.get('frac') || 0;
-const MAPA = {chicle: 'chicle', glaseado: 'glaseado', prisma: 'cuarzo', cuarzo: 'cuarzo', gema: 'cuarzo', alambre: 'alambre', maqueta: 'maqueta', rayosx: 'rayosx', anodizado: 'anodizado'};
-const ES_TECH = TECH.includes(MAPA[new URLSearchParams(location.search).get('piel')]);
+const MAPA = {chicle: 'chicle', glaseado: 'glaseado', prisma: 'cuarzo', cuarzo: 'cuarzo', gema: 'cuarzo', alambre: 'alambre', maqueta: 'maqueta', rayosx: 'rayosx', anodizado: 'anodizado', solare: 'solare', globo: 'globo', saten: 'saten', pompa: 'pompa', terciopelo: 'terciopelo'};
+const ES_TECH = TECH.includes(MAPA[new URLSearchParams(location.search).get('piel')]) || NUEVOS.includes(MAPA[new URLSearchParams(location.search).get('piel')]);
 const MAT = MAPA[Q.get('piel')] || 'cuarzo';
 if (EMBED) { document.documentElement.classList.add('embed'); document.body.classList.add('embed'); if (MOVIL) document.body.classList.add('movil'); }
 const avisar = msg => { if (EMBED && parent !== window) parent.postMessage({esfera: msg}, '*'); };
@@ -30,7 +31,7 @@ function ponerAcento(rgb){ if (!rgb || rgb.length !== 3) return; ACENTO.v = rgb.
   document.documentElement.style.setProperty('--lima', `rgb(${rgb.join(',')})`); if (ACENTO.listo) ajustarTinte(); }
 if (Q.has('acento')) ponerAcento(Q.get('acento').split(','));
 let DIA = Q.has('dia'), PAUSA = false;
-const EXPO = {chicle: [1.3, 1.6], glaseado: [1.3, 1.55], cuarzo: [1.4, 1.75], alambre: [1.25, 1.5], maqueta: [1.0, 1.15], rayosx: [1.1, 1.25], anodizado: [1.15, 1.4]};   // [noche, día]
+const EXPO = {chicle: [1.3, 1.6], glaseado: [1.3, 1.55], cuarzo: [1.4, 1.75], alambre: [1.25, 1.5], maqueta: [1.0, 1.15], rayosx: [1.1, 1.25], anodizado: [1.15, 1.4], solare: [1.2, 1.4], globo: [1.25, 1.5], saten: [1.25, 1.5], pompa: [1.3, 1.5], terciopelo: [1.35, 1.6]};   // [noche, día]
 const expo = () => EXPO[MAT][DIA ? 1 : 0] * SPEC.exposicion / 1.35;
 addEventListener('message', e => { const d = e.data || {};
   if (d.esferaTema) { DIA = d.esferaTema === 'dia'; grano.uniforms.uDia.value = DIA ? 1 : 0; }
@@ -113,7 +114,7 @@ async function montar(){
   fondo.renderOrder = -1; fondo.frustumCulled = false;
   fondo.onBeforeRender = r => { const rt = r.getRenderTarget(); fondo.material.colorWrite = rt !== null && rt !== composer.readBuffer && rt !== composer.writeBuffer; };
   scene.add(fondo);
-  if (ES_TECH) { tech = crearTech(MAT); objeto = tech.objeto; if (tech.luz) scene.add(tech.luz); cur.classList.add('cur--' + tech.cursorCss); }
+  if (ES_TECH) { tech = NUEVOS.includes(MAT) ? crearMaterial(MAT) : crearTech(MAT); objeto = tech.objeto; if (tech.luz) scene.add(tech.luz); cur.classList.add('cur--' + tech.cursorCss); }
   else { const M = materiales(); objeto = new THREE.Group(); gltf.scene.updateMatrixWorld(true);
   gltf.scene.traverse(o => { if (!o.isMesh) return; const mat = M[o.name.replace(/_\d+$/, '').replace('.001', '')]; if (!mat) return;
     const c = o.clone(); c.material = mat; c.position.copy(o.getWorldPosition(new THREE.Vector3())); c.quaternion.copy(o.getWorldQuaternion(new THREE.Quaternion())); objeto.add(c); }); }
@@ -172,7 +173,7 @@ document.addEventListener('visibilitychange', () => { visible = !document.hidden
 const suave = x => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
 /* dónde toca el cursor la bola (esfera analítica de radio 1): en el mundo y en la piel (espacio del objeto, gira con él) */
 const rc = new THREE.Raycaster(), ndc = new THREE.Vector2(), esf = new THREE.Sphere(new THREE.Vector3(), 1), golpe = new THREE.Vector3();
-const K = {sobre: false, dentro: false, pObj: new THREE.Vector3(), pMundo: new THREE.Vector3(), ndc, aspecto: 1, lente: .2};
+const K = {cam, sobre: false, dentro: false, pObj: new THREE.Vector3(), pMundo: new THREE.Vector3(), ndc, aspecto: 1, lente: .2};
 function toque(){
   K.aspecto = innerWidth / innerHeight; K.lente = .42 * radioBola() / (innerHeight / 2);
   if (tech && tech.cursorCss === 'lente') cur.style.setProperty('--lente', Math.round(.84 * radioBola()) + 'px');
