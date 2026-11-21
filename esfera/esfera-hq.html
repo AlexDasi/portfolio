@@ -17,6 +17,11 @@
   #cur{position:fixed;left:0;top:0;pointer-events:none;z-index:4;opacity:0;transition:opacity .2s}
   #cur i{position:absolute;left:0;top:0;display:block;width:10px;height:10px;border-radius:50%;background:var(--lima);box-shadow:0 0 14px 4px color-mix(in srgb,var(--lima) 45%,transparent);transform:translate(-50%,-50%);transition:transform .2s,opacity .2s}
   #cur.down i{transform:translate(-50%,-50%) scale(1.7);opacity:.6}
+  /* v16: cursores de las pieles tech (mira para alambre y maqueta, lente para rayos X) */
+  #cur.cur--mira i{width:22px;height:22px;background:none;box-shadow:none;border:1px solid var(--lima);border-radius:50%}
+  #cur.cur--mira::before,#cur.cur--mira::after{content:"";position:absolute;background:var(--lima);transform:translate(-50%,-50%)}
+  #cur.cur--mira::before{width:34px;height:1px}#cur.cur--mira::after{width:1px;height:34px}
+  #cur.cur--lente i{width:var(--lente,120px);height:var(--lente,120px);background:none;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--lima) 70%,transparent)}
   body.tactil #cur{display:none}
 </style>
 </head>

@@ -103,14 +103,14 @@
   }
   // v14 (Alex, conv. 1393: «se ve increíble en three js»): chicle, glaseado y prisma (con textura de cuarzo) en calidad alta,
   // giro libre en todas direcciones. ?esfera=v12 vuelve a las pieles de antes (con sus efectos de cursor) para comparar.
-  var HQ = ['chicle', 'glaseado', 'prisma', 'cuarzo', 'gema'];
+  var HQ = ['chicle', 'glaseado', 'prisma', 'cuarzo', 'gema', 'alambre', 'maqueta', 'rayosx', 'anodizado']; // v16: + las cuatro tech (conv. 1395)
   function pagina(p) { return HQ.indexOf(p) >= 0 && q.get('esfera') !== 'v12' ? 'esfera/esfera-hq.html' : 'esfera/esfera-pieles.html'; }
   function src(extra, p) { return pagina(p || piel) + '?embed&piel=' + (p || piel) + '&acento=' + acento() + (dia() ? '&dia' : '') + (/^[ab]$/.test(q.get('niebla') || '') ? '&niebla=' + q.get('niebla') : '') + (extra || ''); } // v8 (feedback 157): ?niebla=a|b
 
   // ---------- v15 (Alex, 21/11): cambiar la piel 3D a mano, como el «PRESS SPACE» del color ----------
   // Botón abajo a la derecha (php-elements/nav-baraja.php, [data-piel-3d]) o la tecla E: pasa a la siguiente piel de la lista
   // y recarga las esferas abiertas con ella; desde ahí la piel elegida se queda (no se vuelve a sortear en esta página).
-  var NOMBRES = { chicle: ['Chicle', 'Bubblegum'], glaseado: ['Glaseado', 'Glazed'], prisma: ['Prisma', 'Prism'], gema: ['Gema', 'Gem'], cuarzo: ['Cuarzo', 'Quartz'], solare: ['Solare', 'Solare'], gota: ['Gota', 'Drop'] };
+  var NOMBRES = { alambre: ['Alambre', 'Wire'], maqueta: ['Maqueta', 'Scale model'], rayosx: ['Rayos X', 'X-ray'], anodizado: ['Anodizado', 'Anodized'], chicle: ['Chicle', 'Bubblegum'], glaseado: ['Glaseado', 'Glazed'], prisma: ['Prisma', 'Prism'], gema: ['Gema', 'Gem'], cuarzo: ['Cuarzo', 'Quartz'], solare: ['Solare', 'Solare'], gota: ['Gota', 'Drop'] };
   var botonPiel = document.querySelector('[data-piel-3d]');
   function rotular(p) {
     if (!botonPiel) return;
@@ -127,12 +127,15 @@
       try {
         var u = new URL(f.getAttribute('src'), location.href);
         u.searchParams.set('piel', piel);
+        // v16 (Alex, conv. 1395): la esfera recargada salía con el acento de cuando se creó el marco (menta/azulito)
+        // hasta pasar el ratón por encima; ahora lleva el acento y el tema de AHORA
+        u.searchParams.set('acento', acento());
+        if (dia()) u.searchParams.set('dia', ''); else u.searchParams.delete('dia');
         u.pathname = u.pathname.replace(/[^/]+$/, pagina(piel).split('/').pop());
         f.src = u.pathname.replace(/^\//, '') + u.search;
       } catch (e) {}
     });
     rotular(piel);
-    if (botonPiel) { botonPiel.classList.remove('is-cambia'); void botonPiel.offsetWidth; botonPiel.classList.add('is-cambia'); }
   }
   window.__pielSiguiente = cambiarPiel;
   rotular(piel);

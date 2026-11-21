@@ -13,11 +13,13 @@ import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass.js';
 import {OutputPass} from 'three/examples/jsm/postprocessing/OutputPass.js';
 import {ShaderPass} from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import SPEC from './materiales_esfera-hq.json';
+import {crearTech, TECH} from './esfera-hq_tech.js';   // v16: alambre · maqueta · rayosx · anodizado
 
 const Q = new URLSearchParams(location.search);
 const BASE = 'hq/';
 const EMBED = Q.has('embed'), MOVIL = EMBED && Q.has('movil'), MANO = Q.has('mano'), FRAC = +Q.get('frac') || 0;
-const MAPA = {chicle: 'chicle', glaseado: 'glaseado', prisma: 'cuarzo', cuarzo: 'cuarzo', gema: 'cuarzo'};
+const MAPA = {chicle: 'chicle', glaseado: 'glaseado', prisma: 'cuarzo', cuarzo: 'cuarzo', gema: 'cuarzo', alambre: 'alambre', maqueta: 'maqueta', rayosx: 'rayosx', anodizado: 'anodizado'};
+const ES_TECH = TECH.includes(MAPA[new URLSearchParams(location.search).get('piel')]);
 const MAT = MAPA[Q.get('piel')] || 'cuarzo';
 if (EMBED) { document.documentElement.classList.add('embed'); document.body.classList.add('embed'); if (MOVIL) document.body.classList.add('movil'); }
 const avisar = msg => { if (EMBED && parent !== window) parent.postMessage({esfera: msg}, '*'); };
@@ -28,7 +30,7 @@ function ponerAcento(rgb){ if (!rgb || rgb.length !== 3) return; ACENTO.v = rgb.
   document.documentElement.style.setProperty('--lima', `rgb(${rgb.join(',')})`); if (ACENTO.listo) ajustarTinte(); }
 if (Q.has('acento')) ponerAcento(Q.get('acento').split(','));
 let DIA = Q.has('dia'), PAUSA = false;
-const EXPO = {chicle: [1.3, 1.6], glaseado: [1.3, 1.55], cuarzo: [1.4, 1.75]};   // [noche, día]
+const EXPO = {chicle: [1.3, 1.6], glaseado: [1.3, 1.55], cuarzo: [1.4, 1.75], alambre: [1.25, 1.5], maqueta: [1.0, 1.15], rayosx: [1.1, 1.25], anodizado: [1.15, 1.4]};   // [noche, día]
 const expo = () => EXPO[MAT][DIA ? 1 : 0] * SPEC.exposicion / 1.35;
 addEventListener('message', e => { const d = e.data || {};
   if (d.esferaTema) { DIA = d.esferaTema === 'dia'; grano.uniforms.uDia.value = DIA ? 1 : 0; }
@@ -98,9 +100,9 @@ function materiales(){
   return M;
 }
 
-let objeto = null, nace = 0, pintados = 0;
+let objeto = null, tech = null, nace = 0, pintados = 0;
 async function montar(){
-  const [env, gltf] = await Promise.all([new RGBELoader().loadAsync(BASE + 'estudio_esfera-hq_512.hdr'), new GLTFLoader().loadAsync(`${BASE}esfera-hq_${MAT}.glb`)]);
+  const [env, gltf] = await Promise.all([new RGBELoader().loadAsync(BASE + 'estudio_esfera-hq_512.hdr'), ES_TECH ? null : new GLTFLoader().loadAsync(`${BASE}esfera-hq_${MAT}.glb`)]);
   env.mapping = THREE.EquirectangularReflectionMapping;
   const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromEquirectangular(env).texture; pm.dispose();
   /* fondo SOLO para la refracción: el cristal ve el estudio y la página sigue transparente (pinta color solo en el paso de
@@ -111,9 +113,10 @@ async function montar(){
   fondo.renderOrder = -1; fondo.frustumCulled = false;
   fondo.onBeforeRender = r => { const rt = r.getRenderTarget(); fondo.material.colorWrite = rt !== null && rt !== composer.readBuffer && rt !== composer.writeBuffer; };
   scene.add(fondo);
-  const M = materiales(); objeto = new THREE.Group(); gltf.scene.updateMatrixWorld(true);
+  if (ES_TECH) { tech = crearTech(MAT); objeto = tech.objeto; if (tech.luz) scene.add(tech.luz); cur.classList.add('cur--' + tech.cursorCss); }
+  else { const M = materiales(); objeto = new THREE.Group(); gltf.scene.updateMatrixWorld(true);
   gltf.scene.traverse(o => { if (!o.isMesh) return; const mat = M[o.name.replace(/_\d+$/, '').replace('.001', '')]; if (!mat) return;
-    const c = o.clone(); c.material = mat; c.position.copy(o.getWorldPosition(new THREE.Vector3())); c.quaternion.copy(o.getWorldQuaternion(new THREE.Quaternion())); objeto.add(c); });
+    const c = o.clone(); c.material = mat; c.position.copy(o.getWorldPosition(new THREE.Vector3())); c.quaternion.copy(o.getWorldQuaternion(new THREE.Quaternion())); objeto.add(c); }); }
   incl.add(objeto); objeto.scale.setScalar(.9);
   await renderer.compileAsync(scene, cam);
   resize(); nace = performance.now(); last = nace; requestAnimationFrame(frame);
@@ -137,10 +140,11 @@ const w = new THREE.Vector3(0, REDUCE ? 0 : GIRO, 0), wAuto = new THREE.Vector3(
 let arr = null, pulsado = null, manoDentro = false;
 const cur = document.getElementById('cur');
 const girar = (vx, vy, ang) => { eje.set(vy, vx, 0); const l = eje.length(); if (l < 1e-6) return; qd.setFromAxisAngle(eje.divideScalar(l), ang); pivote.quaternion.premultiply(qd); };
-lienzo.addEventListener('pointerdown', e => { pulsado = {x: e.clientX, y: e.clientY};
+lienzo.addEventListener('pointerdown', e => { pulsado = {x: e.clientX, y: e.clientY}; ptr.x = e.clientX; ptr.y = e.clientY; ptr.activo = true;
   if (e.pointerType === 'touch') document.body.classList.add('tactil');
   arr = {x: e.clientX, y: e.clientY, t: performance.now()}; w.set(0, 0, 0); lienzo.setPointerCapture?.(e.pointerId); cur.classList.add('down'); });
-lienzo.addEventListener('pointermove', e => {
+const ptr = {x: 0, y: 0, activo: false};
+lienzo.addEventListener('pointermove', e => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.activo = e.pointerType !== 'touch' || !!arr;
   if (e.pointerType !== 'touch') { cur.style.transform = `translate(${e.clientX}px,${e.clientY}px)`; cur.style.opacity = 1; }
   if (MANO && e.pointerType !== 'touch') { manoDentro = true; if (!arr && fueraDeBola(e.clientX, e.clientY, 1.12)) { devolver(); return; } }
   if (!arr) return;
@@ -150,14 +154,14 @@ lienzo.addEventListener('pointermove', e => {
   if (ang > 1e-6) { eje.set(dy, dx, 0).normalize().multiplyScalar(ang / dt); w.lerp(eje, .5); }
   arr = {x: e.clientX, y: e.clientY, t: now}; });
 function devolver(){ if (!MANO || !manoDentro) return; manoDentro = false; cur.style.opacity = 0; avisar('fuera'); }
-const soltar = e => { if (arr && performance.now() - arr.t > (MOVIL ? 120 : 80)) w.set(0, 0, 0); arr = null; cur.classList.remove('down'); };
+const soltar = e => { if (e && e.pointerType === 'touch') ptr.activo = false; if (arr && performance.now() - arr.t > (MOVIL ? 120 : 80)) w.set(0, 0, 0); arr = null; cur.classList.remove('down'); };
 lienzo.addEventListener('pointerup', e => {
   if (EMBED && pulsado && !MOVIL) { const mov = Math.hypot(e.clientX - pulsado.x, e.clientY - pulsado.y);
     if (mov < 6 && fueraDeBola(e.clientX, e.clientY, 1.08)) avisar('cerrar'); }
   pulsado = null; soltar(e);
   if (MANO && fueraDeBola(e.clientX, e.clientY, 1.12)) setTimeout(devolver, 0); });
 lienzo.addEventListener('pointercancel', soltar);
-lienzo.addEventListener('pointerleave', () => { cur.style.opacity = 0; if (MANO && !arr) devolver(); });
+lienzo.addEventListener('pointerleave', () => { ptr.activo = false; cur.style.opacity = 0; if (MANO && !arr) devolver(); });
 /* en el móvil la página deja pasar el scroll vertical: un toque que empieza DENTRO de la bola es para girarla en cualquier dirección */
 lienzo.addEventListener('touchstart', e => { const t = e.touches[0]; if (t && !fueraDeBola(t.clientX, t.clientY, 1.0)) e.preventDefault(); }, {passive: false});
 addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === ' ' && EMBED) { e.preventDefault(); avisar('espacio'); } });
@@ -166,6 +170,18 @@ addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if 
 let last = performance.now(), visible = true;
 document.addEventListener('visibilitychange', () => { visible = !document.hidden; last = performance.now(); });
 const suave = x => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+/* dónde toca el cursor la bola (esfera analítica de radio 1): en el mundo y en la piel (espacio del objeto, gira con él) */
+const rc = new THREE.Raycaster(), ndc = new THREE.Vector2(), esf = new THREE.Sphere(new THREE.Vector3(), 1), golpe = new THREE.Vector3();
+const K = {sobre: false, dentro: false, pObj: new THREE.Vector3(), pMundo: new THREE.Vector3(), ndc, aspecto: 1, lente: .2};
+function toque(){
+  K.aspecto = innerWidth / innerHeight; K.lente = .42 * radioBola() / (innerHeight / 2);
+  if (tech && tech.cursorCss === 'lente') cur.style.setProperty('--lente', Math.round(.84 * radioBola()) + 'px');
+  K.dentro = ptr.activo && !fueraDeBola(ptr.x, ptr.y, 1.15); K.sobre = false;
+  if (!ptr.activo) return K;
+  ndc.set(ptr.x / innerWidth * 2 - 1, -(ptr.y / innerHeight) * 2 + 1); rc.setFromCamera(ndc, cam);
+  if (rc.ray.intersectSphere(esf, golpe)) { K.sobre = true; K.pMundo.copy(golpe); K.pObj.copy(objeto.worldToLocal(golpe.clone())).normalize(); }
+  return K;
+}
 function frame(now){
   if (PAUSA || !objeto) return;
   requestAnimationFrame(frame);
@@ -176,6 +192,7 @@ function frame(now){
     if (REDUCE) w.multiplyScalar(Math.exp(-dt * 14)); else w.lerp(wAuto, 1 - Math.exp(-dt * 1.7));   // inercia media → vuelve a su giro
     const a = w.length(); if (a > 1e-6) { qd.setFromAxisAngle(eje.copy(w).divideScalar(a), a * dt); pivote.quaternion.premultiply(qd); }
   }
+  if (tech) tech.actualizar(dt, now / 1000, toque());
   renderer.toneMappingExposure += (expo() - renderer.toneMappingExposure) * (1 - Math.exp(-dt * 5));
   composer.render(dt);
   if (EMBED && ++pintados === 2) avisar('lista');

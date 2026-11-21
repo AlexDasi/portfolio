@@ -4618,24 +4618,21 @@ html.tema-noche .carta__cara {
 
 .press-space {
   position: fixed;
-  left: 22px;
-  bottom: 20px;
+  right: 22px;
+  bottom: 46px;
   z-index: 200;
   margin: 0;
-  padding: 7px 11px 6px;
-  border-radius: 99px;
-  background: var(--accent-color);
-  color: #141415;
+  color: var(--main-color);
+  opacity: 0.45;
   font-family: "Inter", sans-serif;
   font-variant-emoji: text;
-  font-size: 13px;
+  font-size: 11px;
   line-height: 1;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
   pointer-events: none;
-  transition: background-color 0.3s ease, opacity 0.4s ease;
+  transition: opacity 0.4s ease;
 }
 .press-space__cara {
   letter-spacing: 0.02em;
@@ -6739,58 +6736,46 @@ html.tema-dia.precarga::after {
   align-items: center;
   gap: 7px;
   margin: 0;
-  padding: 7px 12px 6px;
+  padding: 4px 0;
   border: 0;
-  border-radius: 99px;
-  background: var(--accent-color);
-  color: #141415;
+  background: none;
+  color: var(--main-color);
   font-family: "Inter", sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.06em;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.35s ease, scale 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.35s ease;
 }
 .piel-3d .piel-3d__icono {
-  width: 14px;
-  height: 14px;
-}
-.piel-3d .piel-3d__tecla {
-  opacity: 0.7;
+  width: 13px;
+  height: 13px;
 }
 .piel-3d .piel-3d__tecla::after {
   content: "·";
   margin-left: 7px;
 }
-.piel-3d.is-cambia {
-  animation: piel-3d-pulso 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
 
 html.esfera-a-la-vista .piel-3d {
-  opacity: 1;
+  opacity: 0.45;
   pointer-events: auto;
 }
 
-@keyframes piel-3d-pulso {
-  40% {
-    scale: 1.12;
-  }
-}
 @media (hover: hover) and (pointer: fine) {
-  .piel-3d:hover {
-    scale: 1.05;
+  html.esfera-a-la-vista .piel-3d:hover {
+    opacity: 0.9;
   }
 }
 @media (hover: none), (pointer: coarse), (max-width: 1280px) {
   .piel-3d {
-    right: 14px;
-    bottom: calc(14px + env(safe-area-inset-bottom));
-    min-height: 40px;
-    padding: 0 14px;
-    background: color-mix(in srgb, var(--accent-color) 92%, transparent);
+    right: 10px;
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    min-height: 44px;
+    padding: 0 8px;
   }
   .piel-3d__tecla {
     display: none;
@@ -6833,5 +6818,14 @@ canvas {
 @media all and (min-width: 600px) {
   .desktopHidden {
     display: none;
+  }
+}
+
+@media (min-width: 1281px) {
+  .pie--piso .sm__habla-bola, .pantalla--sm.pie .sm__habla-bola {
+    right: -4vw;
+    top: 8vh;
+    width: 34vw;
+    margin-top: 0;
   }
 }

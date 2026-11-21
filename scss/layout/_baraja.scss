@@ -812,28 +812,25 @@ html.tema-noche .carta__cara { background: #161616; box-shadow: 0 0 0 1px rgba(2
 }
 
 // PRESS SPACE :) (feedback 86 → 104): ABAJO a la izquierda, como en la web original, con «:)» en texto plano.
-// Pastilla del color de acento con texto en tinta: se lee igual en día y en noche y sigue al acento.
-// La carita va en Inter y con font-variant-emoji: text (nunca se pinta como emoji). Solo con ratón.
+// v16 (Alex, conv. 1395): «que sea una indicación sutil, abajo a la derecha y ya está» — sin pastilla de color.
+// Texto pequeño en el color del texto, a media luz, encima del botón de la piel 3D. Solo con ratón.
 .press-space {
   position: fixed;
-  left: 22px;
-  bottom: 20px;
+  right: 22px;
+  bottom: 46px;
   z-index: $z-top;
   margin: 0;
-  padding: 7px 11px 6px;
-  border-radius: 99px;
-  background: var(--accent-color);
-  color: $tinta;
+  color: var(--main-color);
+  opacity: .45;
   font-family: $main-font;
   font-variant-emoji: text;
-  font-size: 13px;
+  font-size: 11px;
   line-height: 1;
-  font-weight: 500;
-  letter-spacing: .1em;
+  letter-spacing: .12em;
   text-transform: uppercase;
   white-space: nowrap;
   pointer-events: none;
-  transition: background-color .3s ease, opacity .4s ease;
+  transition: opacity .4s ease;
   &__cara { letter-spacing: .02em; margin-left: .35em; }
 }
 @media (hover: none), (pointer: coarse), (max-width: 1280px) { .press-space { display: none; } }
@@ -1908,25 +1905,28 @@ html.tema-dia.precarga::after { background: var(--cursor-color-dia, #7a9b18); }
 @media (hover: hover) and (pointer: fine) { .pisos-subir.is-visible:hover { opacity: 1; translate: 0 -3px; } }
 @media (max-width: 1280px) { .pisos-subir { display: none; } }
 
-// botón para cambiar la piel 3D (v15): abajo a la derecha, gemelo del PRESS SPACE
+// botón para cambiar la piel 3D (v15 → v16, Alex conv. 1395: sin rebote al pulsar y fuera de la pastilla de color):
+// texto sutil abajo a la derecha, como el PRESS SPACE; al pasar el ratón solo sube la luz.
 .piel-3d {
   position: fixed; right: 22px; bottom: 20px; z-index: $z-top;
   display: inline-flex; align-items: center; gap: 7px;
-  margin: 0; padding: 7px 12px 6px; border: 0; border-radius: 99px;
-  background: var(--accent-color); color: $tinta;
-  font-family: $main-font; font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+  margin: 0; padding: 4px 0; border: 0; background: none; color: var(--main-color);
+  font-family: $main-font; font-size: 11px; line-height: 1; letter-spacing: .12em; text-transform: uppercase;
   cursor: pointer; -webkit-tap-highlight-color: transparent;
-  opacity: 0; pointer-events: none; transition: opacity .35s ease, scale .3s cubic-bezier(.22, 1, .36, 1);
-  .piel-3d__icono { width: 14px; height: 14px; }
-  .piel-3d__tecla { opacity: .7; }
+  opacity: 0; pointer-events: none; transition: opacity .35s ease;
+  .piel-3d__icono { width: 13px; height: 13px; }
   .piel-3d__tecla::after { content: "·"; margin-left: 7px; }
-  &.is-cambia { animation: piel-3d-pulso .45s cubic-bezier(.22, 1, .36, 1); }
 }
-html.esfera-a-la-vista .piel-3d { opacity: 1; pointer-events: auto; }
-@keyframes piel-3d-pulso { 40% { scale: 1.12; } }
-@media (hover: hover) and (pointer: fine) { .piel-3d:hover { scale: 1.05; } }
+html.esfera-a-la-vista .piel-3d { opacity: .45; pointer-events: auto; }
+@media (hover: hover) and (pointer: fine) { html.esfera-a-la-vista .piel-3d:hover { opacity: .9; } }
 @media (hover: none), (pointer: coarse), (max-width: 1280px) {
-  .piel-3d { right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); min-height: 40px; padding: 0 14px; background: color-mix(in srgb, var(--accent-color) 92%, transparent); }
+  .piel-3d { right: 10px; bottom: calc(8px + env(safe-area-inset-bottom)); min-height: 44px; padding: 0 8px; }
   .piel-3d__tecla { display: none; }
 }
 html.cursor-fijo .piel-3d { display: none; }
+
+// v16 (Alex, conv. 1395: «me gustaba más la composición de contacto con la esfera arriba a la derecha, en la esquina»):
+// en escritorio el pie de los pisos (home y Sobre mí) lleva la esfera grande en la esquina, como UX/UI, fichas y 404
+@media (min-width: 1281px) {
+  .pie--piso .sm__habla-bola, .pantalla--sm.pie .sm__habla-bola { right: -4vw; top: 8vh; width: 34vw; margin-top: 0; }
+}
