@@ -6,7 +6,7 @@
 - v2 (19/11): home = intro + baraja de 9 cartas en dominó; About nuevo en blanco (`about.php` + `php-pages/sobre-mi.php`); ES por defecto (`?lang=en`); `?pisos=a|b`, `?cursor=fijo`. Detalle en BITACORA (últimas entradas).
 - v4 (19/11, feedback 98-105): esfera detrás del saludo con imán, acento en todo, About diseñado, 15 años, PRESS SPACE :) abajo, día = noche, pasada de rendimiento (tabla en BITACORA). Medidor: `node tools/medir_rendimiento.mjs <url>`.
 - Preview estática: `python3 tools/export_preview.py <carpeta>` → https://atelier-demo-propuestas.pages.dev/2026-11-19_alexdasi-baraja-sobre-su-web/
-- NO mergear a `main` sin el sí de Alex (main despliega en vivo).
+- **Publicar SIEMPRE sin pedir permiso (Alex, 21/11, conv. 1391: «publica SIEMPRE, no me pidas permiso»):** cada bloque terminado y con QA pasa a `main` (despliega en vivo) y se comprueba en vivo; respaldo = el commit anterior (se dice en la bitácora).
 
 **Fecha:** 2026-10-12
 **Rama activa:** `main`. Copy de ATELIER/conceptos, línea para negocios locales, arreglos de tablet y Otra Vez/Pati/Lenta en Works publicados el 2026-10-12 (Conv. 15). Para trabajo nuevo, abrir rama desde `main`.

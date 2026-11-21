@@ -713,3 +713,5 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Esfera:** inercia en el punto medio (sensibilidad 3,9, frenado 1,7); fuera del sorteo el planeta (solare) y la gota.
 
 - **(conv. 1389)** Cursor (punto) en todas las páginas, fichas incluidas (magnet cargaba solo con swiper). UX/UI en escritorio por encima del lienzo del fluido (se veía un segundo y desaparecía). Fuera el cuarzo (forma) del sorteo: quedan chicle, glaseado, prisma y gema. Escenas de móvil en la mano «movil-chimenea» (Imperio, Mas Vesprada, Cocció, Vapor) ocultas (`oculto` en baraja.json): entraban torcidas arriba porque el script encaja la captura con un rectángulo girado (minAreaRect) y no con la perspectiva real.
+
+**Publicado (21/11 13:41, conv. 1391):** `main` fc36525 en vivo (v12 completa). Desde ahora el portfolio se publica sin pedir permiso (Alex: «publica SIEMPRE, no me pidas permiso»).
