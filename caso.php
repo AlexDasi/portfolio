@@ -16,6 +16,7 @@ $C = $lista[$idx];
 $sig = $lista[($idx + 1) % $total];
 $bodyClass = 'sitio-baraja pagina-proyecto pagina-ficha pagina-caso';
 $sinSwiper = true;
+$conPie = true; /* v15 (Alex, 21/11): el pie de «Hablamos» en todas las páginas; «Contacto» baja aquí */
 $pageTitle = $C['nombre'] . ' · Alex Dasi';
 /* v9 (QA H-03/H-04): miniatura JPG propia, descripción = subtítulo + entrada, URL propia */
 $ogImage = is_file(__DIR__ . '/content/og/caso-' . $C['slug'] . '.jpg') ? 'https://www.alexdasi.com/content/og/caso-' . $C['slug'] . '.jpg' : '';
@@ -177,6 +178,8 @@ $enlaceConcepto = static function (string $href): string {
         </span>
     </a>
 </main>
+
+<?php include 'php-elements/pie-contacto.php'; ?>
 
     <?php $sinBaraja = true; include 'php-elements/js-baraja.php'?>
     <script src="/js/ficha.js?v=<?php echo $assetV('js/ficha.js'); ?>"></script>

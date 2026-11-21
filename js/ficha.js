@@ -30,9 +30,62 @@
   }
   [].forEach.call(raiz.querySelectorAll('video[data-video]'), function (v) {
     v.dataset.src = v.getAttribute('data-video');
+    v.preload = 'none';
     videos.push(v);
   });
+  /* v15 (Alex, 21/11: «que los vídeos de ejemplo sean más intuitivos»): los vídeos de «Momentos» y de los casos ya NO arrancan
+     solos: póster + botón grande de play encima → al pulsar, aro de carga → corre, con el icono de pausa (al pasar el ratón o
+     al tocar). La etiqueta «Vídeo» del pie es otro botón con el mismo estado. Al salir de pantalla se pausa y al volver sigue
+     si lo habías puesto tú. Los de la portada (escritorio + móvil) siguen corriendo solos: son la web en uso, no un ejemplo. */
+  var ES = document.documentElement.lang === 'es';
+  var ICO = '<svg class="fv-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>'
+    + '<svg class="fv-pausa" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>'
+    + '<span class="fv-aro" aria-hidden="true"></span>';
+  function estado(v, e) {
+    v._estado = e;
+    var cajas = [v._boton, v._pie];
+    cajas.forEach(function (b) {
+      if (!b) return;
+      b.setAttribute('data-estado', e);
+      b.setAttribute('aria-label', e === 'corre' ? (ES ? 'Pausar vídeo' : 'Pause video') : (ES ? 'Reproducir vídeo' : 'Play video'));
+    });
+    if (v._pie) v._pie.setAttribute('aria-pressed', e === 'corre' ? 'true' : 'false');
+  }
+  function alterna(v) {
+    if (v._estado === 'corre' || v._estado === 'carga') { v._quiere = false; v.pause(); estado(v, 'parado'); return; }
+    v._quiere = true;
+    posterDe(v);
+    if (!v.getAttribute('src')) v.src = v.dataset.src;
+    estado(v, v.readyState >= 3 ? 'corre' : 'carga');
+    var p = v.play(); if (p && p.catch) p.catch(function () { v._quiere = false; estado(v, 'parado'); });
+  }
+  function conMando(v) {
+    var caja = v.parentNode;
+    caja.classList.add('fv');
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'fv-boton'; b.innerHTML = ICO;
+    caja.appendChild(b); v._boton = b;
+    b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); alterna(v); if (v._estado === 'corre') caja.classList.add('fv--toca'); });
+    var fig = v.closest('figure');
+    var i = fig && fig.querySelector('figcaption i');
+    if (i) {
+      var pb = document.createElement('button');
+      pb.type = 'button'; pb.className = 'fv-pie';
+      pb.innerHTML = ICO + '<span>' + i.textContent + '</span>';
+      i.textContent = ''; i.appendChild(pb); i.classList.add('fv-pie-caja'); v._pie = pb;
+      pb.addEventListener('click', function (e) { e.preventDefault(); alterna(v); });
+    }
+    v.addEventListener('waiting', function () { if (v._quiere) estado(v, 'carga'); });
+    v.addEventListener('playing', function () { estado(v, 'corre'); setTimeout(function () { caja.classList.remove('fv--toca'); }, 1400); });
+    v.addEventListener('pause', function () { if (!v._quiere || v._fuera) estado(v, 'parado'); });
+    estado(v, 'parado');
+  }
   function corre(v, si) {
+    if (v.hasAttribute('data-video')) { // vídeos de ejemplo: los arranca la persona
+      if (si) { posterDe(v); if (v._fuera && v._quiere) { v._fuera = false; var p0 = v.play(); if (p0 && p0.catch) p0.catch(function () {}); } }
+      else if (!v.paused) { v._fuera = true; v.pause(); }
+      return;
+    }
     if (si) {
       if (v.hasAttribute('data-video')) posterDe(v);
       if (!v.getAttribute('src')) { v.src = v.dataset.src; }
@@ -40,6 +93,7 @@
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     } else if (!v.paused) { v.pause(); }
   }
+  videos.forEach(function (v) { if (v.hasAttribute('data-video')) conMando(v); });
   if ('IntersectionObserver' in window) {
     var ojoV = new IntersectionObserver(function (es) {
       es.forEach(function (e) { corre(e.target, e.isIntersecting); });
@@ -49,7 +103,7 @@
     videos.forEach(function (v) { corre(v, true); });
   }
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) videos.forEach(function (v) { v.pause(); });
+    if (document.hidden) videos.forEach(function (v) { if (!v.paused && v.hasAttribute('data-video')) v._fuera = true; v.pause(); });
   });
 
   /* ---- capturas de «Momentos»: la versión que toca según el hueco y la densidad de la pantalla ---- */

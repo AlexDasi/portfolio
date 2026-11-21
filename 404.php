@@ -6,6 +6,7 @@ $bodyClass = 'sitio-baraja pagina-404';
 $pageTitle = ['es' => 'Página no encontrada · Alex Dasi', 'en' => 'Page not found · Alex Dasi'];
 $noIndex = true;
 $sinSwiper = true;
+$conPie = true; /* v15 (Alex, 21/11): el pie de «Hablamos» en todas las páginas; «Contacto» baja aquí */
 $canonParams = [];
 $headExtra = '<base href="/">'; // servida por ErrorDocument en cualquier ruta: los enlaces relativos de la cabecera salen de la raíz
 include __DIR__ . '/php-elements/header-baraja.php';
@@ -23,9 +24,11 @@ $e = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UT
     <p class="sm__entrada"><?php echo $e($es ? 'Esta página no existe: puede que el enlace esté mal o que la página se haya movido. Los proyectos siguen aquí.' : 'This page doesn’t exist: the link may be wrong or the page may have moved. The projects are still here.'); ?></p>
     <div class="sm__botones">
         <a class="sm__boton sm__boton--lleno" href="/index.php#works"><?php echo $e($es ? 'Ver proyectos' : 'See projects'); ?></a>
-        <a class="sm__boton" href="/about.php?s=contact"><?php echo $e($es ? 'Escríbeme' : 'Get in touch'); ?></a>
+        <a class="sm__boton" href="#contacto"><?php echo $e($es ? 'Escríbeme' : 'Get in touch'); ?></a>
     </div>
 </main>
+
+<?php include __DIR__ . '/php-elements/pie-contacto.php'; ?>
 
     <?php include __DIR__ . '/php-elements/js-baraja.php'?>
 </body>

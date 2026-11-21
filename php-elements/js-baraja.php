@@ -46,4 +46,4 @@ $assetVersion = static function (string $relativePath): string {
 <script src="/js/cursor-fusion.js?v=<?php echo $assetVersion('js/cursor-fusion.js'); ?>"></script>
 <?php if (empty($sinSwiper)): ?><script src="/js/intro.js?v=<?php echo $assetVersion('js/intro.js'); ?>"></script><?php endif; ?>
 <?php if (empty($sinSwiper)): ?><script src="/js/baraja.js?v=<?php echo $assetVersion('js/baraja.js'); ?>"></script><?php endif; ?>
-<?php if (empty($sinSwiper)): ?><script src="/js/esfera.js?v=<?php echo $assetVersion('js/esfera.js'); ?>"></script><?php endif; ?>
+<?php /* v15: también en las páginas con el pie (su esfera de «Hablamos») */ ?><?php if (empty($sinSwiper) || !empty($conPie)): ?><script src="/js/esfera.js?v=<?php echo $assetVersion('js/esfera.js'); ?>"></script><?php endif; ?>

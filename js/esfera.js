@@ -107,6 +107,52 @@
   function pagina(p) { return HQ.indexOf(p) >= 0 && q.get('esfera') !== 'v12' ? 'esfera/esfera-hq.html' : 'esfera/esfera-pieles.html'; }
   function src(extra, p) { return pagina(p || piel) + '?embed&piel=' + (p || piel) + '&acento=' + acento() + (dia() ? '&dia' : '') + (/^[ab]$/.test(q.get('niebla') || '') ? '&niebla=' + q.get('niebla') : '') + (extra || ''); } // v8 (feedback 157): ?niebla=a|b
 
+  // ---------- v15 (Alex, 21/11): cambiar la piel 3D a mano, como el «PRESS SPACE» del color ----------
+  // Botón abajo a la derecha (php-elements/nav-baraja.php, [data-piel-3d]) o la tecla E: pasa a la siguiente piel de la lista
+  // y recarga las esferas abiertas con ella; desde ahí la piel elegida se queda (no se vuelve a sortear en esta página).
+  var NOMBRES = { chicle: ['Chicle', 'Bubblegum'], glaseado: ['Glaseado', 'Glazed'], prisma: ['Prisma', 'Prism'], gema: ['Gema', 'Gem'], cuarzo: ['Cuarzo', 'Quartz'], solare: ['Solare', 'Solare'], gota: ['Gota', 'Drop'] };
+  var botonPiel = document.querySelector('[data-piel-3d]');
+  function rotular(p) {
+    if (!botonPiel) return;
+    var n = botonPiel.querySelector('[data-piel-nombre]');
+    if (n) n.textContent = (NOMBRES[p] || [p, p])[html.lang === 'es' ? 0 : 1];
+  }
+  function cambiarPiel() {
+    var i = PIELES.indexOf(piel);
+    piel = PIELES[(i + 1) % PIELES.length];
+    forzada = true; // pielHabla() y otraPiel() devuelven ya esta
+    window.__PIEL = piel;
+    apuntar(piel, true);
+    document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe, .sm__habla-bola iframe, .esfera-capa iframe').forEach(function (f) {
+      try {
+        var u = new URL(f.getAttribute('src'), location.href);
+        u.searchParams.set('piel', piel);
+        u.pathname = u.pathname.replace(/[^/]+$/, pagina(piel).split('/').pop());
+        f.src = u.pathname.replace(/^\//, '') + u.search;
+      } catch (e) {}
+    });
+    rotular(piel);
+    if (botonPiel) { botonPiel.classList.remove('is-cambia'); void botonPiel.offsetWidth; botonPiel.classList.add('is-cambia'); }
+  }
+  window.__pielSiguiente = cambiarPiel;
+  rotular(piel);
+  if (botonPiel) botonPiel.addEventListener('click', cambiarPiel);
+  window.addEventListener('keydown', function (e) {
+    if ((e.key !== 'e' && e.key !== 'E') || e.repeat || e.altKey || e.ctrlKey || e.metaKey) return;
+    var t = e.target;
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    cambiarPiel();
+  });
+  // en táctil el botón solo sale con una esfera en pantalla (no estorba en el resto de la página)
+  if (botonPiel && 'IntersectionObserver' in window && !fino) {
+    var vistas = new Set();
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (x.isIntersecting) vistas.add(x.target); else vistas.delete(x.target); });
+      html.classList.toggle('esfera-a-la-vista', vistas.size > 0);
+    }, { threshold: 0.35 });
+    document.querySelectorAll('.pantalla--intro .intro__esfera, [data-esfera-habla]').forEach(function (el) { io.observe(el); });
+  } else html.classList.add('esfera-a-la-vista');
+
   // ---------- «Hablamos» (Sobre mí): la esfera con la ÚLTIMA piel que se ha visto (feedback 106, 119) ----------
   // La bola plana del acento se queda de marcador hasta que la esfera está lista. three.js solo baja al llegar a esa pantalla.
   document.querySelectorAll('[data-esfera-habla]').forEach(function (bolaH) {
@@ -120,6 +166,7 @@
       marcoH.setAttribute('allowtransparency', 'true');
       marcoH.setAttribute('tabindex', '-1');
       var pielH = pielHabla();
+      piel = pielH; rotular(pielH); // v15: el botón de la piel enseña (y parte de) la que se ve
       marcoH.src = src('&frac=0.56&hudizq' + (esMovil ? '&movil' : '&mano'), pielH);
       apuntar(pielH);
       bolaH.appendChild(marcoH);

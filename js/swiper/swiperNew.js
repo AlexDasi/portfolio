@@ -55,6 +55,7 @@
 
     const mainPaginationEl = mainRoot.querySelector(':scope > .swiper-pagination');
 
+    let subiendo = false; // v15: ver pintarFlechas
     const mainSwiper = new Swiper('.MainSwiper', {
       direction: 'vertical',
       speed: 1000,
@@ -85,39 +86,55 @@
         slideChange() {
           // Aviso para la baraja y la intro (rama rediseno-baraja-2026-11)
           window.dispatchEvent(new CustomEvent('pisos:cambio', { detail: { index: this.activeIndex, total: this.slides.length } }));
-          const arrow = document.querySelector('.arrow');
-          if (!arrow) return;
-          // Flecha hacia arriba en la última diapositiva (antes índice fijo 3)
-          if (this.activeIndex === this.slides.length - 1) {
-            arrow.classList.add('up');
-          } else {
-            arrow.classList.remove('up');
-          }
+          pintarFlechas(this);
         }
       }
     });
 
-    const arrowLink = document.querySelector('.arrow-container a');
+    /* v15 (Alex, 21/11): la flecha grande baja hasta el último piso; ahí se da la vuelta y SUBE DE UNO EN UNO (antes saltaba
+       al primero) hasta el primero, donde vuelve a bajar. Desde el 2.º piso sale además una flecha pequeña para subir uno
+       (para no depender de la grande en los pisos intermedios). Los pisos de la derecha, las teclas ↑/↓ y la rueda siguen. */
+    function pintarFlechas(sw) {
+      const ultimo = sw.slides.length - 1;
+      if (sw.activeIndex >= ultimo) subiendo = true;
+      if (sw.activeIndex === 0) subiendo = false;
+      const arrow = document.querySelector('.MainSwiper .arrow') || document.querySelector('.arrow');
+      if (arrow) arrow.classList.toggle('up', subiendo);
+      const chica = document.querySelector('[data-pisos-subir]');
+      if (chica) chica.classList.toggle('is-visible', sw.activeIndex > 0 && !subiendo);
+    }
+
+    const arrowLink = mainRoot.querySelector('.arrow-container a') || document.querySelector('.arrow-container a');
     if (arrowLink) {
       arrowLink.addEventListener(
         'click',
         function (event) {
-          const arrow = document.querySelector('.arrow');
-          if (arrow && arrow.classList.contains('up')) {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            mainSwiper.slideTo(0);
-            arrow.classList.remove('up');
-          }
+          if (!subiendo) return;
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          mainSwiper.slidePrev();
         },
         true
       );
     }
+    const chica = document.querySelector('[data-pisos-subir]');
+    if (chica) chica.addEventListener('click', function (e) { e.preventDefault(); mainSwiper.slidePrev(); });
 
-    if (initialSlide && initialSlide === mainSwiper.slides.length - 1) {
-      const arrowUp = document.querySelector('.arrow');
-      if (arrowUp) arrowUp.classList.add('up');
-    }
+    // Teclado: ↓/AvPág bajan un piso, ↑/RePág suben uno (en la baraja de la home las flechas son de las cartas)
+    window.addEventListener('keydown', function (e) {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      const k = e.key;
+      const baja = k === 'ArrowDown' || k === 'PageDown', sube = k === 'ArrowUp' || k === 'PageUp';
+      if (!baja && !sube) return;
+      const enBaraja = mainSwiper.slides[mainSwiper.activeIndex] && mainSwiper.slides[mainSwiper.activeIndex].classList.contains('slide-baraja');
+      if (enBaraja && (k === 'ArrowDown' || k === 'ArrowUp')) return;
+      e.preventDefault();
+      if (baja) mainSwiper.slideNext(); else mainSwiper.slidePrev();
+    });
+
+    pintarFlechas(mainSwiper);
     window.dispatchEvent(new CustomEvent('pisos:cambio', { detail: { index: mainSwiper.activeIndex, total: mainSwiper.slides.length } }));
 
     return mainSwiper;

@@ -130,9 +130,11 @@ $assetVersion = static function (string $relativePath): string {
                 { r: 200, g: 170, b: 255, n: 'lila', d: { r: 167, g: 112, b: 246 } },
                 { r: 140, g: 230, b: 185, n: 'menta', d: { r: 52, g: 158, b: 113 } },
                 { r: 255, g: 212, b: 110, n: 'albaricoque', d: { r: 192, g: 136, b: 15 } },
-                { r: 255, g: 79, b: 216, n: 'magenta', d: { r: 238, g: 42, b: 203 } },          /* loco */
-                { r: 140, g: 255, b: 60, n: 'verde-acido', d: { r: 69, g: 161, b: 22 } },      /* loco */
-                { r: 255, g: 122, b: 26, n: 'naranja-electrico', d: { r: 234, g: 101, b: 12 } } /* loco */
+                /* v15 (Alex, 21/11: «me gustan colores pastel; quita el verde tan agresivo, el magenta y el naranja fuerte»):
+                   fuera verde ácido, magenta y naranja eléctrico; entran tres pasteles tranquilos */
+                { r: 250, g: 186, b: 206, n: 'rosa-empolvado', d: { r: 204, g: 84, b: 132 } },
+                { r: 255, g: 198, b: 156, n: 'melocoton', d: { r: 212, g: 118, b: 52 } },
+                { r: 160, g: 226, b: 228, n: 'aguamarina', d: { r: 26, g: 146, b: 150 } }
             ];
             var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
             /* v11 (Alex, 21/11: «no quiero que cambie el color acento mientras estés en la misma visita»): el acento se elige al

@@ -7,7 +7,8 @@ $bodyClass = 'sitio-baraja home-pisos'; /* v10: home-pisos = en móvil la págin
 include 'php-elements/header-baraja.php';
 $navActual = 'home';
 $conPie = true; /* v11: el menú «Contacto» baja al pie */
-$pisos = ($lang === 'es') ? 'INICIO|PROYECTOS' : 'HOME|WORKS';
+$pisos = ($lang === 'es') ? 'INICIO|PROYECTOS|HABLAMOS' : 'HOME|WORKS|LET’S TALK'; /* v15: el pie es el último piso */
+$inicial = isset($_GET['carta']) ? 1 : ((($_GET['s'] ?? '') === 'contact') ? 2 : 0);
 ?>
 
 <body class="<?php echo $bodyClass; ?>">
@@ -15,13 +16,16 @@ $pisos = ($lang === 'es') ? 'INICIO|PROYECTOS' : 'HOME|WORKS';
     <?php include 'php-elements/nav-baraja.php'?>
 
 <!-- ESCRITORIO (> 1280 px): las dos pantallas en el MainSwiper de siempre -->
-<div class="hiddenMobile swiper MainSwiper" data-menu="<?php echo $pisos; ?>" data-wheel="off"<?php echo isset($_GET['carta']) ? ' data-initial="1"' : ''; /* v9 (QA H-02): vuelta desde una ficha */ ?>>
+<div class="hiddenMobile swiper MainSwiper" data-menu="<?php echo $pisos; ?>" data-wheel="off"<?php echo $inicial ? ' data-initial="' . $inicial . '"' : ''; /* v9 (QA H-02): vuelta desde una ficha; v15: ?s=contact abre en el pie */ ?>>
     <div class="swiper-wrapper">
         <div class="swiper-slide slide-index">
             <?php include 'php-pages/intro.php'?>
         </div>
         <div class="swiper-slide slide-baraja">
             <?php include 'php-elements/baraja.php'?>
+        </div>
+        <div class="swiper-slide slide-sm slide-pie">
+            <?php $pieEnPiso = true; include 'php-elements/pie-contacto.php'; $pieEnPiso = false; ?>
         </div>
     </div>
 

@@ -45,12 +45,19 @@
     if (a.hasAttribute('data-menu-contacto') && document.getElementById('contacto')) { e.preventDefault(); cerrar(true); irAlPie(); return; }
     cerrar(true); // el enlace navega; el panel se va
   });
-  // tablet (769-1280: accesos de arriba) igual: si la página tiene el pie, «Contacto» baja a él
-  document.querySelectorAll('.nav-sutil__item[href*="s=contact"]').forEach(function (a) {
+  // v15 (Alex, 21/11): «Contact» de arriba lleva al pie de la página en la que estés, en todos los tamaños: en los pisos de
+  // escritorio, al último piso (el pie); en las páginas con scroll (y en móvil/tablet), baja a #contacto.
+  document.querySelectorAll('.nav-sutil__item[data-contacto]').forEach(function (a) {
     a.addEventListener('click', function (e) {
-      if (window.innerWidth > 1280 || !document.getElementById('contacto')) return;
+      var sw = window.mainSwiper;
+      if (sw && window.innerWidth > 1280 && sw.slides) { e.preventDefault(); sw.slideTo(sw.slides.length - 1); return; }
+      if (!document.getElementById('contacto')) return;
       e.preventDefault(); DUR = 0; irAlPie(); DUR = reduce ? 0 : 380;
     });
+  });
+  // en los pisos, «Contact» se marca cuando estás en el último (el pie)
+  window.addEventListener('pisos:cambio', function (e) {
+    document.querySelectorAll('.nav-sutil__item[data-contacto]').forEach(function (a) { a.classList.toggle('is-active', e.detail.index === e.detail.total - 1); });
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') cerrar();

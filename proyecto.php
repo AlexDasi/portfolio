@@ -25,6 +25,7 @@ $sig = $lista[($idx + 1) % $total];
 $tras = [$lista[($idx + 2) % $total], $lista[($idx + 3) % $total]];
 $bodyClass = 'sitio-baraja pagina-proyecto pagina-ficha';
 $sinSwiper = true;
+$conPie = true; /* v15 (Alex, 21/11): el pie de «Hablamos» en todas las páginas; «Contacto» baja aquí */
 $pageTitle = $P['nombre'] . ' · Alex Dasi';
 /* v9 (QA H-03/H-04): miniatura propia (su portada, content/og/<slug>.jpg con tools/og_fichas.py), descripción = su problema, URL propia */
 $ogImage = is_file(__DIR__ . '/content/og/' . $P['slug'] . '.jpg') ? 'https://www.alexdasi.com/content/og/' . $P['slug'] . '.jpg' : '';
@@ -214,6 +215,8 @@ $assetV = static function (string $rel): string { $f = __DIR__ . '/' . $rel; ret
         </span>
     </a>
 </main>
+
+<?php include 'php-elements/pie-contacto.php'; ?>
 
     <?php $sinBaraja = true; include 'php-elements/js-baraja.php'?>
     <script src="/js/ficha.js?v=<?php echo $assetV('js/ficha.js'); ?>"></script>

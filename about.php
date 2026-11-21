@@ -27,7 +27,7 @@ $pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|HABLAMOS' : 'HELLO|H
 <div class="hiddenMobile swiper MainSwiper" data-menu="<?php echo $pisos; ?>" data-wheel="off" data-initial="<?php echo $secciones[$s]; ?>">
     <div class="swiper-wrapper">
         <?php foreach ($pantallas as $k): ?>
-        <div class="swiper-slide slide-sm"><?php sobre_pantalla($k, $T, $e, $flecha, $wa, $cv); ?></div>
+        <div class="swiper-slide slide-sm<?php echo $k === 'habla' ? ' slide-pie' : ''; ?>"><?php if ($k === 'habla') { $pieEnPiso = true; include 'php-elements/pie-contacto.php'; $pieEnPiso = false; } else sobre_pantalla($k, $T, $e, $flecha, $wa, $cv); /* v15: el último piso es el pie común */ ?></div>
         <?php endforeach; ?>
     </div>
     <div class="swiper-pagination"></div>
@@ -45,9 +45,9 @@ $pisos = ($lang === 'es') ? 'HOLA|CÓMO TRABAJO|TRAYECTORIA|HABLAMOS' : 'HELLO|H
     <script>
         /* Escritorio: el acceso de arriba que toca se marca según la pantalla */
         window.addEventListener('pisos:cambio', function (e) {
-            var marca = { 0: 'about', 1: 'about', 2: 'about', 3: 'contact' }[e.detail.index];
+            var ultimo = e.detail.index === e.detail.total - 1; /* v15: el último piso es el pie (lo marca menu-movil.js) */
             document.querySelectorAll('.nav-sutil__item').forEach(function (a) {
-                a.classList.toggle('is-active', a.getAttribute('href').indexOf('s=' + marca) !== -1);
+                if (!a.hasAttribute('data-contacto') && a.getAttribute('href').indexOf('s=about') !== -1) a.classList.toggle('is-active', !ultimo);
             });
         });
         /* v4 (feedback 102): cada pantalla entra escalonada al llegar; la cifra cuenta hasta 15 una vez;

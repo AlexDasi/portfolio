@@ -1,8 +1,9 @@
 <?php
 /* UX/UI · página propia (v11, Alex 21/11: «UX/UI y sobre mí deberían ser dos páginas distintas; UX/UI más profundo y que
    se vea Tulong, Idrica, ATELIER… con su parte visual, no exactamente igual que los proyectos de la home»).
-   Página con scroll normal en todos los tamaños: titular + texto + CV → casos con su portada (los tres grandes a lo ancho,
-   alternando lado en escritorio; los otros dos en pareja) → pie de contacto. Datos: content/casos.json (los mismos de caso.php)
+   Página con scroll normal en todos los tamaños: titular + texto + CV → casos con su portada → pie de contacto.
+   v15 (Alex, 21/11): fuera el zigzag (foto izquierda / derecha) y los tamaños distintos: índice de cinco filas IGUALES
+   (número + nombre + reto y papel a la izquierda, portada 16:10 a la derecha), una línea fina entre caso y caso. Datos: content/casos.json (los mismos de caso.php)
    + textos de php-pages/sobre-mi.php. Aquí no se escribe copy nuevo salvo las etiquetas. */
 $bodyClass = 'sitio-baraja pagina-proyecto pagina-uxui';
 $sinSwiper = true;
@@ -43,14 +44,14 @@ $resumen = static function (array $C, int $k) use ($L) { $r = $C['resumen'][$k] 
         <?php foreach ($T['casos'] as $i => $t):
             $C = $porSlug[$t[0]] ?? null; if (!$C) continue;
             $p = $C['portada'];
-            $grande = $i < 3; // Tulong, Idrica y ATELIER, a lo ancho; Clustag y Knowadays, en pareja
+            $grande = true; // v15 (Alex, 21/11: «foto izquierda, foto derecha… descompensa; las fotos salen de tamaños distintos»): los cinco iguales
         ?>
-        <li class="ux__caso<?php echo $grande ? ' ux__caso--grande' : ' ux__caso--par'; ?><?php echo $grande && $i % 2 ? ' ux__caso--der' : ''; ?>">
+        <li class="ux__caso ux__caso--fila">
             <a href="caso.php?c=<?php echo $e($C['slug']); ?>" class="ux__enlace">
                 <span class="ux__img">
                     <?php $p12 = preg_replace('~_portada-\d+\.webp$~', '_portada-1200.webp', $p['grande']); $set = $p['chica'] . ' ' . $p['wc'] . 'w, ' . (is_file(__DIR__ . '/' . $p12) ? $p12 . ' 1200w, ' : '') . $p['grande'] . ' ' . $p['wg'] . 'w'; ?>
                     <img src="<?php echo $e(is_file(__DIR__ . "/" . $p12) ? $p12 : $p["grande"]); ?>" srcset="<?php echo $e($set); ?>"
-                        sizes="<?php echo $grande ? '(min-width: 900px) 58vw, 86vw' : '(min-width: 900px) 42vw, 86vw'; ?>" width="<?php echo (int) $p['wc']; ?>" height="<?php echo (int) round($p['wc'] * $p['h'] / $p['w']); ?>"
+                        sizes="(min-width: 900px) 52vw, 86vw" width="<?php echo (int) $p['wc']; ?>" height="<?php echo (int) round($p['wc'] * $p['h'] / $p['w']); ?>"
                         alt="<?php echo $e($p['alt'][$L] ?? $C['nombre']); ?>" loading="<?php echo $i === 0 ? 'eager' : 'lazy'; ?>" decoding="async">
                 </span>
                 <span class="ux__info">

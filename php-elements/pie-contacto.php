@@ -5,8 +5,11 @@
 $pieEs = !isset($lang) || $lang === 'es';
 $pieWa = 'https://wa.me/34616420048?text=' . rawurlencode($pieEs ? 'Hola Alex, tengo un negocio y me gustaría hablar de mi web.' : 'Hi Alex, I run a business and I’d like to talk about my website.');
 $pe = static function ($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); };
+/* v15 (Alex, 21/11: «el footer de Hablamos en todas las páginas»): también en las fichas, en la 404 y, en escritorio, como
+   ÚLTIMO PISO de la home y de Sobre mí ($pieEnPiso = true: sin id, el #contacto es el de móvil). */
+$pieEnPiso = !empty($pieEnPiso);
 ?>
-<footer class="pie pantalla pantalla--sm" id="contacto">
+<footer class="pie <?php echo $pieEnPiso ? 'pie--piso' : 'pantalla pantalla--sm'; ?>"<?php echo $pieEnPiso ? ' data-pie-piso' : ' id="contacto"'; ?>>
     <section class="sm sm--habla">
         <span class="sm__habla-bola" data-sigue data-esfera-habla aria-hidden="true"></span>
         <h2 class="sm__titulo sm__titulo--enorme"><span class="sm__grueso"><?php echo $pieEs ? 'Hablamos' : 'Let’s talk'; ?></span><span class="sm__punto" aria-hidden="true"></span></h2>

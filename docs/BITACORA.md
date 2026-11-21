@@ -745,3 +745,17 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Entrada:** la bola nace del disco del acento (escala .9 → 1 en 1,1 s) y el giro arranca desde 0: sin póster ni salto.
 - **Chicle (conv. 1390, 7ada1cd traído a main):** en `esfera-pieles.html` agarra en todo el borde visible y no se suelta en el móvil.
 - **Pendiente:** los efectos de cursor de cada piel (pellizco del chicle, rascar el glaseado, cara encendida del prisma) en la versión de calidad alta; GLB con meshopt para bajar peso en el móvil.
+
+---
+
+## 2026-11-21 — v15 · pie en todas las páginas, pisos de uno en uno, UX/UI en filas, vídeos con play, piel 3D a mano y paleta pastel (feedback 189-198, ATELIER conv. 1393)
+
+- **Mockups (auditoría a fondo):** fuera port-074 y port-114 (barra de menú del Mac), tel-b03 (torcida), tel-b10 (hueco arriba), tel-002/041/043/046/b17 (bordes y muesca); entran tel-015, tel-021 y tel-044; bisel ajustado en port-111 (0,035) y port-056 (0,04). Commit 3c58127.
+- **Pie «Hablamos» en TODAS las páginas** (`php-elements/pie-contacto.php`): home y Sobre mí en escritorio lo tienen como ÚLTIMO PISO (`$pieEnPiso`, sin id); UX/UI, fichas, casos y 404 lo cierran al final. `esfera.js` se carga también donde hay pie.
+- **Contacto = el pie de donde estés:** en los pisos salta al último; en las páginas con scroll baja a `#contacto`; `?s=contact` en la home abre en el pie. «Contact» se marca en el último piso.
+- **Pisos (escritorio):** la flecha grande baja hasta el último; ahí se da la vuelta y sube DE UNO EN UNO hasta el primero. Flecha pequeña ↑ desde el 2.º piso (mientras la grande baja). Teclas ↓/↑ y AvPág/RePág (en la baraja las flechas siguen siendo de las cartas). `js/swiper/swiperNew.js` (`pintarFlechas`).
+- **UX/UI:** fuera el zigzag y los tamaños distintos: cinco filas iguales (texto 5/12 a la izquierda, portada 16:10 a la derecha), filete entre casos; todos con reto y papel.
+- **Vídeos de ejemplo (fichas y casos):** ya no arrancan solos: botón grande de play → aro de carga → corre (pausa al pasar el ratón o al tocar); la etiqueta «Vídeo» del pie es otro botón con el mismo estado. Los de la portada siguen solos. `js/ficha.js` (`conMando`) + `scss/ficha.scss`.
+- **Piel 3D a mano:** botón abajo a la derecha («PRESS E · Glaseado») o tecla E: pasa a la siguiente piel y recarga las esferas abiertas. En táctil solo sale con una esfera a la vista.
+- **Esfera plana / cursor (escritorio) y prisma distinto móvil/escritorio:** resueltos con la v14 (todas las pieles en `esfera-hq.html`, mismo motor en los dos; la esfera dibuja su propio punto). Comprobado en «Hablamos» con el ratón dentro.
+- **Paleta (Alex: «me gustan colores pastel»):** fuera verde ácido, magenta y naranja eléctrico; entran rosa empolvado, melocotón y aguamarina. Se quedan lima, coral (el butano rosáceo), cielo, lila, menta y albaricoque.
