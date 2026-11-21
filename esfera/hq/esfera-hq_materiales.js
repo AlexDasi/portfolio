@@ -1,6 +1,6 @@
 /* alexdasi.com · v17 (Alex, ATELIER conv. 1397: «quiero ver en buena calidad de three.js cómo se verían las 5 primeras»)
    Cinco materiales nuevos propuestos en la conv. 1396, con el mismo estudio (HDR + AgX) que las pieles de calidad alta:
-     solare   · Solare lima: carcasa mate translúcida y gas con luz que se mueve dentro (raymarch)
+     solare   · Solare lima: carcasa mate lechosa y gas con luz que se mueve dentro (raymarch ligero, un solo shader)
      globo    · globo de látex lima, tenso y satinado, con su nudo
      saten    · satén lima arrugado: pliegues reales en la geometría y brillo anisótropo de tela
      pompa    · pompa de jabón: película fina iridiscente cuyos colores fluyen
@@ -37,49 +37,45 @@ const SIMPLEX = `vec3 m289(vec3 x){return x-floor(x*(1./289.))*289.;}vec4 m289(v
 vec4 tis(vec4 r){return 1.79284291400159-.85373472095314*r;}
 float snoise(vec3 v){const vec2 C=vec2(1./6.,1./3.);const vec4 D=vec4(0.,.5,1.,2.);vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.-g;vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;i=m289(i);vec4 p=perm(perm(perm(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));float n_=.142857142857;vec3 ns=n_*D.wyz-D.xzx;vec4 j=p-49.*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.*x_);vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.-abs(x)-abs(y);vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);vec4 s0=floor(b0)*2.+1.;vec4 s1=floor(b1)*2.+1.;vec4 sh=-step(h,vec4(0.));vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);vec4 nm=tis(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=nm.x;p1*=nm.y;p2*=nm.z;p3*=nm.w;vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);m=m*m;return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));}`;
 function solare(){
-  /* v2 (Alex, conv. 1402: «Solare lima sí me gusta… en alta calidad y al sorteo»), como la esfera de Casa di Solare:
-     dentro, un gas lima y ámbar que se enrosca y da luz (raymarch con deformación de dominio, más denso en el núcleo);
-     fuera, una carcasa de cristal esmerilado de verdad (MeshPhysical con transmisión rugosa + barniz brillante) que la
-     desenfoca y coge los reflejos del estudio. Cursor (gesto de Solare, conv. 1011/1027): el gas se arremolina tras el
-     dedo y la luz se aviva donde pasas, con inercia (el remolino se queda y se apaga despacio). */
+  /* v3 (Alex, conv. 1406: «le has puesto los reflejos de la burbuja; tiene que ser mucho más mate, como en el ejemplo, y pesa
+     un quintal»). Vuelve a la carcasa de la v1: lechosa y MATE, pintada en el mismo shader (sin MeshPhysical con transmisión
+     ni barniz: ni reflejos de pompa ni el segundo render de toda la escena que costaba la transmisión). Dentro, el gas lima y
+     ámbar de la v1, más barato (36 pasos en escritorio / 20 en móvil, ruido de 4+2 octavas; la v2 eran 72 pasos de 4+4 más la transmisión) y con el remolino del cursor con
+     inercia de la v2. La resolución de esta piel la baja el embed (gas suave: no se nota). */
   const MOVIL = matchMedia('(hover: none), (pointer: coarse)').matches;
+  const PASOS = MOVIL ? 20 : 36;
   const u = {uT: {value: 0}, uCam: {value: new THREE.Vector3(0, 0, 5)}, uLima: {value: new THREE.Color('#B8E61A')}, uCalido: {value: new THREE.Color('#FFB040')},
-    uCur: {value: new THREE.Vector3(0, 0, 1)}, uRem: {value: 0}, uPasos: {value: MOVIL ? 36 : 72}};
-  const R = .97;
-  const gas = new THREE.Mesh(new THREE.SphereGeometry(R, 128, 64), new THREE.ShaderMaterial({uniforms: u,
-    vertexShader: 'varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }',
-    fragmentShader: `uniform float uT, uRem, uPasos; uniform vec3 uCam, uLima, uCalido, uCur; varying vec3 vP; ${SIMPLEX}
-      float fbm(vec3 p){ float s = 0., a = .55; for (int i = 0; i < 4; i++){ s += a * snoise(p); p = p * 2.03 + vec3(1.7, 9.2, 3.1); a *= .5; } return s; }
+    uPiel: {value: LIMA.clone()}, uCur: {value: new THREE.Vector3(0, 0, 1)}, uRem: {value: 0}};
+  const m = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 48), new THREE.ShaderMaterial({uniforms: u,
+    vertexShader: 'varying vec3 vP; varying vec3 vN; void main(){ vP = position; vN = normal; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }',
+    fragmentShader: `uniform float uT, uRem; uniform vec3 uCam, uLima, uCalido, uPiel, uCur; varying vec3 vP; varying vec3 vN; ${SIMPLEX}
+      float fbm4(vec3 p){ float s = .55 * snoise(p); p = p * 2.02 + vec3(1.7, 9.2, 3.1); s += .275 * snoise(p); p = p * 2.02 + vec3(1.7, 9.2, 3.1); s += .1375 * snoise(p); p = p * 2.02 + vec3(1.7, 9.2, 3.1); return s + .069 * snoise(p); }
+      float fbm2(vec3 p){ return .55 * snoise(p) + .275 * snoise(p * 2.02 + vec3(1.7, 9.2, 3.1)); }
       mat2 rot(float a){ return mat2(cos(a), -sin(a), sin(a), cos(a)); }
       void main(){
-        vec3 ro = uCam, rd = normalize(vP - uCam);
-        float b = dot(ro, rd), c = dot(ro, ro) - ${R} * ${R}, h = max(b * b - c, 0.); float t0 = -b - sqrt(h), t1 = -b + sqrt(h), len = t1 - t0;
-        vec3 acc = vec3(0.); float tr = 1.; float paso = len / uPasos;
-        float jit = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);          // sin bandas
-        for (int i = 0; i < 96; i++){
-          if (float(i) >= uPasos) break;
+        vec3 ro = uCam, rd = normalize(vP - uCam), n = normalize(vN);
+        float b = dot(ro, rd), c = dot(ro, ro) - 1., h = max(b * b - c, 0.); float t0 = -b - sqrt(h), len = 2. * sqrt(h);
+        float paso = len / ${PASOS}.; vec3 acc = vec3(0.); float tr = 1.;
+        float jit = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+        for (int i = 0; i < ${PASOS}; i++){                            // gas que sube y se enrosca, más denso hacia el centro
           vec3 p = ro + rd * (t0 + paso * (float(i) + jit));
-          // remolino del cursor: el gas gira alrededor del punto tocado, más cuanto más cerca
-          vec3 dc = p - uCur * .8; float fc = exp(-dot(dc, dc) * 3.5) * uRem;
+          vec3 dc = p - uCur * .8; float fc = exp(-dot(dc, dc) * 3.5) * uRem;   // remolino tras el cursor
           vec3 q = p; q.xz = rot(fc * 3.2) * q.xz; q.xy = rot(fc * 1.6) * q.xy;
-          q = q * 1.55 + vec3(0., -uT * .1, uT * .04); q.xz = rot(uT * .06) * q.xz;
-          float d = fbm(q + fbm(q * .75 + uT * .035) * 1.1) * .5 + .5;
-          float r = length(p); d = smoothstep(.46, .92, d) * pow(1. - smoothstep(0., ${R}, r), 1.3) + fc * .25 * smoothstep(.4, .8, d);
-          vec3 col = mix(uLima, uCalido, smoothstep(.4, .85, d)) * (1.5 + 6.5 * d * d) * (1. + fc * 1.8);
-          float a = clamp(d * paso * 3.4, 0., 1.); acc += col * a * tr; tr *= 1. - a; if (tr < .015) break; }
-        // fondo del interior: una penumbra lima que respira (la luz rebota dentro de la carcasa)
-        acc += uLima * .05 * tr * (1. + .3 * sin(uT * .7));
-        gl_FragColor = vec4(acc, 1.); }`}));
-  // la carcasa: cristal esmerilado lima con barniz; el paso de transmisión ve el gas y lo difumina
-  const carcasa = new THREE.Mesh(new THREE.SphereGeometry(1, 160, 96), new THREE.MeshPhysicalMaterial({color: new THREE.Color('#F2FAD2'), roughness: .42, transmission: 1, thickness: .35, ior: 1.4,
-    attenuationColor: new THREE.Color('#E7F7A0'), attenuationDistance: 2.5, clearcoat: 1, clearcoatRoughness: .05, specularIntensity: .8}));
-  const g = new THREE.Group(); g.add(gas, carcasa);
+          q = q * 1.6 + vec3(0., -uT * .12, uT * .05); q.xz = rot(uT * .07) * q.xz;
+          float d = fbm4(q + fbm2(q * .8 + uT * .04) * .9) * .5 + .5;
+          d = smoothstep(.5, .95, d) * pow(1. - smoothstep(0., 1., length(p)), 1.6) + fc * .2 * smoothstep(.45, .8, d);
+          vec3 col = mix(uLima, uCalido, smoothstep(.45, .85, d)) * (1.3 + 4.5 * d * d) * (1. + fc * 1.5);
+          float a = clamp(d * paso * 2.4, 0., 1.); acc += col * a * tr; tr *= 1. - a; if (tr < .02) break; }
+        // carcasa mate y lechosa (v1): luz cálida difusa por la izquierda, fría por la derecha, borde suave; sin brillo especular
+        float fr = pow(1. - abs(dot(n, -rd)), 2.2);
+        vec3 piel = uPiel * (.015 + .12 * pow(max(dot(n, normalize(vec3(-.7, .45, .6))), 0.), 1.5)) + vec3(.55, .7, 1.) * .1 * pow(max(dot(n, normalize(vec3(.9, .2, -.3))), 0.), 2.);
+        gl_FragColor = vec4(acc * 1.25 + piel + uPiel * fr * .16 + vec3(.008, .01, .004) * tr, 1.); }`}));
   const local = new THREE.Vector3();
-  return {objeto: g, cursorCss: 'punto', actualizar(dt, t, k){
+  return {objeto: m, cursorCss: 'punto', dpr: MOVIL ? 1 : 1.25, sinFondo: true, actualizar(dt, t, k){
     u.uT.value = t;
-    if (k.cam) u.uCam.value.copy(gas.worldToLocal(local.copy(k.cam.position)));
+    if (k.cam) u.uCam.value.copy(m.worldToLocal(local.copy(k.cam.position)));
     if (k.sobre) { u.uCur.value.lerp(k.pObj, 1 - Math.exp(-dt * 6)); u.uRem.value += (1 - u.uRem.value) * (1 - Math.exp(-dt * 3)); }
-    else u.uRem.value *= Math.exp(-dt * .6); }};                  // inercia: el remolino se apaga despacio
+    else u.uRem.value *= Math.exp(-dt * .6); }};
 }
 
 /* ---------- 2 · GLOBO DE LÁTEX ---------- */

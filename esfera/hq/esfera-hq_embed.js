@@ -114,7 +114,10 @@ async function montar(){
   fondo.renderOrder = -1; fondo.frustumCulled = false;
   fondo.onBeforeRender = r => { const rt = r.getRenderTarget(); fondo.material.colorWrite = rt !== null && rt !== composer.readBuffer && rt !== composer.writeBuffer; };
   scene.add(fondo);
-  if (ES_TECH) { tech = NUEVOS.includes(MAT) ? crearMaterial(MAT) : crearTech(MAT); objeto = tech.objeto; if (tech.luz) scene.add(tech.luz); if (tech.entorno) tech.entorno(env); cur.classList.add('cur--' + tech.cursorCss); }
+  if (ES_TECH) { tech = NUEVOS.includes(MAT) ? crearMaterial(MAT) : crearTech(MAT); objeto = tech.objeto; if (tech.luz) scene.add(tech.luz); if (tech.entorno) tech.entorno(env); cur.classList.add('cur--' + tech.cursorCss);
+    /* v20 (conv. 1406): pieles pintadas en un solo shader (Solare) no refractan nada → sin fondo de refracción y a menos resolución */
+    if (tech.sinFondo) fondo.visible = false;
+    if (tech.dpr && !Q.get('dpr')) renderer.setPixelRatio(Math.min(devicePixelRatio, tech.dpr)); }
   else { const M = materiales(); objeto = new THREE.Group(); gltf.scene.updateMatrixWorld(true);
   gltf.scene.traverse(o => { if (!o.isMesh) return; const mat = M[o.name.replace(/_\d+$/, '').replace('.001', '')]; if (!mat) return;
     const c = o.clone(); c.material = mat; c.position.copy(o.getWorldPosition(new THREE.Vector3())); c.quaternion.copy(o.getWorldQuaternion(new THREE.Quaternion())); objeto.add(c); }); }

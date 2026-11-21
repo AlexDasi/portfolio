@@ -840,3 +840,10 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - Alex: de los cinco materiales nuevos «Solare lima sí me gusta… en alta calidad y mételo en el sorteo». Globo, satén, pompa y terciopelo no convencen: se quedan en `esfera/hq/esfera-hq_materiales.js` fuera del sorteo.
 - **Solare lima** (`?piel=solare`): gas lima y ámbar que se enrosca y da luz dentro (raymarch, 72 pasos en escritorio / 36 en táctil) bajo una carcasa de cristal esmerilado con barniz (MeshPhysical con transmisión rugosa) que lo difumina y coge los reflejos del estudio. Cursor: el gas se arremolina donde pasas y la luz se aviva, con inercia (se apaga despacio).
 - Sorteo: chicle · glaseado · prisma · solare (y la E pasa por las cuatro).
+
+## v20 · Solare lima mate y ligera (ATELIER conv. 1406)
+- **Alex:** «le has puesto los reflejos de la burbuja; tiene que ser mucho más mate, como en el ejemplo; y pesa un quintal».
+- **Carcasa:** fuera el MeshPhysical con transmisión y barniz; vuelve la carcasa lechosa y mate de la v1, pintada en el mismo shader que el gas (un solo shader, una sola pasada).
+- **Peso:** 36 pasos de gas en escritorio / 20 en móvil (antes 72/36), ruido 4+2 octavas (antes 4+4), sin el segundo render de la transmisión, sin fondo de refracción y a densidad 1,25 (móvil 1). Medido en el mismo equipo: 12,9 s → 1,1 s por fotograma en software (≈ 11 veces menos trabajo).
+- **Se queda:** el remolino del cursor con inercia.
+- Embed: las pieles de un solo shader pueden pedir `dpr` y `sinFondo`.
