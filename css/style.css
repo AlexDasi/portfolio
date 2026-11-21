@@ -8007,39 +8007,6 @@ html.tema-dia body {
     color: var(--bkg-color) !important;
   }
 }
-@keyframes punto-latido {
-  0% {
-    scale: 1;
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.55;
-  }
-  70% {
-    scale: 2.1;
-    opacity: 0;
-  }
-  100% {
-    scale: 2.1;
-    opacity: 0;
-  }
-}
-@media (hover: hover) and (pointer: fine) and (min-width: 1281px) {
-  .intro__punto:not(.is-cerca):not(.is-abierta)::after {
-    opacity: 1;
-    scale: 1;
-    animation: punto-latido 3.2s cubic-bezier(0.22, 1, 0.36, 1) 1.2s infinite;
-  }
-  .intro__punto.is-abierta::after {
-    animation: none !important;
-    opacity: 0 !important;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .intro__punto::after {
-    animation: none !important;
-  }
-}
 @media (min-width: 1281px) {
   .baraja[data-modo=mesa] .ficha {
     width: 470px !important;
@@ -8160,66 +8127,28 @@ html.tema-dia body {
     transition: opacity 0.4s ease 0.2s;
   }
 }
-.intro__punto::after {
-  inset: 0 !important;
-  scale: 0.25 !important;
-  opacity: 0 !important;
-  transition: none !important;
-}
-
-@keyframes punto-desde-dentro {
-  0% {
-    scale: 0.25;
-    opacity: 0;
+@keyframes punto-respira {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color) 0%, transparent), 0 0 0.1em color-mix(in srgb, var(--accent-color) 30%, transparent);
   }
-  15% {
-    opacity: 0.75;
-  }
-  75% {
-    scale: 2.3;
-    opacity: 0;
-  }
-  100% {
-    scale: 2.3;
-    opacity: 0;
+  50% {
+    box-shadow: 0 0 0 0.035em color-mix(in srgb, var(--accent-color) 22%, transparent), 0 0 0.32em color-mix(in srgb, var(--accent-color) 60%, transparent);
   }
 }
-@keyframes punto-desde-dentro-cerca {
-  0% {
-    scale: 0.25;
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.9;
-  }
-  70% {
-    scale: 1.9;
-    opacity: 0;
-  }
-  100% {
-    scale: 1.9;
-    opacity: 0;
-  }
-}
-@media (hover: hover) and (pointer: fine) and (min-width: 1281px) {
-  .intro__punto:not(.is-cerca):not(.is-abierta)::after {
-    animation: punto-desde-dentro 3.2s cubic-bezier(0.22, 1, 0.36, 1) 1.2s infinite !important;
-  }
-}
-.intro__punto.is-cerca::after {
-  animation: punto-desde-dentro-cerca 1.5s cubic-bezier(0.22, 1, 0.36, 1) infinite !important;
+.intro__punto:not(.is-cerca):not(.is-abierta) {
+  animation: punto-respira 2.6s ease-in-out 0.8s infinite;
 }
 
 .intro__punto.is-cerca {
-  box-shadow: none !important;
+  animation: none;
 }
 
-.intro__punto.is-abierta::after {
+.intro__punto.is-abierta, .intro__punto.is-abierta::after {
   animation: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro__punto::after {
+  .intro__punto, .intro__punto::after {
     animation: none !important;
   }
 }
