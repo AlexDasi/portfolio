@@ -6572,6 +6572,11 @@ html.tema-dia.precarga::after {
     animation: none;
   }
 }
+.pagina-uxui .ux, .pagina-uxui .pie {
+  position: relative;
+  z-index: 1;
+}
+
 /* CANVAS */
 canvas {
   z-index: 0;

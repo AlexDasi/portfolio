@@ -1851,3 +1851,7 @@ html.tema-dia.precarga::before { background: #f5f3ec; color: #141415; }
 html.tema-dia.precarga::after { background: var(--cursor-color-dia, #7a9b18); }
 @keyframes precarga-late { 0%, 100% { scale: 1; opacity: .9; } 50% { scale: 1.9; opacity: .55; } }
 @media (prefers-reduced-motion: reduce) { html.precarga::after { animation: none; } }
+
+// v12 (Alex, 21/11: «entras en UX/UI, el contenido aparece un segundo y luego desaparece»): el lienzo del fluido (fijo,
+// fondo opaco) se pintaba ENCIMA del contenido en escritorio. El contenido y el pie van por encima del lienzo.
+.pagina-uxui .ux, .pagina-uxui .pie { position: relative; z-index: 1; }

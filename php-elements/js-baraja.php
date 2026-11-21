@@ -33,8 +33,8 @@ $assetVersion = static function (string $relativePath): string {
 	})();
 </script>
 
-<?php if (empty($sinSwiper)): ?><script src="/js/vendor/magnet-mouse.min.js?v=<?php echo $assetVersion('js/vendor/magnet-mouse.min.js'); ?>"></script><?php endif; ?>
-<?php if (empty($sinSwiper)): ?><script src="/js/magnet.js?v=<?php echo $assetVersion('js/magnet.js'); ?>"></script><?php endif; ?>
+<?php /* v12 (Alex, 21/11: «el cursor desaparece al entrar en un proyecto»): el punto del cursor (magnet) va en TODAS las páginas */ ?><?php if (true): ?><script src="/js/vendor/magnet-mouse.min.js?v=<?php echo $assetVersion('js/vendor/magnet-mouse.min.js'); ?>"></script><?php endif; ?>
+<?php if (true): ?><script src="/js/magnet.js?v=<?php echo $assetVersion('js/magnet.js'); ?>"></script><?php endif; ?>
 <?php if (empty($sinSwiper)): ?><script src="/js/active.js?v=<?php echo $assetVersion('js/active.js'); ?>"></script><?php endif; ?>
 
 <?php if (empty($sinSwiper)): ?><script src="/js/swiper/swiper-bundle.min.js?v=<?php echo $assetVersion('js/swiper/swiper-bundle.min.js'); ?>"></script><?php endif; ?>
