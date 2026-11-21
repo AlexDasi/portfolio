@@ -656,6 +656,11 @@ html.fp-js .fp [data-fp-entra].is-in { opacity: 1; translate: 0 0; }
 // con pantallas que no salen en ninguna otra parte de la ficha.
 .fp__m--plano .fp__m-pantalla { background: none; border-radius: 0; overflow: visible; }
 .fp__m--p1 { grid-column: 2 / span 10; }
+// v28 (feedback 296, conv. 1416): portátil plano con vídeo dentro — la pantalla del render está en 144,77 · 1312×820 de 1600×1000
+.fp__m--plano .fp__m-pantalla { position: relative; }
+.fp__plano-pantalla { position: absolute; left: 9%; top: 7.7%; width: 82%; height: 82%; overflow: hidden; border-radius: .76% .76% .15% .15% / 1.22% 1.22% .24% .24%; background: #0c0c0d; }
+.fp__plano-pantalla video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.fp__plano-pantalla::after { content: ""; position: absolute; left: 50%; top: 0; width: 9.15%; height: 2.2%; margin-left: -4.575%; background: #0c0c0d; border-radius: 0 0 9px 9px; z-index: 1; pointer-events: none; } // la muesca, encima del vídeo
 .fp__m--p2 { grid-column: 1 / span 4; margin-top: 2vw; }
 @media (max-width: $movil) { .fp__m--p1 { order: 6; } .fp__m--p2 { order: 7; flex-basis: 56vw; } }
 

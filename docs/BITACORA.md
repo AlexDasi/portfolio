@@ -885,3 +885,14 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Repetidos:** fuera capturas del mismo aparato y sección que un vídeo (Cocció, Brot, Vapor, Mas Vesprada); Solvera, «El diario»; pósters de vídeo de un momento distinto.
 - **Siguiente proyecto:** el siguiente en grande (nombre a la izquierda, portada recta) + «Y después» con los dos siguientes, cada uno con su enlace. Fuera los naipes girados que no se podían clicar.
 - **Halo del punto:** nace dentro de la bola y crece hacia fuera; ya no aparece precargado por fuera al acercarse.
+
+---
+
+## 2026-11-21 — v28 · vídeos sin trompicones, La Hora Blanca en vídeo y repaso de mockups (ATELIER conv. 1416)
+
+- **Causa de los trompicones (todas las fichas):** el montaje de los vídeos pasaba las capturas por `concat` con base de tiempo 1/25 y luego `fps=30` → 1 de cada 6 fotogramas repetido. El grabador ya remuestrea a 30 fps exactos y tiene un modo `"modo": "paso"` (reloj de la página manual, fotograma a fotograma: cero fotogramas parados). Regrabados con él: Elsa portada escritorio, portada móvil (`pm`) y «El índice se abre»; Berto «El índice responde al ratón». Quedan por regrabar los vídeos del resto de fichas (mismo fallo, propuesto a Alex).
+- **Elsa 05 La Hora Blanca:** el portátil plano lleva el vídeo dentro de la pantalla (`caso[].video` en baraja.json → `<video>` encima del render, en 9 % · 7,7 % · 82 % × 82 %, con la muesca). El vídeo es el bucle de 10 s de su web compuesto a 25 fps (el teaser original + la capa de texto de la página), sin capturar.
+- **Berto (bertosanchez.com):** fuera «Tipografía de la bio» (feedback 291/299); en su sitio el vídeo «La ficha sale de la franja».
+- **Caché:** el vídeo y el póster móvil de la portada (`pm`) y las imágenes de «Momentos» también llevan `?v=`.
+- **Mockups:** Solvera p1 salía con la puerta de edad → «Pedir una visita» (paisaje + formulario); Reissue p1 (dirección y mapa) → «La tienda por dentro».
+- Rama `v28-videos-fluidos-2026-11-21`, pendiente del ok de Alex para pasar a `main` (publicar).
