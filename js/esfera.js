@@ -142,34 +142,52 @@
         u.pathname = u.pathname.replace(/[^/]+$/, pagina(piel).split('/').pop());
         if (f.closest('[data-esfera-habla]')) { if (piel === 'glaseado') u.searchParams.set('ligero', ''); else u.searchParams.delete('ligero'); }
         var nueva = u.pathname.replace(/^\//, '') + u.search;
-        /* v18 (Alex, 21/11: «al apretar E, mientras tarda, un preloader o mantener el material antiguo, y una transición más
-           sutil»): la esfera se funde (0,35 s), late el disco del acento mientras carga la nueva y la nueva entra fundiéndose
-           (0,7 s) al pintar su primer fotograma (mensaje 'lista'). Red de seguridad: 7 s. */
-        f.dataset.cambiando = '1';
-        f.style.transition = 'opacity .35s ease';
-        f.style.opacity = '0';
-        var par = f.parentNode;
-        setTimeout(function () {
-          if (par && par.matches && par.matches('[data-esfera-habla], .intro__esfera')) par.classList.add('is-cambiando');
-          f.src = nueva;
-          setTimeout(function () { entra(f); }, 7000);
-        }, 360);
+        /* v19 (Alex, 21/11: «no quiero que desaparezca y vuelva a aparecer; que se haga pequeña y se vuelva a hacer grande»):
+           1) un marco de calentamiento, invisible, baja la piel nueva (GLB, texturas) mientras la vieja sigue girando;
+           2) cuando está, la esfera se encoge un poco, cambia (ya en caché: casi instantáneo) y crece de vuelta. */
+        calentarYCambiar(f, nueva);
       } catch (e) {}
     });
     rotular(piel);
   }
+  function calentarYCambiar(f, nueva) {
+    var w = document.createElement('iframe');
+    w.setAttribute('aria-hidden', 'true'); w.tabIndex = -1;
+    w.style.cssText = 'position:fixed;left:-9999px;top:0;width:200px;height:200px;opacity:0;pointer-events:none;border:0';
+    w.src = nueva;
+    document.body.appendChild(w);
+    var hecho = false;
+    function cambia() {
+      if (hecho) return; hecho = true;
+      window.removeEventListener('message', oye);
+      setTimeout(function () { w.remove(); }, 400);
+      f.dataset.cambiando = '1';
+      f.style.transition = 'scale .28s cubic-bezier(.55, 0, .75, .2)';
+      f.style.scale = '.72';
+      setTimeout(function () { f.src = nueva; setTimeout(function () { entra(f); }, 5000); }, 280);
+    }
+    function oye(e) { if (e.source === w.contentWindow && e.data && e.data.esfera === 'lista') cambia(); }
+    window.addEventListener('message', oye);
+    setTimeout(cambia, 6000);
+  }
   function entra(f) {
     if (!f || !f.dataset.cambiando) return;
     delete f.dataset.cambiando;
-    f.style.transition = 'opacity .7s cubic-bezier(.22, 1, .36, 1)';
-    f.style.opacity = '';
-    var par = f.parentNode; if (par && par.classList) par.classList.remove('is-cambiando');
+    f.style.transition = 'scale .55s cubic-bezier(.34, 1.4, .64, 1)';
+    f.style.scale = '';
   }
   window.addEventListener('message', function (e) {
     if (!e.data || e.data.esfera !== 'lista') return;
     document.querySelectorAll('iframe[data-cambiando]').forEach(function (f) { if (f.contentWindow === e.source) entra(f); });
   });
   window.__pielSiguiente = cambiarPiel;
+  // v19 (Alex, 21/11: «le doy a E y no cambia»): con el foco dentro de una esfera (tras arrastrarla) las teclas iban al
+  // marco; ahora cualquier marco avisa de E y de espacio y la página hace lo mismo que fuera
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.esfera === 'tecla-e') cambiarPiel();
+    else if (e.data.esfera === 'espacio' && window.__acentoSiguiente && !(fino && window.innerWidth > 1280 && document.querySelector('.MainSwiper [data-esfera]'))) window.__acentoSiguiente(); // en la home de escritorio ya lo hace su propio oyente
+  });
   rotular(piel);
   if (botonPiel) botonPiel.addEventListener('click', cambiarPiel);
   window.addEventListener('keydown', function (e) {

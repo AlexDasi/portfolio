@@ -28,9 +28,19 @@
     var api = window.__fluidBackgroundAPI;
     if (api && typeof api.applySettings === 'function') api.applySettings({ EFFECT_COLOR: fl });
     // v4 (feedback 98): la esfera (si está abierta) toma el acento nuevo
-    document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe, .sm__habla-bola iframe').forEach(function (f) {
-      try { f.contentWindow.postMessage({ esferaAcento: [fl.r, fl.g, fl.b] }, '*'); } catch (err) {}
-    });
+    // v19 (Alex, 21/11: «con la esfera abierta el cambio de color es inmediato; quiero una transición, sutil pero no lenta»):
+    // el acento de la esfera se pasa en ~0,3 s, fotograma a fotograma, del color de antes al nuevo
+    var de = window.__acentoEsfera || fl, t0 = performance.now(), DUR = 300;
+    window.__acentoEsfera = fl;
+    cancelAnimationFrame(window.__acentoRaf || 0);
+    (function paso(now) {
+      var k = Math.min(1, (now - t0) / DUR), e = 1 - Math.pow(1 - k, 3);
+      var col = [Math.round(de.r + (fl.r - de.r) * e), Math.round(de.g + (fl.g - de.g) * e), Math.round(de.b + (fl.b - de.b) * e)];
+      document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe, .sm__habla-bola iframe, .esfera-capa iframe').forEach(function (f) {
+        try { f.contentWindow.postMessage({ esferaAcento: col }, '*'); } catch (err) {}
+      });
+      if (k < 1) window.__acentoRaf = requestAnimationFrame(paso);
+    })(t0);
     window.dispatchEvent(new CustomEvent('acento:cambio', { detail: color }));
   }
 
@@ -47,7 +57,9 @@
   window.addEventListener('keydown', function (e) {
     if (e.key !== ' ' || e.repeat) return;
     var t = e.target;
-    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON|A)$/.test(t.tagName))) return;
+    // v19 (Alex, 21/11: «le doy a espacio y no cambia»): tras pulsar un enlace o un botón el foco se quedaba en él y el
+    // espacio se ignoraba; ahora solo se respeta en campos de texto
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
     e.preventDefault();
     siguiente();
   });

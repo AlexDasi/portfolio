@@ -128,18 +128,17 @@ $assetVersion = static function (string $relativePath): string {
             /* v8 (feedback 147): cada acento tiene su variante de DÍA, más oscura y saturada (mismo tono; ≈ 3:1 sobre el papel,
                la tinta encima ≥ 5,1:1). De día todo lo que usa acento toma la variante (--cursor-color-dia → --accent-color):
                subrayados, fusión del cursor, fluido, PRESS SPACE, resaltados. La noche no cambia. Tabla en docs/BITACORA.md. */
+            /* v19 (Alex, 21/11: «los acentos más brillantes, en la línea del lima o el menta; 5-7 colores llamativos con la misma
+               intensidad; me gustan más las versiones claras que las oscuras»): siete de la misma luz; la de día (d) es la misma
+               familia un punto más llena, ya no oscura. */
             var paleta = [
-                { r: 236, g: 249, b: 142, n: 'lima', d: { r: 122, g: 155, b: 24 } },
-                { r: 255, g: 168, b: 140, n: 'coral', d: { r: 240, g: 98, b: 58 } },
-                { r: 150, g: 200, b: 255, n: 'cielo', d: { r: 28, g: 143, b: 245 } },
-                { r: 200, g: 170, b: 255, n: 'lila', d: { r: 167, g: 112, b: 246 } },
-                { r: 140, g: 230, b: 185, n: 'menta', d: { r: 52, g: 158, b: 113 } },
-                { r: 255, g: 212, b: 110, n: 'albaricoque', d: { r: 192, g: 136, b: 15 } },
-                /* v15 (Alex, 21/11: «me gustan colores pastel; quita el verde tan agresivo, el magenta y el naranja fuerte»):
-                   fuera verde ácido, magenta y naranja eléctrico; entran tres pasteles tranquilos */
-                { r: 250, g: 186, b: 206, n: 'rosa-empolvado', d: { r: 204, g: 84, b: 132 } },
-                { r: 255, g: 198, b: 156, n: 'melocoton', d: { r: 212, g: 118, b: 52 } },
-                { r: 160, g: 226, b: 228, n: 'aguamarina', d: { r: 26, g: 146, b: 150 } }
+                { r: 236, g: 249, b: 142, n: 'lima', d: { r: 218, g: 242, b: 92 } },
+                { r: 150, g: 240, b: 196, n: 'menta', d: { r: 104, g: 228, b: 168 } },
+                { r: 142, g: 210, b: 255, n: 'cielo', d: { r: 98, g: 188, b: 255 } },
+                { r: 198, g: 176, b: 255, n: 'lila', d: { r: 172, g: 142, b: 255 } },
+                { r: 255, g: 172, b: 212, n: 'rosa', d: { r: 255, g: 140, b: 196 } },
+                { r: 255, g: 176, b: 140, n: 'coral', d: { r: 255, g: 148, b: 106 } },
+                { r: 255, g: 222, b: 112, n: 'albaricoque', d: { r: 255, g: 206, b: 68 } }
             ];
             var fijo = q.get('cursor') === 'fijo'; if (fijo) html.classList.add('cursor-fijo');
             /* v11 (Alex, 21/11: «no quiero que cambie el color acento mientras estés en la misma visita»): el acento se elige al

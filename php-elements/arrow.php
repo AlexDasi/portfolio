@@ -29,8 +29,8 @@
     els.forEach(function (el) {
       var r = el.getBoundingClientRect(); if (!r.width) return;
       var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2), d = Math.hypot(dx, dy);
-      var k = d < 70 ? (1 - d / 70) : 0;
-      el.style.translate = k ? (Math.max(-6, Math.min(6, dx * 0.18 * k)) + 'px ' + Math.max(-6, Math.min(6, dy * 0.18 * k)) + 'px') : '';
+      var k = d < 110 ? (1 - d / 110) : 0; // v19 (Alex: «el magnetismo un poco más, intermedio»): radio 110 px, hasta 14 px
+      el.style.translate = k ? (Math.max(-14, Math.min(14, dx * 0.34 * k)) + 'px ' + Math.max(-14, Math.min(14, dy * 0.34 * k)) + 'px') : '';
     });
   }, { passive: true });
 })();

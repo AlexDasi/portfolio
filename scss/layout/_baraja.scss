@@ -2042,7 +2042,7 @@ html.cursor-fijo .piel-3d { display: none; }
 // v18 (Alex, 21/11: «el cambio de color, que no sea tan inmediato: una transición sutil de uno al siguiente»)
 @property --cursor-color { syntax: '<color>'; inherits: true; initial-value: rgb(236, 249, 142); }
 @property --cursor-color-dia { syntax: '<color>'; inherits: true; initial-value: rgb(122, 155, 24); }
-html { transition: --cursor-color .8s ease, --cursor-color-dia .8s ease; }
+html { transition: --cursor-color .3s ease-out, --cursor-color-dia .3s ease-out; } // v19: sutil pero rápido (0,3 s)
 .sm__habla-bola.is-lista.is-cambiando { background-color: var(--accent-color); }
 // v18 (Alex, 21/11: «cuando subo desde contacto, la esfera se hace pequeña; es raro»): la del pie no encoge al salir del piso
 html.sm-anima .slide-pie .sm__habla-bola, html.sm-anima .pie .sm__habla-bola, .slide-pie .sm__habla-bola { scale: 1 !important; }
@@ -2126,3 +2126,102 @@ html.sm-anima .slide-pie .sm > .sm__habla-bola { opacity: 1 !important; translat
   .uxp .swiper-slide-active .uxp__img, .uxp .swiper-slide-active .uxp__info { opacity: 1; translate: 0 0; }
   .uxp .swiper-slide-active .uxp__info { transition-delay: .12s; }
 }
+
+// ============================================================
+// v19 (Alex, 21/11: «PRESS SPACE, PRESS E, ALEX DASI, el menú de la derecha y el idioma, del mismo estilo: mismo tamaño,
+// mismo todo; ALEX DASI un poco más bold y con el fondo del acento del momento. Alineados. El hover del menú idéntico al
+// active»). Escritorio. Todo a 12 px, .12em, mayúsculas, regular, color pleno; centros a la misma altura (34 px).
+// ============================================================
+@media (min-width: 1281px) {
+  .lang-switch__item, .sitio-baraja .nav--top .nav--items a, .nav-sutil__item, .press-space, .piel-3d {
+    font-family: $main-font !important; font-size: 12px !important; letter-spacing: .12em !important; font-weight: 400 !important;
+    line-height: 1 !important; text-transform: uppercase !important; color: var(--main-color) !important; opacity: 1 !important;
+    text-decoration: none !important;
+  }
+  .press-space, .piel-3d { opacity: .55 !important; }
+  .piel-3d:hover { opacity: 1 !important; }
+  .sitio-baraja .nav--top .nav--items a {
+    font-weight: 600 !important; padding: 6px 9px 5px !important; border-radius: 2px;
+    background: var(--accent-color); color: $tinta !important;
+    position: relative; top: 8px;
+  }
+  .lang-switch__item { translate: 0 2px; }
+  // subrayado único: el mismo en hover y en active (1 px, 4 px por debajo del texto)
+  .lang-switch__item, .nav-sutil__item { position: relative; padding: 0 !important; min-height: 0 !important; height: 24px; display: inline-flex !important; align-items: center; }
+  .lang-switch__item::after, .nav-sutil__item::after {
+    content: "" !important; position: absolute !important; left: 0 !important; right: 0 !important; bottom: 2px !important; top: auto !important;
+    height: 1px !important; background: currentColor !important; border: 0 !important;
+    transform: scaleX(0) !important; transform-origin: left center !important; transition: transform .3s cubic-bezier(.22, 1, .36, 1) !important;
+  }
+  .lang-switch__item.is-active::after, .nav-sutil__item.is-active::after { transform: scaleX(1) !important; }
+  .lang-switch__item:hover::after, .nav-sutil__item:hover::after { transform: scaleX(1) !important; transition-duration: .3s !important; }
+  .lang-switch__item { border: 0 !important; background: none !important; }
+}
+
+// v19 (Alex, 21/11: «el hover de descargar currículum, un barrido con el color acento de izquierda a derecha»)
+.sm__link, .sm__cv { background-size: 0 1.5em !important; background-position: 0 50% !important; transition: background-size .35s cubic-bezier(.22, 1, .36, 1), color .2s ease .05s !important; }
+.sm__link:focus-visible, .sm__cv:focus-visible { background-size: 100% 1.5em !important; }
+@media (hover: hover) and (pointer: fine) { .sm__link:hover, .sm__cv:hover { background-size: 100% 1.5em !important; color: $tinta !important; } }
+
+// v19 (Alex, 21/11: «el CTA de Ver el caso puede tener mucha más gracia: un barrido con el color acento»)
+.ux__ver { position: relative; z-index: 0; }
+.ux__ver::before {
+  content: ""; position: absolute; z-index: -1; left: -10px; right: -10px; top: 50%; height: 34px; margin-top: -17px;
+  background: var(--accent-color); border-radius: 2px; transform: scaleX(0); transform-origin: left center;
+  transition: transform .4s cubic-bezier(.22, 1, .36, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ux__enlace:hover .ux__ver, .ux__ver:hover, .uxp__tarjeta:hover .ux__ver { animation: none !important; color: $tinta !important; svg { color: $tinta !important; transform: translateX(4px); } }
+  .ux__enlace:hover .ux__ver::before, .ux__ver:hover::before, .uxp__tarjeta:hover .ux__ver::before { transform: scaleX(1); }
+}
+
+// ============================================================
+// v19 · UX/UI en tres pisos (portada · casos · Hablamos); los cinco casos en un slider horizontal (como la web antigua).
+// Tarjetas rectas (fuera la inclinación); al pasar el ratón: sombra y borde del acento, y «Ver el caso» con barrido.
+// ============================================================
+@media (min-width: 1281px) {
+  .uxp__casos { width: 100%; display: flex; flex-direction: column; gap: 28px; padding: 0 0 0 8vw; }
+  .uxp__barra { display: flex; align-items: center; justify-content: space-between; padding-right: 8vw; }
+  .uxp__titulo-casos { margin: 0; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--main-color); span { color: var(--accent-color); margin-left: 6px; } }
+  .uxp__navh { display: flex; align-items: center; gap: 10px; }
+  .uxp__progreso { width: 140px; height: 2px; background: var(--linea); margin-right: 10px; overflow: hidden; i { display: block; height: 100%; background: var(--accent-color); transform-origin: left; transform: scaleX(.08); transition: transform .3s ease; } }
+  .uxp__btn { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--linea); border-radius: 50%; background: none; color: var(--main-color); cursor: pointer; transition: background .25s ease, border-color .25s ease, color .25s ease;
+    svg { width: 18px; height: 18px; } }
+  .uxp__btn:hover { background: var(--accent-color); border-color: var(--accent-color); color: $tinta; }
+  .uxp__btn.swiper-button-disabled { opacity: .3; pointer-events: none; }
+  .UxSwiper { width: 100%; overflow: visible; }
+  .UxSwiper .swiper-wrapper { padding: 20px 0 30px; }
+  .uxp__tarjeta { width: 36vw !important; margin-right: 2.4vw; display: flex; flex-direction: column; gap: 18px; color: var(--main-color); text-decoration: none; }
+  .uxp__tarjeta .uxp__img { position: relative; display: block; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden; transform: none !important; opacity: 1 !important; translate: none !important;
+    box-shadow: 0 0 0 0 transparent, 0 24px 48px -30px rgba(0,0,0,.4); outline: 2px solid transparent; outline-offset: 4px;
+    transition: box-shadow .45s cubic-bezier(.22, 1, .36, 1), outline-color .3s ease; }
+  .uxp__tarjeta .uxp__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: scale .8s cubic-bezier(.22, 1, .36, 1); }
+  .uxp__tarjeta:hover .uxp__img { outline-color: var(--accent-color); box-shadow: 0 0 0 0 transparent, 0 26px 70px -18px color-mix(in srgb, var(--accent-color) 75%, transparent); }
+  .uxp__tarjeta:hover .uxp__img img { scale: 1.03; }
+  .uxp__tarjeta .uxp__info { border-top: 2px solid var(--accent-color); padding-top: 14px; gap: 10px; opacity: 1 !important; translate: none !important; display: flex; flex-direction: column; }
+  .uxp__tarjeta .uxp__num { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .12em; color: var(--accent-color); span { color: var(--tinta-suave); } }
+  .uxp__tarjeta .uxp__nombre { font-size: clamp(30px, 2.6vw, 44px); font-weight: 600; letter-spacing: -.03em; line-height: 1; i { font-style: normal; color: var(--accent-color); } }
+  .uxp__tarjeta .uxp__sub { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave); }
+  .uxp__tarjeta .uxp__dato { font-size: 14px; line-height: 1.5; color: var(--main-color); max-width: 46ch; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .uxp__tarjeta .ux__ver { align-self: flex-start; margin-top: 4px; }
+  // índice de la portada: al pasar el ratón, fondo del acento
+  .uxp__indice a { position: relative; z-index: 0; padding-left: 12px !important; padding-right: 12px; margin: 0 -12px; }
+  .uxp__indice a::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--accent-color); transform: scaleX(0); transform-origin: left; transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
+  .uxp__indice a:hover { color: $tinta; padding-left: 24px !important; }
+  .uxp__indice a:hover::before { transform: scaleX(1); }
+  .uxp__indice a:hover span { color: $tinta; }
+}
+@media (min-width: 1281px) {
+  .lang-switch { gap: 14px !important; }
+  .UxSwiper .swiper-wrapper { align-items: stretch; }
+  .uxp__tarjeta { height: auto !important; }
+  .uxp__tarjeta .uxp__info { flex: 1; }
+  .uxp__tarjeta .ux__ver { margin-top: auto !important; }
+}
+// v19: el texto pequeño en el acento, de día, mezclado con la tinta para que se lea (los acentos ya son claros)
+:root { --acento-texto: var(--accent-color); }
+html.tema-dia { --acento-texto: color-mix(in srgb, var(--accent-color) 40%, #141415); }
+.uxp__num, .uxp__titulo-casos span, .uxp__indice a span, .baraja[data-modo] .ficha__num { color: var(--acento-texto) !important; }
+.uxp__indice a:hover span { color: $tinta !important; }
+.MainSwiper > .swiper-pagination { z-index: 400 !important; } // v19: los pisos siempre por encima (el slider de casos pasa por debajo)
+@media (min-width: 1281px) { .uxp__casos { padding-right: 7.5vw; } .UxSwiper { overflow: hidden !important; } .UxSwiper .swiper-wrapper { padding: 20px 0 40px; } } // v19: el slider termina antes de los pisos

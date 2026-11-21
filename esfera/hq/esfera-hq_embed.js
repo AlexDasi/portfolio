@@ -164,7 +164,7 @@ lienzo.addEventListener('pointercancel', soltar);
 lienzo.addEventListener('pointerleave', () => { ptr.activo = false; cur.style.opacity = 0; if (MANO && !arr) devolver(); });
 /* en el móvil la página deja pasar el scroll vertical: un toque que empieza DENTRO de la bola es para girarla en cualquier dirección */
 lienzo.addEventListener('touchstart', e => { const t = e.touches[0]; if (t && !fueraDeBola(t.clientX, t.clientY, 1.0)) e.preventDefault(); }, {passive: false});
-addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === ' ' && EMBED) { e.preventDefault(); avisar('espacio'); } });
+addEventListener('keydown', e => { if (e.key === 'Escape') avisar('cerrar'); if (e.key === ' ' && EMBED) { e.preventDefault(); avisar('espacio'); } if ((e.key === 'e' || e.key === 'E') && EMBED && !e.repeat) avisar('tecla-e'); });   // v19: la E con el foco en la esfera también cambia la piel
 
 /* ---------- bucle ---------- */
 let last = performance.now(), visible = true;

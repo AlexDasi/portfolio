@@ -11,7 +11,7 @@ $pieEnPiso = !empty($pieEnPiso);
 ?>
 <footer class="pie <?php echo $pieEnPiso ? 'pie--piso' : 'pantalla pantalla--sm'; ?>"<?php echo $pieEnPiso ? ' data-pie-piso' : ' id="contacto"'; ?>>
     <section class="sm sm--habla">
-        <span class="sm__habla-bola" data-sigue data-esfera-habla aria-hidden="true"></span>
+        <span class="sm__habla-bola" data-esfera-habla aria-hidden="true"></span>
         <h2 class="sm__titulo sm__titulo--enorme"><span class="sm__grueso"><?php echo $pieEs ? 'Hablamos' : 'Let’s talk'; ?></span><span class="sm__punto" aria-hidden="true"></span></h2>
         <p class="sm__entrada"><?php echo $pieEs ? 'Si tienes un negocio y crees que tu web podría estar mejor (o todavía no la tienes), escríbeme. Te contesto yo.' : 'If you run a business and think your website could be better (or you don’t have one yet), drop me a line. I’ll reply myself.'; ?></p>
         <div class="sm__botones">

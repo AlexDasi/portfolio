@@ -792,3 +792,16 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Tecla E:** la esfera se funde, late el disco del acento mientras carga y la nueva entra fundiéndose al pintar. **Color (espacio):** transición de 0,8 s (`@property --cursor-color`).
 - **Hablamos:** no encoge al salir del piso. **Pie:** fuera la línea «© Alex Dasi».
 - **Propuestas para mirar:** Hablamos `?hablamos=plana|velada|lejos` (+ `?bola=abajo|centro`); UX/UI en pisos `uxui.php?vista=pisos`.
+
+---
+
+## 2026-11-21 — v19 · HUD unificado, acentos brillantes, UX/UI en slider horizontal (ATELIER conv. 1402)
+
+- **HUD:** idioma, ALEX DASI, menú, PRESS SPACE y PRESS E a 12 px, .12em, mayúsculas, color pleno, centrados a la misma altura; ALEX DASI en semibold con fondo del acento. Subrayado único (1 px) idéntico en hover y active.
+- **Teclas:** E y espacio funcionan con el foco dentro de la esfera (el marco avisa `tecla-e` / `espacio`); el espacio ya no se pierde tras pulsar un enlace o botón.
+- **Color:** transición de 0,3 s en la página y en la esfera (el acento de la esfera se interpola fotograma a fotograma).
+- **Piel (E):** un marco invisible precarga la piel nueva mientras la vieja sigue; luego la esfera se encoge un poco, cambia y vuelve a crecer (sin desaparecer).
+- **Imán de las flechas:** intermedio (radio 110 px, hasta 14 px). **Hablamos:** la esfera ya no sigue al ratón; se gira arrastrando.
+- **Paleta:** siete acentos de la misma luz (lima, menta, cielo, lila, rosa, coral, albaricoque); la variante de día es la misma familia un punto más llena (ya no oscura). Texto pequeño en acento, de día, mezclado con tinta para que se lea.
+- **CTAs:** «Descargar CV» con barrido del acento de izquierda a derecha; «Ver el caso» con barrido del acento.
+- **UX/UI (escritorio):** tres pisos — portada con índice (hover con fondo del acento) · los cinco casos en un slider horizontal (arrastre, rueda horizontal, ← →, flechas y progreso; tarjetas rectas, al pasar el ratón borde y sombra del acento) · Hablamos. `?vista=lista` enseña la lista anterior.
