@@ -2437,11 +2437,14 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
 // v30 (Alex, conv. 1432: «un halo que es una línea, simplemente una línea: sale desde el centro del punto, se abre hasta el
 // doble del diámetro y se va difuminando hasta desaparecer. Sin sombreados ni nada que parpadee o lata; lo mismo que al pasar
 // el ratón, pero mucho más pequeño»). En reposo: solo el aro (::after, 1,5 px del acento), de escala 0 a 2 y de opacidad 1 a 0.
+// v32 (Alex, conv. 1434: «demasiado grande y demasiado tiempo; hazlo todo a la mitad»): el aro ya mide ~1,9× el punto a
+// escala 1 (inset -.09em), así que llega a escala 1 (antes 2) y se ve la mitad de tiempo (~0,9 s de los 2,2 s; antes ~1,8 s)
 @keyframes punto-onda {
   0% { scale: 0; opacity: 1; }
-  28% { scale: 1.1; opacity: .95; }   // dentro del punto no se ve: sale del borde ya con fuerza
-  80% { scale: 2; opacity: 0; }
-  100% { scale: 2; opacity: 0; }
+  14% { scale: .55; opacity: 1; }    // dentro del punto no se ve: sale del borde ya con fuerza
+  30% { scale: .85; opacity: .65; }
+  40% { scale: 1; opacity: 0; }
+  100% { scale: 1; opacity: 0; }
 }
 .intro__punto:not(.is-cerca):not(.is-abierta)::after { border-width: 1.5px; animation: punto-onda 2.2s ease-out .6s infinite; }
 .intro__punto.is-cerca { animation: none; }
