@@ -152,6 +152,23 @@
     });
     rotular(piel);
   }
+  /* v31 (Alex, conv. 1432: «al darle a la E, que se haga pequeño hasta ser un punto otra vez y que el punto vuelva a hacerse
+     grande y sea otro material»; el v19 se encogía a .72, desaparecía mientras cargaba y volvía a crecer: raro).
+     1) un marco de calentamiento, invisible, baja la piel nueva mientras la vieja sigue girando (como en v19);
+     2) la esfera se encoge hasta el tamaño del punto y en ese momento es el punto (un disco plano del acento encima);
+     3) por debajo cambia de piel (ya en caché) y, cuando pinta, el punto crece y se vuelve la esfera nueva. */
+  var PUNTO_PX = 22;
+  function puntoSobre(f) {
+    var d = document.createElement('span');
+    d.className = 'esfera-punto-cambio';
+    d.setAttribute('aria-hidden', 'true');
+    d.style.cssText = 'position:absolute;left:0;top:0;width:' + PUNTO_PX + 'px;height:' + PUNTO_PX + 'px;border-radius:50%;pointer-events:none;z-index:3;opacity:0;scale:.5;background:rgb(' + acento() + ');transition:opacity .16s ease, scale .3s cubic-bezier(.34, 1.56, .64, 1)';
+    f.parentNode.insertBefore(d, f.nextSibling);
+    var op = (d.offsetParent || document.body).getBoundingClientRect(), r = f.getBoundingClientRect();
+    d.style.left = (r.left - op.left + r.width / 2 - PUNTO_PX / 2) + 'px';
+    d.style.top = (r.top - op.top + r.height / 2 - PUNTO_PX / 2) + 'px';
+    return d;
+  }
   function calentarYCambiar(f, nueva) {
     var w = document.createElement('iframe');
     w.setAttribute('aria-hidden', 'true'); w.tabIndex = -1;
@@ -163,10 +180,22 @@
       if (hecho) return; hecho = true;
       window.removeEventListener('message', oye);
       setTimeout(function () { w.remove(); }, 400);
+      f.__nueva = nueva;
+      if (f.dataset.cambiando) { if (f.__t0) f.src = nueva; return; } // E dos veces seguidas: ya es un punto, solo cambia lo que va a salir
       f.dataset.cambiando = '1';
-      f.style.transition = 'scale .28s cubic-bezier(.55, 0, .75, .2)';
-      f.style.scale = '.72';
-      setTimeout(function () { f.src = nueva; setTimeout(function () { entra(f); }, 5000); }, 280);
+      // la esfera ocupa ~60 % del marco: escala con la que mide lo mismo que el punto
+      var lado = Math.min(f.offsetWidth, f.offsetHeight) || 300;
+      var s = Math.max(0.02, PUNTO_PX / (lado * 0.6));
+      f.__escPunto = s;
+      var d = f.__punto = puntoSobre(f);
+      f.style.transition = 'scale .42s cubic-bezier(.55, 0, .8, .25)';
+      f.style.scale = String(s);
+      setTimeout(function () { d.style.opacity = '1'; d.style.scale = '1'; }, 300);   // llega al tamaño del punto: es el punto
+      setTimeout(function () {
+        f.style.transition = 'none'; f.style.opacity = '0';
+        f.__t0 = Date.now(); f.src = f.__nueva;
+        setTimeout(function () { entra(f); }, 5000);                                    // tope por si no avisa
+      }, 440);
     }
     function oye(e) { if (e.source === w.contentWindow && e.data && e.data.esfera === 'lista') cambia(); }
     window.addEventListener('message', oye);
@@ -174,9 +203,15 @@
   }
   function entra(f) {
     if (!f || !f.dataset.cambiando) return;
-    delete f.dataset.cambiando;
-    f.style.transition = 'scale .55s cubic-bezier(.34, 1.4, .64, 1)';
+    var falta = 320 - (Date.now() - (f.__t0 || 0));                                     // el punto se queda un instante
+    if (falta > 0) { setTimeout(function () { entra(f); }, falta); return; }
+    delete f.dataset.cambiando; f.__t0 = 0;
+    var d = f.__punto; f.__punto = null;
+    f.style.transition = 'none'; f.style.scale = String(f.__escPunto || .06); f.style.opacity = '1';
+    void f.offsetWidth;
+    f.style.transition = 'scale .62s cubic-bezier(.34, 1.4, .64, 1)';
     f.style.scale = '';
+    if (d) { d.style.transition = 'opacity .22s ease .05s, scale .3s cubic-bezier(.55, 0, .8, .25)'; d.style.opacity = '0'; d.style.scale = '1.6'; setTimeout(function () { d.remove(); }, 450); }
   }
   window.addEventListener('message', function (e) {
     if (!e.data || e.data.esfera !== 'lista') return;

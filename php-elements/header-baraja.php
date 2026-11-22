@@ -132,7 +132,7 @@ $assetVersion = static function (string $relativePath): string {
                otra»; el menta de hace dos versiones; el coral un pelín más anaranjado, no rosa chicle). El lima es SIEMPRE
                #ECF98E, de día y de noche. La de día (d) es la misma familia un punto más llena. Ver el design system. */
             var paleta = [
-                { r: 236, g: 249, b: 142, n: 'lima', d: { r: 236, g: 249, b: 142 } },
+                { r: 236, g: 249, b: 142, n: 'lima', d: { r: 184, g: 208, b: 26 } },   // v31 (Alex, conv. 1432: «el lima de día queda muy bien pero no se ve casi; una versión un poco más oscura»): de noche sigue #ECF98E; de día #B8D01A
                 { r: 140, g: 232, b: 186, n: 'menta', d: { r: 112, g: 222, b: 166 } },
                 { r: 255, g: 174, b: 122, n: 'coral', d: { r: 255, g: 152, b: 96 } },
                 { r: 132, g: 204, b: 255, n: 'cielo', d: { r: 104, g: 186, b: 255 } },
