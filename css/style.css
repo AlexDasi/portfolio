@@ -8132,16 +8132,20 @@ html.tema-dia body {
     scale: 0;
     opacity: 1;
   }
-  28% {
-    scale: 1.1;
-    opacity: 0.95;
+  14% {
+    scale: 0.55;
+    opacity: 1;
   }
-  80% {
-    scale: 2;
+  30% {
+    scale: 0.85;
+    opacity: 0.65;
+  }
+  40% {
+    scale: 1;
     opacity: 0;
   }
   100% {
-    scale: 2;
+    scale: 1;
     opacity: 0;
   }
 }

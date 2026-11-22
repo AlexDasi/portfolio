@@ -912,3 +912,9 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - **Halo del punto (v30):** en reposo, solo una línea (el `::after`, 1,5 px del acento) que sale del centro, se abre hasta el doble del diámetro y se desvanece, cada 2,2 s. Sin brillo, sin latido (fuera `punto-respira`). El hover sigue igual (v4).
 - **Cambio de material con la E (v31, `js/esfera.js`):** la esfera se encoge hasta el tamaño del punto y se convierte en él (disco plano del acento encima); por debajo cambia de piel (ya precargada) y, cuando pinta, el punto crece y es la esfera nueva. Antes se encogía a .72, desaparecía mientras cargaba y volvía.
 - **Lima de día (v31, `header-baraja.php`):** Alex: «el lima de día queda muy bien pero no se ve casi». De noche sigue `#ECF98E` (sagrado); de día, `#B8D01A`. Cambia la regla v20 («el lima es siempre #ECF98E de día y de noche»): ahora solo de noche.
+
+---
+
+## 2026-11-22 — v32 · halo a la mitad (ATELIER conv. 1434)
+
+- Alex: «demasiado grande y demasiado tiempo; hazlo todo a la mitad». El aro llega a escala 1 (≈1,9× el punto; antes 2 ≈ 3,8×) y se ve ~0,9 s de cada 2,2 s (antes ~1,8 s).
