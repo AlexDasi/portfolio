@@ -1423,6 +1423,15 @@
       ],
       "caso": [
         {
+          "id": "v0",
+          "marco": "nav",
+          "medio": "vid",
+          "pie": {
+            "es": "El plano se dibuja",
+            "en": "The plan draws itself"
+          }
+        },
+        {
           "id": "d1",
           "marco": "nav",
           "medio": "img",
@@ -1435,7 +1444,8 @@
           "anchos": [
             1600,
             900
-          ]
+          ],
+          "oculto": true
         },
         {
           "id": "m1",
