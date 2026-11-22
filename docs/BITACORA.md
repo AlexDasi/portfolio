@@ -918,3 +918,9 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 ## 2026-11-22 — v32 · halo a la mitad (ATELIER conv. 1434)
 
 - Alex: «demasiado grande y demasiado tiempo; hazlo todo a la mitad». El aro llega a escala 1 (≈1,9× el punto; antes 2 ≈ 3,8×) y se ve ~0,9 s de cada 2,2 s (antes ~1,8 s).
+
+---
+
+## 2026-11-22 — v33 · panel para ajustar el halo a mano (ATELIER conv. 1436)
+
+- Alex: «¿no lo puedo configurar yo en vivo y lo ajusto a mano?». `www.alexdasi.com/?ajustar` saca un panel (arriba a la derecha) con tamaño, ciclo, tiempo visible, opacidad, desvanecido y grosor; reescribe los @keyframes del aro en directo y se guarda en ese navegador. «Copiar valores» da el texto para pasárselo a Claude, que los deja fijos en el SCSS. Sin `?ajustar` no se carga nada (`js/esfera.js` → `js/ajustar-halo.js`).
