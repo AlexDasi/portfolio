@@ -8128,30 +8128,66 @@ html.tema-dia body {
   }
 }
 @keyframes punto-onda {
-  0% {
+  0.00% {
     scale: 0;
     opacity: 1;
   }
-  14% {
-    scale: 0.55;
-    opacity: 1;
+  6.33% {
+    scale: 0.176;
+    opacity: 0.815;
   }
-  30% {
-    scale: 0.85;
-    opacity: 0.65;
+  12.67% {
+    scale: 0.336;
+    opacity: 0.652;
   }
-  40% {
-    scale: 1;
+  19.00% {
+    scale: 0.481;
+    opacity: 0.509;
+  }
+  25.33% {
+    scale: 0.611;
+    opacity: 0.386;
+  }
+  31.67% {
+    scale: 0.726;
+    opacity: 0.282;
+  }
+  38.00% {
+    scale: 0.825;
+    opacity: 0.196;
+  }
+  44.33% {
+    scale: 0.909;
+    opacity: 0.128;
+  }
+  50.67% {
+    scale: 0.978;
+    opacity: 0.076;
+  }
+  57.00% {
+    scale: 1.031;
+    opacity: 0.038;
+  }
+  63.33% {
+    scale: 1.069;
+    opacity: 0.015;
+  }
+  69.67% {
+    scale: 1.092;
+    opacity: 0.003;
+  }
+  76.00% {
+    scale: 1.1;
     opacity: 0;
   }
   100% {
-    scale: 1;
+    scale: 1.1;
     opacity: 0;
   }
 }
 .intro__punto:not(.is-cerca):not(.is-abierta)::after {
-  border-width: 1.5px;
-  animation: punto-onda 2.2s ease-out 0.6s infinite;
+  border-width: 2px;
+  animation: punto-onda 3s linear 0.6s infinite;
 }
 
 .intro__punto.is-cerca {

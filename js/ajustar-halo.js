@@ -5,8 +5,8 @@
 (function () {
   'use strict';
   var CLAVE = 'alexdasi-ajuste-halo';
-  // valores de la web publicada (v32): aro hasta escala 1 (≈1,9× el punto), ciclo 2,2 s, visible el 40 %
-  var BASE = { tam: 1, ciclo: 2.2, vida: 40, op: 1, suave: 1.3, linea: 1.5 };
+  // valores de la web publicada (v34, elegidos por Alex con este panel)
+  var BASE = { tam: 1.1, ciclo: 3, vida: 76, op: 1, suave: 2.35, linea: 2 };   // v34: los fijados por Alex
   var CAMPOS = [
     { k: 'tam', t: 'Tamaño máximo', min: 0.5, max: 2.5, paso: 0.05, txt: function (v) { return (v * 1.9).toFixed(1) + '× el punto'; } },
     { k: 'ciclo', t: 'Ciclo (cada cuánto sale)', min: 0.8, max: 6, paso: 0.1, txt: function (v) { return v.toFixed(1) + ' s'; } },

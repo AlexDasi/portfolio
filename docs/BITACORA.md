@@ -924,3 +924,10 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 ## 2026-11-22 — v33 · panel para ajustar el halo a mano (ATELIER conv. 1436)
 
 - Alex: «¿no lo puedo configurar yo en vivo y lo ajusto a mano?». `www.alexdasi.com/?ajustar` saca un panel (arriba a la derecha) con tamaño, ciclo, tiempo visible, opacidad, desvanecido y grosor; reescribe los @keyframes del aro en directo y se guarda en ese navegador. «Copiar valores» da el texto para pasárselo a Claude, que los deja fijos en el SCSS. Sin `?ajustar` no se carga nada (`js/esfera.js` → `js/ajustar-halo.js`).
+
+---
+
+## 2026-11-22 — v34 · halo con los valores de Alex (ATELIER conv. 1437)
+
+- Elegidos por Alex con el panel `?ajustar`: tamaño 1,10 (2,1× el punto) · ciclo 3 s · visible 76 % · opacidad 1 · desvanecido 2,35 · línea 2 px. Los @keyframes del SCSS salen con la misma fórmula del panel; el panel arranca ya con estos valores («Como está»).
+- Ojo: con un error de sintaxis, `sass` dejó `css/style.css` cortado (−8.000 líneas). Mirar siempre `git diff --stat css/style.css` antes de subir.
