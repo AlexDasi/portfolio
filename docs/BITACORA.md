@@ -934,6 +934,9 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 
 ---
 
+## 2026-11-22 — v38 · Mas Vesprada: vídeo de la finca más lento (ATELIER conv. 1448)
+- Alex: «va demasiado rápido». Regrabado en cámara lenta ×1,8 (nuevo `lento` en el grabador): 23 s → ~21 s tras quitar la pausa, dibujo de la finca despacio y recorrido de 5200 px en lugar de 6200. Mismo fichero en `_scroll-desktop-hd` y `_caso-v0`. Marcha atrás: 57eb270.
+
 ## 2026-11-22 — v37 · Mas Vesprada: el vídeo de la finca dibujándose abre la ficha (ATELIER conv. 1448)
 - Nuevo `_caso-v0.mp4` (el mismo del hd) como primer medio de la ficha; la imagen d1 «El plano se dibuja» queda oculta. Marcha atrás: dd256e7.
 
