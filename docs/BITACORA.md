@@ -934,6 +934,9 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 
 ---
 
+## 2026-11-22 — v37 · Mas Vesprada: el vídeo de la finca dibujándose abre la ficha (ATELIER conv. 1448)
+- Nuevo `_caso-v0.mp4` (el mismo del hd) como primer medio de la ficha; la imagen d1 «El plano se dibuja» queda oculta. Marcha atrás: dd256e7.
+
 ## 2026-11-22 — v36 · Mas Vesprada: vídeo principal = cómo se dibuja la finca; recorrido lento y sin temblor (ATELIER conv. 1448)
 - `_scroll-desktop-hd.mp4` (miniatura principal) ahora arranca desde la carga: el preloader «Dibujando la finca» y la masía construyéndose, luego recorrido lento; 12,5 s, 0,8 MB. Póster = fotograma con la finca ya dibujada.
 - `_caso-v2.mp4` («Del plano a la noche») 7 s → 17,5 s; `_caso-pm.mp4` regrabado. Los tres con el scroll sincronizado con el reloj manual (`scrollSync`): parados 1-2 %, sin temblor.
