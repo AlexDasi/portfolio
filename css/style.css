@@ -8127,16 +8127,27 @@ html.tema-dia body {
     transition: opacity 0.4s ease 0.2s;
   }
 }
-@keyframes punto-respira {
-  0%, 100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color) 0%, transparent), 0 0 0.1em color-mix(in srgb, var(--accent-color) 30%, transparent);
+@keyframes punto-onda {
+  0% {
+    scale: 0;
+    opacity: 1;
   }
-  50% {
-    box-shadow: 0 0 0 0.035em color-mix(in srgb, var(--accent-color) 22%, transparent), 0 0 0.32em color-mix(in srgb, var(--accent-color) 60%, transparent);
+  28% {
+    scale: 1.1;
+    opacity: 0.95;
+  }
+  80% {
+    scale: 2;
+    opacity: 0;
+  }
+  100% {
+    scale: 2;
+    opacity: 0;
   }
 }
-.intro__punto:not(.is-cerca):not(.is-abierta) {
-  animation: punto-respira 2.6s ease-in-out 0.8s infinite;
+.intro__punto:not(.is-cerca):not(.is-abierta)::after {
+  border-width: 1.5px;
+  animation: punto-onda 2.2s ease-out 0.6s infinite;
 }
 
 .intro__punto.is-cerca {

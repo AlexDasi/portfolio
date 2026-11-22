@@ -904,3 +904,11 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - Alex: «el punto quieto y con un pequeño parpadeo, un halo pequeño; al hacer hover, el mismo efecto de antes; al hacer clic, la bola».
 - Causa de que no hiciera nada: el v27 dejaba el aro (`::after`) con `scale` y `opacity` en `!important`, y una animación no puede con eso.
 - Fuera los bloques v24 (latido) y v27 (desde dentro). Reposo: `punto-respira` (brillo pequeño del acento, 2,6 s), sin moverse ni crecer. Hover (`.is-cerca`): el de la v4 (imán, crece ×1,9, brillo y aro `punto-aro`). Esfera abierta: nada.
+
+---
+
+## 2026-11-22 — v30-v31 · halo de línea, la E pasa por el punto, lima de día más oscuro (ATELIER conv. 1432)
+
+- **Halo del punto (v30):** en reposo, solo una línea (el `::after`, 1,5 px del acento) que sale del centro, se abre hasta el doble del diámetro y se desvanece, cada 2,2 s. Sin brillo, sin latido (fuera `punto-respira`). El hover sigue igual (v4).
+- **Cambio de material con la E (v31, `js/esfera.js`):** la esfera se encoge hasta el tamaño del punto y se convierte en él (disco plano del acento encima); por debajo cambia de piel (ya precargada) y, cuando pinta, el punto crece y es la esfera nueva. Antes se encogía a .72, desaparecía mientras cargaba y volvía.
+- **Lima de día (v31, `header-baraja.php`):** Alex: «el lima de día queda muy bien pero no se ve casi». De noche sigue `#ECF98E` (sagrado); de día, `#B8D01A`. Cambia la regla v20 («el lima es siempre #ECF98E de día y de noche»): ahora solo de noche.

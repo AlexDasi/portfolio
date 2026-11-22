@@ -2434,11 +2434,16 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
 // · Reposo: el punto no se mueve ni crece; solo respira un halo pequeño del acento (brillo que sube y baja).
 // · Hover (.is-cerca, js/esfera.js): el de la v4 — imán, crece, brillo y el aro fino que late (punto-aro).
 // · Con la esfera abierta: nada.
-@keyframes punto-respira {
-  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-color) 0%, transparent), 0 0 .1em color-mix(in srgb, var(--accent-color) 30%, transparent); }
-  50% { box-shadow: 0 0 0 .035em color-mix(in srgb, var(--accent-color) 22%, transparent), 0 0 .32em color-mix(in srgb, var(--accent-color) 60%, transparent); }
+// v30 (Alex, conv. 1432: «un halo que es una línea, simplemente una línea: sale desde el centro del punto, se abre hasta el
+// doble del diámetro y se va difuminando hasta desaparecer. Sin sombreados ni nada que parpadee o lata; lo mismo que al pasar
+// el ratón, pero mucho más pequeño»). En reposo: solo el aro (::after, 1,5 px del acento), de escala 0 a 2 y de opacidad 1 a 0.
+@keyframes punto-onda {
+  0% { scale: 0; opacity: 1; }
+  28% { scale: 1.1; opacity: .95; }   // dentro del punto no se ve: sale del borde ya con fuerza
+  80% { scale: 2; opacity: 0; }
+  100% { scale: 2; opacity: 0; }
 }
-.intro__punto:not(.is-cerca):not(.is-abierta) { animation: punto-respira 2.6s ease-in-out .8s infinite; }
+.intro__punto:not(.is-cerca):not(.is-abierta)::after { border-width: 1.5px; animation: punto-onda 2.2s ease-out .6s infinite; }
 .intro__punto.is-cerca { animation: none; }
 .intro__punto.is-abierta, .intro__punto.is-abierta::after { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { .intro__punto, .intro__punto::after { animation: none !important; } }
