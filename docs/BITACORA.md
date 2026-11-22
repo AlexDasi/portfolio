@@ -934,6 +934,9 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 
 ---
 
+## 2026-11-22 — v39 · Mas Vesprada: del plano entero a los edificios (ATELIER conv. 1448)
+- Alex: tardaba mucho en empezar a verse los elementos de la finca. Causa: el recorrido anterior solo llegaba a 5.200 px (vistas generales); los edificios empiezan hacia 6.000 px. Ahora: finca dibujándose → vista entera → acercamiento rápido → Invernadero, Era, Patio de la Higuera y Sala del Lagar, ~21 s, 1,0 MB. Mismo fichero en `_scroll-desktop-hd` y `_caso-v0`. Marcha atrás: 3091ac9.
+
 ## 2026-11-22 — v38 · Mas Vesprada: vídeo de la finca más lento (ATELIER conv. 1448)
 - Alex: «va demasiado rápido». Regrabado en cámara lenta ×1,8 (nuevo `lento` en el grabador): 23 s → ~21 s tras quitar la pausa, dibujo de la finca despacio y recorrido de 5200 px en lugar de 6200. Mismo fichero en `_scroll-desktop-hd` y `_caso-v0`. Marcha atrás: 57eb270.
 
