@@ -931,3 +931,12 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 
 - Elegidos por Alex con el panel `?ajustar`: tamaño 1,10 (2,1× el punto) · ciclo 3 s · visible 76 % · opacidad 1 · desvanecido 2,35 · línea 2 px. Los @keyframes del SCSS salen con la misma fórmula del panel; el panel arranca ya con estos valores («Como está»).
 - Ojo: con un error de sintaxis, `sass` dejó `css/style.css` cortado (−8.000 líneas). Mirar siempre `git diff --stat css/style.css` antes de subir.
+
+---
+
+## 2026-11-22 — v35 · vídeos de las fichas regrabados en modo paso (ATELIER conv. 1439)
+
+- 44 vídeos de `content/baraja` regrabados fotograma a fotograma (30 distintos por segundo, sin repetidos): elsa-moreno d2·v2, berto-sanchez v2, berto-sanchez-studio hd·pm·z1·v1·v2 e imperio · casa-albar · coccio · solvera · mas-vesprada · brot · vapor · reissue · nomada hd·pm·v1·v2. Mismos nombres (`?v=` refresca la caché); `hd` = `_scroll-desktop-hd.mp4` + `_poster-1600.webp` + `_poster.jpg`.
+- Fotogramas parados en movimiento (antes → después): scroll/portadas 15-47 % → 0-4 %; los de clic/hover/teclado dependen de las transiciones propias de cada web.
+- Peso: hd ~0,7-1,4 MB, pm ~0,5-0,9 MB, v1/v2 ~0,04-1,3 MB (Mas Vesprada con crf 34-40 por el grano WebGL).
+- Respaldo: commit anterior 2cb9489 (v34).
