@@ -15,6 +15,8 @@
 (function () {
   'use strict';
   var q = new URLSearchParams(location.search);
+  // v33 (Alex, conv. 1436): con ?ajustar en la URL sale el panel para ajustar el halo del punto en directo (js/ajustar-halo.js)
+  if (q.has('ajustar')) { var aj = document.createElement('script'); aj.src = '/js/ajustar-halo.js?v=33'; aj.defer = true; document.head.appendChild(aj); }
   var PIELES = window.__PIELES || ['chicle', 'glaseado', 'prisma', 'gema'];
   var piel = PIELES.indexOf(window.__PIEL) >= 0 ? window.__PIEL : 'glaseado';
   var forzada = ['solare', 'chicle', 'glaseado', 'gota', 'prisma', 'cuarzo', 'gema'].indexOf(q.get('piel')) >= 0;
