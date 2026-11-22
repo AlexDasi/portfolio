@@ -934,6 +934,11 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 
 ---
 
+## 2026-11-22 — v36 · Mas Vesprada: vídeo principal = cómo se dibuja la finca; recorrido lento y sin temblor (ATELIER conv. 1448)
+- `_scroll-desktop-hd.mp4` (miniatura principal) ahora arranca desde la carga: el preloader «Dibujando la finca» y la masía construyéndose, luego recorrido lento; 12,5 s, 0,8 MB. Póster = fotograma con la finca ya dibujada.
+- `_caso-v2.mp4` («Del plano a la noche») 7 s → 17,5 s; `_caso-pm.mp4` regrabado. Los tres con el scroll sincronizado con el reloj manual (`scrollSync`): parados 1-2 %, sin temblor.
+- Marcha atrás: commit anterior 974f749.
+
 ## 2026-11-22 — v35 · vídeos de las fichas regrabados en modo paso (ATELIER conv. 1439)
 
 - 44 vídeos de `content/baraja` regrabados fotograma a fotograma (30 distintos por segundo, sin repetidos): elsa-moreno d2·v2, berto-sanchez v2, berto-sanchez-studio hd·pm·z1·v1·v2 e imperio · casa-albar · coccio · solvera · mas-vesprada · brot · vapor · reissue · nomada hd·pm·v1·v2. Mismos nombres (`?v=` refresca la caché); `hd` = `_scroll-desktop-hd.mp4` + `_poster-1600.webp` + `_poster.jpg`.
