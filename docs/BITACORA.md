@@ -962,3 +962,10 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - Menú de móvil y tablet (≤ 1280): botón = bola del acento; el panel crece en círculo desde él y las palabras suben con la cortina de Berto v14. `?menu=acento` (por defecto, fondo del acento) · `?menu=modo` (fondo de día/noche); se recuerda en la visita. Color y Material (piel de la esfera) dentro del menú; fuera el botón suelto de la esfera en ≤ 1280.
 - Esfera fija por visita: misma regla que el acento (v12): se sortea al entrar o recargar; navegar dentro la mantiene; ya no cambia al reabrirla ni en Hablamos. Solo cambia con Material del menú o la E.
 - Marcha atrás: 5ba645c (v39).
+
+## 2026-11-23 — v41 · menú más rápido y que se recoge, fondo del modo por defecto, pisos en Sobre mí y Producto (ATELIER conv. 1477)
+- Alex: «tarda mucho toda la animación» → círculo .65 → .42 s al abrir y .38 → .3 s al cerrar; palabras .7 → .45 s con .04 s entre ellas.
+- «Al elegir un link, que se vuelva a reducir el círculo»: el círculo se recoge hacia el botón y después se navega (Cmd/Ctrl, WhatsApp y mailto, como siempre).
+- «Al revés: el día o la noche mandando, el acento solo cambiando»: fondo y tinta del modo, las palabras en el acento (de día, su versión con tinta, `--acento-texto`), subrayado y bola de cerrar en el acento. Por defecto; `?menu=acento` sigue enseñando el de fondo acento.
+- Pisos imantados también en Sobre mí (hola · lo que hago · cómo trabajo · ATELIER · de dónde vengo · lo que me llevo · Hablamos) y en Producto (portada · un caso por piso · Hablamos), en móvil y tablet. De dónde vengo: los seis hitos en tira horizontal. Producto hace scroll en html: el body deja de ser contenedor de scroll (overflow-x: clip) para que el html imante. Medido en iPhone 13, SE e iPad Mini.
+- Marcha atrás: e62c24e (v40).

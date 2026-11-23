@@ -4,7 +4,7 @@ if (($_GET['s'] ?? '') === 'uxui') { header('Location: uxui.php' . ((($_GET['lan
 /* About v2 (feedback 79, rama rediseno-baraja-2026-11, ATELIER conv. 1330): rediseñado en blanco roto con el
    lenguaje de la home (antes se traían tal cual las pantallas oscuras). Misma estructura que la home: pantallas
    completas que se pasan con «los pisos» o la flecha. ?s=about|uxui|contact abre en esa pantalla. */
-$bodyClass = 'sitio-baraja pagina-about';
+$bodyClass = 'sitio-baraja pagina-about pisos-movil'; /* v41 (Alex, 23/11): en móvil, pisos imantados como la home */
 $pageTitle = ['es' => 'Sobre mí · Alex Dasi', 'en' => 'About · Alex Dasi']; /* v9 (QA H-19): título por idioma */
 $canonParams = isset($_GET['s']) && in_array($_GET['s'], ['about', 'process', 'uxui', 'contact'], true) && $_GET['s'] !== 'about' ? ['s' => $_GET['s']] : [];
 include 'php-elements/header-baraja.php';

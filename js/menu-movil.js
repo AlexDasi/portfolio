@@ -10,7 +10,7 @@
   var root = document.documentElement;
   var cerrarBtn = panel.querySelector('[data-menu-cerrar]');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var DUR = reduce ? 0 : 380;
+  var DUR = reduce ? 0 : 300; // v41: igual que el cierre del círculo en el CSS (.3 s)
   var t = 0;
   var meta = document.querySelector('meta[name="theme-color"]'), metaAntes = null;
 
@@ -83,7 +83,13 @@
     var a = e.target.closest && e.target.closest('a');
     if (!a) return;
     if (a.hasAttribute('data-menu-contacto') && document.getElementById('contacto')) { e.preventDefault(); cerrar(true); irAlPie(); return; }
-    cerrar(true); // el enlace navega; el panel se va
+    // v41 (Alex, 23/11: «al elegir un link, que se vuelva a reducir el círculo, no que salte de golpe»): primero se recoge el
+    // círculo hacia el botón y, cuando ha terminado, se navega. Con Cmd/Ctrl o en pestaña nueva, el navegador manda.
+    var href = a.getAttribute('href') || '';
+    if (e.metaKey || e.ctrlKey || e.shiftKey || a.target === '_blank' || /^(mailto:|tel:|https?:\/\/wa\.me)/.test(href) || reduce) { cerrar(true); return; }
+    e.preventDefault();
+    cerrar(true);
+    setTimeout(function () { location.href = a.href; }, DUR);
   });
   // v15 (Alex, 21/11): «Contact» de arriba lleva al pie de la página en la que estés, en todos los tamaños: en los pisos de
   // escritorio, al último piso (el pie); en las páginas con scroll (y en móvil/tablet), baja a #contacto.

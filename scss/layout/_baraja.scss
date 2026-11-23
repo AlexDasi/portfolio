@@ -1298,21 +1298,24 @@ $menu-ease: cubic-bezier(.33, 1, .68, 1);
     clip-path: circle(0px at var(--mx) var(--my));
     visibility: hidden;
     pointer-events: none;
-    transition: clip-path .38s cubic-bezier(.5, 0, .75, 0), visibility 0s linear .38s, background-color .4s ease;
+    transition: clip-path .3s cubic-bezier(.5, 0, .75, 0), visibility 0s linear .3s, background-color .4s ease; // v41 (Alex: «tarda mucho»): cierre .38 → .3 s
     &[hidden] { display: none; }
   }
-  // B · el fondo del modo (día: papel; noche: negro) con la tinta del modo y el acento en los detalles
-  html.menu-modo .menu-movil {
+  // v41 (Alex, 23/11: «al revés: el día o la noche mandando y el color acento solo en lo demás; que el menú no tenga el acento
+  // de fondo»): fondo y tinta del modo; el acento en las palabras (de día, su versión con tinta para que se lea en el papel),
+  // en el subrayado y en la bola de cerrar. Es la de por defecto; ?menu=acento enseña la de fondo acento.
+  html:not(.menu-acento) .menu-movil {
     --menu-bg: var(--bkg-color);
     --menu-tinta: var(--main-color);
     --menu-linea: var(--linea);
     --menu-subraya: var(--accent-color);
   }
+  html:not(.menu-acento) .menu-movil__enlace { color: var(--acento-texto); }
   html.menu-abierto .menu-movil {
     clip-path: circle(150% at var(--mx) var(--my));
     visibility: visible;
     pointer-events: auto;
-    transition: clip-path .65s $menu-ease, visibility 0s, background-color .4s ease;
+    transition: clip-path .42s $menu-ease, visibility 0s, background-color .4s ease; // v41: apertura .65 → .42 s
   }
   html.menu-abierto, html.menu-abierto body { overflow: hidden; } // el fondo no se mueve (la web hace scroll en body)
 
@@ -1327,8 +1330,8 @@ $menu-ease: cubic-bezier(.33, 1, .68, 1);
   // la X, en el mismo sitio que el botón: en el acento es una bola de tinta; en el modo, la del acento
   .menu-movil__cerrar { color: var(--cursor-color); }
   .menu-movil__cerrar .barra-movil__bola { background: $tinta; }
-  html.menu-modo .menu-movil__cerrar { color: $tinta; }
-  html.menu-modo .menu-movil__cerrar .barra-movil__bola { background: var(--cursor-color); }
+  html:not(.menu-acento) .menu-movil__cerrar { color: $tinta; }
+  html:not(.menu-acento) .menu-movil__cerrar .barra-movil__bola { background: var(--cursor-color); }
 
   .menu-movil__enlaces {
     display: flex;
@@ -1357,15 +1360,15 @@ $menu-ease: cubic-bezier(.33, 1, .68, 1);
   .menu-movil__txt {
     display: inline-block;
     translate: 0 110%;
-    transition: translate .25s ease-in;
+    transition: translate .2s ease-in;
     // el activo, subrayado (en el acento: tinta; en el modo: el acento)
     background: linear-gradient(var(--menu-subraya), var(--menu-subraya)) left calc(100% - .06em) / 0 3px no-repeat;
   }
   .menu-movil__enlace.is-active .menu-movil__txt { background-size: 100% 3px; }
   html.menu-abierto .menu-movil__txt {
     translate: 0 0;
-    transition: translate .7s $menu-ease;
-    transition-delay: calc(.14s + var(--i, 0) * .06s);
+    transition: translate .45s $menu-ease;
+    transition-delay: calc(.06s + var(--i, 0) * .04s); // v41: las palabras llegan a la vez que el círculo (antes .14 s + .06 s cada una, .7 s)
   }
 
   .menu-movil__pie {
@@ -1381,7 +1384,7 @@ $menu-ease: cubic-bezier(.33, 1, .68, 1);
     opacity: 0;
     transition: opacity .2s ease;
   }
-  html.menu-abierto .menu-movil__pie { opacity: 1; transition: opacity .5s ease .38s; }
+  html.menu-abierto .menu-movil__pie { opacity: 1; transition: opacity .35s ease .2s; }
   .menu-movil__fila { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 16px; width: 100%; }
   .menu-movil__fila--ajustes { justify-content: flex-start; gap: 0 22px; }
   .menu-movil__idioma { display: flex; margin-left: -10px; }
@@ -2631,20 +2634,20 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
 @media (max-width: 1280px) {
   #works { padding-bottom: 0; }
   .pantalla--baraja { height: 100svh; overflow: hidden; }
-  body.home-pisos .pie { min-height: 100svh; padding-bottom: 0; }
-  body.home-pisos .pie .sm--habla { min-height: 100svh; padding-bottom: calc(22px + env(safe-area-inset-bottom)); }
+  :is(body.home-pisos, body.pisos-movil) .pie { min-height: 100svh; padding-bottom: 0; }
+  :is(body.home-pisos, body.pisos-movil) .pie .sm--habla { min-height: 100svh; padding-bottom: calc(22px + env(safe-area-inset-bottom)); }
 }
 @media (max-width: 1280px) and (min-height: 501px) and (hover: none) {
   body.home-pisos .pantalla--banner { scroll-snap-align: start; scroll-snap-stop: always; }
-  body.home-pisos .pie { scroll-snap-align: start; scroll-snap-stop: always; }
+  :is(body.home-pisos, body.pisos-movil) .pie { scroll-snap-align: start; scroll-snap-stop: always; }
 }
 // el pie en pantallas bajas: la esfera más pequeña para que «Hablamos» quepa en un pantallazo
 @media (max-width: 1280px) and (max-height: 640px) {
-  body.home-pisos .pie .sm--habla { padding-top: 60px !important; padding-bottom: 16px; }
-  body.home-pisos .pie .sm__habla-bola { width: min(34vw, 200px); margin-bottom: 8px; }
-  body.home-pisos .pie .sm__titulo--enorme { font-size: clamp(48px, 15vw, 80px); }
-  body.home-pisos .pie .sm__entrada { font-size: 15px; margin-top: 10px; }
-  body.home-pisos .pie .sm__botones { margin-top: 16px; }
+  :is(body.home-pisos, body.pisos-movil) .pie .sm--habla { padding-top: 60px !important; padding-bottom: 16px; }
+  :is(body.home-pisos, body.pisos-movil) .pie .sm__habla-bola { width: min(34vw, 200px); margin-bottom: 8px; }
+  :is(body.home-pisos, body.pisos-movil) .pie .sm__titulo--enorme { font-size: clamp(48px, 15vw, 80px); }
+  :is(body.home-pisos, body.pisos-movil) .pie .sm__entrada { font-size: 15px; margin-top: 10px; }
+  :is(body.home-pisos, body.pisos-movil) .pie .sm__botones { margin-top: 16px; }
 }
 
 // --- La pista de bajar: con el imán, el botón grande sobraba; queda una pista fina que se va al primer gesto ---
@@ -2656,4 +2659,75 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
 }
 @media (max-width: 1280px) and (prefers-reduced-motion: no-preference) {
   .bajar__bola::after { animation: none; }
+}
+
+// ============================================================
+// v41 (Alex, 23/11: «no has aplicado lo de la paginación en Sobre mí y en Producto»): las dos páginas, en móvil y tablet,
+// también por pisos imantados de una pantalla. Sobre mí: cada bloque es un piso (hola · lo que hago · cómo trabajo ·
+// ATELIER · de dónde vengo · lo que me llevo · Hablamos). Producto: portada · un caso por piso · Hablamos.
+// ============================================================
+@media (max-width: 1280px) {
+  // Sobre mí: la sección deja de tener aire propio; lo pone cada bloque, que mide al menos una pantalla
+  .pisos-movil .sm-movil .pantalla--sm:not(.pie) .sm { padding: 0 7vw !important; display: block; min-height: 0; }
+  .pisos-movil .sm-movil .pantalla--sm:not(.pie) .sm > * {
+    box-sizing: border-box;
+    min-height: 100svh;
+    margin-top: 0 !important;
+    padding-top: calc(84px + env(safe-area-inset-top));
+    padding-bottom: calc(28px + env(safe-area-inset-bottom));
+    align-content: center; // centra en vertical donde el navegador lo entiende; si no, arriba con su aire
+  }
+  // el bloque de ATELIER (con fondo) no puede medir una pantalla entera: va dentro de un piso con aire alrededor
+  .pisos-movil .sm-movil .pantalla--sm:not(.pie) .sm > .sm__bloque { min-height: 0; padding: 26px 22px 22px; margin: calc(50svh - 160px) 0 !important; }
+  .pisos-movil .sm-movil .sm--tray .sm__hitos { grid-template-columns: 1fr 1fr; gap: 0 18px; }
+  .pisos-movil .sm-movil .sm--tray .sm__hitos li { padding: 10px 0 12px; }
+
+  // Producto: la portada y cada caso, un piso
+  .pagina-uxui--pisos main.ux { padding: 0 7vw !important; }
+  .pagina-uxui--pisos .ux__seccion { display: none; } // cada caso ya lleva su «01 / 05»
+  .pagina-uxui--pisos .ux__cab, .pagina-uxui--pisos .ux__caso {
+    box-sizing: border-box;
+    min-height: 100svh;
+    margin: 0 !important;
+    padding-top: calc(76px + env(safe-area-inset-top));
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pagina-uxui--pisos .ux__casos { margin: 0; }
+}
+@media (max-width: 1280px) and (min-height: 501px) and (hover: none) {
+  body.pisos-movil:not(.pagina-uxui--pisos), html:has(> body.pagina-uxui--pisos) { scroll-snap-type: y mandatory; } // Producto hace scroll en html, no en body
+  body.pagina-uxui--pisos { overflow: visible; overflow-x: clip; } // si el body es contenedor de scroll (sin moverse), se queda con los imanes y el html no imanta
+  .pisos-movil .sm-movil .pantalla--sm:not(.pie) .sm > *, .pagina-uxui--pisos .ux__cab, .pagina-uxui--pisos .ux__caso { scroll-snap-align: start; scroll-snap-stop: always; }
+  .pisos-movil .sm-movil .pantalla--sm:not(.pie) .sm > .sm__bloque { scroll-snap-align: center; }
+}
+
+@media (max-width: 1280px) {
+  // De dónde vengo: los seis hitos en una tira que se pasa con el dedo (en dos columnas eran 1,2-1,6 pantallas)
+  .pisos-movil .sm-movil .sm--tray .sm__hitos {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: min(72vw, 340px);
+    gap: 0 22px;
+    margin-left: -7vw;
+    margin-right: -7vw;
+    padding: 0 7vw 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 7vw;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+    li { scroll-snap-align: start; padding: 12px 0 0; }
+  }
+}
+@media (max-width: 1280px) and (max-height: 640px) {
+  // pantallas bajas: Cómo trabajo un punto más compacto para que quepa en un pantallazo
+  .pisos-movil .sm-movil .sm--como .sm__pasos li { padding-top: 7px; padding-bottom: 7px; }
+  .pisos-movil .sm-movil .sm--como .sm__nota { margin-top: 10px; }
+  .pisos-movil .sm-movil .sm--como .sm__h2 { margin-bottom: 10px; }
+  .pisos-movil .sm-movil .sm--como .sm__item-p { font-size: 13px; line-height: 1.4; }
+  .pisos-movil .sm-movil .pantalla--sm:not(.pie) .sm > * { padding-top: calc(70px + env(safe-area-inset-top)); padding-bottom: 16px; }
 }

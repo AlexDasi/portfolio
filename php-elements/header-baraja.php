@@ -121,10 +121,10 @@ $assetVersion = static function (string $relativePath): string {
             try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (bolaQ === 'abajo-centro') html.classList.add('bola-abajo-centro'); /* v25: fuera las composiciones ya descartadas (?bola=abajo|centro, ?hablamos=…) */ } catch (e) {}
             var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', tema === 'noche' ? '#000000' : '#f5f3ec');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
-            /* v40 (Alex, 23/11): fondo del menú del móvil para comparar: ?menu=acento (por defecto) · ?menu=modo (día/noche); se recuerda en la visita */
+            /* v40 → v41 (Alex, 23/11): fondo del menú del móvil: ?menu=modo (día/noche, por defecto desde v41) · ?menu=acento; se recuerda en la visita */
             var mv = q.get('menu');
             try { if (mv === 'modo' || mv === 'acento') sessionStorage.setItem('alexdasi-menu', mv); else mv = sessionStorage.getItem('alexdasi-menu'); } catch (e) {}
-            html.classList.add(mv === 'modo' ? 'menu-modo' : 'menu-acento');
+            html.classList.add(mv === 'acento' ? 'menu-acento' : 'menu-modo'); /* v41: por defecto, el fondo del modo */
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));
             /* v6 (feedback 115): vuelven los 6 de siempre + 3 «locos» (magenta, verde ácido, naranja eléctrico). Al abrir sale uno
                al azar y el espacio salta a otro AL AZAR (nunca el mismo que hay). Tinta encima ≥ 6,4:1 en día y ≥ 7,3:1 sobre el

@@ -10,7 +10,7 @@
 /* v19 (Alex, 21/11: «la propuesta está bien; tres pisos y todos los proyectos en un mismo slider horizontal, como en mi web
    antigua»): ya es la de por defecto en escritorio (?vista=lista enseña la lista de antes) */
 $vistaPisos = (($_GET['vista'] ?? '') !== 'lista');
-$bodyClass = $vistaPisos ? 'sitio-baraja pagina-uxui pagina-uxui--pisos' : 'sitio-baraja pagina-proyecto pagina-uxui';
+$bodyClass = $vistaPisos ? 'sitio-baraja pagina-uxui pagina-uxui--pisos pisos-movil' : 'sitio-baraja pagina-proyecto pagina-uxui'; /* v41: pisos-movil = pisos imantados en móvil */
 $sinSwiper = !$vistaPisos;
 $pageTitle = ['es' => 'Producto · Alex Dasi', 'en' => 'Product · Alex Dasi'];
 $metaDescription = ['es' => 'Casos de producto digital y UX/UI de Alex Dasi: Tulong, Idrica, ATELIER, Clustag y Knowadays.', 'en' => 'Digital product and UX/UI case studies by Alex Dasi: Tulong, Idrica, ATELIER, Clustag and Knowadays.'];
