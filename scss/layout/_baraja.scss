@@ -1298,7 +1298,7 @@ $menu-ease: cubic-bezier(.33, 1, .68, 1);
     clip-path: circle(0px at var(--mx) var(--my));
     visibility: hidden;
     pointer-events: none;
-    transition: clip-path .3s cubic-bezier(.5, 0, .75, 0), visibility 0s linear .3s, background-color .4s ease; // v41 (Alex: «tarda mucho»): cierre .38 → .3 s
+    transition: clip-path .3s cubic-bezier(.65, 0, .35, 1), visibility 0s linear .3s, background-color .4s ease; // v41 (Alex: «tarda mucho»): cierre .38 → .3 s; curva suave a los dos lados para que se vea recogerse
     &[hidden] { display: none; }
   }
   // v41 (Alex, 23/11: «al revés: el día o la noche mandando y el color acento solo en lo demás; que el menú no tenga el acento
