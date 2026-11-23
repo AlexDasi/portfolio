@@ -77,6 +77,15 @@
       e.preventDefault();
       works.scrollIntoView({ behavior: reduceQ ? 'auto' : 'smooth', block: 'start' });
     });
+    // v40 (Alex, 23/11): con la página imantada la pista sobra en cuanto te mueves: se va al primer gesto (y no vuelve)
+    var quitarPista = function () {
+      var y = Math.max(document.body.scrollTop || 0, document.documentElement.scrollTop || 0);
+      if (y < 24) return;
+      document.documentElement.classList.add('ya-bajo');
+      document.body.removeEventListener('scroll', quitarPista); window.removeEventListener('scroll', quitarPista);
+    };
+    document.body.addEventListener('scroll', quitarPista, { passive: true });
+    window.addEventListener('scroll', quitarPista, { passive: true });
   }
 })();
 

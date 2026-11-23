@@ -1209,13 +1209,17 @@ html.cursor-fusion {
 }
 
 // ============================================================
-// v8 (feedback 159 + QA móvil H-06): cabecera del móvil (≤ 768 px) con fondo + menú a pantalla completa
+// v8 (feedback 159 + QA móvil H-06): cabecera del móvil con fondo + menú a pantalla completa
+// v40 (Alex, 23/11): vale para móvil Y tablet (≤ 1280 px, la maqueta apilada). El botón es un círculo del acento; el panel
+// crece en círculo desde él (clip-path, la cortina circular de Berto v14) y las palabras suben desde su máscara.
+// Fondo para comparar: html.menu-acento (el acento claro de siempre, tinta encima) · html.menu-modo (el del día o la noche).
 // ============================================================
 .barra-movil, .menu-movil { display: none; font-family: $main-font; }
 .menu-movil button { font-family: $main-font; }
-@media (max-width: 768px) {
-  // en móvil, idioma y accesos sueltos se van al menú (a 320 px o con letra grande se pisaban)
-  .sitio-baraja .lang-switch, .sitio-baraja .nav-sutil, .sitio-baraja .nav--top { display: none !important; }
+$menu-ease: cubic-bezier(.33, 1, .68, 1);
+@media (max-width: 1280px) {
+  // en móvil y tablet, idioma, accesos sueltos y el botón de la esfera se van al menú
+  .sitio-baraja .lang-switch, .sitio-baraja .nav-sutil, .sitio-baraja .nav--top, .sitio-baraja .piel-3d { display: none !important; }
   body.sitio-baraja::before { display: none; } // el degradado de antes lo sustituye el fondo de la barra
 
   .barra-movil {
@@ -1226,7 +1230,7 @@ html.cursor-fusion {
     inset: 0 0 auto 0;
     z-index: $z-top + 2;
     min-height: 56px;
-    padding: env(safe-area-inset-top) max(6px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+    padding: env(safe-area-inset-top) max(8px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
     background: color-mix(in srgb, var(--bkg-color) 95%, transparent);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
@@ -1243,40 +1247,73 @@ html.cursor-fusion {
     text-decoration: none;
     white-space: nowrap;
   }
+  // el botón: zona de toque de 44 px y, dentro, la bola del acento con dos líneas en tinta
   .barra-movil__abrir {
     display: inline-grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     padding: 0;
     border: 0;
     background: none;
-    color: var(--main-color);
+    color: $tinta;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    svg { width: 24px; height: 24px; display: block; }
-    &:focus-visible { outline: 1px solid var(--accent-color); outline-offset: -4px; }
+    &:focus-visible { outline: 1px solid var(--main-color); outline-offset: -2px; border-radius: 50%; }
   }
+  .barra-movil__bola {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--cursor-color);
+    transition: scale .25s $menu-ease, background-color .4s ease;
+    svg { width: 22px; height: 22px; display: block; }
+  }
+  .barra-movil__abrir:active .barra-movil__bola { scale: .9; }
   // en las fichas, la barra se aparta al bajar y vuelve al subir (como la cabecera de escritorio)
   html.fp-baja .pagina-ficha .barra-movil { opacity: 0; translate: 0 -14px; pointer-events: none; }
 
   .menu-movil {
+    --mx: calc(100% - 32px);
+    --my: 28px;
+    --menu-bg: var(--cursor-color);
+    --menu-tinta: #{$tinta};
+    --menu-linea: #{rgba($tinta, .22)};
+    --menu-subraya: #{$tinta};
     display: flex;
     flex-direction: column;
     position: fixed;
     inset: 0;
     z-index: $z-top + 3;
-    padding: env(safe-area-inset-top) max(6px, env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-    background: var(--bkg-color);
-    color: var(--main-color);
+    padding: env(safe-area-inset-top) max(8px, env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    background: var(--menu-bg);
+    color: var(--menu-tinta);
     overflow-y: auto;
     overscroll-behavior: contain;
-    opacity: 0;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+    // cerrado: un punto en el centro del botón; al cerrar se recoge más rápido de lo que se abre
+    clip-path: circle(0px at var(--mx) var(--my));
     visibility: hidden;
-    transition: opacity .38s ease, visibility 0s linear .38s;
+    pointer-events: none;
+    transition: clip-path .38s cubic-bezier(.5, 0, .75, 0), visibility 0s linear .38s, background-color .4s ease;
     &[hidden] { display: none; }
   }
-  html.menu-abierto .menu-movil { opacity: 1; visibility: visible; transition: opacity .38s ease, visibility 0s; }
+  // B · el fondo del modo (día: papel; noche: negro) con la tinta del modo y el acento en los detalles
+  html.menu-modo .menu-movil {
+    --menu-bg: var(--bkg-color);
+    --menu-tinta: var(--main-color);
+    --menu-linea: var(--linea);
+    --menu-subraya: var(--accent-color);
+  }
+  html.menu-abierto .menu-movil {
+    clip-path: circle(150% at var(--mx) var(--my));
+    visibility: visible;
+    pointer-events: auto;
+    transition: clip-path .65s $menu-ease, visibility 0s, background-color .4s ease;
+  }
   html.menu-abierto, html.menu-abierto body { overflow: hidden; } // el fondo no se mueve (la web hace scroll en body)
 
   .menu-movil__barra {
@@ -1285,50 +1322,68 @@ html.cursor-fusion {
     justify-content: space-between;
     min-height: 56px;
     padding-right: 0;
+    .barra-movil__nombre { color: var(--menu-tinta); }
   }
+  // la X, en el mismo sitio que el botón: en el acento es una bola de tinta; en el modo, la del acento
+  .menu-movil__cerrar { color: var(--cursor-color); }
+  .menu-movil__cerrar .barra-movil__bola { background: $tinta; }
+  html.menu-modo .menu-movil__cerrar { color: $tinta; }
+  html.menu-modo .menu-movil__cerrar .barra-movil__bola { background: var(--cursor-color); }
+
   .menu-movil__enlaces {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
+    gap: 2px;
     margin: auto 0;
     padding: 24px 0;
   }
+  // la cortina: cada palabra sube desde su máscara (overflow), escalonadas
   .menu-movil__enlace {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    padding: 4px 0;
-    font-size: clamp(30px, 11vw, 54px);
-    line-height: 1.05;
+    padding: 2px 0 .08em;
+    overflow: hidden;
+    font-size: clamp(30px, 11vw, 64px);
+    line-height: 1.08;
     font-weight: 300;
-    letter-spacing: -.01em;
+    letter-spacing: -.02em;
     text-transform: uppercase;
-    color: var(--main-color);
+    color: var(--menu-tinta);
     text-decoration: none;
-    // el activo, subrayado en el acento (de día, su variante oscura)
-    background: linear-gradient(var(--accent-color), var(--accent-color)) left calc(100% - 2px) / 0 3px no-repeat;
-    opacity: 0;
-    translate: 0 14px;
-    transition: opacity .4s ease, translate .5s cubic-bezier(.22, 1, .36, 1), background-size .4s cubic-bezier(.22, 1, .36, 1);
-    transition-delay: calc(60ms + var(--i, 0) * 50ms);
-    &.is-active { background-size: 100% 3px; }
-    &:focus-visible { outline: 1px solid var(--accent-color); outline-offset: 4px; }
+    &:focus-visible { outline: 1px solid var(--menu-tinta); outline-offset: 4px; }
   }
-  html.menu-abierto .menu-movil__enlace { opacity: 1; translate: 0 0; }
+  .menu-movil__txt {
+    display: inline-block;
+    translate: 0 110%;
+    transition: translate .25s ease-in;
+    // el activo, subrayado (en el acento: tinta; en el modo: el acento)
+    background: linear-gradient(var(--menu-subraya), var(--menu-subraya)) left calc(100% - .06em) / 0 3px no-repeat;
+  }
+  .menu-movil__enlace.is-active .menu-movil__txt { background-size: 100% 3px; }
+  html.menu-abierto .menu-movil__txt {
+    translate: 0 0;
+    transition: translate .7s $menu-ease;
+    transition-delay: calc(.14s + var(--i, 0) * .06s);
+  }
 
   .menu-movil__pie {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    padding-top: 16px;
-    border-top: 1px solid var(--linea);
+    padding-top: 14px;
+    border-top: 1px solid var(--menu-linea);
     font-size: 14px;
     letter-spacing: .08em;
     text-transform: uppercase;
+    opacity: 0;
+    transition: opacity .2s ease;
   }
-  .menu-movil__fila { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; width: 100%; }
+  html.menu-abierto .menu-movil__pie { opacity: 1; transition: opacity .5s ease .38s; }
+  .menu-movil__fila { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 16px; width: 100%; }
+  .menu-movil__fila--ajustes { justify-content: flex-start; gap: 0 22px; }
   .menu-movil__idioma { display: flex; margin-left: -10px; }
   .menu-movil__chip {
     display: inline-flex;
@@ -1336,12 +1391,12 @@ html.cursor-fusion {
     justify-content: center;
     min-width: 44px;
     min-height: 44px;
-    color: var(--main-color);
-    opacity: .5;
+    color: var(--menu-tinta);
+    opacity: .55;
     text-decoration: none;
-    &.is-active { opacity: 1; text-decoration: underline; text-decoration-color: var(--accent-color); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+    &.is-active { opacity: 1; text-decoration: underline; text-decoration-color: var(--menu-subraya); text-decoration-thickness: 2px; text-underline-offset: 5px; }
   }
-  .menu-movil__tema {
+  .menu-movil__tema, .menu-movil__ajuste {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -1349,12 +1404,25 @@ html.cursor-fusion {
     padding: 0 10px 0 0;
     border: 0;
     background: none;
-    color: var(--main-color);
+    color: var(--menu-tinta);
     font: inherit;
     letter-spacing: inherit;
     text-transform: inherit;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     svg { width: 16px; height: 16px; flex: none; }
+    &:active { opacity: .6; }
+    &[hidden] { display: none; }
+  }
+  // el punto de «Color» enseña el acento que hay (en el fondo acento, con aro de tinta para que se vea)
+  .menu-movil__punto {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--cursor-color);
+    box-shadow: 0 0 0 1px var(--menu-tinta);
+    transition: background-color .4s ease;
   }
   html.tema-noche .menu-movil__tema svg { transform: rotate(180deg); }
   html.tema-dia .menu-movil__tema-noche, html.tema-noche .menu-movil__tema-dia { display: none; }
@@ -1362,7 +1430,7 @@ html.cursor-fusion {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    color: var(--main-color);
+    color: var(--menu-tinta);
     text-decoration: none;
     text-transform: none;
     letter-spacing: .01em;
@@ -1370,8 +1438,8 @@ html.cursor-fusion {
     &:first-of-type { text-transform: uppercase; letter-spacing: .08em; font-size: 14px; }
   }
 }
-@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
-  .menu-movil, .menu-movil__enlace { transition: none !important; }
+@media (max-width: 1280px) and (prefers-reduced-motion: reduce) {
+  .menu-movil, .menu-movil__txt, .menu-movil__pie { transition: none !important; }
 }
 
 // ============================================================
@@ -2460,3 +2528,132 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
 .intro__punto.is-cerca { animation: none; }
 .intro__punto.is-abierta, .intro__punto.is-abierta::after { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { .intro__punto, .intro__punto::after { animation: none !important; } }
+
+// ============================================================
+// v40 (Alex, 23/11, ATELIER conv. 1474): home con dos pisos más (Producto · Sobre mí), pisos de verdad en móvil
+// y la pista de bajar fina
+// ============================================================
+
+// --- Banners de la home (php-elements/banners-home.php) ---
+.banner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  font-family: $main-font;
+  color: var(--main-color);
+  &__titulo { margin: 0; text-transform: none !important; font-size: clamp(64px, 7vw, 128px); font-weight: 700; letter-spacing: -.045em; line-height: .92; i { font-style: normal; color: var(--accent-color); } }
+  &__lead { margin: 22px 0 0; font-size: clamp(18px, 1.4vw, 23px); line-height: 1.45; max-width: 34ch; }
+  &__casos span { white-space: nowrap; }
+  &__casos { margin: 18px 0 0; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave); }
+  &__cta {
+    gap: 12px;
+    margin-top: 34px;
+    background: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: $tinta !important;
+    svg { width: 12px; height: 12px; transition: translate .35s cubic-bezier(.22, 1, .36, 1); }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &__cta:hover { background: var(--main-color) !important; border-color: var(--main-color) !important; color: var(--bkg-color) !important; svg { translate: 4px 0; } }
+  }
+}
+// Producto: texto a la izquierda, tres portadas en abanico a la derecha (guiño a la baraja)
+.banner--producto { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 6vw; padding: 110px 12vw 100px 8vw; } // a la derecha, sitio para los pisos
+.banner__abanico { position: relative; display: block; aspect-ratio: 16 / 11; width: 100%; max-width: 760px; justify-self: end; }
+.banner__hoja {
+  position: absolute;
+  inset: 8% 6% 8% 6%;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--linea);
+  box-shadow: 0 24px 50px -28px rgba(0, 0, 0, .45);
+  transition: transform .7s cubic-bezier(.22, 1, .36, 1);
+  img { width: 100%; height: 100%; object-fit: cover; display: block; }
+}
+.banner__hoja--0 { transform: rotate(0deg); z-index: 3; }
+.banner__hoja--1 { transform: translate(7%, -5%) rotate(5deg); z-index: 2; }
+.banner__hoja--2 { transform: translate(13%, -10%) rotate(10deg); z-index: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .banner--producto:hover .banner__hoja--0 { transform: translate(-3%, 2%) rotate(-2deg); }
+  .banner--producto:hover .banner__hoja--1 { transform: translate(9%, -6%) rotate(6deg); }
+  .banner--producto:hover .banner__hoja--2 { transform: translate(18%, -12%) rotate(12deg); }
+}
+// Sobre mí: la bola del acento con los 15 años, el saludo al lado
+.banner--sobre { grid-template-columns: auto minmax(0, 1fr); gap: 6vw; padding: 110px 8vw 100px; }
+.banner__bola {
+  display: grid;
+  place-items: center;
+  width: clamp(220px, 26vw, 420px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent-color);
+  transition: background-color .4s ease;
+  span { color: $tinta; font-size: clamp(96px, 12vw, 200px); font-weight: 600; letter-spacing: -.06em; line-height: 1; margin-left: -.06em; font-variant-numeric: tabular-nums; }
+}
+.banner__fuerte { display: block; font-weight: 600; }
+.banner__sub { display: block; margin-top: 4px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave); }
+.slide-banner { height: 100vh; }
+
+// --- Móvil y tablet: cada banner es un piso de una pantalla, compuesto para un pantallazo ---
+@media (max-width: 1280px) {
+  .pantalla--banner { height: 100svh; min-height: 0; overflow: hidden; }
+  .banner { padding: calc(76px + env(safe-area-inset-top)) 7vw calc(28px + env(safe-area-inset-bottom)); }
+  .banner__titulo { font-size: clamp(56px, 16vw, 104px); }
+  .banner__lead { margin-top: 14px; font-size: 17px; }
+  .banner__casos { margin-top: 12px; font-size: 12px; line-height: 1.6; }
+  .banner__cta { margin-top: 22px; min-height: 50px; }
+  .banner--producto { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; gap: 18px; align-items: end; }
+  .banner__abanico { order: -1; justify-self: center; align-self: center; width: min(86%, 520px); max-height: 100%; }
+  .banner--sobre { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; gap: 18px; align-items: end; }
+  .banner__cifra { align-self: center; justify-self: center; }
+  .banner__bola { width: min(64vw, 38svh, 360px); span { font-size: min(30vw, 18svh, 168px); } }
+}
+// pantallas bajas (iPhone SE y similares): todo un punto más compacto para que quepa
+@media (max-width: 1280px) and (max-height: 640px) {
+  .banner { padding-top: calc(66px + env(safe-area-inset-top)); }
+  .banner__titulo { font-size: clamp(48px, 13vw, 72px); }
+  .banner__lead { font-size: 15px; margin-top: 10px; }
+  .banner__cta { margin-top: 16px; min-height: 46px; }
+  .banner__bola { width: min(56vw, 30svh); span { font-size: min(26vw, 14svh); } }
+}
+// tablet en horizontal o móvil tumbado: dos columnas, como en escritorio
+@media (max-width: 1280px) and (orientation: landscape) and (min-width: 700px) {
+  .banner--producto { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: none; align-items: center; }
+  .banner__abanico { order: 0; }
+  .banner--sobre { grid-template-columns: auto minmax(0, 1fr); grid-template-rows: none; align-items: center; }
+}
+
+// --- Pisos de verdad en móvil: cada piso mide justo una pantalla y la página se imanta a cada uno ---
+// (v39 y antes: #works traía un 4 vh abajo de la home antigua y medía una pantalla + 27 px: el imán se quedaba a medias)
+@media (max-width: 1280px) {
+  #works { padding-bottom: 0; }
+  .pantalla--baraja { height: 100svh; overflow: hidden; }
+  body.home-pisos .pie { min-height: 100svh; padding-bottom: 0; }
+  body.home-pisos .pie .sm--habla { min-height: 100svh; padding-bottom: calc(22px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 1280px) and (min-height: 501px) and (hover: none) {
+  body.home-pisos .pantalla--banner { scroll-snap-align: start; scroll-snap-stop: always; }
+  body.home-pisos .pie { scroll-snap-align: start; scroll-snap-stop: always; }
+}
+// el pie en pantallas bajas: la esfera más pequeña para que «Hablamos» quepa en un pantallazo
+@media (max-width: 1280px) and (max-height: 640px) {
+  body.home-pisos .pie .sm--habla { padding-top: 60px !important; padding-bottom: 16px; }
+  body.home-pisos .pie .sm__habla-bola { width: min(34vw, 200px); margin-bottom: 8px; }
+  body.home-pisos .pie .sm__titulo--enorme { font-size: clamp(48px, 15vw, 80px); }
+  body.home-pisos .pie .sm__entrada { font-size: 15px; margin-top: 10px; }
+  body.home-pisos .pie .sm__botones { margin-top: 16px; }
+}
+
+// --- La pista de bajar: con el imán, el botón grande sobraba; queda una pista fina que se va al primer gesto ---
+@media (max-width: 1280px) {
+  .bajar { gap: 8px; transition: opacity .5s ease, translate .5s ease; }
+  .bajar .bajar__txt { font-size: 11px; letter-spacing: .2em; opacity: .6; }
+  .bajar .bajar__bola { width: auto; height: auto; background: none; color: var(--accent-color); &::after { display: none; } svg { width: 12px; height: 20px; color: var(--accent-color); } }
+  html.ya-bajo .bajar { opacity: 0; translate: 0 8px; pointer-events: none; }
+}
+@media (max-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .bajar__bola::after { animation: none; }
+}

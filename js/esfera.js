@@ -27,21 +27,10 @@
   // v8 (feedback 153): la home apunta además la piel que se ha visto en ESTA visita (sessionStorage); «Hablamos» solo la
   // repite si vienes de la home sin recargar. Si recargas o entras directo, otra al azar en cada carga.
   function apuntar(p, enHome) { try { localStorage.setItem('alexdasi-piel-ultima', p); if (enHome) sessionStorage.setItem('alexdasi-piel-home', p); } catch (e) {} }
-  function pielHabla() {
-    if (forzada) return piel;
-    var vista = null, recarga = false, deHome = false;
-    try { vista = sessionStorage.getItem('alexdasi-piel-home'); } catch (e) {}
-    try { var nav = performance.getEntriesByType('navigation')[0]; recarga = !!nav && nav.type === 'reload'; } catch (e) {}
-    try { var r = new URL(document.referrer); deHome = r.host === location.host && /^\/(index(-en)?\.(php|html))?$/.test(r.pathname); } catch (e) {}
-    if (vista && PIELES.indexOf(vista) >= 0 && deHome && !recarga) return vista;
-    var ultima = window.__PIEL_ULTIMA, resto = PIELES.filter(function (x) { return x !== ultima; });
-    return resto[Math.floor(Math.random() * resto.length)];
-  }
-  function otraPiel() { // al azar entre las demás (nunca repite la que se acaba de ver)
-    if (forzada) return piel;
-    var resto = PIELES.filter(function (x) { return x !== piel; });
-    return resto[Math.floor(Math.random() * resto.length)];
-  }
+  // v40 (Alex, 23/11: «en la misma visita no quiero que cambie ni el color ni la esfera»): una sola piel por visita
+  // (header-baraja.php la elige al entrar y la guarda en sessionStorage). «Hablamos» y cada vez que se reabre: la misma.
+  function pielHabla() { return piel; }
+  function otraPiel() { return piel; }
   function dia() { return html.classList.contains('tema-dia'); }
   // el día/noche llega a todas las esferas abiertas (la de día sale más clara, feedback 122)
   new MutationObserver(function () {
@@ -125,15 +114,16 @@
   var NOMBRES = { alambre: ['Alambre', 'Wire'], maqueta: ['Maqueta', 'Scale model'], rayosx: ['Rayos X', 'X-ray'], anodizado: ['Anodizado', 'Anodized'], chicle: ['Chicle', 'Bubblegum'], glaseado: ['Glaseado', 'Glazed'], prisma: ['Prisma', 'Prism'], gema: ['Gema', 'Gem'], cuarzo: ['Cuarzo', 'Quartz'], solare: ['Solare lima', 'Solare lime'], gota: ['Gota', 'Drop'] };
   var botonPiel = document.querySelector('[data-piel-3d]');
   function rotular(p) {
-    if (!botonPiel) return;
-    var n = botonPiel.querySelector('[data-piel-nombre]');
-    if (n) n.textContent = (NOMBRES[p] || [p, p])[html.lang === 'es' ? 0 : 1];
+    // v40: también el botón «Material» del menú
+    document.querySelectorAll('[data-piel-nombre]').forEach(function (n) { n.textContent = (NOMBRES[p] || [p, p])[html.lang === 'es' ? 0 : 1]; });
   }
   function cambiarPiel() {
     var i = PIELES.indexOf(piel);
     piel = PIELES[(i + 1) % PIELES.length];
     forzada = true; // pielHabla() y otraPiel() devuelven ya esta
     window.__PIEL = piel;
+    proxima = piel; // v40: la próxima vez que se abra en escritorio, esta
+    try { sessionStorage.setItem('alexdasi-piel-visita', piel); } catch (e) {} // v40: la elegida se queda para la visita
     apuntar(piel, true);
     document.querySelectorAll('iframe.esfera-marco, .intro__esfera iframe, .sm__habla-bola iframe, .esfera-capa iframe').forEach(function (f) {
       try {

@@ -121,6 +121,10 @@ $assetVersion = static function (string $relativePath): string {
             try { var bolaQ = new URLSearchParams(location.search).get('bola'); if (bolaQ === 'abajo-centro') html.classList.add('bola-abajo-centro'); /* v25: fuera las composiciones ya descartadas (?bola=abajo|centro, ?hablamos=…) */ } catch (e) {}
             var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute('content', tema === 'noche' ? '#000000' : '#f5f3ec');
             html.classList.add(q.get('pisos') === 'b' ? 'pisos-b' : 'pisos-a');
+            /* v40 (Alex, 23/11): fondo del menú del móvil para comparar: ?menu=acento (por defecto) · ?menu=modo (día/noche); se recuerda en la visita */
+            var mv = q.get('menu');
+            try { if (mv === 'modo' || mv === 'acento') sessionStorage.setItem('alexdasi-menu', mv); else mv = sessionStorage.getItem('alexdasi-menu'); } catch (e) {}
+            html.classList.add(mv === 'modo' ? 'menu-modo' : 'menu-acento');
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));
             /* v6 (feedback 115): vuelven los 6 de siempre + 3 «locos» (magenta, verde ácido, naranja eléctrico). Al abrir sale uno
                al azar y el espacio salta a otro AL AZAR (nunca el mismo que hay). Tinta encima ≥ 6,4:1 en día y ≥ 7,3:1 sobre el
@@ -182,11 +186,17 @@ $assetVersion = static function (string $relativePath): string {
                cada vez que se vuelve a abrir (js/esfera.js). La última que se ha visto se apunta (localStorage, solo para no
                repetirla y para que «Hablamos» del Sobre mí enseñe esa). Fuera la sesión de la v5. ?piel= fuerza una. */
             var PIELES = ['chicle', 'glaseado', 'prisma', 'solare']; /* v19 (Alex, conv. 1402): + Solare lima en calidad alta (gas con luz dentro de cristal esmerilado) */ /* v16 (Alex, conv. 1396): las cuatro tech (alambre, maqueta, rayos X, anodizado) NO convencen: se guardan en esfera/hq/esfera-hq_tech.js (se ven con ?piel=alambre…) pero fuera del sorteo y de la E */ /* v14 (Alex, 21/11, ATELIER conv. 1393): las tres en calidad alta (esfera/esfera-hq.html); el prisma lleva la textura de cuarzo, así que la gema sale del sorteo. v12: fuera planeta, gota y cuarzo (forma) */
-            var piel = q.get('piel'), ultima = null;
-            try { ultima = localStorage.getItem('alexdasi-piel-ultima'); sessionStorage.removeItem('alexdasi-piel'); } catch (e) {}
+            /* v40 (Alex, 23/11: «dentro de la web no quiero que cambie ni el color ni la esfera en la misma visita, salvo que yo
+               decida cambiarlo»): la piel sigue la misma regla que el acento (v12): se sortea al entrar de fuera o al recargar
+               y se guarda para la visita (sessionStorage); navegar dentro de la web la mantiene. Solo cambia desde el menú
+               (Material) o con la E, y la nueva también se queda. */
+            var piel = q.get('piel'), ultima = null, deVisita = null;
+            try { ultima = localStorage.getItem('alexdasi-piel-ultima'); deVisita = sessionStorage.getItem('alexdasi-piel-visita'); sessionStorage.removeItem('alexdasi-piel'); } catch (e) {}
             if (PIELES.indexOf(ultima) < 0) ultima = null;
             var forzada = PIELES.indexOf(piel) >= 0;
-            if (!forzada) { var resto = PIELES.filter(function (x) { return x !== ultima; }); piel = resto[Math.floor(Math.random() * resto.length)]; }
+            if (!forzada && interna && !recarga && PIELES.indexOf(deVisita) >= 0) piel = deVisita;
+            else if (!forzada) { var resto = PIELES.filter(function (x) { return x !== ultima; }); piel = resto[Math.floor(Math.random() * resto.length)]; }
+            try { sessionStorage.setItem('alexdasi-piel-visita', piel); } catch (e) {}
             window.__PIELES = PIELES;
             window.__PIEL = piel;
             window.__PIEL_ULTIMA = forzada ? piel : (ultima || piel);

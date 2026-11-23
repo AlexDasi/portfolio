@@ -43,22 +43,27 @@ $mm = [
     ['contact', 'Contacto', 'Contact', !empty($conPie) ? '#contacto' : 'index.php#contacto'],
 ];
 ?>
+<?php /* v40 (Alex, 23/11: «el menú en el color acento, que se abra como un círculo que ocupe toda la pantalla y las palabras
+   con el efecto cortina que le quitamos a Berto»; «lo de cambiar el color o el material, escóndelo en el menú»):
+   botón = círculo del acento; el panel crece en círculo desde él (clip-path) y las palabras suben desde su máscara
+   (la cortina circular de Berto v14, conv. 685). Dos fondos para probar: ?menu=acento (por defecto) · ?menu=modo (día/noche).
+   Color y Material (la piel de la esfera) viven aquí en móvil y tablet; fuera, el botón suelto de la esfera. */ ?>
 <header class="barra-movil" data-barra-movil>
     <a class="barra-movil__nombre" href="index.php">alex dasi</a>
     <button class="barra-movil__abrir" type="button" data-menu-abrir aria-expanded="false" aria-controls="menu-movil" aria-label="<?php echo $isEs ? 'Abrir menú' : 'Open menu'; ?>">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9h17M3.5 15h17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <span class="barra-movil__bola" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 10h11M6.5 14h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
     </button>
 </header>
 <div class="menu-movil" id="menu-movil" data-menu-movil role="dialog" aria-modal="true" aria-label="<?php echo $isEs ? 'Menú' : 'Menu'; ?>" hidden>
     <div class="menu-movil__barra">
         <a class="barra-movil__nombre" href="index.php">alex dasi</a>
         <button class="barra-movil__abrir menu-movil__cerrar" type="button" data-menu-cerrar aria-label="<?php echo $isEs ? 'Cerrar menú' : 'Close menu'; ?>">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <span class="barra-movil__bola" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 8l8 8M16 8l-8 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
         </button>
     </div>
     <nav class="menu-movil__enlaces" aria-label="<?php echo $isEs ? 'Secciones' : 'Sections'; ?>">
         <?php foreach ($mm as $i => $m): ?>
-        <a class="menu-movil__enlace<?php echo $navActual === $m[0] ? ' is-active' : ''; ?>" href="<?php echo $m[3]; ?>"<?php echo $m[0] === 'contact' ? ' data-menu-contacto' : ''; ?><?php echo $navActual === $m[0] ? ' aria-current="page"' : ''; ?> style="--i: <?php echo $i; ?>"><?php echo $isEs ? $m[1] : $m[2]; ?></a>
+        <a class="menu-movil__enlace<?php echo $navActual === $m[0] ? ' is-active' : ''; ?>" href="<?php echo $m[3]; ?>"<?php echo $m[0] === 'contact' ? ' data-menu-contacto' : ''; ?><?php echo $navActual === $m[0] ? ' aria-current="page"' : ''; ?> style="--i: <?php echo $i; ?>"><span class="menu-movil__txt"><?php echo $isEs ? $m[1] : $m[2]; ?></span></a>
         <?php endforeach; ?>
     </nav>
     <div class="menu-movil__pie">
@@ -73,6 +78,10 @@ $mm = [
                 <span class="menu-movil__tema-dia"><?php echo $isEs ? 'Modo noche' : 'Night mode'; ?></span><span class="menu-movil__tema-noche"><?php echo $isEs ? 'Modo día' : 'Day mode'; ?></span>
             </button>
             <?php endif; ?>
+        </div>
+        <div class="menu-movil__fila menu-movil__fila--ajustes">
+            <button class="menu-movil__ajuste" type="button" data-menu-color><span class="menu-movil__punto" aria-hidden="true"></span><?php echo $isEs ? 'Color' : 'Colour'; ?></button>
+            <button class="menu-movil__ajuste" type="button" data-menu-material><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.1"/><ellipse cx="8" cy="8" rx="6.25" ry="2.4" fill="none" stroke="currentColor" stroke-width="1.1"/></svg><?php echo $isEs ? 'Esfera' : 'Sphere'; ?> · <span data-piel-nombre>3D</span></button>
         </div>
         <a class="menu-movil__contacto" href="https://wa.me/34616420048?text=<?php echo rawurlencode($isEs ? 'Hola Alex, tengo un negocio y me gustaría hablar de mi web.' : 'Hi Alex, I run a business and I’d like to talk about my website.'); ?>">WhatsApp</a>
         <a class="menu-movil__contacto" href="mailto:hola@alexdasi.com">hola@alexdasi.com</a>

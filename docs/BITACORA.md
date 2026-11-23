@@ -954,3 +954,11 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - Fotogramas parados en movimiento (antes → después): scroll/portadas 15-47 % → 0-4 %; los de clic/hover/teclado dependen de las transiciones propias de cada web.
 - Peso: hd ~0,7-1,4 MB, pm ~0,5-0,9 MB, v1/v2 ~0,04-1,3 MB (Mas Vesprada con crf 34-40 por el grano WebGL).
 - Respaldo: commit anterior 2cb9489 (v34).
+
+## 2026-11-23 — v40 · menú circular, Producto y Sobre mí en la home, pisos de verdad en móvil, esfera fija por visita (ATELIER conv. 1474)
+- Alex: banner de Producto (CTA a uxui.php) y banner de Sobre mí en la home → dos pisos nuevos entre Proyectos y Hablamos (`php-elements/banners-home.php`, copy de `sobre-mi.php` y `content/casos.json`). Escritorio: INICIO|PROYECTOS|PRODUCTO|SOBRE MÍ|HABLAMOS; `?s=contact` → piso 4.
+- Pisos en móvil: #works medía una pantalla + 27 px (un 4 vh de la home antigua) y el imán se quedaba a medias. Ahora cada piso mide justo 100svh (intro, proyectos, Producto, Sobre mí, Hablamos) y todos imantan; medido en iPhone 13, SE, Galaxy S9+ e iPad Mini: saltos exactos de una pantalla.
+- Pista de bajar: fuera la bola grande del acento; «Desliza» fino que se va al primer gesto (`html.ya-bajo`, js/intro.js).
+- Menú de móvil y tablet (≤ 1280): botón = bola del acento; el panel crece en círculo desde él y las palabras suben con la cortina de Berto v14. `?menu=acento` (por defecto, fondo del acento) · `?menu=modo` (fondo de día/noche); se recuerda en la visita. Color y Material (piel de la esfera) dentro del menú; fuera el botón suelto de la esfera en ≤ 1280.
+- Esfera fija por visita: misma regla que el acento (v12): se sortea al entrar o recargar; navegar dentro la mantiene; ya no cambia al reabrirla ni en Hablamos. Solo cambia con Material del menú o la E.
+- Marcha atrás: 5ba645c (v39).
