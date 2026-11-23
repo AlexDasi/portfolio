@@ -976,3 +976,10 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - Idioma sin salir del menú: el chip marca `alexdasi-menu-reabre` y la página nueva abre con el menú ya abierto (html.menu-reabre antes de pintar).
 - Sobre mí en móvil: la bola de los 15 años arriba, grande y saliendo por la derecha; números de «lo que hago» en bolas del acento; ATELIER = piso entero en el acento con el nombre grande y botón en tinta; hitos más grandes en la tira.
 - «Solare lima» → «Solare» en los rótulos (la esfera ya toma el acento).
+
+## 2026-11-23 — v42 · De dónde vengo como extracto del CV, CV a Sobre mí, menú en cortina, Proyectos más ligero (ATELIER conv. 1479)
+- De dónde vengo (móvil/tablet): de 2 en 2 (3 en tablet), años en un círculo del acento (inicio grande, fin pequeño; hoy relleno), idea de los círculos con cifra de Clustag («Result»). Valencia lleva los años del CV (2008-2012). Fuera el punto que se cortaba.
+- CV: sale de Producto y entra en Sobre mí, al pie de De dónde vengo (escritorio y móvil).
+- Menú: de círculo a cortina de arriba abajo (clip-path inset); con el mismo fondo el círculo no se percibía.
+- Proyectos en móvil: fuera el párrafo de la ficha (queda número, nombre, tipo y enlaces).
+- Marcha atrás: b9fec9c (v41b).

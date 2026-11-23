@@ -1295,7 +1295,7 @@ $menu-ease: cubic-bezier(.33, 1, .68, 1);
     scrollbar-width: none;
     &::-webkit-scrollbar { display: none; }
     // cerrado: un punto en el centro del botón; al cerrar se recoge más rápido de lo que se abre
-    clip-path: circle(0px at var(--mx) var(--my));
+    clip-path: inset(0 0 100% 0); // v42 (Alex: «el círculo no se percibe con el mismo fondo y distrae: una cortina de arriba abajo»)
     visibility: hidden;
     pointer-events: none;
     transition: clip-path .3s cubic-bezier(.65, 0, .35, 1), visibility 0s linear .3s, background-color .4s ease; // v41 (Alex: «tarda mucho»): cierre .38 → .3 s; curva suave a los dos lados para que se vea recogerse
@@ -1311,7 +1311,7 @@ $menu-ease: cubic-bezier(.33, 1, .68, 1);
   }
   // v41b (Alex: «la letra no en el acento, solo la línea que la subraya»): las palabras en la tinta del modo
   html.menu-abierto .menu-movil {
-    clip-path: circle(150% at var(--mx) var(--my));
+    clip-path: inset(0 0 0 0);
     visibility: visible;
     pointer-events: auto;
     transition: clip-path .42s $menu-ease, visibility 0s, background-color .4s ease; // v41: apertura .65 → .42 s
@@ -2677,8 +2677,6 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
     align-content: center; // centra en vertical donde el navegador lo entiende; si no, arriba con su aire
   }
   // el bloque de ATELIER (con fondo) no puede medir una pantalla entera: va dentro de un piso con aire alrededor
-  .pisos-movil .sm-movil .sm--tray .sm__hitos { grid-template-columns: 1fr 1fr; gap: 0 18px; }
-  .pisos-movil .sm-movil .sm--tray .sm__hitos li { padding: 10px 0 12px; }
 
   // Producto: la portada y cada caso, un piso
   .pagina-uxui--pisos main.ux { padding: 0 7vw !important; }
@@ -2702,23 +2700,6 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
 }
 
 @media (max-width: 1280px) {
-  // De dónde vengo: los seis hitos en una tira que se pasa con el dedo (en dos columnas eran 1,2-1,6 pantallas)
-  .pisos-movil .sm-movil .sm--tray .sm__hitos {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: none;
-    grid-auto-columns: min(72vw, 340px);
-    gap: 0 22px;
-    margin-left: -7vw;
-    margin-right: -7vw;
-    padding: 0 7vw 6px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding: 0 7vw;
-    scrollbar-width: none;
-    &::-webkit-scrollbar { display: none; }
-    li { scroll-snap-align: start; padding: 12px 0 0; }
-  }
 }
 @media (max-width: 1280px) and (max-height: 640px) {
   // pantallas bajas: Cómo trabajo un punto más compacto para que quepa en un pantallazo
@@ -2766,12 +2747,6 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
     border-radius: 99px !important; background: $tinta !important; background-image: none !important; color: var(--cursor-color) !important; font-size: 15px; letter-spacing: .02em; text-transform: none;
     svg { width: 12px; height: 12px; }
   }
-  // De dónde vengo: la tira de hitos más grande y legible; la siguiente asoma para invitar a deslizar
-  .pisos-movil .sm-movil .sm--tray .sm__hitos { grid-auto-columns: min(78vw, 360px); }
-  .pisos-movil .sm-movil .sm--tray .sm__hitos li { padding-top: 26px !important; border-top: 1px solid var(--linea); }
-  .pisos-movil .sm-movil .sm--tray .sm__hito { width: 13px; height: 13px; top: -7px; }
-  .pisos-movil .sm-movil .sm--tray .sm__item-t { font-size: 22px; letter-spacing: -.02em; line-height: 1.15; }
-  .pisos-movil .sm-movil .sm--tray .sm__item-p { font-size: 15px; line-height: 1.5; margin-top: 10px; }
 
   // Tiempos (Alex: «mucho más rápido en móvil»): día/noche .5 → .2 s; cambio de color .3 → .15 s
   body.sitio-baraja { transition-duration: .2s; }
@@ -2784,8 +2759,83 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
   .barra-movil__bola, .menu-movil__punto { transition-duration: .15s; }
 
   // Idioma sin salir del menú: la página nueva arranca con el menú ya abierto (sin animación)
-  html.menu-reabre .menu-movil { display: flex !important; clip-path: circle(150% at var(--mx) var(--my)); visibility: visible; pointer-events: auto; transition: none !important; }
+  html.menu-reabre .menu-movil { display: flex !important; clip-path: inset(0 0 0 0); visibility: visible; pointer-events: auto; transition: none !important; }
   html.menu-reabre .menu-movil__txt { translate: 0 0; transition: none !important; }
   html.menu-reabre .menu-movil__pie { opacity: 1; transition: none !important; }
   html.menu-reabre, html.menu-reabre body { overflow: hidden; }
 }
+
+// ============================================================
+// v42 (Alex, 23/11): «De dónde vengo» como extracto del CV, de 2 en 2, con las fechas claras. Idea de los círculos con
+// cifra de Clustag (pantalla «Result»): el año de inicio grande dentro de un círculo del acento, el de fin pequeño y en gris;
+// el de hoy, relleno. Fuera el punto del filete (en la tira se cortaba).
+// ============================================================
+.sm__anios { display: none; }
+@media (max-width: 1280px) {
+  .sm-movil .sm--tray .sm__item-anios { display: none; }
+  .sm-movil .sm--tray .sm__hito { display: none; }
+  .sm-movil .sm--tray .sm__hitos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start; // cada celda a su alto: el círculo no baila al estirarse la fila
+    gap: 14px 14px;
+    margin: 12px 0 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .sm-movil .sm--tray .sm__hitos li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 10px;
+    align-items: center;
+    padding: 0 !important;
+    border-top: 0;
+  }
+  .sm-movil .sm--tray .sm__anios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent-color);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: border-color .2s ease, background-color .2s ease;
+    b { font-size: 14px; font-weight: 600; letter-spacing: -.02em; color: var(--main-color); }
+    i { margin-top: 2px; font-style: normal; font-size: 10px; color: var(--tinta-suave); }
+  }
+  .sm-movil .sm--tray .sm__hitos li:last-child .sm__anios { background: var(--accent-color); b, i { color: $tinta; } }
+  .sm-movil .sm--tray .sm__item-t { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.15; letter-spacing: -.01em; }
+  .sm-movil .sm--tray .sm__item-p { grid-column: 1 / -1; margin: 6px 0 0; font-size: 12.5px; line-height: 1.38; }
+}
+@media (max-width: 1280px) and (max-height: 640px) {
+  .sm-movil .sm--tray .sm__hitos { gap: 12px 12px; margin-top: 10px; }
+  .sm-movil .sm--tray .sm__anios { width: 42px; height: 42px; b { font-size: 12px; } i { font-size: 9px; } }
+  .sm-movil .sm--tray .sm__item-t { font-size: 13px; }
+  .sm-movil .sm--tray .sm__item-p { font-size: 11.5px; line-height: 1.32; margin-top: 4px; }
+  .sm-movil .sm--tray .sm__anios { width: 38px; height: 38px; }
+  .pisos-movil .sm-movil .sm--tray .sm__h2 { margin-bottom: 0; }
+}
+@media (min-width: 700px) and (max-width: 1280px) {
+  .sm-movil .sm--tray .sm__hitos { grid-template-columns: 1fr 1fr 1fr; gap: 40px 28px; }
+  .sm-movil .sm--tray .sm__anios { width: 70px; height: 70px; b { font-size: 19px; } }
+  .sm-movil .sm--tray .sm__item-t { font-size: 19px; }
+  .sm-movil .sm--tray .sm__item-p { font-size: 15px; }
+}
+
+// v42 (Alex, 23/11: «Proyectos de la home, muy recargado; el texto de abajo, muy recargado»): en móvil la ficha queda en
+// número, nombre, tipo y los dos enlaces; el párrafo largo vive en la ficha del proyecto
+@media (max-width: 899px) {
+  .pantalla--baraja .ficha__texto { display: none !important; }
+  .pantalla--baraja .ficha__nombre { margin-bottom: 2px; }
+  .pantalla--baraja .ficha__acciones { margin-top: 14px; }
+}
+@media (max-width: 1280px) and (max-height: 640px) {
+  .pisos-movil .sm-movil .sm--tray > .sm__col { padding-top: calc(78px + env(safe-area-inset-top)) !important; }
+}
+// el CV, en Sobre mí al pie de «De dónde vengo» (antes estaba en Producto)
+.sm--tray .sm__cvs { margin-top: 22px; }
+@media (max-width: 1280px) { .sm-movil .sm--tray .sm__cvs { margin-top: 14px; } .pisos-movil .sm-movil .sm--tray > .sm__col { padding-bottom: 12px; padding-top: calc(78px + env(safe-area-inset-top)); } }
+@media (max-width: 1280px) and (max-height: 640px) { .sm-movil .sm--tray .sm__cvs { margin-top: 10px; } }

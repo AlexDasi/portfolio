@@ -67,7 +67,7 @@ $resumen = static function (array $C, int $k) use ($L) { $r = $C['resumen'][$k] 
                     <li><a href="caso.php?c=<?php echo $e($C['slug']); ?>" data-uxe-ir="<?php echo $n; ?>"<?php echo $n === 0 ? ' class="is-on"' : ''; ?>><span><?php echo str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT); ?></span><?php echo $e($C['nombre']); ?></a></li>
                     <?php endforeach; ?>
                 </ol>
-                <p class="uxe__cv"><a class="sm__boton sm__boton--lleno" href="<?php echo $e($cv); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv']); ?></a><a class="sm__cv" href="<?php echo $e($cvOtro); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv_otro']); ?></a></p>
+                <?php /* v42 (Alex): el CV se va a Sobre mí */ ?>
             </div>
         </div>
         <div class="swiper-slide slide-sm slide-pie"><?php $pieEnPiso = true; include 'php-elements/pie-contacto.php'; $pieEnPiso = false; ?></div>
@@ -98,7 +98,6 @@ $resumen = static function (array $C, int $k) use ($L) { $r = $C['resumen'][$k] 
         <div class="ux__intro">
             <p class="ux__lead"><?php echo $e($T['ux_t']); ?></p>
             <p class="ux__texto"><?php echo $e($T['ux_p']); ?></p>
-            <p class="sm__cvs ux__cvs"><a class="sm__cv" href="<?php echo $e($cv); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv']); ?></a><a class="sm__cv sm__cv--otro" href="<?php echo $e($cvOtro); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv_otro']); ?></a></p>
         </div>
     </header>
 

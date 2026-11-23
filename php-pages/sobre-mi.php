@@ -40,7 +40,7 @@ $T = $es ? [
     'atelier_a' => 'Cómo funciona ATELIER',
     'tray_t' => 'De dónde vengo',
     'tray' => [
-        ['Valencia', 'Estudié Diseño de Producto y Gráfico en el CEU San Pablo.'],
+        ['Valencia · 2008-2012', 'Estudié Diseño de Producto y Gráfico en el CEU San Pablo.'], /* v42: años del CV (CEU San Pablo · 2008–2012) */
         ['Edimburgo · 2016-2021', 'Seis años como diseñador en Registers of Scotland y Scottish Enterprise: marca, campañas, informes, web e intranet.'],
         ['En remoto para Londres · 2021-2025', 'Diseño digital para Knowadays, una plataforma de formación online: web, email, redes y editorial.'],
         ['El salto a UX/UI · 2022-2024', 'Posgrado en diseño y desarrollo web (ID3, ESAT) e Idrica: el UX/UI de una plataforma para depuradoras, con alarmas, mapas y muchos datos.'],
@@ -92,7 +92,7 @@ $T = $es ? [
     'atelier_a' => 'How ATELIER works',
     'tray_t' => 'Where I come from',
     'tray' => [
-        ['Valencia', 'I studied Product and Graphic Design at CEU San Pablo.'],
+        ['Valencia · 2008-2012', 'I studied Product and Graphic Design at CEU San Pablo.'],
         ['Edinburgh · 2016-2021', 'Six years as a designer at Registers of Scotland and Scottish Enterprise: brand, campaigns, reports, web and intranet.'],
         ['Remote for London · 2021-2025', 'Digital design for Knowadays, an online learning platform: web, email, social and editorial.'],
         ['The move into UX/UI · 2022-2024', 'A postgraduate in web design and development (ID3, ESAT) and Idrica: UX/UI for a platform that runs wastewater plants.'],
@@ -167,9 +167,16 @@ function sobre_pantalla(string $k, array $T, callable $e, string $flecha, string
         <h2 class="sm__h2"><?php echo $e($T['tray_t']); ?></h2>
         <ol class="sm__rejilla sm__rejilla--3 sm__hitos">
             <?php foreach ($T['tray'] as $t): ?>
-            <li><span class="sm__hito" aria-hidden="true"></span><p class="sm__item-t"><?php echo $e($t[0]); ?></p><p class="sm__item-p"><?php echo $e($t[1]); ?></p></li>
+            <?php /* v42 (Alex, 23/11: «de 2 en 2, las fechas más claras, como un extracto de mi currículum»; idea de los círculos con
+               cifra de Clustag): los años salen aparte, en su círculo del acento (inicio grande, fin pequeño; el de hoy, relleno).
+               En escritorio sigue el título con « · años». «Hoy»: el año sale de su propio texto («desde 2026»). */
+            $partes = explode(' · ', $t[0], 2); $anios = isset($partes[1]) ? explode('-', $partes[1]) : [];
+            if (!$anios && preg_match('/\b(20\d\d)\b/', $t[1], $mm)) $anios = [$mm[1]]; ?>
+            <li><span class="sm__hito" aria-hidden="true"></span><?php if ($anios): ?><span class="sm__anios"><b><?php echo $e($anios[0]); ?></b><?php if (isset($anios[1])): ?><i><?php echo $e($anios[1]); ?></i><?php endif; ?></span><?php endif; ?><p class="sm__item-t"><?php echo $e($partes[0]); ?><?php if (isset($partes[1])): ?><span class="sm__item-anios"> · <?php echo $e($partes[1]); ?></span><?php endif; ?></p><p class="sm__item-p"><?php echo $e($t[1]); ?></p></li>
             <?php endforeach; ?>
         </ol>
+        <?php /* v42 (Alex, 23/11: «lo del currículum debería estar en About, no en Product»): el CV, al pie del extracto */ ?>
+        <p class="sm__cvs"><a class="sm__cv" href="<?php echo $e($cv); ?>" target="_blank" rel="noopener"><?php echo $e($T['cv']); ?></a><a class="sm__cv sm__cv--otro" href="<?php echo $e($GLOBALS['cvOtro'] ?? $cv); ?>" target="_blank" rel="noopener" hreflang="<?php echo $T['cv_otro'] === 'In English' ? 'en' : 'es'; ?>"><?php echo $e($T['cv_otro']); ?></a></p>
     </div>
     <div class="sm__col sm__col--aparte">
         <h2 class="sm__h2"><?php echo $e($T['llevo_t']); ?></h2>
