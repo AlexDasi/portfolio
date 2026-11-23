@@ -969,3 +969,10 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - «Al revés: el día o la noche mandando, el acento solo cambiando»: fondo y tinta del modo, las palabras en el acento (de día, su versión con tinta, `--acento-texto`), subrayado y bola de cerrar en el acento. Por defecto; `?menu=acento` sigue enseñando el de fondo acento.
 - Pisos imantados también en Sobre mí (hola · lo que hago · cómo trabajo · ATELIER · de dónde vengo · lo que me llevo · Hablamos) y en Producto (portada · un caso por piso · Hablamos), en móvil y tablet. De dónde vengo: los seis hitos en tira horizontal. Producto hace scroll en html: el body deja de ser contenedor de scroll (overflow-x: clip) para que el html imante. Medido en iPhone 13, SE e iPad Mini.
 - Marcha atrás: e62c24e (v40).
+
+## 2026-11-23 — v41b · feedback de Alex en el móvil (ATELIER conv. 1477, feedback 327-331)
+- Menú: las palabras en la tinta del modo (nunca en el acento); solo el subrayado del activo en el acento.
+- Día/noche en ≤ 1280: .5 → .2 s (CSS y js/tema.js). Cambio de color: .3 → .15 s (CSS y esfera en js/cursor-color.js).
+- Idioma sin salir del menú: el chip marca `alexdasi-menu-reabre` y la página nueva abre con el menú ya abierto (html.menu-reabre antes de pintar).
+- Sobre mí en móvil: la bola de los 15 años arriba, grande y saliendo por la derecha; números de «lo que hago» en bolas del acento; ATELIER = piso entero en el acento con el nombre grande y botón en tinta; hitos más grandes en la tira.
+- «Solare lima» → «Solare» en los rótulos (la esfera ya toma el acento).

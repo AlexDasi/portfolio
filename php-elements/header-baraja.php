@@ -125,6 +125,8 @@ $assetVersion = static function (string $relativePath): string {
             var mv = q.get('menu');
             try { if (mv === 'modo' || mv === 'acento') sessionStorage.setItem('alexdasi-menu', mv); else mv = sessionStorage.getItem('alexdasi-menu'); } catch (e) {}
             html.classList.add(mv === 'acento' ? 'menu-acento' : 'menu-modo'); /* v41: por defecto, el fondo del modo */
+            /* v41b (Alex: «el cambio de idioma, sin salir del menú»): si se cambió el idioma desde el menú, la página nueva abre con él abierto */
+            try { if (sessionStorage.getItem('alexdasi-menu-reabre') === '1') { sessionStorage.removeItem('alexdasi-menu-reabre'); if (window.innerWidth <= 1280) html.classList.add('menu-reabre'); } } catch (e) {}
             var claim = q.get('claim'); html.classList.add('claim-' + (claim === 'a' || claim === 'b' ? claim : 'c'));
             /* v6 (feedback 115): vuelven los 6 de siempre + 3 «locos» (magenta, verde ácido, naranja eléctrico). Al abrir sale uno
                al azar y el espacio salta a otro AL AZAR (nunca el mismo que hay). Tinta encima ≥ 6,4:1 en día y ≥ 7,3:1 sobre el

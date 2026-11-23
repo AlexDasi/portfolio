@@ -7,7 +7,7 @@
 (function () {
   'use strict';
   var root = document.documentElement;
-  var DUR = 520;
+  var DUR = window.innerWidth <= 1280 ? 200 : 520; // v41b (Alex: «día/noche mucho más rápido en móvil»)
   var anim = 0;
 
   function actual() { return root.classList.contains('tema-noche') ? 'noche' : 'dia'; }

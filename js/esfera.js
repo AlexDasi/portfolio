@@ -111,7 +111,7 @@
   // ---------- v15 (Alex, 21/11): cambiar la piel 3D a mano, como el «PRESS SPACE» del color ----------
   // Botón abajo a la derecha (php-elements/nav-baraja.php, [data-piel-3d]) o la tecla E: pasa a la siguiente piel de la lista
   // y recarga las esferas abiertas con ella; desde ahí la piel elegida se queda (no se vuelve a sortear en esta página).
-  var NOMBRES = { alambre: ['Alambre', 'Wire'], maqueta: ['Maqueta', 'Scale model'], rayosx: ['Rayos X', 'X-ray'], anodizado: ['Anodizado', 'Anodized'], chicle: ['Chicle', 'Bubblegum'], glaseado: ['Glaseado', 'Glazed'], prisma: ['Prisma', 'Prism'], gema: ['Gema', 'Gem'], cuarzo: ['Cuarzo', 'Quartz'], solare: ['Solare lima', 'Solare lime'], gota: ['Gota', 'Drop'] };
+  var NOMBRES = { alambre: ['Alambre', 'Wire'], maqueta: ['Maqueta', 'Scale model'], rayosx: ['Rayos X', 'X-ray'], anodizado: ['Anodizado', 'Anodized'], chicle: ['Chicle', 'Bubblegum'], glaseado: ['Glaseado', 'Glazed'], prisma: ['Prisma', 'Prism'], gema: ['Gema', 'Gem'], cuarzo: ['Cuarzo', 'Quartz'], solare: ['Solare', 'Solare'] /* v41b: sin «lima» en el nombre: la esfera toma el acento que haya */, gota: ['Gota', 'Drop'] };
   var botonPiel = document.querySelector('[data-piel-3d]');
   function rotular(p) {
     // v40: también el botón «Material» del menú

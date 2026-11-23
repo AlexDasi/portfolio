@@ -49,7 +49,7 @@
 
   /* v40 (Alex, 23/11: «lo de cambiar el color o el material, escóndelo en el menú»). Color = el mismo salto que el espacio
      (js/cursor-color.js); Material = la piel siguiente de la esfera (js/esfera.js). Lo elegido se queda toda la visita. */
-  var NOMBRES = { chicle: ['Chicle', 'Bubblegum'], glaseado: ['Glaseado', 'Glazed'], prisma: ['Prisma', 'Prism'], solare: ['Solare lima', 'Solare lime'], gema: ['Gema', 'Gem'] };
+  var NOMBRES = { chicle: ['Chicle', 'Bubblegum'], glaseado: ['Glaseado', 'Glazed'], prisma: ['Prisma', 'Prism'], solare: ['Solare', 'Solare'], gema: ['Gema', 'Gem'] };
   var es = (document.querySelector('.menu-movil__chip.is-active') || {}).textContent === 'ES';
   var btnColor = panel.querySelector('[data-menu-color]'), btnMat = panel.querySelector('[data-menu-material]');
   if (btnColor) {
@@ -71,6 +71,15 @@
   }
 
   abrirBtn.addEventListener('click', abrir);
+  // v41b: vuelve del cambio de idioma con el menú ya abierto (header-baraja.php pone html.menu-reabre antes de pintar)
+  if (root.classList.contains('menu-reabre')) {
+    centro();
+    panel.hidden = false;
+    root.classList.add('menu-abierto');
+    abrirBtn.setAttribute('aria-expanded', 'true');
+    pintarBarra(true);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('menu-reabre'); }); });
+  }
   if (cerrarBtn) cerrarBtn.addEventListener('click', function () { cerrar(); });
   // v11 (Alex, 21/11): «Contacto» baja al pie (#contacto) de la página en la que estés, con el panel ya cerrado
   function irAlPie() {
@@ -85,6 +94,8 @@
     if (a.hasAttribute('data-menu-contacto') && document.getElementById('contacto')) { e.preventDefault(); cerrar(true); irAlPie(); return; }
     // v41 (Alex, 23/11: «al elegir un link, que se vuelva a reducir el círculo, no que salte de golpe»): primero se recoge el
     // círculo hacia el botón y, cuando ha terminado, se navega. Con Cmd/Ctrl o en pestaña nueva, el navegador manda.
+    // v41b (Alex: «el cambio de idioma debería ser sin salir del menú»): la página en el otro idioma se abre con el menú abierto
+    if (a.classList.contains('menu-movil__chip')) { if (a.classList.contains('is-active')) { e.preventDefault(); return; } try { sessionStorage.setItem('alexdasi-menu-reabre', '1'); } catch (err) {} return; }
     var href = a.getAttribute('href') || '';
     if (e.metaKey || e.ctrlKey || e.shiftKey || a.target === '_blank' || /^(mailto:|tel:|https?:\/\/wa\.me)/.test(href) || reduce) { cerrar(true); return; }
     e.preventDefault();

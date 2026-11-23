@@ -30,7 +30,7 @@
     // v4 (feedback 98): la esfera (si está abierta) toma el acento nuevo
     // v19 (Alex, 21/11: «con la esfera abierta el cambio de color es inmediato; quiero una transición, sutil pero no lenta»):
     // el acento de la esfera se pasa en ~0,3 s, fotograma a fotograma, del color de antes al nuevo
-    var de = window.__acentoEsfera || fl, t0 = performance.now(), DUR = 300;
+    var de = window.__acentoEsfera || fl, t0 = performance.now(), DUR = window.innerWidth <= 1280 ? 150 : 300; // v41b: más rápido en móvil
     window.__acentoEsfera = fl;
     cancelAnimationFrame(window.__acentoRaf || 0);
     (function paso(now) {
