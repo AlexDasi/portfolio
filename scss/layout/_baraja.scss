@@ -2744,7 +2744,7 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
   .pisos-movil .sm-movil .sm__bloque .sm__texto { margin: 0; font-size: 18px; line-height: 1.5; }
   .pisos-movil .sm-movil .sm__bloque a.sm__link {
     align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 24px !important;
-    border-radius: 99px !important; background: $tinta !important; background-image: none !important; color: var(--cursor-color) !important; font-size: 15px; letter-spacing: .02em; text-transform: none;
+    border-radius: 99px !important; background: $tinta !important; color: var(--cursor-color) !important; font-size: 15px !important; letter-spacing: .02em !important; text-transform: none;
     svg { width: 12px; height: 12px; }
   }
 
@@ -2839,3 +2839,65 @@ html.tema-dia body { --acento-texto: color-mix(in srgb, var(--accent-color) 40%,
 .sm--tray .sm__cvs { margin-top: 22px; }
 @media (max-width: 1280px) { .sm-movil .sm--tray .sm__cvs { margin-top: 14px; } .pisos-movil .sm-movil .sm--tray > .sm__col { padding-bottom: 12px; padding-top: calc(78px + env(safe-area-inset-top)); } }
 @media (max-width: 1280px) and (max-height: 640px) { .sm-movil .sm--tray .sm__cvs { margin-top: 10px; } }
+
+// ============================================================
+// v43 (Alex, 23/11, feedback desde el ordenador)
+// ============================================================
+// Banner Sobre mí: saludo + primera frase + los cuatro pasos de cómo trabajo (fuera la bola del 15)
+.banner--sobre { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 7vw; padding: 110px 12vw 100px 8vw; }
+.banner__etiqueta { margin: 0 0 14px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-suave); }
+.banner__pasos ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--linea); }
+.banner__pasos li { display: flex; align-items: center; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--linea); font-size: clamp(18px, 1.6vw, 26px); letter-spacing: -.015em; line-height: 1.2; }
+.banner__n {
+  flex: none; display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--accent-color); color: $tinta; font-size: 12px; font-weight: 600; letter-spacing: 0; transition: background-color .2s ease;
+}
+@media (max-width: 1280px) {
+  .banner--sobre { grid-template-columns: 1fr; grid-template-rows: none; align-content: center; align-items: start; gap: 22px; }
+  .banner--sobre .banner__cta { margin-top: 18px; }
+  // en móvil el botón va al final, después de los pasos
+  .banner--sobre .banner__texto { display: contents; }
+  .banner--sobre .banner__titulo { order: 1; } .banner--sobre .banner__lead { order: 2; margin-top: -8px; }
+  .banner--sobre .banner__pasos { order: 3; } .banner--sobre .banner__cta { order: 4; align-self: start; justify-self: start; margin-top: 0; }
+  .banner__pasos li { padding: 11px 0; font-size: 17px; gap: 14px; }
+  .banner__n { width: 28px; height: 28px; font-size: 11px; }
+}
+@media (max-width: 1280px) and (max-height: 640px) { .banner__pasos li { padding: 8px 0; font-size: 15px; } }
+@media (max-width: 1280px) and (orientation: landscape) and (min-width: 700px) { .banner--sobre { grid-template-columns: 1fr 1fr; align-items: center; } }
+
+// Producto (escritorio): vuelve la franja entera en el acento en el caso señalado (en vez de la línea de abajo)
+@media (min-width: 1281px) {
+  .uxe__lista a::before { inset: 0 !important; height: auto !important; z-index: -1 !important; transform: scaleX(0); transform-origin: left; }
+  .uxe__lista a.is-on { opacity: 1; color: $tinta !important; padding-left: 14px !important; }
+  .uxe__lista a.is-on span { color: $tinta !important; }
+}
+
+// Sobre mí (escritorio): ATELIER con más gracia (nombre grande, botón en tinta) y De dónde vengo con los años en círculo
+@media (min-width: 1281px) {
+  .slide-sm .sm__bloque { padding: 44px 40px 38px; border-radius: 14px; display: flex; flex-direction: column; gap: 20px; }
+  .slide-sm .sm__bloque .sm__h2 { margin: 0; opacity: 1; font-size: clamp(40px, 3.6vw, 64px); font-weight: 700; letter-spacing: -.045em; line-height: .95; text-transform: none; }
+  .slide-sm .sm__bloque .sm__texto { margin: 0; font-size: 18px; line-height: 1.5; }
+  .slide-sm .sm__bloque a.sm__link {
+    align-self: flex-start; display: inline-flex !important; align-items: center; gap: 10px; min-height: 48px !important; padding: 0 24px !important;
+    border-radius: 99px !important; background: $tinta !important; color: var(--cursor-color) !important; font-size: 14px !important; letter-spacing: .02em !important; text-transform: none;
+    svg { width: 12px; height: 12px; }
+  }
+  .slide-sm .sm--tray .sm__item-anios, .slide-sm .sm--tray .sm__hito { display: none; }
+  .slide-sm .sm--tray .sm__hitos li { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 14px; align-items: center; align-content: start; padding-top: 18px !important; }
+  .slide-sm .sm--tray .sm__anios {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; width: 62px; height: 62px; border-radius: 50%;
+    border: 1.5px solid var(--accent-color); line-height: 1; font-variant-numeric: tabular-nums;
+    b { font-size: 16px; font-weight: 600; letter-spacing: -.02em; color: var(--main-color); }
+    i { margin-top: 3px; font-style: normal; font-size: 11px; color: var(--tinta-suave); }
+  }
+  .slide-sm .sm--tray .sm__hitos li:last-child .sm__anios { background: var(--accent-color); b, i { color: $tinta; } }
+  .slide-sm .sm--tray .sm__item-t { margin: 0; font-size: 18px; }
+  .slide-sm .sm--tray .sm__item-p { grid-column: 1 / -1; margin-top: 12px; }
+}
+// v43 (Alex, móvil: «el abanico de Producto parece que se puede mover pero no se mueve; raro, muy bruto»): en móvil y tablet,
+// una sola portada (la de Idrica), sin cartas detrás
+@media (max-width: 1280px) {
+  .banner__hoja--1, .banner__hoja--2 { display: none; }
+  .banner__hoja--0 { inset: 0; }
+  .banner__abanico { aspect-ratio: 16 / 10; width: 100%; }
+}

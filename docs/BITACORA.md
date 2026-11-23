@@ -983,3 +983,10 @@ Descargadas por el conector de Unsplash (queda registrada la descarga). Descarta
 - Menú: de círculo a cortina de arriba abajo (clip-path inset); con el mismo fondo el círculo no se percibía.
 - Proyectos en móvil: fuera el párrafo de la ficha (queda número, nombre, tipo y enlaces).
 - Marcha atrás: b9fec9c (v41b).
+
+## 2026-11-23 — v43 · feedback desde el ordenador (ATELIER conv. 1479)
+- Banner Producto: delante Idrica (la plataforma), detrás Clustag y Tulong; en móvil una sola portada, sin abanico.
+- Banner Sobre mí: fuera la bola del 15 («no cuenta nada»): «Soy Alex.» + primera frase de la bio + los cuatro pasos de Cómo trabajo + botón.
+- Producto (escritorio): vuelve la franja entera del acento en el caso señalado (antes, línea abajo, v26).
+- Sobre mí (escritorio): ATELIER con el nombre grande y botón en tinta; De dónde vengo con los años en círculo, como en móvil.
+- Marcha atrás: a3fc401 (v42).

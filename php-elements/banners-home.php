@@ -15,7 +15,10 @@ function banner_home(string $k, array $T, callable $e, bool $es): void
         $porSlug = [];
         foreach ($casos as $c) { $porSlug[$c['slug']] = $c; }
         $L = $es ? 'es' : 'en';
-        $abanico = array_slice($T['casos'], 0, 3); ?>
+        // v43 (Alex: «delante, una que enseñe producto de verdad, no una foto»): Idrica (la plataforma) delante, Clustag y Tulong detrás
+        $orden = ['idrica-wastewater', 'clustag', 'tulong'];
+        $abanico = [];
+        foreach ($orden as $sl) { foreach ($T['casos'] as $t) { if ($t[0] === $sl) $abanico[] = $t; } } ?>
 <section class="banner banner--producto">
     <div class="banner__texto">
         <h2 class="banner__titulo"><?php echo $es ? 'Producto' : 'Product'; ?><i aria-hidden="true">.</i></h2>
@@ -29,13 +32,23 @@ function banner_home(string $k, array $T, callable $e, bool $es): void
         <?php endforeach; ?>
     </a>
 </section>
-<?php } else { ?>
+<?php } else {
+        /* v43 (Alex: «Soy Alex, 15 años: una pelota con un 15 no cuenta nada, yo no entraría»): el banner cuenta CÓMO trabajo,
+           que es lo que vende: el saludo con la primera frase de la bio y los cuatro pasos (copy de sobre-mi.php). */
+        $frase = preg_split('/(?<=\.)\s/u', $T['hola_p'], 2)[0]; ?>
 <section class="banner banner--sobre">
-    <div class="banner__cifra" aria-hidden="true"><span class="banner__bola"><span>15</span></span></div>
     <div class="banner__texto">
         <h2 class="banner__titulo"><?php echo $e($T['hola_t1']); ?></h2>
-        <p class="banner__lead"><span class="banner__fuerte">15 <?php echo $e($T['cifra_k']); ?></span><span class="banner__sub"><?php echo $e($T['cifra_s']); ?></span></p>
+        <p class="banner__lead"><?php echo $e($frase); ?></p>
         <a class="sm__boton sm__boton--lleno banner__cta" href="about.php?s=about"><?php echo $es ? 'Sobre mí' : 'About me'; ?><?php echo $fd; ?></a>
+    </div>
+    <div class="banner__pasos">
+        <p class="banner__etiqueta"><?php echo $e($T['como_t']); ?></p>
+        <ol>
+            <?php foreach ($T['pasos'] as $i => $pp): ?>
+            <li><span class="banner__n"><?php echo str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT); ?></span><span class="banner__paso"><?php echo $e($pp[0]); ?></span></li>
+            <?php endforeach; ?>
+        </ol>
     </div>
 </section>
 <?php }
